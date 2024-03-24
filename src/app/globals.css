@@ -26,6 +26,10 @@ body {
     rgb(var(--background-start-rgb));
 } */
 
+.loginBgImage {
+  background-image: url('/loginBgImage.jpg');
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

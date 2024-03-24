@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import React, { useState, useEffect } from "react";
 import InputSpace from "@/app/components/InputSpace"; // Assuming you have already created the Input component
 import axios from "axios";
@@ -6,6 +6,7 @@ import Popup from "../components/Popup";
 import Image from "next/image";
 import { FcBusinessman } from "react-icons/fc";
 import { FcGoogle } from "react-icons/fc";
+// import loginBgImage from "@/../public/pexels-johannes-plenio-1103970.jpg"
 
 
 const Login = () => {
@@ -70,7 +71,7 @@ const Login = () => {
 	];
 
 	return (
-		<div className="flex justify-center items-center">
+		<div className="flex loginBgImage justify-center items-center bg-loginBgImage">
 			<Popup Visible={success} popupContent={popupContent} />
 			<div
 				className=" bg-gray-100 w-1/5 m-auto text-center p-8 grid grid-cols-1 gap-5 grid-flow-row justify-center items-center"
