@@ -19,6 +19,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
+  orders: [{
+    type: [mongoose.Schema.ObjectId],
+    ref: "products"
+    
+  }],
+  delivered: [{
+    type: [mongoose.Schema.ObjectId],
+    ref: "products"
+  }],
 
   isApprove: {
     type: Boolean,
@@ -33,4 +42,5 @@ const userSchema = new mongoose.Schema({
   resetPasswordExpire: Date,
 });
 
-export const User = mongoose.models.users || mongoose.model("User", userSchema);
+ const User = mongoose.models.users || mongoose.model("User", userSchema);
+export default User;
