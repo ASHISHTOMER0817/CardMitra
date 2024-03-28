@@ -16,6 +16,9 @@ const config: Config = {
       },
       colors: {
         "primaryBgClr": "#39AC73"
+      },
+      backgroundColor: {
+        "primaryBgClr": "#39AC73"
       }
     },
   },
