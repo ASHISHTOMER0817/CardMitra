@@ -4,28 +4,31 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-   required: true
+    required: true
   },
   email: {
     type: String,
     required: true,
     unique: true,
   },
+  // number: {
+  //   type: String,
+  //   unique: true
+  // },
   password: {
     type: String,
-    required: true
   },
   role: {
     type: String,
     default: "user",
   },
   orders: [{
-    type: [mongoose.Schema.ObjectId],
+    type: mongoose.Schema.Types.ObjectId,
     ref: "products"
-    
+
   }],
   delivered: [{
-    type: [mongoose.Schema.ObjectId],
+    type: mongoose.Schema.Types.ObjectId,
     ref: "products"
   }],
 
@@ -42,5 +45,5 @@ const userSchema = new mongoose.Schema({
   resetPasswordExpire: Date,
 });
 
- const User = mongoose.models.users || mongoose.model("User", userSchema);
+const User =  mongoose.model("User", userSchema);
 export default User;

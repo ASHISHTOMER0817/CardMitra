@@ -15,7 +15,7 @@ const InputSpace: React.FC<InputProps> = ({ type, placeholder, value, onChange }
   };
 
   return (
-    <input className='pb-1 text-sm px-3 pt-3 border-b border-black outline-none bg-gray-100'
+    <input className='py-4 px-3 w-96 outline-none border rounded-3xl'
       type={type}
       placeholder={placeholder}
       value={value}

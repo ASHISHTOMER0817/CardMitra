@@ -12,20 +12,20 @@ export default function Footer() {
 				{/* <div className="bg-white rounded-full"> */}
 					<FaWhatsapp
 						
-						className=" w-12 h-12 rounded-full p-[10px] text-primaryBgClr bg-white"
+						className=" w-12 h-12 rounded-full p-[5px] text-primaryBgClr bg-white"
 					/>
 				{/* </div> */}
 
 				<div className="bg-white rounded-full">
 					<Image
-						className="p-[11px] w-12 h-12"
+						className="p-[9px] w-12 h-12"
 						
 						src={insta}
 						alt={""}
 					/>
 				</div>
 				<div className="bg-white rounded-full">
-					<Image className="w-12 h-12 p-[11px]" src={fb} alt={""} />
+					<Image className="w-12 h-12 p-[9px]" src={fb} alt={""} />
 				</div>
 			</div>
 			<div className="responsiveLink flex items-center justify-center gap-x-5">

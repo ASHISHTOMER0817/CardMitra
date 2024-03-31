@@ -1,3 +1,4 @@
+'use client'
 import Image from "next/image";
 import phoneImg from "@/../public/phoneImg.svg";
 import { GoBell } from "react-icons/go";
@@ -6,9 +7,57 @@ import { IoCubeOutline } from "react-icons/io5";
 import vector from "@/../public/Vector.svg";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import VeriticalRuler from "@/../public/VerticalRuler.svg";
+import InputSpace from "./components/InputSpace";
+import { useState } from "react";
+import axios from "axios";
+import Link from "next/link";
 
 export default function Home() {
-	const image = <Image src={vector} alt={""}></Image>;
+	const [name, setName] = useState("");
+	const [email, setEmail] = useState("");
+	const [number, setNumber] = useState("");
+	const [error, setError] = useState("");
+	const [mail, setMail] =  useState("")
+
+	const user = { name, email, number };
+
+	async function sendData() {
+		try {
+			// Validate form inputs
+			if (name.length < 5) {
+				// Handle name validation error
+				setError("Name must be at least 5 characters long");
+				return;
+			}
+			if (number.length < 10) {
+				// Handle phone number validation error
+				setError(
+					"Phone number must be at least 10 digits long"
+				);
+				return;
+			}
+			
+			const response = await axios.post("/api/users/signup", {
+				user,
+			});
+			const success = await response.data.success
+			if(!success){
+				setError(await response.data.message)
+				console.log(error)
+				return;
+			}else{
+				
+			}
+		} catch (error) {
+			setError("Something went wrong,Please try again later")
+			console.log("Something went wrong ", error);
+		}
+	}
+	
+	
+
+	const image = <Image src={VeriticalRuler} alt={""}></Image>;
 	return (
 		<>
 			<Header />
@@ -27,7 +76,7 @@ export default function Home() {
 						solution
 					</h3>
 					<button className="px-7 py-4 mb-10 rounded-[36px] bg-primaryBgClr font-bold text-white">
-						Become a Afilliate
+						<Link href={"/Auth/signup"}>Become a Afilliate</Link>
 					</button>
 				</section>
 				<section className="bg-black text-white px-10 py-10 flex justify-evenly  items-center">
@@ -145,26 +194,35 @@ export default function Home() {
 								form
 							</h5>
 						</div>
-						<div className="text-sm flex flex-col gap-y-5 items-center justify-center">
-							<input
-								type="name"
+						<form onSubmit={sendData} className="text-sm flex flex-col gap-y-5 items-center justify-center">
+							<InputSpace
+								type="text"
+								value={name}
 								placeholder="Name"
-								className="py-4 px-3 w-96 outline-none rounded-3xl"
+								onChange={(value) =>
+									setName(value)
+								}
 							/>
-							<input
-								type="email"
+							<InputSpace
+								type="text"
+								value={email}
 								placeholder="Email"
-								className="py-4 px-3 w-96 outline-none rounded-3xl"
+								onChange={(value) =>
+									setEmail(value)
+								}
 							/>
-							<input
-								type="number"
+							<InputSpace
+								type="text"
+								value={number}
 								placeholder="Phone Number"
-								className="py-4 px-3 w-96 outline-none rounded-3xl"
+								onChange={(value) =>
+									setNumber(value)
+								}
 							/>
-							<button className="py-4 w-96 font-extrabold hover:text-gray-200 bg-primaryBgClr text-white rounded-3xl">
+							<button type="submit" className="py-4 w-96 font-extrabold hover:text-gray-200 bg-primaryBgClr text-white rounded-3xl">
 								Send Request
 							</button>
-						</div>
+						</form>
 					</div>
 				</section>
 			</main>

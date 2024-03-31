@@ -29,21 +29,21 @@ const CardLayout = () => {
 				/>
 				<section className="flex flex-col gap-4 justify-around">
 					<div className="text-wrap">
-					<div>	One plus Nord CE2 Lite 5G</div>
+					<div className="font-semibold">	One plus Nord CE2 Lite 5G</div>
 					<div className="text-gray-400 text-xs">4645756778695</div>
 					</div>
 					<div className=" flex">
 						<div>
-							<div className="text-nowrap">Rs. 54,000</div>
+							<div className="text-nowrap text-primaryBgClr">Rs. 54,000</div>
 							<div>Price/Unit</div>
 						</div>
 						<hr className="rotate-90 my-5 mx-4 w-[20px] h-3px" />
 						<div>
-							<div className="text-red-500">Rs. 800</div>
+							<div className="font-semibold text-red-500">Rs. 800</div>
 							<div>Commission</div>
 						</div>
 					</div>
-					<button className="bg-primaryBgClr px-[10px] py-[5px] text-sm rounded-3xl border text-center w-auto text-white">
+					<button className="bg-primaryBgClr px-[10px] py-[5px]  rounded-3xl border text-center w-auto text-white">
 						Fulfill Order
 					</button>
 				</section>
@@ -56,8 +56,8 @@ const CardLayout = () => {
 					<Image src={flipkart} alt={""} />
 				</div>
 				<div className="flex flex-col justify-end text-sm items-end">
-					<div className="ml-auto">30 Mar, 24</div>
-					<div>Fulfill By Date</div>
+					<div className="ml-auto font-semibold">30 Mar, 24</div>
+					<div className="text-xs">Fulfill By Date</div>
 				</div>
 			</div>
 		</div>

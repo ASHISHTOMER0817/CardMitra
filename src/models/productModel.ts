@@ -36,10 +36,10 @@ const productSchema = new mongoose.Schema({
             type: String,
       },
 
-        isAvail: {
-          type: Boolean,
-          default: true,
-        },
+      isAvail: {
+            type: Boolean,
+            default: true,
+      },
 
       profit: {
             type: Number,
@@ -47,5 +47,5 @@ const productSchema = new mongoose.Schema({
 
 });
 
- const Product = mongoose.models.products || mongoose.model("Product", productSchema);
- export default Product;
+const Product = mongoose.models.products || mongoose.model("Product", productSchema);
+export default Product;

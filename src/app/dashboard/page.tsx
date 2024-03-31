@@ -10,7 +10,7 @@ import Deals from "../components/Deals";
 import Link from "next/link";
 
 const Dashboard = () => {
-      const [main, setMain] = useState<ReactNode>(<Deals/>)
+      const [main, setMain] = useState<ReactNode>(<Deals/>) 
 
       const SideBar = (
             img: string,

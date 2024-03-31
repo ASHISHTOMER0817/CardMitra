@@ -1,8 +1,5 @@
-"use client";
-import React, { useState, useEffect } from "react";
-// import InputSpace from "./InputSpace"; // Assuming you have already created the Input component
-import axios from "axios";
-// import Popup from "../components/Popup";
+'use client'
+import React from "react";
 import Image from "next/image";
 import arrow from "@/../public/ArrowLeft.svg";
 import googleIcon from "@/../public/flat-color-icons_google.svg";
@@ -12,73 +9,10 @@ import LoginAuth from "@/app/components/LoginAuth";
 import SignUpAuth from "@/app/components/SignUpAuth";
 
 const Login = ({ params }: { params: { Choice: string } }) => {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [success, setSuccess] = useState(Boolean);
-	const [popupContent, setPopupContent] = useState("");
-
-	const loginData = {
-		email: email,
-		password: password,
-	};
-
-	const submitData = async () => {
-		try {
-			if (password.length < 9) {
-				setPopupContent(
-					"Password should be atleast 8 Alphabets"
-				);
-				setSuccess(true);
-
-				return;
-				// return setPopupContent(
-				// 	"Password should be atleast 8 Alphabets"
-				// );
-				// setSuccess(true)
-			} else {
-				const response = await axios.post("/api/login", {
-					loginData,
-				});
-				console.log(loginData);
-				const success = await response.data.success;
-				const message = await response.data.message;
-				if (success) {
-					setPopupContent(message);
-					setSuccess(success);
-				} else {
-					setPopupContent(message);
-					setSuccess(success);
-				}
-			}
-		} catch (error) {
-			throw new Error("Login failed"); // Throw an error if request fails
-		}
-	};
-
-	// Array of objects for input props
-	const inputProps = [
-		{
-			type: "email",
-			placeholder: "Email",
-			value: email,
-			onChange: setEmail,
-		},
-		{
-			type: "password",
-			placeholder: "Password",
-			value: password,
-			onChange: setPassword,
-		},
-	];
-
-	{
-		/* {inputProps.map((props, index) => (
-					<InputSpace key={index} {...props} />
-				))} */
-	}
+	
 	return (
 		
-			<div className=" m-auto flex justify-between items-start">
+			<div className=" m-auto p-[10%] flex justify-around items-start">
 				<section className="flex flex-col justify-start gap-7">
 					<Image
 						src={arrow}
@@ -119,7 +53,7 @@ const Login = ({ params }: { params: { Choice: string } }) => {
 					</div>
 					<hr className="mx-auto w-[70%] my-5" />
 
-					<div className="px-3 absolute top-[20%] bg-white left-[43%]">
+					<div className="px-3 absolute top-[7.300rem] bg-white left-[43%]">
 						OR
 					</div>
 					{params.Choice === "login" ? (

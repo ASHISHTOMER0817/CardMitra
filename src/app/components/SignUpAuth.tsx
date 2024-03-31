@@ -1,34 +1,97 @@
-import React from "react";
-
+import React, { FormEvent, useState } from "react";
+import InputSpace from "./InputSpace";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 const SingUpAuth = () => {
+	const router = useRouter();
+	const [name, setName] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [number, setNumber] = useState("");
+	const [error, setError] = useState("");
+
+	const user = { name, email, password, number };
+
+	async function sendData(e:FormEvent<HTMLFormElement>) {
+		try {
+			// Validate form inputs
+
+			// if (name.length < 5) {
+			// 	// Handle name validation error
+			// 	setError("Name must be at least 5 characters long");
+			// 	return;
+			// }
+			// if (number.length < 10) {
+			// 	// Handle phone number validation error
+			// 	setError(
+			// 		"Phone number must be at least 10 digits long"
+			// 	);
+			// 	return;
+			// }
+			// if (
+			// 	!/[a-z]/.test(password) ||
+			// 	!/[A-Z]/.test(password) ||
+			// 	!/\d/.test(password)
+			// ) {
+			// 	// Handle password validation error
+			// 	setError(
+			// 		"Password must contain at least one lowercase letter, one uppercase letter, and one digit"
+			// 	);
+			// 	return;
+			// }
+
+			e.preventDefault()
+			const response = await axios.post("/api/users/signup", {
+				user,
+			});
+			console.log("user")
+			const success = await response.data.success;
+			if (!success) {
+				setError(await response.data.message);
+				console.log(success);
+				return;
+			} else {
+				// router.push("/Auth/login");
+				console.log(success);
+				return;
+			}
+		} catch (error) {
+			setError("Something went wrong,Please try again later");
+			console.log("Something went wrong ", error);
+		}
+	}
+
 	return (
-		<form action="">
-			<input
-				type="name"
+		<form onSubmit={sendData} className="flex flex-col gap-y-10 mt-4">
+			<InputSpace
+				type="text"
+				value={name}
 				placeholder="Name"
-				className="py-4 px-3 w-96 outline-none border rounded-3xl"
+				onChange={(value) => setName(value)}
 			/>
-			<input
-				type="email"
+			<InputSpace
+				type="text"
+				value={email}
 				placeholder="Email"
-				className="py-4 px-3 w-96 outline-none border rounded-3xl"
+				onChange={(value) => setEmail(value)}
 			/>
-			<input
-				type="number"
+			<InputSpace
+				type="text"
+				value={number}
 				placeholder="Phone Number"
-				className="py-4 px-3 w-96 outline-none border rounded-3xl"
+				onChange={(value) => setNumber(value)}
 			/>
-			<input
+			<InputSpace
 				type="password"
+				value={password}
 				placeholder="Password"
-				className="py-4 px-3 w-96 outline-none border rounded-3xl"
+				onChange={(value) => setPassword(value)}
 			/>
 			<div className="mb-5 ml-2 text-sm">
 				<input type="checkbox" id="checkbox" />{" "}
 				<label className="ml-2" htmlFor="checkbox">
 					Remember Me
 				</label>
-				
 			</div>
 			<button
 				type="submit"
@@ -36,7 +99,6 @@ const SingUpAuth = () => {
 			>
 				Sign Up
 			</button>
-			
 		</form>
 	);
 };
