@@ -1,14 +1,13 @@
 import { NextResponse, NextRequest } from "next/server";
-import Product from "@/models/userModel"
-
+import Product from "@/models/productModel";
 
 export async function POST(request: NextRequest) {
       try{
             const productId = request.json()
             const product = await Product.findById({productId})
-            if(product.requirement > 0){
+            if(product?.requirement > 0){
 
-                  await Product.findOneAndUpdate({_id:productId},{$set:{requirement: product.requirement -1}})
+                  await Product.findOneAndUpdate({_id:productId},{$set:{requirement: product?.requirement -1}})
                   return NextResponse.json(
                         {
                               success: true, status: 200

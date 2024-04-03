@@ -10,10 +10,10 @@ const Header = () => {
 			<Link href={"/"}>
 				<Image src={Logo} alt={"Logo"}></Image>
 			</Link>{" "}
-			<ul className="font-medium text-gray-400  flex gap-x-36">
+			<ul className="font-medium text-gray-400  flex gap-x-20">
 				{navbar.map((e, index)=>{
 					return (
-						<li key={index} className="hover:text-black cursor-pointer hover:underline-offset-2 hover:underline focus:text-black hover:font-semibold transition-all">{e}</li>
+						<li key={index} className="hover:text-black cursor-pointer focus:text-black hover:font-semibold transition-all">{e}</li>
 					)
 				})}
 				

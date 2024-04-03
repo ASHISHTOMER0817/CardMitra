@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import User from "@/models/userModel";
+import {User} from "@/models/userModel";
 import Database from "@/database/database";
 import mail from "@sendgrid/mail";
 

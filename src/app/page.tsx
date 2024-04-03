@@ -25,18 +25,18 @@ export default function Home() {
 	async function sendData() {
 		try {
 			// Validate form inputs
-			if (name.length < 5) {
-				// Handle name validation error
-				setError("Name must be at least 5 characters long");
-				return;
-			}
-			if (number.length < 10) {
-				// Handle phone number validation error
-				setError(
-					"Phone number must be at least 10 digits long"
-				);
-				return;
-			}
+			// if (name.length < 5) {
+			// 	// Handle name validation error
+			// 	setError("Name must be at least 5 characters long");
+			// 	return;
+			// }
+			// if (number.length < 10) {
+			// 	// Handle phone number validation error
+			// 	setError(
+			// 		"Phone number must be at least 10 digits long"
+			// 	);
+			// 	return;
+			// }
 			
 			const response = await axios.post("/api/users/signup", {
 				user,
@@ -63,7 +63,7 @@ export default function Home() {
 			<Header />
 			<main className=" min-h-screen text-center">
 				<section className="text-center px-10 py-24">
-					<h5 className="my-4 text-primaryBgClr">
+					<h5 className="my-4 font-medium text-primaryBgClr">
 						TOP RANKED SOLUTIONS
 					</h5>
 					<h1 className="font-extrabold ">
@@ -76,37 +76,37 @@ export default function Home() {
 						solution
 					</h3>
 					<button className="px-7 py-4 mb-10 rounded-[36px] bg-primaryBgClr font-bold text-white">
-						<Link href={"/Auth/signup"}>Become a Afilliate</Link>
+						<Link href={"/Auth/signup"} className="text-xl">Become a Afilliate</Link>
 					</button>
 				</section>
-				<section className="bg-black text-white px-10 py-10 flex justify-evenly  items-center">
+				<section className="bg-black text-white text-left px-10 py-10 flex justify-center gap-24 items-center">
 					{" "}
 					<div className="font-extrabold text-white flex flex-col gap-y-4">
 						{" "}
-						<h1 className="text-[52px]">20K+</h1>
+						<h1 className="">20K+</h1>
 						<h3 className="text-gray-400 font-semibold">
 							Users
 						</h3>
 					</div>
 					{image}
 					<div className="font-extrabold text-white flex flex-col gap-y-4">
-						<h1 className="text-[52px]">10,000+</h1>
+						<h1 className="">10,000+</h1>
 						<h3 className="text-gray-400 font-semibold">
 							Phones
 						</h3>
 					</div>
 					{image}{" "}
 					<div className="font-extrabold text-white flex flex-col gap-y-3">
-						<h1 className="text-[52px]">400+</h1>
+						<h1 className="">400+</h1>
 						<h3 className="text-gray-400 font-semibold">
 							Deals
 						</h3>
 					</div>
 				</section>
 				<section className="py-[3.75rem] text-center px-10">
-					<div className=" text-primaryBgClr mb-8">
+					<h5 className="font-medium text-primaryBgClr mb-8">
 						ABOUT US
-					</div>
+					</h5>
 					<h1 className="font-extrabold">
 						Simplify Phone Order <br />
 						Management
@@ -116,7 +116,7 @@ export default function Home() {
 						alt={"phones Image"}
 						className="my-12 mx-auto"
 					></Image>
-					<h3 className="text-gray-400">
+					<h3 className="text-[#121212B2]">
 						We&apos;re on a mission to Streamline phone
 						order management. Our <br /> user-friendly
 						platform empowers businesses and individuals
@@ -127,46 +127,46 @@ export default function Home() {
 						today
 					</h3>
 				</section>
-				<section className="text-center py-24 px-10 bg-black text-white">
-					<div className="text-primaryBgClr mb-8">
+				<section className="text-center py-24 px-10 bg-[#242424] text-white">
+					<h5 className="font-medium text-primaryBgClr mb-8">
 						OUR FEATURES
-					</div>
+					</h5>
 					<h1 className="font-extrabold ">
 						Unlock the power of seamless <br />
 						phone Order Management
 					</h1>
 					<div className="flex justify-center gap-x-32 mt-12 items-center text-left mt-">
-						<div className="flex flex-col p-5 rounded-3xl bg-gray-700 justify-start gap-y-3">
+						<div className="flex flex-col p-5 rounded-2xl bg-[#FFFFFF1A] justify-start gap-y-3">
 							<GoBell className="w-12 h-12 rounded-3xl p-2 text-white bg-primaryBgClr" />
 
 							<div className="text-lg">
-								Real-Time Order Alerts
+								Real-Time Order <br /> Alerts
 							</div>
-							<div className="text-gray-400">
+							<div className="text-[#FFFFFFB2]">
 								Instant alerts for new <br />{" "}
 								orders and updates for <br />{" "}
 								seamless order <br /> management
 							</div>
 						</div>
-						<div className="flex flex-col p-3 rounded-3xl bg-gray-700 justify-start gap-y-3">
+						<div className="flex flex-col p-3 rounded-2xl bg-[#FFFFFF1A] justify-start gap-y-3">
 							<CiRoute className="w-12 h-12 rounded-3xl p-2 text-white bg-primaryBgClr" />
 
 							<div className="text-lg">
-								Customizable Management
+								Customizable <br /> Management
 							</div>
-							<div className="text-gray-400">
+							<div className="text-[#FFFFFFB2]">
 								Get promotions <br />{" "}
 								effortlessly. Set <br />{" "}
 								discounts, deals, <br />{" "}
 								quantities & validity
 							</div>
 						</div>
-						<div className="flex flex-col p-3 rounded-3xl bg-gray-700 justify-start gap-y-3">
+						<div className="flex flex-col p-3 rounded-2xl bg-[#FFFFFF1A] justify-start gap-y-3">
 							<IoCubeOutline className="w-12 h-12 rounded-3xl p-2 text-white bg-primaryBgClr" />
 							<div className="text-lg">
-								Advanced Order Tracking
+								Advanced Order <br /> Tracking
 							</div>
-							<div className="text-gray-400">
+							<div className="text-[#FFFFFFB2]">
 								Effortlessly track orders,{" "}
 								<br /> gain insights, provide{" "}
 								<br /> unparalleled customer{" "}
@@ -176,9 +176,9 @@ export default function Home() {
 					</div>
 				</section>
 				<section className="pt-24 pb-24 px-10">
-					<div className="text-primaryBgClr mb-8">
+					<h5 className="font-medium text-primaryBgClr mb-8">
 						BECOME AN AFFILIATE
-					</div>
+					</h5>
 					<h1 className="my-12 font-extrabold">
 						Join Our Affiliate Program <br /> & Start
 						Earning Today

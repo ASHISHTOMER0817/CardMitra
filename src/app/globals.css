@@ -35,6 +35,23 @@ body {
   cursor: pointer;
 }
 
+.form :nth-child(odd) {
+  margin-bottom: 6px;
+  font-size: small;
+  font-weight: 500;
+  
+}
+
+.form :nth-child(even) {
+  margin-bottom: 12px;
+  padding: 16px 12px;
+  width: 384px;
+  outline: none;
+  border: 1px solid;
+  border-radius: 999px;
+}
+
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

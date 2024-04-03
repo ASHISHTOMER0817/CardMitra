@@ -24,7 +24,7 @@ const LoginAuth = () => {
 			console.log(error);
 			return;
 		} else {
-			router.push("/dasboard/home");
+			router.push("/dasboard");
 		}
 	}
 
@@ -55,7 +55,7 @@ const LoginAuth = () => {
 		e.preventDefault();
 		try {
 			const { success, message } = await makeApiCall(
-				"/api/users/signup",
+				"/api/users/login",
 				{ user }
 			);
 			checkSuccess(success, message);
@@ -85,11 +85,7 @@ const LoginAuth = () => {
 	const divTagCSS =
 		"text-white border px-3 text-center -mt-[19px] rounded-3xl bg-green-300 py-4 w-96";
 	return (
-		<form
-			
-			className="flex flex-col gap-y-10 mt-4"
-			onSubmit={sendData}
-		>
+		<form className="flex flex-col gap-y-10 mt-4" onSubmit={sendData}>
 			{method ? (
 				<>
 					<InputSpace

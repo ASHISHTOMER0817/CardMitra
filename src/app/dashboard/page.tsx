@@ -20,8 +20,6 @@ const Dashboard = () => {
             node? : ReactNode
             
       ) => {
-
-            
             return (
                   <div className={classList}>
                         {heading && (
@@ -37,7 +35,7 @@ const Dashboard = () => {
       };
 	return (
 		<div className="flex items-start">
-			<section className=" px-6 py-6 gap-6 flex flex-col min-h-screen items-start top-0 justify-between border-r-[7px] border-r-gray-600 sticky">
+			<section className=" px-6 py-6 gap-6 flex flex-col min-h-screen items-start top-0 justify-between border-r-[5px] border-r-gray-300 sticky">
 				{SideBar(logo)}
 				{SideBar(home, "Dashboard", "MENU", "mt-3")}
 				{SideBar(bell, "Deals",undefined,undefined, <Deals/>)}
