@@ -75,7 +75,7 @@ export default function Home() {
 						effortlessly <br /> with our comprehensive
 						solution
 					</h3>
-					<button className="px-7 py-4 mb-10 rounded-[36px] bg-primaryBgClr font-bold text-white">
+					<button className="px-7 py-4 mb-10 mt-6 rounded-[36px] bg-primaryBgClr font-bold text-white">
 						<Link href={"/Auth/signup"} className="text-xl">Become a Afilliate</Link>
 					</button>
 				</section>
@@ -136,7 +136,7 @@ export default function Home() {
 						phone Order Management
 					</h1>
 					<div className="flex justify-center gap-x-32 mt-12 items-center text-left mt-">
-						<div className="flex flex-col p-5 rounded-2xl bg-[#FFFFFF1A] justify-start gap-y-3">
+						<div className="flex flex-col p-9 rounded-2xl bg-[#FFFFFF1A] justify-start gap-y-3">
 							<GoBell className="w-12 h-12 rounded-3xl p-2 text-white bg-primaryBgClr" />
 
 							<div className="text-lg">
@@ -148,20 +148,20 @@ export default function Home() {
 								seamless order <br /> management
 							</div>
 						</div>
-						<div className="flex flex-col p-3 rounded-2xl bg-[#FFFFFF1A] justify-start gap-y-3">
+						<div className="flex flex-col p-9 rounded-2xl bg-[#FFFFFF1A] justify-start gap-y-3">
 							<CiRoute className="w-12 h-12 rounded-3xl p-2 text-white bg-primaryBgClr" />
 
 							<div className="text-lg">
 								Customizable <br /> Management
 							</div>
 							<div className="text-[#FFFFFFB2]">
-								Get promotions <br />{" "}
-								effortlessly. Set <br />{" "}
-								discounts, deals, <br />{" "}
-								quantities & validity
+								Get promotions  <br />{" "}
+								effortlessly. Set 
+								discounts, <br />{" "} deals, 
+								quantities & <br />{" "} validity
 							</div>
 						</div>
-						<div className="flex flex-col p-3 rounded-2xl bg-[#FFFFFF1A] justify-start gap-y-3">
+						<div className="flex flex-col p-9 rounded-2xl bg-[#FFFFFF1A] justify-start gap-y-3">
 							<IoCubeOutline className="w-12 h-12 rounded-3xl p-2 text-white bg-primaryBgClr" />
 							<div className="text-lg">
 								Advanced Order <br /> Tracking
@@ -183,12 +183,12 @@ export default function Home() {
 						Join Our Affiliate Program <br /> & Start
 						Earning Today
 					</h1>
-					<div className="py-12 px-8 bg-gray-200 flex justify-center gap-x-[17rem] items-center">
+					<div className="py-12 bg-gray-200 flex justify-center gap-x-[20rem] items-start">
 						<div className="text-left">
 							<h2 className=" font-medium">
 								Fill the form
 							</h2>
-							<h5 className="text-gray-400 mt-3 leading-normal">
+							<h5 className="text-gray-400 mt-3 leading-tight">
 								Begin your journey to affiliate{" "}
 								<br /> success by completing the
 								form

@@ -81,11 +81,11 @@ const LoginAuth = () => {
 		}
 	}
 	const buttonCSS =
-		"text-white border px-3 py-4 rounded-3xl bg-primaryBgClr w-96";
+		"text-white border px-3 py-4 rounded-full bg-primaryBgClr w-96";
 	const divTagCSS =
-		"text-white border px-3 text-center -mt-[19px] rounded-3xl bg-green-300 py-4 w-96";
+		"text-white border px-3 py-4 text-center rounded-full bg-green-300 w-96";
 	return (
-		<form className="flex flex-col gap-y-10 mt-4" onSubmit={sendData}>
+		<form className="flex flex-col gap-y-6 mt-4" onSubmit={sendData}>
 			{method ? (
 				<>
 					<InputSpace
@@ -117,18 +117,6 @@ const LoginAuth = () => {
 					/>
 				</>
 			)}
-			{/* <InputSpace
-				type="email"
-				value={email}
-				placeholder="Email"
-				onChange={(value) => setEmail(value)}
-			/>
-			<InputSpace
-				type="password"
-				value={password}
-				placeholder="Password"
-				onChange={(value) => setPassword(value)}
-			/> */}
 			<div className="text-sm">
 				<input
 					type="checkbox"
@@ -136,7 +124,7 @@ const LoginAuth = () => {
 					checked={rememberMe}
 					onChange={(e) => setRememberMe(e.target.checked)}
 				/>
-				<label className="ml-2" htmlFor="checkbox">
+				<label className="ml-2 font-light" htmlFor="checkbox">
 					Remember Me
 				</label>
 
@@ -144,7 +132,7 @@ const LoginAuth = () => {
 					{method ? "Forgot Password" : "Resend OTP"}
 				</div>
 			</div>
-			<button type="submit" className="">
+			{/* <button type="submit" className=""> */}
 				{!method && verifyotp ? (
 					<button className={buttonCSS}>Verify OTP</button>
 				) : !method ? (
@@ -156,7 +144,7 @@ const LoginAuth = () => {
 						Login
 					</button>
 				)}
-			</button>
+			{/* </button> */}
 			<div className="">
 				{method ? (
 					<div
