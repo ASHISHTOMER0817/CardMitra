@@ -1,8 +1,9 @@
 import React from "react";
-import CardLayout from "./CardLayout";
+// import cardLayoutForDeals from "./cardLayoutForDeals";
 import filter from "@/../public/Filter.svg";
 import sort from "@/../public/sort.svg";
 import Image from "next/image";
+import CardLayoutForDeals from "./cardLayoutForDeals";
 const Deals = () => {
 	return (
 		<>
@@ -19,31 +20,32 @@ const Deals = () => {
 				<div></div>
 			</div>
 			<div className="grid grid-flow-row gap-3 grid-cols-3">
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
-				<CardLayout />
+				<CardLayoutForDeals/>
+				<CardLayoutForDeals/>
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
+				<CardLayoutForDeals />
 			</div>
 		</>
 	);

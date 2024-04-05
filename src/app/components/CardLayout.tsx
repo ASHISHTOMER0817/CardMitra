@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { IoHeartOutline } from "react-icons/io5";
 import { CiShoppingCart } from "react-icons/ci";
 import Image from "next/image";
@@ -6,7 +6,7 @@ import myntra from "@/../public/myntra.svg";
 import amazon from "@/../public/amazon.svg";
 import flipkart from "@/../public/flipkart.svg";
 import phoneImage from "@/../public/phoneImage.jpg"
-const CardLayout = () => {
+const CardLayout = ({image,placeOrder, beforeDate}:{image:ReactNode, placeOrder:ReactNode, beforeDate:ReactNode}) => {
 	return (
 		<div className="p-3 border rounded-3xl border-gray-400">
 			<div className="flex items-center mb-4 gap-4">
@@ -14,9 +14,9 @@ const CardLayout = () => {
 					
 					Quantity: 7
 				</div>
-				<IoHeartOutline className="text-red-500 border rounded-full p-2 w-10 h-10" />
-				{/* <div></div> */}
-				<CiShoppingCart className="border rounded-full p-2 w-10 h-10" />
+				{image}
+				{/* <IoHeartOutline className="text-red-500 border rounded-full p-2 w-10 h-10" />
+				<CiShoppingCart className="border rounded-full p-2 w-10 h-10" /> */}
 			</div>
 			<div className="flex justify-center gap-8 text-sm items-start">
 				<Image
@@ -43,9 +43,10 @@ const CardLayout = () => {
 							<div>Commission</div>
 						</div>
 					</div>
-					<button className="bg-primaryBgClr px-[10px] py-[5px]  rounded-3xl border text-center w-auto text-white">
+					{placeOrder}
+					{/* <button className="bg-primaryBgClr px-[10px] py-[5px]  rounded-3xl border text-center w-auto text-white">
 						Fulfill Order
-					</button>
+					</button> */}
 				</section>
 			</div>
 			<hr  className="my-4"/>
@@ -55,10 +56,11 @@ const CardLayout = () => {
 					<Image src={amazon} alt={""} />
 					<Image src={flipkart} alt={""} />
 				</div>
-				<div className="flex flex-col justify-end text-sm items-end">
+				{beforeDate}
+				{/* <div className="flex flex-col justify-end text-sm items-end">
 					<div className="ml-auto font-semibold">30 Mar, 24</div>
 					<div className="text-xs">Fulfill By Date</div>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);
