@@ -1,4 +1,4 @@
-import Datavisual from '@/app/datavisual/page'
+// import Datavisual from '@/app/datavisual/page'
 import React from 'react'
 
 const Dashboard = () => {
@@ -14,7 +14,7 @@ const Dashboard = () => {
 				<div className="px-3 py-4">Sold out </div>
 				<div className="px-3 py-4">Affiliates Joined</div>
 			</div>
-                  <Datavisual/>
+                  {/* <Datavisual/> */}
                   <h3 className="my-5 font-semibold">Order History</h3>
     </div>
   )

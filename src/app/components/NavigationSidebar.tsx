@@ -1,16 +1,12 @@
-"use client";
+'use client'
 import React, { ReactNode, useState } from "react";
-import Image from "next/image";
 import logo from "@/../public/logo.svg";
 import home from "@/../public/Home.svg";
 import bell from "@/../public/bell.svg";
 import apps from "@/../public/Apps.svg";
 import helpicon from "@/../public/Help.svg";
-// import Deals from "../components/Deals";
-// import Link from "next/link";
 import Dashboard from "../components/user/Dashboard";
 import SideBar from "../components/Sidebar";
-// import Notification from "../components/Notification";
 const NavigationSidebar = ({
 	Children,
 	dashboard,
@@ -63,7 +59,7 @@ const NavigationSidebar = ({
 					tab={"Notifications"}
 					heading={""}
 					classList={""}
-					changeState={() => notification}
+					changeState={() => changeState(notification)}
 				/>
 				<SideBar
 					img={helpicon}
@@ -74,7 +70,7 @@ const NavigationSidebar = ({
 				/>
 				{Children}
 			</section>
-			<section className="mx-auto">{main}</section>
+			{main}
 		</div>
 	);
 };

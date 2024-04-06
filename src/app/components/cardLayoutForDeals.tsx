@@ -2,8 +2,22 @@ import { IoHeartOutline } from "react-icons/io5";
 import CardLayout from "./CardLayout";
 import React from "react";
 import { CiShoppingCart } from "react-icons/ci";
-
-const CardLayoutForDeals = () => {
+import Link from "next/link";
+const CardLayoutForDeals = ({
+	link,
+	quantity,
+	name,
+	randomNo,
+	price,
+	commission,
+}: {
+	link: string;
+	quantity: number;
+	name: string;
+	randomNo: number;
+	price: number;
+	commission: number;
+}) => {
 	return (
 		<div>
 			<CardLayout
@@ -15,7 +29,9 @@ const CardLayoutForDeals = () => {
 				}
 				placeOrder={
 					<button className="bg-primaryBgClr px-[10px] py-[5px]  rounded-3xl border text-center w-auto text-white">
-						Fulfill Order
+						<Link href={`/user/${link}`}>
+							Fulfill Order
+						</Link>
 					</button>
 				}
 				beforeDate={
@@ -28,6 +44,11 @@ const CardLayoutForDeals = () => {
 						</div>
 					</div>
 				}
+				quantity={quantity}
+				name={name}
+				randomNo={randomNo}
+				price={price}
+				commission={commission}
 			/>
 		</div>
 	);

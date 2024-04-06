@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import React from "react";
 import Deals from "../components/Deals";
 // import Link from "next/link";

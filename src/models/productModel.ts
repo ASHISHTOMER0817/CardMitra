@@ -41,7 +41,7 @@ const productSchema = new mongoose.Schema({
             default: true,
       },
 
-      profit: {
+      commission: {
             type: Number,
       },
 

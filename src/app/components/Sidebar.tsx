@@ -24,7 +24,7 @@ const SideBar = ({img,
                   )}
                   <div
                         onClick={changeState}
-                        className="flex items-center font-medium gap-x-3"
+                        className="flex cursor-pointer items-center font-medium gap-x-3"
                   >
                         <Image src={img} alt={""} />
                         <div className="text-sm">{tab}</div>
