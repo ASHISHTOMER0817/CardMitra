@@ -14,9 +14,9 @@ const CardLayout = ({
 	price,
 	commission,
 }: {
-	image: ReactNode;
-	placeOrder: ReactNode;
-	beforeDate: ReactNode;
+	image?: ReactNode;
+	placeOrder?: ReactNode;
+	beforeDate?: ReactNode;
 	quantity: number;
 	name: string;
 	randomNo: number;

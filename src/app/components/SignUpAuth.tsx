@@ -47,11 +47,11 @@ const SingUpAuth = () => {
 			console.log("user")
 			const success = await response.data.success;
 			if (!success) {
-				setError(await response.data.message);
-				console.log(success,await response.data.message);
+				setError( response.data.message);
+				console.log(success, response.data.message);
 				return;
 			} else {
-				// router.push("/Auth/login");
+				router.push("/Auth/login");
 				console.log(success);
 				return;
 			}

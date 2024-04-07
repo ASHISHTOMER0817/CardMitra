@@ -1,22 +1,18 @@
 import { NextResponse, NextRequest } from "next/server";
-import {User} from "@/models/userModel";
 import Database from "@/database/database";
-import getToken from "@/app/components/getToken"
-
+import Product from "@/models/productModel";
 
 
 Database()
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
 
       try {
-            const email = getToken()
-            console.log( '1',email)
-            const user = await User.findOne({ email }).populate({path:'products', options:{limit:3}}).exec()
-            console.log('2', user)
-            if (user) {
-                  
+            const userId = request.json()
+            const product = await Product.findById({userId})
+            console.log('2', product)
+            if (product) {
                   return NextResponse.json({
-                        data: user, message: 'User data successfully retrieved', success: true
+                        data: product, message: 'User data successfully retrieved', success: true
                   })
             }
             return NextResponse.json({

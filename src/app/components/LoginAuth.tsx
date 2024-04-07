@@ -24,7 +24,7 @@ const LoginAuth = () => {
 			console.log(error);
 			return;
 		} else {
-			router.push("/dasboard");
+			router.push("/user");
 		}
 	}
 
