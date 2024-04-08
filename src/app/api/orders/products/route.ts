@@ -4,8 +4,8 @@ import { NextResponse, NextRequest } from "next/server";
 
 export async function GET() {
       try{
-
-            const products = await Product.find({isValid: true})
+            const products = await Product.find({isAvail: true})
+            console.log('1st console',products)
             if(products){
                   return NextResponse.json(
                         {

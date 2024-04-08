@@ -1,10 +1,10 @@
-"use client";
+'use client'
 import React, { useEffect, useState } from "react";
 // import Data from "../Data";
 import BarChart from "../BarChart";
 import axios from "axios";
 import CardLayout from "../CardLayout";
-import productList from "@/interface/productList"
+import productList from "@/interface/productList";
 
 const Dashboard = () => {
 	const [data, setData] = useState<productList[]>([]);
@@ -42,11 +42,11 @@ const Dashboard = () => {
 				console.log("Please try again later");
 			}
 		}
-		getData()
+		getData();
 	}, []);
 	return (
 		<div className="mx-6 w-full">
-			<h3 className="my-7">DashBoard</h3>
+			<h3 className="my-7 font-semibold">DashBoard</h3>
 			<div className="flex justify-between gap-2">
 				<div className="px-32 py-8 rounded-3xl  bg-[#F3F3F3] ">
 					<h3 className="text-[#1844E1]">Rs.300</h3>{" "}
@@ -63,19 +63,19 @@ const Dashboard = () => {
 				</div>
 			</div>
 			<div className="flex justify-between items-center my-6">
-				<h4>Overview</h4>
-				<h6 className="text-primaryBgClr">DETAILS</h6>
+				<h4 className="font-semibold">Overview</h4>
+				<div className="text-primaryBgClr text-base">DETAILS</div>
 			</div>
 			<div>
-			<BarChart ChartData={userData} />
+				<BarChart ChartData={userData} />
 			</div>
 			<div className="flex justify-between my-6">
-				<h4>Order History</h4>
-				<h5 className="text-primaryBgClr">View All</h5>
+				<h4 className="font-semibold">Order History</h4>
+				<div className="text-primaryBgClr text-base">VIEW ALL</div>
 			</div>
-			<div className="grid grid-flow-row gap-3 grid-cols-3">
-				{Array.isArray(data) && data.length > 0 ?
-					data.map(
+			{Array.isArray(data) && data.length > 0 ? (
+				<div className="grid grid-flow-row gap-3 grid-cols-3">
+					{data.map(
 						(
 							{
 								quantity,
@@ -95,7 +95,9 @@ const Dashboard = () => {
 									<CardLayout
 										quantity={quantity}
 										name={name}
-										randomNo={65456141161}
+										randomNo={
+											65456141161
+										}
 										price={price}
 										commission={
 											commission
@@ -104,8 +106,13 @@ const Dashboard = () => {
 								</div>
 							);
 						}
-					): <div className="mt-10 ml-20">You have never placed any order</div>}
-			</div>
+					)}
+				</div>
+			) : (
+				<div className="mx-auto mb-20 w-fit font-serif text-sm font-semibold text-red-500">
+					You have never placed any order
+				</div>
+			)}
 		</div>
 	);
 };

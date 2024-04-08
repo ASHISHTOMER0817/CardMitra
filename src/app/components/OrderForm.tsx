@@ -6,9 +6,6 @@ const OrderForm = () => {
 			<label htmlFor="number">Order Number  <span className="text-red-500">*</span></label>
 			<input type="text" placeholder="Order Number" />
 
-			<label htmlFor="tracking">Tracking ID <span className="text-red-500">*</span></label>
-			<input type="text" placeholder="Tracking ID" />
-
 			<label htmlFor="date">Date of Delivery</label>
 			<input type="date" placeholder="DD-MM-YYYY" />
 

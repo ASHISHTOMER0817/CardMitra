@@ -1,15 +1,17 @@
 'use client'
 import React, { ReactNode, useState } from "react";
 import logo from "@/../public/logo.svg";
-import home from "@/../public/Home.svg";
 import dimBell from "@/../public/dimBell.svg";
+import home from "@/../public/Home.svg";
+import apps from "@/../public/apps.svg"
 import bell from "@/../public/bell.svg";
 import dimApps from "@/../public/dimApps.svg";
 import helpicon from "@/../public/Help.svg";
 import Dashboard from "../components/user/Dashboard";
 import SideBar from "../components/Sidebar";
 import dimHome from "@/../public/dimHome.svg"
-import apps from "@/../public/apps.svg"
+import { useContext } from "react";
+import { useGlobalState } from "./globalVariable";
 const NavigationSidebar = ({
 	Children,
 	dashboard,
@@ -24,20 +26,22 @@ const NavigationSidebar = ({
 	help: ReactNode;
 }) => {
 	const [main, setMain] = useState<ReactNode>(<Dashboard />);
+	const {reload, setReload} = useGlobalState()
 
 	const navigationBar = [true, false, false, false]
 	const [navigationbar, setNavigationbar] = useState(navigationBar);
 
-  // Function to change navigation state based on position
-  const changeState = (change: React.ReactNode, position: number) => {
-    setMain(change); // Update main content state
+  const changeState = (change: React.ReactNode, toggle?:string) => {
+    setMain(change)
+    if (toggle && toggle === 're-render') {
+	setReload(!reload);
+    }
 
-    // Update navigationbar state based on position
-    const updatedNavigationbar = navigationBar.map((item, index) =>
-      index === position ? true : false
-    );
-    setNavigationbar(updatedNavigationbar);
-  };
+//     const updatedNavigationbar = navigationBar.map((item, index) =>
+//       index === position ? true : false
+//     );
+//     setNavigationbar(updatedNavigationbar);
+};
 
 
 	return (
@@ -55,25 +59,31 @@ const NavigationSidebar = ({
 					}}
 				/>
 				<SideBar
-					img={navigationbar[0]? home : dimHome}
+					img={
+						// navigationbar[0]? home : 
+						dimHome}
 					tab={"Dashboard"}
 					heading={"MENU"}
 					classList={"mt-3"}
-					changeState={() => changeState(dashboard, 0)}
+					changeState={() => changeState(dashboard)}
 				/>
 				<SideBar
-					img={navigationbar[1]? apps : dimApps}
+					img={
+						// navigationbar[1]? apps :
+						 dimApps}
 					tab={"Deals"}
 					heading={""}
 					classList={""}
-					changeState={() => changeState(deals, 1)}
+					changeState={() => changeState(deals, 're-render')}
 				/>
 				<SideBar
-					img={navigationbar[2]? bell : dimBell}
+					img={
+						// navigationbar[2]? bell:
+						 dimBell}
 					tab={"Notifications"}
 					heading={""}
 					classList={""}
-					changeState={() => changeState(notification, 2)}
+					changeState={() => changeState(notification)}
 				/>
 				<SideBar
 					img={helpicon}

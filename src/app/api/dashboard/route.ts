@@ -14,7 +14,6 @@ export async function GET(request: NextRequest) {
             const user = await User.findOne({ email }).populate({path:'products', options:{limit:3}}).exec()
             console.log('2', user)
             if (user) {
-                  
                   return NextResponse.json({
                         data: user, message: 'User data successfully retrieved', success: true
                   })

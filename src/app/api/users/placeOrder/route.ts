@@ -7,8 +7,11 @@ Database()
 export async function POST(request: NextRequest) {
 
       try {
-            const userId = request.json()
-            const product = await Product.findById({userId})
+            const userId = await request.json()
+            const objId = userId.objectid
+            // const objectid = userId.toString()
+            console.log('1st console', objId)
+            const product = await Product.findOne({ _id: objId })
             console.log('2', product)
             if (product) {
                   return NextResponse.json({

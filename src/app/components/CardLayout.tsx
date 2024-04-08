@@ -24,9 +24,9 @@ const CardLayout = ({
 	commission: number;
 }) => {
 	return (
-		<div className="p-3 border rounded-3xl border-gray-400">
+		<div className="p-7 border rounded-2xl border-gray-400">
 			<div className="flex items-center mb-4 gap-4">
-				<div className="mr-auto px-[10px] py-[5px] text-sm rounded-3xl border text-center bg-gray-300">
+				<div className="mr-auto px-[10px] py-[5px] text-sm rounded-3xl border text-center bg-gray-200">
 					Quantity: {quantity}
 				</div>
 				{image}
@@ -41,7 +41,7 @@ const CardLayout = ({
 				/>
 				<section className="flex flex-col gap-4 justify-around">
 					<div className="text-wrap">
-						<div className="font-semibold">
+						<div className="font-semibold text-base">
 							{" "}
 							{name}
 						</div>
@@ -51,14 +51,14 @@ const CardLayout = ({
 					</div>
 					<div className=" flex">
 						<div>
-							<div className="text-nowrap text-primaryBgClr">
+							<div className="text-nowrap font-bold text-primaryBgClr">
 								Rs. {price}
 							</div>
 							<div>Price/Unit</div>
 						</div>
 						<hr className="rotate-90 my-5 mx-4 w-[20px] h-3px" />
 						<div>
-							<div className="font-semibold text-red-500">
+							<div className="font-bold text-red-500">
 								Rs. {commission}
 							</div>
 							<div>Commission</div>
