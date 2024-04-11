@@ -16,29 +16,29 @@ const SingUpAuth = () => {
 		try {
 			// Validate form inputs
 
-			if (name.length < 5) {
-				// Handle name validation error
-				setError("Name must be at least 5 characters long");
-				return;
-			}
-			if (number.length < 10) {
-				// Handle phone number validation error
-				setError(
-					"Phone number must be at least 10 digits long"
-				);
-				return;
-			}
-			if (
-				!/[a-z]/.test(password) ||
-				!/[A-Z]/.test(password) ||
-				!/\d/.test(password)
-			) {
-				// Handle password validation error
-				setError(
-					"Password must contain at least one lowercase letter, one uppercase letter, and one digit"
-				);
-				return;
-			}
+			// if (name.length < 5) {
+			// 	// Handle name validation error
+			// 	setError("Name must be at least 5 characters long");
+			// 	return;
+			// }
+			// if (number.length < 10) {
+			// 	// Handle phone number validation error
+			// 	setError(
+			// 		"Phone number must be at least 10 digits long"
+			// 	);
+			// 	return;
+			// }
+			// if (
+			// 	!/[a-z]/.test(password) ||
+			// 	!/[A-Z]/.test(password) ||
+			// 	!/\d/.test(password)
+			// ) {
+			// 	// Handle password validation error
+			// 	setError(
+			// 		"Password must contain at least one lowercase letter, one uppercase letter, and one digit"
+			// 	);
+			// 	return;
+			// }
 
 			e.preventDefault()
 			const response = await axios.post("/api/users/signup", {

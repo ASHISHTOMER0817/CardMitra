@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import Database from "@/database/database";
-import Product from "@/models/productModel";
+import Product, { IProduct } from "@/models/productModel";
 
 
 Database()
@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
             const objId = userId.objectid
             // const objectid = userId.toString()
             console.log('1st console', objId)
-            const product = await Product.findOne({ _id: objId })
+            const product = await Product.findOne<IProduct>({ _id: objId })
             console.log('2', product)
             if (product) {
                   return NextResponse.json({

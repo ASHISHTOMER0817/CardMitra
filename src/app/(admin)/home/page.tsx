@@ -1,6 +1,6 @@
 import React from "react";
-import NavigationSidebar from "../components/NavigationSidebar";
-import SideBar from "../components/Sidebar";
+import NavigationSidebar from "../../components/NavigationSidebar";
+import SideBar from "../../components/Sidebar";
 import heroicon from "@/../public/heroicon.svg";
 import Heroicon from "@/app/components/Heroicon";
 const Admin = () => {

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
@@ -8,12 +8,11 @@ import cards from "@/../public/cards.svg";
 import platform from "@/../public/platform.svg";
 import Link from "next/link";
 import OrderForm from "@/app/components/OrderForm";
-import phoneImage from "@/../public/phoneImage.jpg"
+import phoneImage from "@/../public/phoneImage.jpg";
 // import phoneImage from "@/../public/phoneImage.jpg";
 // import CardLayoutForDeals from "@/app/components/cardLayoutForDeals";
 import NavigationSidebar from "@/app/components/NavigationSidebar";
 import Dashboard from "@/app/components/user/Dashboard";
-import Deals from "@/app/components/Deals";
 import Help from "@/app/components/help";
 import Notification from "@/app/components/Notification";
 import productList from "@/interface/productList";
@@ -24,10 +23,11 @@ import CardLayoutForDeals from "@/app/components/CardLayoutForDeals";
 const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 	const [data, setData] = useState<productList>();
 	const [productList, setProductList] = useState<productList[]>([]);
+	const objectid = params.placeorder;
+
 	useEffect(() => {
 		async function getData() {
 			try {
-				const objectid = params.placeorder;
 				const response = await axios.post(
 					"/api/users/placeOrder",
 					{ objectid }
@@ -41,20 +41,18 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 		getData();
 	}, [params]);
 
-
-
-	// useEffect(() => {
-	// 	async function similarProducts() {
-	// 		try {
-	// 			const response = await axios.get("/api/dashboard");
-	// 			setProductList(response.data.data);
-	// 			console.log(response.data.data);
-	// 		} catch (error) {
-	// 			console.log(error);
-	// 		}
-	// 	}
-	// 	similarProducts();
-	// }, []);
+	useEffect(() => {
+		async function similarProducts() {
+			try {
+				const response = await axios.get("/api/users/similarProducts");
+				setProductList(response.data.data);
+				console.log(response.data.data);
+			} catch (error) {
+				console.log(error);
+			}
+		}
+		similarProducts();
+	}, []);
 
 	const placeOrder = () => {};
 	return (
@@ -65,12 +63,14 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 				notification={<Notification />}
 				help={<Help />}
 			/>{" "} */}
-			<div className="ml-32 mt-10">
-				<Image
-					className="mb-6 w-6 h-6"
-					src={arrowleft}
-					alt={""}
-				/>
+			<div className="mt-16 mx-32 w-full">
+				<Link href={"/deals"}>
+					<Image
+						className="mb-6 w-6 h-6"
+						src={arrowleft}
+						alt={""}
+					/>
+				</Link>
 				{data && (
 					<section className="flex items-start text-sm justify-around">
 						<div className="flex flex-col items-start gap-10 justify-around">
@@ -78,9 +78,7 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 								<div className="flex gap-4 justify-center items-start">
 									<Image
 										className=" w-40"
-										src={
-											phoneImage
-										}
+										src={phoneImage}
 										alt={""}
 									/>
 									<div className="flex flex-col gap-5 justify-center">
@@ -184,7 +182,7 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 								Order Form
 							</div>
 							<hr className="my-5" />
-							<OrderForm />
+							<OrderForm objectId={objectid} />
 						</div>
 					</section>
 				)}
@@ -256,7 +254,7 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 									);
 								}
 							)} */}
-						{/* <CardLayoutForDeals data={productList} /> */}
+						<CardLayoutForDeals data={productList} />
 					</div>
 				</section>
 			</div>

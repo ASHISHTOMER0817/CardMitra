@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+// import Product from "./productModel";
 
 const notificationsSchema = new mongoose.Schema({
 	message: {
@@ -10,6 +10,21 @@ const notificationsSchema = new mongoose.Schema({
 		}
 	}
 })
+
+// const ordersSchema = new mongoose.Schema({
+// 	order: {
+// 		type: mongoose.Schema.Types.ObjectId,
+// 		ref: "products"
+// 	},
+// 	orderNumber: {
+// 		type: String,
+// 		required: true
+// 	},
+// 	deliveryDate: {
+// 		type: Date,
+// 		format: Date
+// 	}
+// })
 
 const userSchema = new mongoose.Schema({
 	name: {
@@ -29,31 +44,42 @@ const userSchema = new mongoose.Schema({
 		type: String,
 	},
 	role: {
-	  type: String,
-	  default: "user",
+		type: String,
+		default: "user",
 	},
-	orders: [{
-	  type: mongoose.Schema.Types.ObjectId,
-	  ref: "products"
-
-	}],
+	orders: [
+		{
+			order: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "Product"
+			},
+			orderNumber: {
+				type: String,
+				required: true
+			},
+			deliveryDate: {
+				type: Date,
+				format: Date
+			}
+		}
+	],
 	delivered: [{
-	  type: mongoose.Schema.Types.ObjectId,
-	  ref: "products"
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Product"
 	}],
 
-	notification:[{
-	  type:mongoose.Schema.Types.ObjectId,
-	  ref:"notifications"
+	notification: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "notifications"
 	}],
 
 	isApprove: {
-	  type: Boolean,
-	  default: false,
+		type: Boolean,
+		default: false,
 	},
 	createdAt: {
-	  type: Date,
-	  default: Date.now,
+		type: Date,
+		default: Date.now,
 	},
 
 	resetPasswordToken: String,

@@ -1,11 +1,11 @@
 import { cookies } from 'next/headers'
 import jwt from "jsonwebtoken"
 
-export default function Page() {
+export default function GetToken() {
       const cookieStore = cookies()
-      const cookie = cookieStore.get('token')?.value!
-      const decodedToken: any = jwt.verify(cookie, process.env.SECRET_KEY!)
-      console.log(decodedToken)
-      const { email } = decodedToken;
+      const cookie = cookieStore.get('MyToken')?.value!
+      const decodedToken: any = jwt.verify(cookie, process.env.TOKEN_SECRET_KEY!)
+      // console.log(decodedToken)
+      const { email } = decodedToken.user;
       return email;
 }

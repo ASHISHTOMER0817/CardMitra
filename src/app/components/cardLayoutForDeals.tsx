@@ -25,14 +25,14 @@ const CardLayoutForDeals = ({ data }: { data: productList[] }) => {
 									key={index}
 									image={
 										<>
-											<IoHeartOutline className="text-red-500 border rounded-full p-2 w-10 h-10" />
-											<CiShoppingCart className="border rounded-full p-2 w-10 h-10" />
+											<IoHeartOutline className="text-red-500 border border-gray-400 rounded-full p-2 w-10 h-10" />
+											<CiShoppingCart className="border border-gray-400 rounded-full p-2 w-10 h-10" />
 										</>
 									}
 									placeOrder={
 										<button className="bg-primaryBgClr p-[14px] font-semibold text-base   rounded-3xl border text-center w-auto text-white">
 											<Link
-												href={`/user/${_id.toString()}`}
+												href={`/deals/${_id.toString()}`}
 											>
 												Fulfill
 												Order

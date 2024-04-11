@@ -1,49 +1,27 @@
-'use client'
+"use client";
 import React, { ReactNode, useState } from "react";
 import logo from "@/../public/logo.svg";
 import dimBell from "@/../public/dimBell.svg";
 import home from "@/../public/Home.svg";
-import apps from "@/../public/apps.svg"
+import apps from "@/../public/apps.svg";
 import bell from "@/../public/bell.svg";
 import dimApps from "@/../public/dimApps.svg";
 import helpicon from "@/../public/Help.svg";
 import Dashboard from "../components/user/Dashboard";
 import SideBar from "../components/Sidebar";
-import dimHome from "@/../public/dimHome.svg"
+import dimHome from "@/../public/dimHome.svg";
 import { useContext } from "react";
 import { useGlobalState } from "./globalVariable";
 const NavigationSidebar = ({
 	Children,
-	dashboard,
-	deals,
-	notification,
-	help,
+	icon,
+	main
 }: {
 	Children?: ReactNode;
-	dashboard: ReactNode;
-	deals: ReactNode;
-	notification: ReactNode;
-	help: ReactNode;
+	icon:string[],
+	main:ReactNode
 }) => {
-	const [main, setMain] = useState<ReactNode>(<Dashboard />);
-	const {reload, setReload} = useGlobalState()
-
-	const navigationBar = [true, false, false, false]
-	const [navigationbar, setNavigationbar] = useState(navigationBar);
-
-  const changeState = (change: React.ReactNode, toggle?:string) => {
-    setMain(change)
-    if (toggle && toggle === 're-render') {
-	setReload(!reload);
-    }
-
-//     const updatedNavigationbar = navigationBar.map((item, index) =>
-//       index === position ? true : false
-//     );
-//     setNavigationbar(updatedNavigationbar);
-};
-
-
+	 
 	return (
 		<div className="flex items-start">
 			<section className=" px-6 py-6 gap-6 flex flex-col min-h-screen items-start top-0 justify-between border-r-[5px] border-r-gray-300 sticky">
@@ -52,50 +30,46 @@ const NavigationSidebar = ({
 					tab={""}
 					heading={""}
 					classList={""}
-					changeState={function (): void {
-						throw new Error(
-							"Function not implemented."
-						);
-					}}
+					changeState={'/'}
 				/>
 				<SideBar
 					img={
-						// navigationbar[0]? home : 
-						dimHome}
+						icon[0]
+					}
 					tab={"Dashboard"}
 					heading={"MENU"}
 					classList={"mt-3"}
-					changeState={() => changeState(dashboard)}
+					changeState={'/dashboard'}
 				/>
 				<SideBar
 					img={
-						// navigationbar[1]? apps :
-						 dimApps}
+						icon[1]
+					}
 					tab={"Deals"}
 					heading={""}
 					classList={""}
-					changeState={() => changeState(deals, 're-render')}
+					changeState={'/deals'}
 				/>
 				<SideBar
 					img={
-						// navigationbar[2]? bell:
-						 dimBell}
+						icon[2]
+					}
 					tab={"Notifications"}
 					heading={""}
 					classList={""}
-					changeState={() => changeState(notification)}
+					changeState={'/notifications'}
 				/>
 				<SideBar
-					img={helpicon}
+					img={icon[3]}
 					tab={"Chat support"}
 					heading={"SUPPORT"}
 					classList={"mt-auto"}
-					changeState={() => help}
+					changeState={'/help'}
 				/>
 				{Children}
 			</section>
 			{main}
-		</div>
+			</div>
 	);
 };
 

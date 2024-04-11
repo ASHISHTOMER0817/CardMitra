@@ -1,11 +1,18 @@
 import Product from "@/models/productModel";
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import Database from "@/database/database";
+
+
 
 Database()
 export async function GET() {
+
+
+
+
+      // { IProduct }
       try{
-            const products = await Product.find({isAvail: true})
+            const products = await Product.find({isAvail: true}).limit(3)
             console.log('1st console',products)
             if(products){
                   return NextResponse.json(

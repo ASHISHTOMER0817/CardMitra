@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"; 
 
 const productSchema = new mongoose.Schema({
       name: {
@@ -47,5 +47,25 @@ const productSchema = new mongoose.Schema({
 
 });
 
-const Product = mongoose.models.products || mongoose.model("Product", productSchema);
-export default Product;
+// export interface IProduct extends Document {
+//       name: string;
+//       address: string;
+//       price: number;
+//       productLink: string;
+//       requirement: number;
+//       isAvail: boolean;
+//       cards?: string;
+//       commission?: number;
+//     }
+    
+//     let Product: Model<IProduct>;
+    
+//     if (mongoose.models.Products) {
+//       Product = mongoose.model<IProduct>('Products');
+//     } else {
+//       Product = mongoose.model<IProduct>('Products', productSchema);
+//     }
+
+    const Product = mongoose.models.products || mongoose.model("products", productSchema)
+    
+    export default Product;

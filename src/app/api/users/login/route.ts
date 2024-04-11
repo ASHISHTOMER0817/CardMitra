@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
                   console.log("NOT EXIST",user, verifyPassword)
                   const userDetails = jwt.sign(reqBody, process.env.TOKEN_SECRET_KEY!, { expiresIn: "7d" })
                   const days = 7 * 24 * 60 * 60 * 1000
-                  cookies().set('MyToken', userDetails, { expires: Date.now() + days })
+                  cookies().set('MyToken', userDetails, {expires: Date.now() + days})
                   return NextResponse.json({
                         message: "Logged In successfully", success: true
                   })
