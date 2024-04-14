@@ -4,10 +4,19 @@ import React, { useEffect, useState } from "react";
 import BarChart from "@/app/components/BarChart";
 import axios from "axios";
 import CardLayout from "@/app/components/CardLayout";
-import productList from "@/interface/productList";
+import OrderHistory from "@/app/components/OrderHistory";
+// import productList from "@/interface/productList";
 
+interface orderHistory {
+	order: {
+		name: string;
+		price: number;
+		commission: number;
+	};
+	quantity: number;
+}
 const Dashboard = () => {
-	const [data, setData] = useState<productList[]>([]);
+	const [data, setData] = useState([]);
 	const [userData, setUserData] = useState({
 		labels: [
 			"JAN",
@@ -39,7 +48,7 @@ const Dashboard = () => {
 				const response = await axios.get("/api/dashboard");
 				console.log(response.data.data);
 				setData(response.data.data);
-				console.log(response.data.message)
+				console.log(response.data.message);
 			} catch {
 				console.log("Please try again later");
 			}
@@ -80,40 +89,21 @@ const Dashboard = () => {
 				</div>
 			</div>
 			{/* {  */}
-			{/* <div className="grid grid-flow-row gap-3 grid-cols-3">
-				{data.map(
-					(
-						{
-							quantity,
-							name,
-							price,
-							commission,
-						}: {
-							quantity: number;
-							name: string;
-							price: number;
-							commission: number;
-						},
-						index: number
-					) => {
-						return (
-							<div key={index}>
-								<CardLayout
-									quantity={quantity}
-									name={name}
-									randomNo={65456141161}
-									price={price}
-									commission={commission}
-								/>
-							</div>
-						);
-					}
-				)}
-			</div> */}
+			<div className="grid grid-flow-row gap-3 grid-cols-3">
+				{/* {data.map(({ quantity, order }, index) => (
+					<div key={index}>
+						<CardLayout
+							quantity={quantity}
+							name={order.name}
+							randomNo={65456141161}
+							price={order.price}
+							commission={order.commission}
+						/>
+					</div>
+				))} */}
 
-
-
-
+				<OrderHistory data={data}/>
+			</div>
 
 			{/* <div className="mx-auto mb-20 w-fit font-serif text-sm font-semibold text-red-500">
 					You have never placed any order

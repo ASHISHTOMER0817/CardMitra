@@ -1,6 +1,7 @@
-import Product from "@/models/productModel";
-import { NextResponse, NextRequest } from "next/server";
+
+import { NextResponse } from "next/server";
 import Database from "@/database/database";
+import { Product } from "@/models/userModel";
 
 Database()
 export async function GET() {

@@ -4,6 +4,7 @@ import { User } from "@/models/userModel";
 import GetToken from "@/app/components/getToken";
 import mongoose from "mongoose";
 
+Database()
 export const POST = async(request: NextRequest)=> {
 
       try{

@@ -60,6 +60,15 @@ const NavigationSidebar = ({
 					changeState={'/notifications'}
 				/>
 				<SideBar
+					img={
+						icon[2]
+					}
+					tab={"Order History"}
+					heading={""}
+					classList={""}
+					changeState={'/OrderHistory'}
+				/>
+				<SideBar
 					img={icon[3]}
 					tab={"Chat support"}
 					heading={"SUPPORT"}

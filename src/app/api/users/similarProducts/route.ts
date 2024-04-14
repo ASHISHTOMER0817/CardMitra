@@ -1,6 +1,7 @@
-import Product from "@/models/productModel";
+
 import { NextResponse } from "next/server";
 import Database from "@/database/database";
+import { Product } from "@/models/userModel";
 
 
 

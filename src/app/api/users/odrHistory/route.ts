@@ -12,7 +12,7 @@ export async function GET() {
       try {
             const email = getToken()
             console.log('1', email)
-            const user = await User.findOne({ email }).populate({ path: 'orders.order', model: 'products', options: { limit: 3 } }).exec()
+            const user = await User.findOne({ email }).populate({ path: 'orders.order', model: 'products' }).exec()
             console.log(user)
             if (user) {
                   return NextResponse.json({
