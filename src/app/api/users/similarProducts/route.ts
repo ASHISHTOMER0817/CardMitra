@@ -7,10 +7,6 @@ import { Product } from "@/models/userModel";
 
 Database()
 export async function GET() {
-
-
-
-
       // { IProduct }
       try{
             const products = await Product.find({isAvail: true}).limit(3)

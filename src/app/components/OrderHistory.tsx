@@ -1,34 +1,41 @@
-import React, { useState } from 'react'
-import CardLayout from './CardLayout';
+import React, { useState } from "react";
+import CardLayout from "./CardLayout";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 
 interface orderHistory {
 	order: {
-		name: string;
-		price: number;
-		commission: number;
+		name: string
+		price: number
+		commission: number
 	};
-	quantity: number;
+	// quantity: number;
+	orderNumber:string
 }
 
-const OrderHistory = ({data}:{data:orderHistory[]}) => {
-      // const [data, setData] = useState<orderHistory[]>([]);
-
-  return (
-    <div>
-      {data.map(({ quantity, order }, index) => (
-					<div key={index}>
+const OrderHistory = ({ data }: { data: orderHistory[] }) => {
+	const router = useRouter();
+	// function submitOTP(submitOTP:string) {
+	// 	router.push(`/odrHistory/${submitOTP}`);
+	// }
+	return (
+		<>
+			{data.map(({ order, orderNumber}, index) => {
+				return (
+					<Link key={index} href={`/odrHistory/${orderNumber}`}>
 						<CardLayout
-							quantity={quantity}
+							quantity={0}
 							name={order.name}
 							randomNo={65456141161}
 							price={order.price}
 							commission={order.commission}
 						/>
-					</div>
-				))}
-    </div>
-  )
-}
+					</Link>
+				);
+			})}
+		</>
+	);
+};
 
 export default OrderHistory;

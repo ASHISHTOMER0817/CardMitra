@@ -66,7 +66,7 @@ const NavigationSidebar = ({
 					tab={"Order History"}
 					heading={""}
 					classList={""}
-					changeState={'/OrderHistory'}
+					changeState={'/odrHistory'}
 				/>
 				<SideBar
 					img={icon[3]}

@@ -1,9 +1,10 @@
+'use client'
 import axios from "axios";
 import React, { useState, ChangeEvent, FormEvent } from "react";
 
 const OrderForm = ({ objectId }:{objectId:string}) => {
 	const [orderNumber, setOrderNumber] = useState("");
-	const [deliveryDate, setDeliveryDate] = useState("");
+	const [deliveryDate, setDeliveryDate] = useState(Date);
 	const [address, setAddress] = useState("");
 
 	const handleOrderNumberChange = (e: ChangeEvent<HTMLInputElement>) => {

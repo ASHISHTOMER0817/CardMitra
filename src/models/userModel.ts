@@ -59,8 +59,16 @@ const userSchema = new mongoose.Schema({
 			},
 			deliveryDate: {
 				type: Date,
-				format: Date
+				format:Date
+			},
+			otp:{
+				default: false,
+				type: Boolean
+			},
+			trackingId:{
+				type:String,
 			}
+
 		}
 	],
 	delivered: [{
