@@ -1,17 +1,17 @@
-"use client";
+'use client'
 import React, { ReactNode, useState } from "react";
 import logo from "@/../public/logo.svg";
-import dimBell from "@/../public/dimBell.svg";
-import home from "@/../public/Home.svg";
-import apps from "@/../public/apps.svg";
-import bell from "@/../public/bell.svg";
-import dimApps from "@/../public/dimApps.svg";
-import helpicon from "@/../public/Help.svg";
-import Dashboard from "../components/user/Dashboard";
+// import dimBell from "@/../public/dimBell.svg";
+// import home from "@/../public/Home.svg";
+// import apps from "@/../public/apps.svg";
+// import bell from "@/../public/bell.svg";
+// import dimApps from "@/../public/dimApps.svg";
+// import helpicon from "@/../public/Help.svg";
+// import Dashboard from "../components/user/Dashboard";
 import SideBar from "../components/Sidebar";
-import dimHome from "@/../public/dimHome.svg";
-import { useContext } from "react";
-import { useGlobalState } from "./globalVariable";
+// import dimHome from "@/../public/dimHome.svg";
+// import { useContext } from "react";
+// import { useGlobalState } from "./globalVariable";
 const NavigationSidebar = ({
 	Children,
 	icon,
@@ -61,7 +61,7 @@ const NavigationSidebar = ({
 				/>
 				<SideBar
 					img={
-						icon[2]
+						icon[3]
 					}
 					tab={"Order History"}
 					heading={""}
@@ -69,7 +69,7 @@ const NavigationSidebar = ({
 					changeState={'/odrHistory'}
 				/>
 				<SideBar
-					img={icon[3]}
+					img={icon[4]}
 					tab={"Chat support"}
 					heading={"SUPPORT"}
 					classList={"mt-auto"}

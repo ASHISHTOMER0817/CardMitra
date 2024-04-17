@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
@@ -21,7 +21,6 @@ import { CiShoppingCart } from "react-icons/ci";
 import { IoHeartOutline } from "react-icons/io5";
 import CardLayoutForDeals from "@/app/components/CardLayoutForDeals";
 import ProductDetails from "@/app/components/ProductDetails";
-// import TestProductDetails from "@/app/components/TestProductDetails";
 const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 	const [data, setData] = useState<productList>();
 	const [productList, setProductList] = useState<productList[]>([]);

@@ -6,6 +6,7 @@ import dimHome from "@/../public/dimHome.svg";
 import dimBell from "@/../public/dimBell.svg";
 import dimHelp from "@/../public/dimHelp.svg";
 import Apps from "@/../public/apps.svg";
+import OdrHistory from "@/../public/odrHistory.svg";
 // import { GlobalStateProvider } from "./components/globalVariable";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -24,14 +25,17 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={inter.className}>
 				{/* <GlobalStateProvider>{children}</GlobalStateProvider> */}
-				
+
 				<NavigationSidebar
-				icon={[dimHome, Apps, dimBell, dimHelp]}
-				main={
-					children
-				}
-			/>
-				
+					icon={[
+						dimHome,
+						Apps,
+						dimBell,
+						OdrHistory,
+						dimHelp,
+					]}
+					main={children}
+				/>
 			</body>
 		</html>
 	);

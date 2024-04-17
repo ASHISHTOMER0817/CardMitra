@@ -1,20 +1,10 @@
-"use client";
+'use client'
 import React, { useEffect, useState } from "react";
-// import Data from "../Data";
 import BarChart from "@/app/components/BarChart";
 import axios from "axios";
-import CardLayout from "@/app/components/CardLayout";
 import OrderHistory from "@/app/components/OrderHistory";
-// import productList from "@/interface/productList";
 
-interface orderHistory {
-	order: {
-		name: string;
-		price: number;
-		commission: number;
-	};
-	quantity: number;
-}
+
 const Dashboard = () => {
 	const [data, setData] = useState([]);
 	const [userData, setUserData] = useState({
@@ -88,19 +78,7 @@ const Dashboard = () => {
 					VIEW ALL
 				</div>
 			</div>
-			{/* {  */}
 			<div className="grid grid-flow-row gap-3 grid-cols-3">
-				{/* {data.map(({ quantity, order }, index) => (
-					<div key={index}>
-						<CardLayout
-							quantity={quantity}
-							name={order.name}
-							randomNo={65456141161}
-							price={order.price}
-							commission={order.commission}
-						/>
-					</div>
-				))} */}
 
 				<OrderHistory data={data}/>
 			</div>

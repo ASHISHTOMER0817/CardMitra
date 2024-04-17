@@ -11,17 +11,18 @@ export async function POST(request: NextRequest) {
       try {
             const reqBody = await request.json()
             const { email, password } = reqBody.user;
-            console.log(email, password)
+            // console.log(email, password)
             const user = await User.findOne({ email })
             const existingPassword = user.password
 
             //compare password
             const verifyPassword = await bcrypt.compare(password, existingPassword)
-
+            const tokenData = {email, password, userId:user._id}
+            console.log(tokenData)
             //check if user actually exist 
             if (user && verifyPassword) {
                   console.log("NOT EXIST",user, verifyPassword)
-                  const userDetails = jwt.sign(reqBody, process.env.TOKEN_SECRET_KEY!, { expiresIn: "7d" })
+                  const userDetails = jwt.sign(tokenData, process.env.TOKEN_SECRET_KEY!, { expiresIn: "7d" })
                   const days = 7 * 24 * 60 * 60 * 1000
                   cookies().set('MyToken', userDetails, {expires: Date.now() + days})
                   return NextResponse.json({

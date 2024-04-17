@@ -7,10 +7,10 @@ const SingUpAuth = () => {
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [number, setNumber] = useState("");
+	const [contact, setContact] = useState("");
 	const [error, setError] = useState("");
 
-	const user = { name, email, password, number };
+	const user = { name, email, password, contact };
 
 	async function sendData(e:FormEvent<HTMLFormElement>) {
 		try {
@@ -21,7 +21,7 @@ const SingUpAuth = () => {
 			// 	setError("Name must be at least 5 characters long");
 			// 	return;
 			// }
-			// if (number.length < 10) {
+			// if (contact.length < 10) {
 			// 	// Handle phone number validation error
 			// 	setError(
 			// 		"Phone number must be at least 10 digits long"
@@ -77,9 +77,9 @@ const SingUpAuth = () => {
 			/>
 			<InputSpace
 				type="text"
-				value={number}
+				value={contact}
 				placeholder="Phone Number"
-				onChange={(value) => setNumber(value)}
+				onChange={(value) => setContact(value)}
 			/>
 			<InputSpace
 				type="password"

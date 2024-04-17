@@ -13,6 +13,7 @@ const CardLayout = ({
 	randomNo,
 	price,
 	commission,
+	classList
 }: {
 	image?: ReactNode;
 	placeOrder?: ReactNode;
@@ -22,9 +23,10 @@ const CardLayout = ({
 	randomNo: number;
 	price: number;
 	commission: number;
+	classList?:string
 }) => {
 	return (
-		<div className="p-7 border rounded-2xl border-gray-400">
+		<div className={`p-7 border rounded-2xl border-gray-400 ${classList}`}>
 			<div className="flex items-center mb-4 gap-4">
 				<div className="mr-auto px-[10px] py-[5px] text-sm rounded-3xl border text-center bg-gray-200">
 					Quantity: {quantity}

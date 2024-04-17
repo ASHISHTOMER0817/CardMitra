@@ -36,8 +36,6 @@ const OrderForm = ({ objectId }:{objectId:string}) => {
 			console.log("Failed to perform operation, please try again later")
 		}
 		
-		// Replace the console.log with your actual backend API call using fetch or axios
-
 		// Reset the form fields after submission (optional)
 		setOrderNumber("");
 		setDeliveryDate("");

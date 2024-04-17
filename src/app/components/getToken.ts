@@ -5,7 +5,7 @@ export default function GetToken() {
       const cookieStore = cookies()
       const cookie = cookieStore.get('MyToken')?.value!
       const decodedToken: any = jwt.verify(cookie, process.env.TOKEN_SECRET_KEY!)
-      // console.log(decodedToken)
-      const { email } = decodedToken.user;
-      return email;
+      console.log(decodedToken)
+      const { userId } = decodedToken;
+      return userId;
 }

@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-// import Product from "./productModel";
 
 const notificationsSchema = new mongoose.Schema({
 	message: {
@@ -11,20 +10,54 @@ const notificationsSchema = new mongoose.Schema({
 	}
 })
 
-// const ordersSchema = new mongoose.Schema({
-// 	order: {
-// 		type: mongoose.Schema.Types.ObjectId,
-// 		ref: "products"
-// 	},
-// 	orderNumber: {
-// 		type: String,
-// 		required: true
-// 	},
-// 	deliveryDate: {
-// 		type: Date,
-// 		format: Date
-// 	}
-// })
+const orderSchema = new mongoose.Schema({
+	product: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "products"
+	},
+	user: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "users"
+	},
+	orderId: {
+		type: String,
+	},
+	deliveryDate: {
+		type: Date,
+		format: Date
+	},
+	otp: {
+		default: false,
+		type: Boolean
+	},
+	delivered: {
+		type: Boolean,
+		default: false
+	}
+})
+
+const otpSchema = new mongoose.Schema({
+	orderObjectId:{
+		type:mongoose.Schema.Types.ObjectId,
+		ref: "orders"
+	},
+	contact: {
+		type: String,
+		unique: true
+	},
+	userObjectId: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "users"
+	},
+	otp: {
+		type: Number,
+		required: true
+	},
+	trackingId: {
+		type: String,
+	},
+})
+
 
 const userSchema = new mongoose.Schema({
 	name: {
@@ -36,7 +69,7 @@ const userSchema = new mongoose.Schema({
 		required: true,
 		unique: true,
 	},
-	number: {
+	contact: {
 		type: String,
 		unique: true
 	},
@@ -47,34 +80,35 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		default: "user",
 	},
-	orders: [
-		{
-			order: {
-				type: mongoose.Schema.Types.ObjectId,
-				ref: "products"
-			},
-			orderNumber: {
-				type: String,
-				required: true
-			},
-			deliveryDate: {
-				type: Date,
-				format:Date
-			},
-			otp:{
-				default: false,
-				type: Boolean
-			},
-			trackingId:{
-				type:String,
-			}
+	// orders: [
+	// 	{
+	// 		order: {
+	// 			type: mongoose.Schema.Types.ObjectId,
+	// 			ref: "products"
+	// 		},
+	// 		orderNumber: {
+	// 			type: String,
+	// 			required: true
+	// 		},
+	// 		deliveryDate: {
+	// 			type: Date,
+	// 			format:Date
+	// 		},
+	// 		otp:{
+	// 			default: false,
+	// 			type: Boolean
+	// 		},
+	// 		trackingId:{
+	// 			type:String,
+	// 		}
 
-		}
-	],
-	delivered: [{
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "products"
-	}],
+	// 	}
+	// ],
+
+	// delivered: [{
+	// 	type: mongoose.Schema.Types.ObjectId,
+	// 	ref: "products"
+	// }],
 
 	notification: [{
 		type: mongoose.Schema.Types.ObjectId,
@@ -141,28 +175,9 @@ const productSchema = new mongoose.Schema({
 
 });
 
-// export interface IProduct extends Document {
-//       name: string;
-//       address: string;
-//       price: number;
-//       productLink: string;
-//       requirement: number;
-//       isAvail: boolean;
-//       cards?: string;
-//       commission?: number;
-//     }
-
-//     let Product: Model<IProduct>;
-
-//     if (mongoose.models.Products) {
-//       Product = mongoose.model<IProduct>('Products');
-//     } else {
-//       Product = mongoose.model<IProduct>('Products', productSchema);
-//     }
-
-
 const Product = mongoose.models.products || mongoose.model("products", productSchema)
-
+const Otp = mongoose.models.otps || mongoose.model("otps", otpSchema)
+const Order = mongoose.models.orders || mongoose.model("orders", orderSchema)
 const User = mongoose.models.users || mongoose.model("users", userSchema);
 const Notifications = mongoose.models.notifications || mongoose.model("notifications", notificationsSchema)
-export { User, Notifications, Product }
+export { User, Notifications, Product, Otp, Order }

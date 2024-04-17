@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
-import { User } from "@/models/userModel";
+import { Order, User } from "@/models/userModel";
 import Database from "@/database/database";
 import getToken from "@/app/components/getToken"
 import { Product } from "@/models/userModel";
+import mongoose from "mongoose";
 
 
 
@@ -10,13 +11,16 @@ Database()
 export async function GET() {
 
       try {
-            const email = getToken()
-            console.log('1', email)
-            const user = await User.findOne({ email }).populate({ path: 'orders.order', model: 'products', options: { limit: 3 } }).exec()
-            console.log(user)
+            const userId = getToken()
+            console.log('1', userId)
+            // Convert the userId string to a mongoose.Schema.Types.ObjectId object
+            const userObjectId = new mongoose.Types.ObjectId(userId);
+
+            const user = await Order.find({ user: userObjectId }).populate({ path: 'product', options: { limit: 3 } });
+            console.log(user);
             if (user) {
                   return NextResponse.json({
-                        data: user.orders, message: 'User data successfully retrieved', success: true
+                        data: user, message: 'User data successfully retrieved', success: true
                   })
             }
             return console.error("error")

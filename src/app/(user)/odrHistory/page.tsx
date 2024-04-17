@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import React, { useEffect, useState } from "react";
 import OrderHistory from "@/app/components/OrderHistory";
 import axios from "axios";
@@ -11,6 +11,7 @@ const OdrHistory = () => {
 				const response = await axios.get(
 					"/api/users/odrHistory"
 				);
+				console.log(response.data.data)
 				setData(response.data.data);
 			} catch {
 				console.log("please try again later");
