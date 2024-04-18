@@ -36,7 +36,6 @@ const OtpForm = ({ _id }: { _id: string }) => {
 			console.log(error);
 		}
 	};
-
 	return (
 		<form
 			className="form flex flex-col justify-start"
