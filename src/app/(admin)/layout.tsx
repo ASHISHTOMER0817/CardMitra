@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
-// import { GlobalStateProvider } from "./components/globalVariable";
+import "../globals.css";
+import NavigationSidebar from "../components/NavigationSidebar";
+import dimHome from "@/../public/dimHome.svg";
+import dimBell from "@/../public/dimBell.svg";
+import dimHelp from "@/../public/dimHelp.svg";
+import Apps from "@/../public/apps.svg";
+import OdrHistory from "@/../public/odrHistory.svg";
+import SideBar from "../components/Sidebar";
+import bookers from "@/../public/bookers.svg"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,8 +25,26 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={inter.className}>
-				{/* <GlobalStateProvider>{children}</GlobalStateProvider> */}
-				{children}
+
+				<NavigationSidebar
+					icon={[
+						dimHome,
+						Apps,
+						dimBell,
+						OdrHistory,
+						dimHelp,
+					]}
+					main={children}
+					Children={
+						<>
+						<SideBar
+					img={bookers}
+					tab={"Bookers"}
+					changeState={'/'}
+				/>
+						</>
+					}
+				/>
 			</body>
 		</html>
 	);

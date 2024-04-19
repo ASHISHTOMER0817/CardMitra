@@ -1,7 +1,8 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import OrderHistory from "@/app/components/OrderHistory";
 import axios from "axios";
+import ProductDisplayFormat from "@/app/components/productDisplayFormat";
 const OdrHistory = () => {
 	const [data, setData] = useState([]);
 
@@ -11,7 +12,7 @@ const OdrHistory = () => {
 				const response = await axios.get(
 					"/api/users/odrHistory"
 				);
-				console.log(response.data.data)
+				console.log(response.data.data);
 				setData(response.data.data);
 			} catch {
 				console.log("please try again later");
@@ -21,10 +22,10 @@ const OdrHistory = () => {
 	}, []);
 	return (
 		<div className="mx-8">
-			<h2 className="my-7 ">Order History</h2>
-			<div className="grid grid-flow-row gap-7 grid-cols-3">
+			<ProductDisplayFormat heading={"Order History"}>
+				{" "}
 				<OrderHistory data={data} />
-			</div>
+			</ProductDisplayFormat>
 		</div>
 	);
 };

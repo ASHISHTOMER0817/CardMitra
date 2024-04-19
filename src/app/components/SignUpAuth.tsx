@@ -13,6 +13,7 @@ const SingUpAuth = () => {
 	const user = { name, email, password, contact };
 
 	async function sendData(e:FormEvent<HTMLFormElement>) {
+		e.preventDefault()
 		try {
 			// Validate form inputs
 
@@ -40,11 +41,11 @@ const SingUpAuth = () => {
 			// 	return;
 			// }
 
-			e.preventDefault()
+			
 			const response = await axios.post("/api/users/signup", {
 				user,
 			});
-			console.log("user")
+			// console.log("user")
 			const success = await response.data.success;
 			if (!success) {
 				setError( response.data.message);

@@ -3,24 +3,42 @@ import CardLayout from "./CardLayout";
 import Image from "next/image";
 import deleteIcon from "@/../public/delete.svg";
 import edit from "@/../public/edit.svg";
-const CardLayoutAdminDashboard = () => {
+import productList from "@/interface/productList";
+
+interface OrderHistory {
+	product: productList;
+}
+const CardLayoutAdminDashboard = ({data}:{data:OrderHistory[]}) => {
+
 	return (
-		<div>
-			<CardLayout
-				image={
-					<>
-						<Image
-							src={deleteIcon}
-							alt={""}
-							className=""
-						/>
-						<Image src={edit} alt={""} className="" />
-					</>
-				}
-				placeOrder={undefined}
-				beforeDate={undefined}
-			/>
-		</div>
+		<>
+			{data.map(({ product }, index: number) => {
+				return (
+					<CardLayout
+						key={index}
+						image={
+							<>
+								<Image
+									src={deleteIcon}
+									alt={""}
+									className=""
+								/>
+								<Image
+									src={edit}
+									alt={""}
+									className=""
+								/>
+							</>
+						}
+						quantity={product.requirement}
+						name={product.name}
+						randomNo={0}
+						price={product.price}
+						commission={product.commission}
+					/>
+				);
+			})}{" "}
+		</>
 	);
 };
 

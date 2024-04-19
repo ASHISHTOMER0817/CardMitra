@@ -33,6 +33,10 @@ const orderSchema = new mongoose.Schema({
 	delivered: {
 		type: Boolean,
 		default: false
+	},
+	orderedAt:{
+		type: Date,
+		default: Date.now
 	}
 })
 

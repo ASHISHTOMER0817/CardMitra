@@ -24,8 +24,6 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={inter.className}>
-				{/* <GlobalStateProvider>{children}</GlobalStateProvider> */}
-
 				<NavigationSidebar
 					icon={[
 						dimHome,

@@ -4,9 +4,9 @@ import Link from "next/link";
 
 interface sidebar {
 	img: string;
-	tab: string;
-	heading: string;
-	classList: string;
+	tab?: string;
+	heading?: string;
+	classList?: string;
 	changeState: string;
 }
 const SideBar = ({ img, tab, heading, classList, changeState }: sidebar) => {

@@ -1,28 +1,48 @@
-'use client'
+"use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Image from "next/image";
+import reject from "@/../public/reject.svg";
+import accept from "@/../public/accept.svg";
+import view from "@/../public/view.svg";
 
-interface details{
-      name:string
-      number:string
-      email:string
+interface details {
+	name: string;
+	contact: string;
+	email: string;
 }
-const UserTable = () => {
+const AffiliateRequest = () => {
 	const [users, setUsers] = useState<details[]>([]);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await axios.get("api/affiliateRequest");
-				setUsers( await response.data); // Assuming API response is an array of user objects
+				const response = await axios.get(
+					"api/affiliate/affiliateRequest"
+				);
+				setUsers(response.data.data); // Assuming API response is an array of user objects
 			} catch (error) {
-				console.error("Something went wrong; Please reload the page", error);
+				console.error(
+					"Something went wrong; Please reload the page",
+					error
+				);
 			}
 		};
 
 		fetchData();
 	}, []);
+
+	async function acceptAffiliate(choice: boolean) {
+		try {
+			const response = await axios.post(
+				"/api/affiliate/affiliateAcceptOrReject",
+				{ choice }
+			);
+			console.log(response.data.message);
+		} catch {
+			console.log("something went wrong please refresh the page");
+		}
+	}
 
 	return (
 		<div className="container mx-auto my-8">
@@ -30,7 +50,7 @@ const UserTable = () => {
 				User List
 			</h5>
 			<div className="rounded-lg overflow-hidden border border-gray-300">
-				<table className="min-w-full divide-y divide-gray-300">
+				{/* <table className="min-w-full divide-y divide-gray-300">
 					<thead>
 						<tr>
 							<th className="px-4 py-2">Name</th>
@@ -42,42 +62,118 @@ const UserTable = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{users.map(({name, email, number}, index) => (
-							<tr
-								key={index}
-								className="border-b"
-							>
-								<td className="px-4 py-2">
-									{name}
-								</td>
-								<td className="px-4 py-2">
-									{email}
-								</td>
-								<td className="px-4 py-2">
-									{number}
-								</td>
-								<td className="px-4 py-2 flex gap-2">
-									<Image
-										src="edit-icon.png"
-										alt="Edit"
-										width="20"
-										height="20"
-									/>
-									<Image
-										src="delete-icon.png"
-										alt="Delete"
-										width="20"
-										height="20"
-									/>
-									<Image
-										src="view-icon.png"
-										alt="View"
-										width="20"
-										height="20"
-									/>
-								</td>
-							</tr>
-						))}
+						{users.map(
+							({ name, email, contact }, index) => (
+								<tr
+									key={index}
+									className="border-b"
+								>
+									<td className="px-4 py-2">
+										{name}
+									</td>
+									<td className="px-4 py-2">
+										{email}
+									</td>
+									<td className="px-4 py-2">
+										{contact}
+									</td>
+									<td className="px-4 py-2 flex gap-2">
+										<Image onClick={()=>acceptAffiliate(true)}
+											src={accept}
+											alt="Edit"
+											width={30}
+											height={30}
+											className="cursor-pointer"
+										/>
+										<Image onClick={()=>acceptAffiliate(false)}
+											src={reject}
+											alt="Delete"
+											height={30}
+											width={30}
+											className="cursor-pointer"
+										/>
+										<Image
+											src={view}
+											alt="View"
+											width={30}
+											height={30}
+											className="cursor-pointer"
+										/>
+									</td>
+								</tr>
+							)
+						)}
+					</tbody>
+				</table> */}
+				<table className="min-w-full divide-y divide-gray-300">
+					<thead>
+						<tr>
+							<th className="px-4 py-2 text-center">
+								Name
+							</th>
+							<th className="px-4 py-2 text-center">
+								Email
+							</th>
+							<th className="px-4 py-2 text-center">
+								Contact No
+							</th>
+							<th className="px-4 py-2 text-center">
+								Action
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{users.map(
+							({ name, email, contact }, index) => (
+								<tr
+									key={index}
+									className="border-b"
+								>
+									<td className="px-4 py-2 text-center">
+										{name}
+									</td>
+									<td className="px-4 py-2 text-center">
+										{email}
+									</td>
+									<td className="px-4 py-2 text-center">
+										{contact}
+									</td>
+									<td className="px-4 py-2 text-center flex justify-center gap-2">
+										<Image
+											onClick={() =>
+												acceptAffiliate(
+													true
+												)
+											}
+											src={accept}
+											alt="Edit"
+											width={30}
+											height={30}
+											className="cursor-pointer"
+										/>
+										<Image
+											onClick={() =>
+												acceptAffiliate(
+													false
+												)
+											}
+											src={reject}
+											alt="Delete"
+											height={30}
+											width={30}
+											className="cursor-pointer"
+										/>
+										<Image
+											src={view}
+											alt="View"
+											width={30}
+											height={30}
+											className="cursor-pointer"
+										/>
+									</td>
+								</tr>
+							)
+						)}
 					</tbody>
 				</table>
 			</div>
@@ -85,4 +181,4 @@ const UserTable = () => {
 	);
 };
 
-export default UserTable;
+export default AffiliateRequest;

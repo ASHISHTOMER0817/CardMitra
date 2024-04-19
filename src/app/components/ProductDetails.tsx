@@ -6,15 +6,20 @@ import cardVerticalLine from "@/../public/cardVerticalLine.svg";
 import Link from "next/link";
 import cards from "@/../public/cards.svg";
 import platform from "@/../public/platform.svg";
+import { useRouter } from "next/navigation";
 
 const ProductDetails = ({ data }: { data: productList }) => {
-	console.log('data is: ', data);
+	console.log("data is: ", data);
+	const router = useRouter();
+	function backward() {
+		router.back();
+	}
 	return (
-		
 		<div>
 			<section className=" text-left">
 				<div className="flex gap-4 justify-center items-start">
 					<Image
+						onClick={backward}
 						className=" w-40"
 						src={phoneImage}
 						alt={""}
@@ -74,7 +79,9 @@ const ProductDetails = ({ data }: { data: productList }) => {
 				<div className="font-semibold text-black text-base">
 					Direct Links
 				</div>
-				<Link href={data?.productLink || '#'}>{data?.productLink!}</Link>
+				<Link href={data?.productLink || "#"}>
+					{data?.productLink!}
+				</Link>
 				{/* <Link
     href={
           "www.flipkart.com/apple-iphone-15-blue-128-gb/pitmbf14ef54f645"
@@ -93,7 +100,6 @@ const ProductDetails = ({ data }: { data: productList }) => {
 </Link> */}
 			</section>
 		</div>
-
 	);
 };
 
