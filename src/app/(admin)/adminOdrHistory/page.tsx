@@ -1,6 +1,6 @@
 "use client";
 import CardLayoutAdminDashboard from "@/app/components/CardLayoutAdminDashboard";
-import ProductDisplayFormat from "@/app/components/productDisplayFormat";
+import ProductDisplayFormat from "@/app/components/ProductDisplayFormat";
 import productList from "@/interface/productList";
 import axios from "axios";
 import React, { useEffect, useState } from "react";

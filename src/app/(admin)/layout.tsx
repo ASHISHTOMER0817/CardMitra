@@ -8,7 +8,7 @@ import dimHelp from "@/../public/dimHelp.svg";
 import Apps from "@/../public/apps.svg";
 import OdrHistory from "@/../public/odrHistory.svg";
 import SideBar from "../components/Sidebar";
-import bookers from "@/../public/bookers.svg"
+import bookers from "@/../public/bookers.svg";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +25,6 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={inter.className}>
-
 				<NavigationSidebar
 					icon={[
 						dimHome,
@@ -37,11 +36,11 @@ export default function RootLayout({
 					main={children}
 					Children={
 						<>
-						<SideBar
-					img={bookers}
-					tab={"Bookers"}
-					changeState={'/'}
-				/>
+							<SideBar
+								img={bookers}
+								tab={"Bookers"}
+								changeState={"/adminBookers"}
+							/>
 						</>
 					}
 				/>

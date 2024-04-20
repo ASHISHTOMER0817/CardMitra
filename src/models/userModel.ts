@@ -60,6 +60,10 @@ const otpSchema = new mongoose.Schema({
 	trackingId: {
 		type: String,
 	},
+	delivered:{
+		type: Boolean,
+		default: false
+	}
 })
 
 

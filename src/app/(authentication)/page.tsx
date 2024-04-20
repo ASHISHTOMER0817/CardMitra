@@ -5,8 +5,8 @@ import { GoBell } from "react-icons/go";
 import { CiRoute } from "react-icons/ci";
 import { IoCubeOutline } from "react-icons/io5";
 import vector from "@/../public/Vector.svg";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
+import IntroFooter from "../components/IntroFooter";
+import IntroHeader from "../components/IntroHeader";
 import VeriticalRuler from "@/../public/VerticalRuler.svg";
 import InputSpace from "../components/InputSpace";
 import { useState } from "react";
@@ -60,7 +60,7 @@ export default function Home() {
 	const image = <Image src={VeriticalRuler} alt={""}></Image>;
 	return (
 		<>
-			<Header />
+			<IntroHeader />
 			<main className=" min-h-screen text-center">
 				<section className="text-center px-10 py-24">
 					<h5 className="my-4 font-medium text-primaryBgClr">
@@ -226,7 +226,7 @@ export default function Home() {
 					</div>
 				</section>
 			</main>
-			<Footer />
+			<IntroFooter />
 		</>
 	);
 }

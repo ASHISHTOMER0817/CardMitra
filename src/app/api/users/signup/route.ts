@@ -13,8 +13,6 @@ export async function POST(request: NextRequest) {
             const user = await User.findOne({ email })
             console.log("2nd", user)
             if (!user) {
-
-
                   //hash Password
                   const salt = await bcryptjs.genSalt(10)
                   const hashedPassword = await bcryptjs.hash(password, salt);

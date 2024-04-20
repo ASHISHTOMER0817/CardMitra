@@ -61,6 +61,7 @@ const NavigationSidebar = ({
 					
 					changeState={'/odrHistory'}
 				/>
+				{Children}
 				<SideBar
 					img={icon[4]}
 					tab={"Chat support"}
@@ -68,7 +69,7 @@ const NavigationSidebar = ({
 					classList={"mt-auto"}
 					changeState={'/help'}
 				/>
-				{Children}
+				
 			</section>
 			{main}
 			</div>

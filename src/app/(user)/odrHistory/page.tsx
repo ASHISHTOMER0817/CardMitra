@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import OrderHistory from "@/app/components/OrderHistory";
 import axios from "axios";
-import ProductDisplayFormat from "@/app/components/productDisplayFormat";
+import ProductDisplayFormat from "@/app/components/ProductDisplayFormat";
 const OdrHistory = () => {
 	const [data, setData] = useState([]);
 
