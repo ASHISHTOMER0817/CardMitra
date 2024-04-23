@@ -14,6 +14,7 @@ import edit from "@/../public/edit.svg";
 import axios from "axios";
 import productList from "@/interface/productList";
 import AffiliateRequest from "@/app/components/admin/affiliateRequests";
+import Link from "next/link";
 
 interface OrderHistory {
 	product: productList;
@@ -61,7 +62,7 @@ const AdminDashboard = () => {
 		getData();
 	},[]);
 	return (
-		<div className="mx-6 w-full mt-6">
+		<div className="mx-6 w-[84%] mt-6">
 			<section className="mt-9 ">
 				<h3 className=" font-semibold mb-3">Dashboard</h3>
 				<div className="flex justify-between gap-2">
@@ -85,9 +86,9 @@ const AdminDashboard = () => {
 			<section className="mt-9 ">
 				<div className="flex justify-between mb-3 items-center">
 					<h4 className="font-semibold">Overview</h4>
-					<div className="text-primaryBgClr text-base">
+					<Link href={""} className="text-primaryBgClr text-base">
 						DETAILS
-					</div>
+					</Link>
 				</div>
 				<div>
 					<BarChart ChartData={userData} />
@@ -97,39 +98,11 @@ const AdminDashboard = () => {
 			<section className="mt-9 ">
 				<div className="flex justify-between mb-3">
 					<h4 className="font-semibold">Order History</h4>
-					<div className="text-primaryBgClr text-base">
+					<Link href={"adminOdrHistory"} className="text-primaryBgClr hover:text-green-300 text-base">
 						VIEW ALL
-					</div>
+					</Link>
 				</div>
 				<div className="grid grid-flow-row gap-3 grid-cols-3">
-					{/* {data.map(({ product }, index: number) => {
-						return (
-							<CardLayout
-								key={index}
-								image={
-									<>
-										<Image
-											src={
-												deleteIcon
-											}
-											alt={""}
-											className=""
-										/>
-										<Image
-											src={edit}
-											alt={""}
-											className=""
-										/>
-									</>
-								}
-								quantity={product.requirement}
-								name={product.name}
-								randomNo={0}
-								price={product.price}
-								commission={product.commission}
-							/>
-						);
-					})} */}
 					<CardLayoutAdminDashboard data={data}/>
 				</div>
 			</section>
@@ -139,9 +112,9 @@ const AdminDashboard = () => {
 					<h4 className="font-semibold">
 						Affiliate Requests
 					</h4>
-					<div className="text-primaryBgClr text-base">
+					<Link href={"/adminBookers"} className="text-primaryBgClr hover:text-green-300 text-base">
 						VIEW ALL
-					</div>
+					</Link>
 				</div>
 				<AffiliateRequest/>
 			</section>

@@ -6,29 +6,25 @@ import cardVerticalLine from "@/../public/cardVerticalLine.svg";
 import Link from "next/link";
 import cards from "@/../public/cards.svg";
 import platform from "@/../public/platform.svg";
-import { useRouter } from "next/navigation";
+import BackwardButton from "./BackwardButton";
 
 const ProductDetails = ({ data }: { data: productList }) => {
 	console.log("data is: ", data);
-	const router = useRouter();
-	function backward() {
-		router.back();
-	}
 	return (
-		<div>
+		<>
 			<section className=" text-left">
-				<div className="flex gap-4 justify-center items-start">
+				<BackwardButton />
+				<div className="flex gap-10 justify-start items-start">
 					<Image
-						onClick={backward}
 						className=" w-40"
 						src={phoneImage}
 						alt={""}
 					/>
 					<div className="flex flex-col gap-5 justify-center">
 						<div className="text-left">
-							<div className="font-semibold text-base mb-2">
+							<h4 className="font-semibold mb-2">
 								{data?.name}
-							</div>
+							</h4>
 							<div className="text-[#12121280] text-xs">
 								6541651563516532
 							</div>
@@ -60,20 +56,11 @@ const ProductDetails = ({ data }: { data: productList }) => {
 					</div>
 				</div>
 			</section>
-			<section className="flex justify-between items-center gap-4">
-				<div className="">
-					<div className="mb-[4px]">
-						<Image src={cards} alt="" />
-					</div>
-					<div>Offers available on bank cards</div>
-				</div>
-				<div className="">
-					<div className="">
-						{" "}
-						<Image src={platform} alt={""} />
-					</div>
-					<div>Websites</div>
-				</div>
+			<section className="grid grid-flow-row grid-cols-2 justify-between w-2/4 items-center gap-x-10 gap-y-5">
+				<Image src={cards} alt="" />{" "}
+				<Image src={platform} alt={""} />
+				<div>Offers available on bank cards</div>
+				<div>Websites</div>
 			</section>
 			<section className="text-wrap flex flex-col justify-start gap-3 text-primaryBgClr">
 				<div className="font-semibold text-black text-base">
@@ -82,24 +69,8 @@ const ProductDetails = ({ data }: { data: productList }) => {
 				<Link href={data?.productLink || "#"}>
 					{data?.productLink!}
 				</Link>
-				{/* <Link
-    href={
-          "www.flipkart.com/apple-iphone-15-blue-128-gb/pitmbf14ef54f645"
-    }
->
-    https://www.flipkart.com/apple-iphone-15-blue-128-gb/pitmbf14ef5
-    4f645
-</Link>
-<Link
-    href={
-          "www.flipkart.com/apple-iphone-15-blue-128-gb/pitmbf14ef54f645"
-    }
->
-    https://www.flipkart.com/apple-iphone-15-blue-128-gb/pitmbf14ef5
-    4f645
-</Link> */}
 			</section>
-		</div>
+		</>
 	);
 };
 

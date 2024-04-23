@@ -5,38 +5,42 @@ import Image from "next/image";
 import reject from "@/../public/reject.svg";
 import accept from "@/../public/accept.svg";
 import view from "@/../public/view.svg";
+import Link from "next/link";
+import acceptAffiliate from "../acceptAffiliate";
 
 interface details {
 	name: string;
 	contact: string;
 	email: string;
+	_id: string;
 }
 const AffiliateRequest = () => {
 	const [users, setUsers] = useState<details[]>([]);
-	function buttonclick (boolean:boolean){
-		acceptAffiliate(boolean)
 
-	}
-	const [acceptbutton, setAcceptButton] = useState<ReactNode>(
-		<Image
-			onClick={() => acceptAffiliate(true)}
-			src={accept}
-			alt="Edit"
-			width={30}
-			height={30}
-			className="cursor-pointer"
-		/>
-	);
-	const [rejectbuton, setRejectButton] = useState<ReactNode>(
-		<Image
-			onClick={() =>acceptAffiliate(false)}
-			src={reject}
-			alt="Delete"
-			height={30}
-			width={30}
-			className="cursor-pointer"
-		/>
-	);
+	const [arr, setArr] = useState()
+	// function buttonclick(boolean: boolean) {
+	// 	acceptAffiliate(boolean);
+	// }
+	// const [acceptbutton, setAcceptButton] = useState<ReactNode>(
+	// 	<Image
+	// 		onClick={() => acceptAffiliate(true)}
+	// 		src={accept}
+	// 		alt="Edit"
+	// 		width={30}
+	// 		height={30}
+	// 		className="cursor-pointer"
+	// 	/>
+	// );
+	// const [rejectbuton, setRejectButton] = useState<ReactNode>(
+	// 	<Image
+	// 		onClick={() => acceptAffiliate(false)}
+	// 		src={reject}
+	// 		alt="Delete"
+	// 		height={30}
+	// 		width={30}
+	// 		className="cursor-pointer"
+	// 	/>
+	// );
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -56,17 +60,8 @@ const AffiliateRequest = () => {
 		fetchData();
 	}, []);
 
-	async function acceptAffiliate(choice: boolean) {
-		try {
-			const response = await axios.post(
-				"/api/affiliate/affiliateAcceptOrReject",
-				{choice} 
-			);
-			console.log(response.data.message);
-		} catch {
-			console.log("something went wrong please refresh the page");
-		}
-	}
+	
+	
 
 	// function acceptButtonState() {
 	// 	setAcceptButton(
@@ -184,46 +179,82 @@ const AffiliateRequest = () => {
 				<table className="min-w-full divide-y divide-gray-300">
 					<thead>
 						<tr>
-							<th className="px-4 py-2 text-center">
+							<th className="px-4 py-2 text-left">
 								Name
 							</th>
-							<th className="px-4 py-2 text-center">
+							<th className="px-4 py-2 text-left">
 								Email
 							</th>
-							<th className="px-4 py-2 text-center">
+							<th className="px-4 py-2 text-left">
 								Contact No
 							</th>
-							<th className="px-4 py-2 text-center">
+							<th className="px-4 py-2 text-left">
 								Action
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 						{users.map(
-							({ name, email, contact }, index) => (
+							(
+								{ name, email, contact, _id },
+								index
+							) => (
 								<tr
 									key={index}
 									className="border-b"
 								>
-									<td className="px-4 py-5 text-center">
+									<td className="px-4 py-5 text-left">
 										{name}
 									</td>
-									<td className="px-4 py-5 text-center">
+									<td className="px-4 py-5 text-left">
 										{email}
 									</td>
-									<td className="px-4 py-5 text-center">
+									<td className="px-4 py-5 text-left">
 										{contact}
 									</td>
-									<td className="px-4 py-5 text-center flex justify-center gap-2">
-										{rejectbuton}
-										{acceptbutton}
+									<td className="px-4 py-5 text-center flex justify-start gap-2">
 										<Image
-											src={view}
-											alt="View"
+											onClick={() =>
+												acceptAffiliate(
+													true,
+													email
+												)
+											}
+											src={accept}
+											alt="Edit"
 											width={30}
 											height={30}
 											className="cursor-pointer"
 										/>
+										<Image
+											onClick={() =>
+												acceptAffiliate(
+													false, email
+												)
+											}
+											src={reject}
+											alt="Delete"
+											height={30}
+											width={30}
+											className="cursor-pointer"
+										/>
+										{/* <Link
+											href={`/adminBookers/${_id}`}
+										>
+											<Image
+												src={
+													view
+												}
+												alt="View"
+												width={
+													30
+												}
+												height={
+													30
+												}
+												className="cursor-pointer"
+											/>
+										</Link> */}
 									</td>
 								</tr>
 							)

@@ -4,6 +4,7 @@ import Image from "next/image";
 import deleteIcon from "@/../public/delete.svg";
 import edit from "@/../public/edit.svg";
 import productList from "@/interface/productList";
+import Link from "next/link";
 
 interface OrderHistory {
 	product: productList;
@@ -14,8 +15,9 @@ const CardLayoutAdminDashboard = ({data}:{data:OrderHistory[]}) => {
 		<>
 			{data.map(({ product }, index: number) => {
 				return (
+					<Link href={`/adminOdrHistory/${product._id}`} key={index}>
 					<CardLayout
-						key={index}
+						classList="hover:border-primaryBgClr"
 						image={
 							<>
 								<Image
@@ -36,6 +38,7 @@ const CardLayoutAdminDashboard = ({data}:{data:OrderHistory[]}) => {
 						price={product.price}
 						commission={product.commission}
 					/>
+					</Link>
 				);
 			})}{" "}
 		</>

@@ -33,7 +33,7 @@ const Deals = () => {
 	return (
 		<>
 			<div className="mx-8">
-				<ProductDisplayFormat heading={"Order History"}>
+				<ProductDisplayFormat heading={"Deals"}>
 					{" "}
 					<CardLayoutForDeals data={data} />
 				</ProductDisplayFormat>

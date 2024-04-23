@@ -1,26 +1,16 @@
 'use client'
 import React from "react";
 import Image from "next/image";
-import arrow from "@/../public/ArrowLeft.svg";
 import googleIcon from "@/../public/flat-color-icons_google.svg";
 import facebook from "@/../public/logos_facebook.svg";
 import LoginAuth from "@/app/components/LoginAuth";
 import SignUpAuth from "@/app/components/SignUpAuth";
-import { useRouter } from "next/navigation";
+import BackwardButton from "@/app/components/BackwardButton";
 const Login = ({ params }: { params: { Choice: string } }) => {
-	const router = useRouter()
-	
-	function backward (){
-		router.back()
-	}
 	return (
 			<div className=" m-auto p-[5%] flex justify-around items-start">
 				<section className="flex flex-col justify-start gap-7">
-					<Image onClick={backward}
-						src={arrow}
-						className="focus:from-5% cursor-pointer"
-						alt={""}
-					/>
+					<BackwardButton/>
 
 					<h5 className=" text-primaryBgClr">
 						{params.Choice === "login"

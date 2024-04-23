@@ -22,6 +22,6 @@
       // "public/*": ["./public/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/components/barChart.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/components/barChart.jsx", "src/app/(admin)/adminAddProduct/page.jsx"],
   "exclude": ["node_modules"]
 }

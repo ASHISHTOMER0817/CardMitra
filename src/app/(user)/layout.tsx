@@ -5,8 +5,9 @@ import NavigationSidebar from "../components/NavigationSidebar";
 import dimHome from "@/../public/dimHome.svg";
 import dimBell from "@/../public/dimBell.svg";
 import dimHelp from "@/../public/dimHelp.svg";
-import Apps from "@/../public/apps.svg";
+import deals from "@/../public/apps.svg";
 import OdrHistory from "@/../public/odrHistory.svg";
+import SideBar from "../components/Sidebar";
 // import { GlobalStateProvider } from "./components/globalVariable";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -27,14 +28,37 @@ export default function RootLayout({
 				<NavigationSidebar
 					icon={[
 						dimHome,
-						Apps,
 						dimBell,
-						OdrHistory,
 						dimHelp,
 					]}
-					main={children}
+					main={children} firstSection={{
+						image: deals,
+						name: "Deals",
+						changeState: "/deals"
+					}} secondSection={{
+						image: OdrHistory,
+						name: "Order History",
+						changeState: "/odrHistory"
+					}}				
 				/>
 			</body>
 		</html>
 	);
 }
+
+
+// dealsAndhistory={
+// 	<>
+// 		<SideBar
+// 			img={deals}
+// 			tab={"Deals"}
+// 			changeState={"/deals"}
+// 		/>
+// 		<hr className="border  w-[30%]" />
+// 		<SideBar
+// 			img={OdrHistory}
+// 			tab={"Order History"}
+// 			changeState={"/odrHistory"}
+// 		/>
+// 	</>
+// }

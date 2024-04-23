@@ -24,7 +24,7 @@ const OtpForm = ({ _id }: { _id: string }) => {
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
-			const response = await axios.post("/api/users/orderObjectId", {orderDetails});
+			const response = await axios.post("/api/users/OTPsubmission", {orderDetails});
 			console.log(response)
 			console.log("Submitting OTP:", otp);
 			console.log("Submitting Contact:", contact);

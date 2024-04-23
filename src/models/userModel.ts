@@ -52,7 +52,7 @@ const otpSchema = new mongoose.Schema({
 	userObjectId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "users"
-	},
+	}, 
 	otp: {
 		type: Number,
 		required: true

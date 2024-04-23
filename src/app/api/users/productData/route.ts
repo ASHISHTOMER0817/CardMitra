@@ -1,27 +1,28 @@
 import { NextResponse, NextRequest } from "next/server";
 import Database from "@/database/database";
-import { Order, Product, User } from "@/models/userModel";
-import GetToken from "@/app/components/getToken";
-import mongoose from "mongoose";
+import { Product } from "@/models/userModel";
+
 
 
 Database()
+
 export async function GET(request: NextRequest) {
 
       try {
-            const _id = request.nextUrl.searchParams.get('odrId')
-            console.log('1st', _id)
-            if (_id) {
-                  const order = await Order.findById({_id}).populate('product')
-                  console.log('2nd console', order)
+            // const userId = await request.json()
+            const _id = request.nextUrl.searchParams.get('query')
+            // const objId = userId.objectid
+            console.log('1st console', _id)
+            const product = await Product.findOne({ _id })
+            console.log('2', product)
+            if (product) {
                   return NextResponse.json({
-                        data: order, message: 'User data successfully retrieved', success: true
+                        data: product, message: 'Product data is being shown', success: true
                   })
             }
-
-            return NextResponse.json({
-                  message: "Something went wrong, Please refresh the page", success: false
-            })
+            // return NextResponse.json({
+            //       message: "Something went wrong, Please refresh the page", success: false
+            // })
       } catch (error) {
             return NextResponse.json({
                   message: "Something went wrong, Server error", success: false

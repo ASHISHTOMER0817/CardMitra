@@ -5,10 +5,11 @@ import NavigationSidebar from "../components/NavigationSidebar";
 import dimHome from "@/../public/dimHome.svg";
 import dimBell from "@/../public/dimBell.svg";
 import dimHelp from "@/../public/dimHelp.svg";
-import Apps from "@/../public/apps.svg";
+import deals from "@/../public/apps.svg";
 import OdrHistory from "@/../public/odrHistory.svg";
 import SideBar from "../components/Sidebar";
 import bookers from "@/../public/bookers.svg";
+import transactions from "@/../public/transactions.svg";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,25 +27,48 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={inter.className}>
 				<NavigationSidebar
-					icon={[
-						dimHome,
-						Apps,
-						dimBell,
-						OdrHistory,
-						dimHelp,
-					]}
+					icon={[dimHome, dimBell, dimHelp]}
 					main={children}
-					Children={
-						<>
-							<SideBar
-								img={bookers}
-								tab={"Bookers"}
-								changeState={"/adminBookers"}
-							/>
-						</>
-					}
+					firstSection={{
+						image: deals,
+						name: "Orders",
+						changeState: "/Orders",
+					}}
+					secondSection={{
+						image: bookers,
+						name: "Bookers",
+						changeState: "/adminBookers",
+					}}
+					thirdSection={{
+						image: transactions,
+						name: "Transactions",
+						changeState: "/transactions",
+					}}
 				/>
 			</body>
 		</html>
 	);
 }
+
+// Children={
+// 	<>
+// 		<SideBar
+// 			img={bookers}
+// 			tab={"Bookers"}
+// 			changeState={"/adminBookers"}
+// 		/>
+// 		<hr className="border w-[30%]"/>
+// 		<SideBar
+// 			img={transactions}
+// 			tab={"Transactions"}
+// 			changeState={"/transactions"}
+// 		/>
+// 	</>
+// }
+// dealsAndhistory={
+// 	<SideBar
+// 			img={deals}
+// 			tab={"Orders"}
+// 			changeState={"/Orders"}
+// 		/>
+// }

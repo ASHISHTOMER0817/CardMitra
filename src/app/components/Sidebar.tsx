@@ -8,8 +8,9 @@ interface sidebar {
 	heading?: string;
 	classList?: string;
 	changeState: string;
+	tabClassList:string
 }
-const SideBar = ({ img, tab, heading, classList, changeState }: sidebar) => {
+const SideBar = ({ img, tab, heading, classList, changeState, tabClassList }: sidebar) => {
 	return (
 		<div className={classList}>
 			{heading && (
@@ -21,7 +22,7 @@ const SideBar = ({ img, tab, heading, classList, changeState }: sidebar) => {
 				href={changeState}
 			>
 				<Image src={img} alt={""} />
-				<div className="text-sm">{tab}</div>
+				<div className={`text-sm ${tabClassList}`}>{tab}</div>
 			</Link>
 		</div>
 	);
