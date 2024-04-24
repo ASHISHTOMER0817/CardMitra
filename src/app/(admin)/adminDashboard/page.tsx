@@ -16,11 +16,15 @@ import productList from "@/interface/productList";
 import AffiliateRequest from "@/app/components/admin/affiliateRequests";
 import Link from "next/link";
 
-interface OrderHistory {
-	product: productList;
+interface dashboardData {
+ OrderHistory:productList[]
+ noOfDelivery: number
+ noOfAffiliate:number
+ noOfOrders:number
+
 }
 const AdminDashboard = () => {
-	const [data, setData] = useState<OrderHistory[]>([]);
+	const [data, setData] = useState<dashboardData>();
 	const [userData, setUserData] = useState({
 		labels: [
 			"JAN",
@@ -61,25 +65,27 @@ const AdminDashboard = () => {
 		}
 		getData();
 	},[]);
+
+
 	return (
 		<div className="mx-6 w-[84%] mt-6">
 			<section className="mt-9 ">
 				<h3 className=" font-semibold mb-3">Dashboard</h3>
 				<div className="flex justify-between gap-2">
 					<div className="px-32 py-8 rounded-3xl  bg-[#F3F3F3] ">
-						<h3 className="text-[#1844E1]">Rs.300</h3>{" "}
-						Today&apos;s profile
+						<h3 className="text-[#1844E1]">{data?.noOfDelivery} </h3>{" "}
+						Today&apos;s delivery
 					</div>
 					<div className="px-32 py-8 rounded-3xl  bg-[#F3F3F3] ">
-						<h3 className="text-primaryBgClr">64</h3>
+						<h3 className="text-primaryBgClr">{data?.noOfOrders}</h3>
 						Orders placed <br />
-						till date
+						today
 					</div>
 					<div className="px-32 py-8 rounded-3xl  bg-[#F3F3F3]">
 						<h3 className="text-primaryBgClr">
-							Rs. 6,800
+						{data?.noOfAffiliate}
 						</h3>
-						Commission earned
+						Affiliates Joined
 					</div>
 				</div>
 			</section>
@@ -98,12 +104,12 @@ const AdminDashboard = () => {
 			<section className="mt-9 ">
 				<div className="flex justify-between mb-3">
 					<h4 className="font-semibold">Order History</h4>
-					<Link href={"adminOdrHistory"} className="text-primaryBgClr hover:text-green-300 text-base">
+					<Link href={"/orders"} className="text-primaryBgClr hover:text-green-300 text-base">
 						VIEW ALL
 					</Link>
 				</div>
 				<div className="grid grid-flow-row gap-3 grid-cols-3">
-					<CardLayoutAdminDashboard data={data}/>
+					<CardLayoutAdminDashboard data={data?.OrderHistory!}/>
 				</div>
 			</section>
 

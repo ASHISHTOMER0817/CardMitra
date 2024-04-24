@@ -5,11 +5,11 @@ import productList from "@/interface/productList";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-interface OrderHistory {
-	product: productList;
-}
+// interface OrderHistory {
+// 	product: productList;
+// }
 const AdminOrderHistory = () => {
-	const [data, setData] = useState<OrderHistory[]>([]);
+	const [data, setData] = useState<productList[]>([]);
 
 	useEffect(() => {
 		async function getData() {

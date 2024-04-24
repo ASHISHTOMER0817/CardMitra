@@ -6,8 +6,8 @@ import dimHome from "@/../public/dimHome.svg";
 import dimBell from "@/../public/dimBell.svg";
 import dimHelp from "@/../public/dimHelp.svg";
 import deals from "@/../public/apps.svg";
-import OdrHistory from "@/../public/odrHistory.svg";
-import SideBar from "../components/Sidebar";
+// import OdrHistory from "@/../public/odrHistory.svg";
+// import SideBar from "../components/Sidebar";
 import bookers from "@/../public/bookers.svg";
 import transactions from "@/../public/transactions.svg";
 
@@ -29,46 +29,23 @@ export default function RootLayout({
 				<NavigationSidebar
 					icon={[dimHome, dimBell, dimHelp]}
 					main={children}
-					firstSection={{
+
+					thirdSection={{
 						image: deals,
 						name: "Orders",
 						changeState: "/Orders",
 					}}
-					secondSection={{
+					fourthSection={{
 						image: bookers,
 						name: "Bookers",
 						changeState: "/adminBookers",
 					}}
-					thirdSection={{
+					fifthSection={{
 						image: transactions,
 						name: "Transactions",
 						changeState: "/transactions",
-					}}
-				/>
+					}} firstSection={"/adminDashboard"} secondSection={"/adminDashboard"}/>
 			</body>
 		</html>
 	);
 }
-
-// Children={
-// 	<>
-// 		<SideBar
-// 			img={bookers}
-// 			tab={"Bookers"}
-// 			changeState={"/adminBookers"}
-// 		/>
-// 		<hr className="border w-[30%]"/>
-// 		<SideBar
-// 			img={transactions}
-// 			tab={"Transactions"}
-// 			changeState={"/transactions"}
-// 		/>
-// 	</>
-// }
-// dealsAndhistory={
-// 	<SideBar
-// 			img={deals}
-// 			tab={"Orders"}
-// 			changeState={"/Orders"}
-// 		/>
-// }

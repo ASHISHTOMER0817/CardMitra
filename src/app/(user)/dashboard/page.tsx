@@ -46,8 +46,8 @@ const Dashboard = () => {
 		getData();
 	}, []);
 	return (
-		<div className="mx-6 w-full">
-			<h3 className="my-7 font-semibold">DashBoard</h3>
+		<div className="mx-6 w-[90%]">
+			<h3 className="my-7 font-semibold">Dashboard</h3>
 			<div className="flex justify-between gap-2">
 				<div className="px-32 py-8 rounded-3xl  bg-[#F3F3F3] ">
 					<h3 className="text-[#1844E1]">Rs.300</h3>{" "}

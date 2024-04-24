@@ -23,8 +23,9 @@ const orderSchema = new mongoose.Schema({
 		type: String,
 	},
 	deliveryDate: {
-		type: Date,
-		format: Date
+		type: String,
+		required:true
+		// format: Date
 	},
 	otp: {
 		default: false,
@@ -35,8 +36,9 @@ const orderSchema = new mongoose.Schema({
 		default: false
 	},
 	orderedAt:{
-		type: Date,
-		default: Date.now
+		type: String,
+		required:true
+		
 	}
 })
 
@@ -88,36 +90,6 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		default: "user",
 	},
-	// orders: [
-	// 	{
-	// 		order: {
-	// 			type: mongoose.Schema.Types.ObjectId,
-	// 			ref: "products"
-	// 		},
-	// 		orderNumber: {
-	// 			type: String,
-	// 			required: true
-	// 		},
-	// 		deliveryDate: {
-	// 			type: Date,
-	// 			format:Date
-	// 		},
-	// 		otp:{
-	// 			default: false,
-	// 			type: Boolean
-	// 		},
-	// 		trackingId:{
-	// 			type:String,
-	// 		}
-
-	// 	}
-	// ],
-
-	// delivered: [{
-	// 	type: mongoose.Schema.Types.ObjectId,
-	// 	ref: "products"
-	// }],
-
 	notification: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "notifications"
@@ -172,14 +144,18 @@ const productSchema = new mongoose.Schema({
 		type: String,
 	},
 
-	isAvail: {
+	deals: {
 		type: Boolean,
-		default: true,
+		default: false,
 	},
 
 	commission: {
 		type: Number,
 	},
+	show:{
+		type:Boolean,
+		default:true
+	}
 
 });
 

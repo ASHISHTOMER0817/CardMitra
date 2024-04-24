@@ -31,34 +31,22 @@ export default function RootLayout({
 						dimBell,
 						dimHelp,
 					]}
-					main={children} firstSection={{
+					main={children}
+					thirdSection={{
 						image: deals,
 						name: "Deals",
 						changeState: "/deals"
-					}} secondSection={{
+					}} fourthSection={{
 						image: OdrHistory,
 						name: "Order History",
 						changeState: "/odrHistory"
-					}}				
-				/>
+					}}
+					fifthSection={{
+						image: OdrHistory,
+						name: "Profile",
+						changeState: "/userProfile"
+					}} firstSection={"/dashboard"} secondSection={"/dashboard"}				/>
 			</body>
 		</html>
 	);
 }
-
-
-// dealsAndhistory={
-// 	<>
-// 		<SideBar
-// 			img={deals}
-// 			tab={"Deals"}
-// 			changeState={"/deals"}
-// 		/>
-// 		<hr className="border  w-[30%]" />
-// 		<SideBar
-// 			img={OdrHistory}
-// 			tab={"Order History"}
-// 			changeState={"/odrHistory"}
-// 		/>
-// 	</>
-// }
