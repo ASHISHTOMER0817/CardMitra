@@ -12,5 +12,12 @@ interface productList {
 }
 export default productList;
 
-
-//
+export interface order{
+	product:string,
+	user:string,
+	orderId:string,
+	deliveryDate:string,
+	otp:boolean,
+	delivered:boolean,
+	orderedAt:string
+}

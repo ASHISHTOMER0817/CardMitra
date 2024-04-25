@@ -6,8 +6,11 @@ import Image from "next/image";
 import redCross from "@/../public/redCross.svg";
 import accept from "@/../public/accept.svg";
 import acceptAffiliate from "@/app/components/acceptAffiliate";
+import UserOrders from "@/app/components/userOrders";
+import { order } from "@/interface/productList";
 
 interface User {
+user:{
 	name: string;
 	email: string;
 	contact: string;
@@ -15,8 +18,10 @@ interface User {
 	IFSC_code: string;
 	UPI_ID: string;
 }
+orderList:order[]
+} 
 const Bookers = ({ params }: { params: { _id: string } }) => {
-	const [user, setUser] = useState<User>();
+	const [data, setData] = useState<User>();
 
 	useEffect(() => {
 		async function getData() {
@@ -26,7 +31,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 				);
 				const status = response.data.status;
 				const msg = response.data.message;
-				setUser(response.data.data);
+				setData(response.data.data)
 				console.log(response.data.data);
 			} catch {
 				console.log(
@@ -38,12 +43,12 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 	}, [params._id]);
 
 	return (
-		<div className="w-full mx-10 mt-6 ">
+		<div className="w-[90%] mx-10 mt-6 ">
 			<BackwardButton />
 			<div className="flex justify-between mb-8 items-center">
-				<h3>{user?.name}</h3>
-				<div className="flex gap-6 text-sm">
-					<button className="rounded-3xl flex text-center items-center justify-center w-36 py-1 bg-primaryBgClr">
+				<h3>{data?.user?.name}</h3>
+				{/* <div className="flex gap-6 text-sm"> */}
+					{/* <button className="rounded-3xl flex text-center items-center justify-center w-36 py-1 bg-primaryBgClr">
 						<Image
 							onClick={() =>
 								acceptAffiliate(
@@ -58,9 +63,9 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 							className="cursor-pointer"
 						/>{" "}
 						Accept
-					</button>
-					<button className="rounded-3xl flex w-36 py-1 border justify-center items-center border-red-500 text-red-500">
-						<Image
+					</button> */}
+					<div className="rounded-3xl text-nowrap cursor-pointer hover:bg-slate-100 flex py-2 px-4 border justify-center items-center border-red-500 text-red-500">
+						{/* <Image
 							onClick={() =>
 								acceptAffiliate(
 									false,
@@ -72,16 +77,16 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 							width={18}
 							height={18}
 							className="cursor-pointer"
-						/>{" "}
-						Reject
-					</button>
-				</div>
+						/>{" "} */}
+						<div>Remove account</div>
+					</div>
+				{/* </div> */}
 			</div>
 			<h6 className="text-gray-400 mb-2 text-sm">PERSONAL</h6>
 			<section className=" flex justify-between items-center">
-				<div>Name: {user?.name}</div>
-				<div>Email: {user?.email}</div>
-				<div>Contact: {user?.contact} </div>
+				<div>Name: {data?.user?.name}</div>
+				<div>Email: {data?.user?.email}</div>
+				<div>Contact: {data?.user?.contact} </div>
 			</section>
 
 			<hr className="border w-4/5 my-7" />
@@ -89,11 +94,12 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 
 			<section className="flex justify-between items-center">
 				<div>
-					Bank Account Number: {user?.bank_account_number}
+					Bank Account Number: {data?.user?.bank_account_number}
 				</div>
-				<div>IFSC Code: {user?.bank_account_number} </div>
-				<div className="mr-20">UPI ID: {user?.UPI_ID}</div>
+				<div>IFSC Code: {data?.user?.bank_account_number} </div>
+				<div className="mr-20">UPI ID: {data?.user?.UPI_ID}</div>
 			</section>
+			<UserOrders data={data?.orderList!}/>
 		</div>
 	);
 };

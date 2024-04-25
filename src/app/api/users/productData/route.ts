@@ -12,9 +12,9 @@ export async function GET(request: NextRequest) {
             // const userId = await request.json()
             const _id = request.nextUrl.searchParams.get('query')
             // const objId = userId.objectid
-            console.log('1st console', _id)
+            // console.log('1st console', _id)
             const product = await Product.findOne({ _id })
-            console.log('2', product)
+            // console.log('2', product)
             if (product) {
                   return NextResponse.json({
                         data: product, message: 'Product data is being shown', success: true

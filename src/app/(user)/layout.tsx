@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
@@ -7,7 +8,8 @@ import dimBell from "@/../public/dimBell.svg";
 import dimHelp from "@/../public/dimHelp.svg";
 import deals from "@/../public/apps.svg";
 import OdrHistory from "@/../public/odrHistory.svg";
-import SideBar from "../components/Sidebar";
+// import SideBar from "../components/Sidebar";
+// import { ToastContainer } from "react-toastify";
 // import { GlobalStateProvider } from "./components/globalVariable";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -45,7 +47,7 @@ export default function RootLayout({
 						image: OdrHistory,
 						name: "Profile",
 						changeState: "/userProfile"
-					}} firstSection={"/dashboard"} secondSection={"/dashboard"}				/>
+					}} firstSection={"/dashboard"} secondSection={"/dashboard"}/>
 			</body>
 		</html>
 	);

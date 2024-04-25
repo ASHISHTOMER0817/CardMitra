@@ -1,13 +1,10 @@
 
-function dateFormat(date: Date) {
+function dateFormat(date: Date):string {
 
-      // const date = new Date(deliveryDate)
-      console.log(date)
-
-      const year = date.getFullYear()
-      const month = date.getMonth()
-      const day = date.getDay()
-
+      const dt = new Date(date);
+      const year = dt.getFullYear()
+      const month = dt.getMonth()
+      const day = dt.getDay()
       const delivery_date = `${day}-${month}-${year}`
       return delivery_date;
 }

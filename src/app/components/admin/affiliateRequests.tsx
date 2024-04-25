@@ -7,40 +7,21 @@ import accept from "@/../public/accept.svg";
 import view from "@/../public/view.svg";
 import Link from "next/link";
 import acceptAffiliate from "../acceptAffiliate";
+import Popup from "../Popup";
 
 interface details {
 	name: string;
 	contact: string;
 	email: string;
 	_id: string;
+	isApprove: boolean;
 }
 const AffiliateRequest = () => {
 	const [users, setUsers] = useState<details[]>([]);
+	const [refreshData, setRefreshData] = useState(false);
 
-	const [arr, setArr] = useState()
-	// function buttonclick(boolean: boolean) {
-	// 	acceptAffiliate(boolean);
-	// }
-	// const [acceptbutton, setAcceptButton] = useState<ReactNode>(
-	// 	<Image
-	// 		onClick={() => acceptAffiliate(true)}
-	// 		src={accept}
-	// 		alt="Edit"
-	// 		width={30}
-	// 		height={30}
-	// 		className="cursor-pointer"
-	// 	/>
-	// );
-	// const [rejectbuton, setRejectButton] = useState<ReactNode>(
-	// 	<Image
-	// 		onClick={() => acceptAffiliate(false)}
-	// 		src={reject}
-	// 		alt="Delete"
-	// 		height={30}
-	// 		width={30}
-	// 		className="cursor-pointer"
-	// 	/>
-	// );
+
+	// const [arr, setArr] = useState();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -58,62 +39,32 @@ const AffiliateRequest = () => {
 		};
 
 		fetchData();
-	}, []);
+	}, [refreshData]);
 
-	
-	
 
-	// function acceptButtonState() {
-	// 	setAcceptButton(
-	// 		<div className="rounded-3xl flex items-center justify-center pr-[9px] bg-primaryBgClr">
-	// 			<Image
-	// 				onClick={() => acceptAffiliate(true)}
-	// 				src={accept}
-	// 				alt="Edit"
-	// 				width={30}
-	// 				height={30}
-	// 				className="cursor-pointer"
-	// 			/>
-	// 			<div className="text-sm">Accepted</div>
-	// 		</div>
-	// 	);
-	// 	setRejectButton(
-	// 		<Image
-	// 			onClick={() => acceptAffiliate(false)}
-	// 			src={reject}
-	// 			alt="Delete"
-	// 			height={30}
-	// 			width={30}
-	// 			className="cursor-pointer"
-	// 		/>
-	// 	);
-	// }
-
-	// function rejectButtonState() {
-	// 	setRejectButton(
-	// 		<div className="rounded-3xl flex items-center justify-center pr-[9px] bg-primaryBgClr">
-	// 			<Image
-	// 				onClick={() => acceptAffiliate(true)}
-	// 				src={reject}
-	// 				alt="Edit"
-	// 				width={30}
-	// 				height={30}
-	// 				className="cursor-pointer"
-	// 			/>
-	// 			<div className="text-sm">Rejected</div>
-	// 		</div>
-	// 	);
-	// 	setAcceptButton(
-	// 		<Image
-	// 			onClick={() => acceptAffiliate(false)}
-	// 			src={accept}
-	// 			alt="Delete"
-	// 			height={30}
-	// 			width={30}
-	// 			className="cursor-pointer"
-	// 		/>
-	// 	);
-	// }
+	async function isAccept(choice: boolean, _id: string) {
+		try {
+			const response = await axios.get(
+				`/api/affiliate/affiliateAcceptOrReject?choice=${choice}&objectId=${_id}`
+			);
+			const msg = response.data.message;
+			const status = response.data.status
+			if (status === 200) {
+				
+				Popup("success", msg);
+				setRefreshData(!refreshData);
+			}
+			if (status === 400) {
+				Popup("info", msg);
+				setRefreshData(!refreshData);
+			}
+			if (status === 500) {
+				Popup("error", msg);
+			}
+		} catch {
+			Popup("error", "Something went wrong, REFRESH");
+		}
+	}
 
 	return (
 		<div className="container mx-auto my-8">
@@ -121,61 +72,6 @@ const AffiliateRequest = () => {
 				User List
 			</h5>
 			<div className="rounded-lg overflow-hidden border border-gray-300">
-				{/* <table className="min-w-full divide-y divide-gray-300">
-					<thead>
-						<tr>
-							<th className="px-4 py-2">Name</th>
-							<th className="px-4 py-2">Email</th>
-							<th className="px-4 py-2">
-								Contact No
-							</th>
-							<th className="px-4 py-2">Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						{users.map(
-							({ name, email, contact }, index) => (
-								<tr
-									key={index}
-									className="border-b"
-								>
-									<td className="px-4 py-2">
-										{name}
-									</td>
-									<td className="px-4 py-2">
-										{email}
-									</td>
-									<td className="px-4 py-2">
-										{contact}
-									</td>
-									<td className="px-4 py-2 flex gap-2">
-										<Image onClick={()=>acceptAffiliate(true)}
-											src={accept}
-											alt="Edit"
-											width={30}
-											height={30}
-											className="cursor-pointer"
-										/>
-										<Image onClick={()=>acceptAffiliate(false)}
-											src={reject}
-											alt="Delete"
-											height={30}
-											width={30}
-											className="cursor-pointer"
-										/>
-										<Image
-											src={view}
-											alt="View"
-											width={30}
-											height={30}
-											className="cursor-pointer"
-										/>
-									</td>
-								</tr>
-							)
-						)}
-					</tbody>
-				</table> */}
 				<table className="min-w-full divide-y divide-gray-300">
 					<thead>
 						<tr>
@@ -196,7 +92,13 @@ const AffiliateRequest = () => {
 					<tbody>
 						{users.map(
 							(
-								{ name, email, contact, _id },
+								{
+									name,
+									email,
+									contact,
+									isApprove,
+									_id,
+								},
 								index
 							) => (
 								<tr
@@ -213,7 +115,7 @@ const AffiliateRequest = () => {
 										{contact}
 									</td>
 									<td className="px-4 py-5 text-center flex justify-start gap-2">
-										<Image
+										{/* <Image
 											onClick={() =>
 												acceptAffiliate(
 													true,
@@ -237,7 +139,7 @@ const AffiliateRequest = () => {
 											height={30}
 											width={30}
 											className="cursor-pointer"
-										/>
+										/> */}
 										{/* <Link
 											href={`/adminBookers/${_id}`}
 										>
@@ -255,6 +157,51 @@ const AffiliateRequest = () => {
 												className="cursor-pointer"
 											/>
 										</Link> */}
+
+										{!isApprove ? (
+											<>
+												<div
+													onClick={() =>
+														isAccept(
+															true,
+															_id
+														)
+													}
+													className="text-sm hover:bg-green-600 py-2 px-5 cursor-pointer  rounded-full border bg-primaryBgClr"
+												>
+													Accept
+												</div>
+												<div
+													onClick={() =>
+														isAccept(
+															false,
+															_id
+														)
+													}
+													className="text-sm py-2 px-5 cursor-pointer hover:bg-slate-100 rounded-full border text-red-500"
+												>
+													Reject
+												</div>
+											</>
+										) : (
+											<Link
+												href={`/adminBookers/${_id}`}
+											>
+												<Image
+													src={
+														view
+													}
+													alt="View"
+													width={
+														30
+													}
+													height={
+														30
+													}
+													className="cursor-pointer"
+												/>
+											</Link>
+										)}
 									</td>
 								</tr>
 							)

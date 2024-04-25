@@ -23,9 +23,9 @@ const orderSchema = new mongoose.Schema({
 		type: String,
 	},
 	deliveryDate: {
-		type: String,
-		required:true
-		// format: Date
+		type: Date,
+		required:true,
+		format: Date
 	},
 	otp: {
 		default: false,
@@ -36,8 +36,8 @@ const orderSchema = new mongoose.Schema({
 		default: false
 	},
 	orderedAt:{
-		type: String,
-		required:true
+		type: Date,
+		format:Date
 		
 	}
 })

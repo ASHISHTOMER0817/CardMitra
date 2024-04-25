@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import filter from "@/../public/Filter.svg";
-import sort from "@/../public/sort.svg";
-import Image from "next/image";
+// import filter from "@/../public/Filter.svg";
+// import sort from "@/../public/sort.svg";
+// import Image from "next/image";
 import axios from "axios";
 import productList from "@/interface/productList";
 import CardLayoutForDeals from "@/app/components/CardLayoutForDeals";
 import ProductDisplayFormat from "@/app/components/ProductDisplayFormat";
+import Popup from "@/app/components/Popup";
 
 const Deals = () => {
 	const [data, setData] = useState<productList[]>([]);
@@ -20,26 +21,22 @@ const Deals = () => {
 				console.log(allProducts);
 				setData(allProducts);
 			} catch {
+				Popup("error", "Something went wrong, REFRESH THE PAGE")
 				console.log(
-					"Something went wrong please try again later!"
+					"Something went wrong, REFRESH THE PAGE"
 				);
 			}
 		}
 		getData();
 	}, []);
 
-	function placeOrder() {}
+	// function placeOrder() {}
 
 	return (
-		<>
-			<div className="mx-8">
-				<ProductDisplayFormat heading={"Deals"}>
-					{" "}
-					<CardLayoutForDeals data={data} />
-				</ProductDisplayFormat>
-			</div>
-			
-		</>
+		<ProductDisplayFormat heading={"Deals"}>
+			{" "}
+			<CardLayoutForDeals data={data} />
+		</ProductDisplayFormat>
 	);
 };
 

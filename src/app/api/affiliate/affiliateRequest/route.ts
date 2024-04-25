@@ -6,7 +6,7 @@ Database()
 export async function GET(){
       
       try{
-            const allRequest = await User.find({isApprove:false})
+            const allRequest = await User.find().sort({isApprove: 1})
             if(allRequest){
                   return NextResponse.json({
                         data:allRequest, success: true, message:"All is well"

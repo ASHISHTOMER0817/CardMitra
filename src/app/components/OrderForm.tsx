@@ -1,11 +1,14 @@
-'use client'
+"use client";
 import axios from "axios";
 import React, { useState, ChangeEvent, FormEvent } from "react";
+import { useRouter } from "next/navigation";
+import Popup from "./Popup";
 
-const OrderForm = ({ objectId }:{objectId:string}) => {
+const OrderForm = ({ objectId }: { objectId: string }) => {
 	const [orderNumber, setOrderNumber] = useState("");
 	const [deliveryDate, setDeliveryDate] = useState(Date);
 	const [address, setAddress] = useState("");
+	const router = useRouter();
 
 	const handleOrderNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setOrderNumber(e.target.value);
@@ -19,28 +22,47 @@ const OrderForm = ({ objectId }:{objectId:string}) => {
 		setAddress(e.target.value);
 	};
 
-	const handleSubmit = async(e: FormEvent) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		try{
+		try {
 			const formData = {
 				orderNumber,
 				deliveryDate,
-				address,
-				objectId, // Include the objectId prop in the formData
+				objectId,
 			};
-			const response = await axios.post("/api/users/orderForm", {formData})
-			console.log(response.data)
+			const response = await axios.post("/api/users/orderForm", {
+				formData,
+			});
+			const message = response.data.message;
+			const status = response.data.status;
 
-		}catch{
-			console.log("Failed to perform operation, please try again later")
+			if (status === 400) {
+				Popup("info", message);
+				return;
+			}
+			if (status === 500) {
+				Popup("error", message);
+				return;
+			}
+
+			Popup("success", message);
+			// console.log(response.data);
+			setTimeout(() => {
+				router.back();
+			}, 2000);
+		} catch {
+			Popup("error", "Failed to submit form, please try again");
+			console.log("Failed to submit form, please try again");
 		}
-		
+
 		// Reset the form fields after submission (optional)
 		setOrderNumber("");
 		setDeliveryDate("");
 		setAddress("");
 	};
+
+	// function runPopup(statement: string) {}
 
 	return (
 		<form
@@ -48,7 +70,7 @@ const OrderForm = ({ objectId }:{objectId:string}) => {
 			onSubmit={handleSubmit}
 		>
 			<label htmlFor="number">
-				Order Number <span className="text-red-500">*</span>
+				Order Number 
 			</label>
 			<input
 				type="text"
@@ -64,6 +86,7 @@ const OrderForm = ({ objectId }:{objectId:string}) => {
 				placeholder="DD-MM-YYYY"
 				value={deliveryDate}
 				onChange={handleDeliveryDateChange}
+				required
 			/>
 
 			<label htmlFor="address">Address</label>
@@ -72,6 +95,7 @@ const OrderForm = ({ objectId }:{objectId:string}) => {
 				placeholder="Address"
 				value={address}
 				onChange={handleAddressChange}
+				required
 			/>
 
 			<button

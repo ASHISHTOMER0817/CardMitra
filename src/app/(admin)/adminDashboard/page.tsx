@@ -18,9 +18,9 @@ import Link from "next/link";
 
 interface dashboardData {
  OrderHistory:productList[]
- noOfDelivery: number
+ deliveries: number
  noOfAffiliate:number
- noOfOrders:number
+ order:number
 
 }
 const AdminDashboard = () => {
@@ -72,16 +72,16 @@ const AdminDashboard = () => {
 			<section className="mt-9 ">
 				<h3 className=" font-semibold mb-3">Dashboard</h3>
 				<div className="flex justify-between gap-2">
-					<div className="px-32 py-8 rounded-3xl  bg-[#F3F3F3] ">
-						<h3 className="text-[#1844E1]">{data?.noOfDelivery} </h3>{" "}
+					<div className="px-32 py-8 rounded-3xl bg-[#F3F3F3] cursor-pointer">
+						<h3 className="text-[#1844E1]">{data?.deliveries} </h3>{" "}
 						Today&apos;s delivery
 					</div>
-					<div className="px-32 py-8 rounded-3xl  bg-[#F3F3F3] ">
-						<h3 className="text-primaryBgClr">{data?.noOfOrders}</h3>
+					<div className="px-32 py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer">
+						<h3 className="text-primaryBgClr">{data?.order}</h3>
 						Orders placed <br />
 						today
 					</div>
-					<div className="px-32 py-8 rounded-3xl  bg-[#F3F3F3]">
+					<div className="px-32 py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer">
 						<h3 className="text-primaryBgClr">
 						{data?.noOfAffiliate}
 						</h3>
