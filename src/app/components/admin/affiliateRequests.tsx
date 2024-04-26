@@ -195,10 +195,8 @@ const AffiliateRequest = () => {
 													width={
 														30
 													}
-													height={
-														30
-													}
-													className="cursor-pointer"
+													
+													className="cursor-pointer h-auto"
 												/>
 											</Link>
 										)}

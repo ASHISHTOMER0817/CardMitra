@@ -5,7 +5,7 @@ import React from "react";
 
 const AdminBookers = () => {
 	return (
-		<div className="flex flex-col w-full mx-7">
+		<div className="flex flex-col w-[90%] mx-7">
 			<Header heading={"Bookers"} />
 			<AffiliateRequest />
 		</div>

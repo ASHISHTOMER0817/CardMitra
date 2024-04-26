@@ -7,12 +7,21 @@ Database()
 export async function POST(request: NextRequest){
       try{
             const reqBody = await request.json()
+
             
-            const productData = reqBody.formData
+            const {name, requirement,cards, site, address, productLink, image, price, commission} = reqBody.formData
+            const binaryImage = Buffer.from(image,'base64')
+            // console.log("first time", image)
             
-            const newProduct = await Product.create({productData})
+            const newProduct = await new Product({
+                  name, requirement, cards, site, address, productLink, image:binaryImage, price, commission
+            })
+            console.log(binaryImage)
+            newProduct.save()
+            // console.log(newProduct)
+            // const newProduct = await Product.create({productData})
             
-            console.log(newProduct)
+            console.log("second Time",newProduct)
             return NextResponse.json({
                   message: "The product has been added", success: true, status: 200
             })

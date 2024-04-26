@@ -111,24 +111,28 @@ const userSchema = new mongoose.Schema({
 const productSchema = new mongoose.Schema({
 	name: {
 		type: String,
-		required: true,
-		trim: true,
+		// required: true,
+		// trim: true,
 	},
 	address: {
 		type: String,
-		required: true,
+		// required: true,
+	},
+	image:{
+		types:Buffer,
+		// required:true
 	},
 	price: {
 		type: Number,
-		required: true,
+		// required: true,
 	},
 	productLink: {
 		type: String,
-		required: true,
+		// required: true,
 	},
 	requirement: {
 		type: Number,
-		required: true,
+		// required: true,
 		default: 0,
 	},
 	//   images: {
@@ -142,11 +146,15 @@ const productSchema = new mongoose.Schema({
 	//   },
 	cards: {
 		type: String,
+		// required:true
 	},
-
+	site:{
+		type:String,
+		// required:true
+	},
 	deals: {
 		type: Boolean,
-		default: false,
+		default: true,
 	},
 
 	commission: {
