@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import React, { useEffect, useState } from "react";
 // import filter from "@/../public/Filter.svg";
 // import sort from "@/../public/sort.svg";

@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import React, { useEffect, useState } from "react";
 import NavigationSidebar from "../../components/NavigationSidebar";
 import SideBar from "../../components/Sidebar";

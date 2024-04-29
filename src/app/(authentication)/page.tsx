@@ -12,6 +12,8 @@ import InputSpace from "../components/InputSpace";
 import { useState } from "react";
 import axios from "axios";
 import Link from "next/link";
+// import russian from ""
+
 
 export default function Home() {
 	const [name, setName] = useState("");
@@ -61,6 +63,7 @@ export default function Home() {
 	return (
 		<>
 			<IntroHeader />
+			<Image src={"/Users/ashis/Pictures/Screenshots/russian.png"} width={200} height={200} alt="hello"/>
 			<main className=" min-h-screen text-center">
 				<section className="text-center px-10 py-24">
 					<h5 className="my-4 font-medium text-primaryBgClr">

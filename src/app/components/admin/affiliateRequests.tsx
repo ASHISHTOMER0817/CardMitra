@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import React, { useState, useEffect, ReactNode } from "react";
 import axios from "axios";
 import Image from "next/image";
@@ -16,12 +16,10 @@ interface details {
 	_id: string;
 	isApprove: boolean;
 }
+
 const AffiliateRequest = () => {
 	const [users, setUsers] = useState<details[]>([]);
 	const [refreshData, setRefreshData] = useState(false);
-
-
-	// const [arr, setArr] = useState();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -68,7 +66,7 @@ const AffiliateRequest = () => {
 
 	return (
 		<div className="container mx-auto my-8">
-			<h5 className="font-semibold text-lg mb-4 pb-2 border-b">
+			<h5 className="font-semibold text-lg mb-4 pb-2">
 				User List
 			</h5>
 			<div className="rounded-lg overflow-hidden border border-gray-300">

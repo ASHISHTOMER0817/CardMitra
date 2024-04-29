@@ -13,11 +13,32 @@ interface productList {
 export default productList;
 
 export interface order{
-	product:string,
-	user:string,
+	product:productList,
+	user:user,
 	orderId:string,
 	deliveryDate:string,
 	otp:boolean,
 	delivered:boolean,
 	orderedAt:string
+	_id:ObjectId
+}
+
+export interface otp{
+	orderObjectId:order,
+	contact: string,
+	userObjectId:user, 
+	otp: number,
+	trackingId: string,
+	delivered: boolean,
+}
+
+export interface user{
+	name: string
+	email: string
+	contact:string
+	password:string
+	role: string
+	notification: string[]
+	isApprove: boolean
+	createdAt: Date
 }

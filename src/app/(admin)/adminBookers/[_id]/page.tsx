@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import BackwardButton from "@/app/components/BackwardButton";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -10,8 +10,7 @@ import UserOrders from "@/app/components/userOrders";
 import { order } from "@/interface/productList";
 import Popup from "@/app/components/Popup";
 import { useRouter } from "next/navigation";
-
-
+import { RxCross1 } from "react-icons/rx";
 
 interface User {
 	user: {
@@ -21,25 +20,30 @@ interface User {
 		bank_account_number: string;
 		IFSC_code: string;
 		UPI_ID: string;
+		unpaid:number
 	};
 	orderList: order[];
+	totalAmt: number
 }
 const Bookers = ({ params }: { params: { _id: string } }) => {
 	const [data, setData] = useState<User>();
+	const [listType, setListType] = useState("delivered");
 	const router = useRouter();
+	const [amount, setAmount] = useState<number>(0);
+	const [overlay, setOverlay] = useState("hidden");
 
 	useEffect(() => {
 		async function getData() {
 			try {
 				const response = await axios.get(
-					`/api/users/details?query=${params._id}`
-				);
-				console.log(params._id);
-				const status = response.data.status;
-				const msg = response.data.message;
-				// Popup("success",msg)
+					`/api/users/details?query=${params._id}&listType=${listType}&paid=${amount}`
+				)
+				if(response.data.status === 250){
+					Popup("success", `${response.data.message} - Rs.${amount}`)
+					return;
+				}
 				setData(response.data.data);
-				console.log(status, msg);
+
 			} catch {
 				console.log(
 					"Something went wrong, please try again later"
@@ -47,33 +51,58 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 			}
 		}
 		getData();
-	}, [params._id]);
+	}, [listType, params._id]);
 
-	async function removeAccount() {
-		try {
-			const response = await axios.delete(
-				`/api/users/deleteAccount?objectId=${params._id}`
-			);
-			const success = await response.data.success;
-			const msg = await response.data.message;
-			console.log(success);
-			if (success !== true) {
-				Popup("error", msg);
-			} else if (success) {
-				Popup("success", msg);
-				setTimeout(() => {
-					router.back();
-				}, 3000);
-			}
-		} catch {
-			Popup("error", "something went wrong, REFRESH");
-		}
+	// Function to remove account of the user
+	// async function removeAccount() {
+	// 	try {
+	// 		const response = await axios.delete(
+	// 			`/api/users/deleteAccount?objectId=${params._id}`
+	// 		);
+	// 		const success = await response.data.success;
+	// 		const msg = await response.data.message;
+	// 		console.log(success);
+	// 		if (success !== true) {
+	// 			Popup("error", msg);
+	// 		} else if (success) {
+	// 			Popup("success", msg);
+	// 			setTimeout(() => {
+	// 				router.back();
+	// 			}, 3000);
+	// 		}
+	// 	} catch {
+	// 		Popup("error", "something went wrong, REFRESH");
+	// 	}
+	// }
+	function overlayFeature(){
+		setOverlay("hidden")
+		console.log(overlay)
 	}
 
+	function paymentUpdate(){
 
-	 
+	}
 	return (
-		<div className="w-[90%] mx-10 mt-6 ">
+		<div className="w-[90%] mx-10 mt-6 relative">
+			<div
+				className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}
+			></div>
+			<div className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4`}>
+				<RxCross1
+					className=" cursor-pointer ml-auto"
+					onClick={overlayFeature}
+				/>
+				<h4>Write the amount you paid</h4>
+				<input
+					type="number"
+					required
+					placeholder="Amount"
+					className="outline-none border-b pb-2 border-black"
+					value={amount}
+					onChange={(e)=>setAmount(+e.target.value)}
+				/>{" "}
+				<button onClick={()=>setListType("reduce")} className="px-3 py-1">Submit</button>
+			</div>
 			<BackwardButton />
 			<div className="flex justify-between mb-10 items-center">
 				<h3>{data?.user?.name}</h3>
@@ -94,23 +123,15 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 						/>{" "}
 						Accept
 					</button> */}
-				<div className="rounded-3xl text-nowrap cursor-pointer hover:bg-slate-100 flex py-2 px-4 border justify-center items-center border-red-500 text-red-500">
-					{/* <Image
-							onClick={() =>
-								acceptAffiliate(
-									false,
-									user?.email!
-								)
-							}
-							src={redCross}
-							alt="reject"
-							width={18}
-							height={18}
-							className="cursor-pointer"
-						/>{" "} */}
-					<div onClick={removeAccount}>Remove account</div>
-				</div>
-				{/* </div> */}
+
+				{listType === "delivered" && amount !== 0 && (
+					<div
+						onClick={() => setOverlay("")}
+						className="rounded-3xl text-nowrap cursor-pointer bg-primaryBgClr flex py-2 px-4 border justify-center items-center  text-white"
+					>
+						pay Rs.{data?.totalAmt}
+					</div>
+				)}
 			</div>
 			<h6 className="text-gray-400 mb-4 text-sm">PERSONAL</h6>
 			<section className=" flex justify-between items-center">
@@ -132,9 +153,25 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 					UPI ID: {data?.user?.UPI_ID}
 				</div>
 			</section>
-			<h6 className="mt-8 text-gray-400 mb-4 text-sm">
-				ORDER LIST
-			</h6>
+
+			<div className="flex justify-start gap-4 mt-8 mb-4 items-center ">
+				<h6
+					onClick={() => setListType("delivered")}
+					className={` text-gray-400 text-sm p-[10px] rounded-full ${
+						listType === "delivered" && "bg-blue-100"
+					}`}
+				>
+					Delivered List
+				</h6>
+				<h6
+					onClick={() => setListType("nonDelivered")}
+					className={` text-gray-400 text-sm p-[10px] rounded-full ${
+						listType === "nonDelivered" && "bg-blue-100"
+					}`}
+				>
+					non-delivered List
+				</h6>
+			</div>
 
 			{data ? (
 				data?.orderList?.length! > 0 ? (

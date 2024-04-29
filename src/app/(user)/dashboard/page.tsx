@@ -3,10 +3,17 @@ import React, { useEffect, useState } from "react";
 import BarChart from "@/app/components/BarChart";
 import axios from "axios";
 import OrderHistory from "@/app/components/OrderHistory";
+import { order } from "@/interface/productList";
+import Popup from "@/app/components/Popup";
+import dateFormat from "@/app/components/dateFormat";
+import Link from "next/link";
 
 
 const Dashboard = () => {
-	const [data, setData] = useState([]);
+	const [data, setData] = useState<order[]>([]);
+	const [profit, setProfit] = useState(0);
+	const [commission, setCommission] = useState(0);
+	const [ordersTillDate, setOrdersTillDate] = useState(0);
 	const [userData, setUserData] = useState({
 		labels: [
 			"JAN",
@@ -35,31 +42,56 @@ const Dashboard = () => {
 	useEffect(() => {
 		async function getData() {
 			try {
-				const response = await axios.get("/api/dashboard");
+				const response = await axios.get(
+					"/api/users/dashboard"
+				);
 				console.log(response.data.data);
+				
 				setData(response.data.data);
+				 
+				loops(response.data.data);
 				console.log(response.data.message);
 			} catch {
+				Popup("error", "Something went wrong, please refresh");
 				console.log("Please try again later");
 			}
 		}
 		getData();
 	}, []);
+
+	function loops(todaysOrders: order[]) {
+		let total = 0;
+		let commission = 0;
+		for (let i = 0; i < todaysOrders.length; i++) {
+			if (todaysOrders[i].orderedAt === dateFormat(new Date())) {
+				total += todaysOrders[i].product.price;
+			}
+		}
+		for (let i = 0; i < todaysOrders.length; i++) {
+			commission += todaysOrders[i].product.price;
+		}
+		setCommission(commission);
+		setProfit(total);
+		setOrdersTillDate(todaysOrders.length);
+		console.log(total);
+	}
+
+
 	return (
 		<div className="mx-6 w-[90%]">
 			<h3 className="my-7 font-semibold">Dashboard</h3>
 			<div className="flex justify-between gap-2">
 				<div className="px-32 py-8 rounded-3xl  bg-[#F3F3F3] ">
-					<h3 className="text-[#1844E1]">Rs.300</h3>{" "}
-					Today&apos;s profile
+					<h3 className="text-[#1844E1]">{profit} </h3>{" "}
+					Today&apos;s Profit
 				</div>
 				<div className="px-32 py-8 rounded-3xl  bg-[#F3F3F3] ">
-					<h3 className="text-primaryBgClr">64</h3>
+					<h3 className="text-primaryBgClr">{ordersTillDate}</h3>
 					Orders placed <br />
 					till date
 				</div>
 				<div className="px-32 py-8 rounded-3xl  bg-[#F3F3F3]">
-					<h3 className="text-primaryBgClr">Rs. 6,800</h3>
+					<h3 className="text-primaryBgClr">Rs. {commission}</h3>
 					Commission earned
 				</div>
 			</div>
@@ -74,13 +106,11 @@ const Dashboard = () => {
 			</div>
 			<div className="flex justify-between my-6">
 				<h4 className="font-semibold">Order History</h4>
-				<div className="text-primaryBgClr text-base">
-					VIEW ALL
-				</div>
+				
+					<Link className="text-primaryBgClr text-base" href={"/odrHistory"}>VIEW ALL</Link>
 			</div>
 			<div className="grid grid-flow-row gap-3 grid-cols-3">
-
-				<OrderHistory data={data}/>
+				<OrderHistory data={data.slice(0,3)} />
 			</div>
 
 			{/* <div className="mx-auto mb-20 w-fit font-serif text-sm font-semibold text-red-500">

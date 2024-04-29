@@ -1,7 +1,7 @@
-"use client";
+'use client'
 import axios from "axios";
 import Image from "next/image";
-import React, { useState, useEffect, FormEvent } from "react";
+import React, { useState } from "react";
 import downloadImg from "@/../public/downloadImg.svg";
 // import oneCard from "@/../public/oneCard.jpg";
 // import hdfcCard from "@/../public/hdfcCard.jpg";

@@ -1,12 +1,14 @@
-"use client";
+'use client'
 import axios from "axios";
 import React, { ChangeEvent, FormEvent, useState } from "react";
+import Popup from "./Popup";
+import { useRouter } from "next/navigation";
 
 const OtpForm = ({ _id }: { _id: string }) => {
 	const [otp, setOtp] = useState('');
 	const [contact, setContact] = useState("");
 	const [trackingId, setTrackingId] = useState("");
-
+const router = useRouter()
 	const handleOtpChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setOtp(e.target.value);
 	};
@@ -25,15 +27,26 @@ const OtpForm = ({ _id }: { _id: string }) => {
 		e.preventDefault();
 		try {
 			const response = await axios.post("/api/users/OTPsubmission", {orderDetails});
-			console.log(response)
-			console.log("Submitting OTP:", otp);
-			console.log("Submitting Contact:", contact);
+			// console.log(response)
+			// console.log("Submitting OTP:", otp);
+			// console.log("Submitting Contact:", contact);
+			console.log(response.data.success)
 			// Clear form fields after submission
+			if(response.data.success !== true){
+				Popup("error", "Server side problem, try again")
+			}else{
+				Popup("success", "OTP submitted")
+				setTimeout(() => {
+					router.back()
+				}, 2500);
+
+			}
 			setOtp('');
 			setContact("");
 			setTrackingId("")
 		} catch (error) {
 			console.log(error);
+			Popup("error", "Something went wrong, please refresh")
 		}
 	};
 	return (

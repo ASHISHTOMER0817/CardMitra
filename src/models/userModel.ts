@@ -23,9 +23,9 @@ const orderSchema = new mongoose.Schema({
 		type: String,
 	},
 	deliveryDate: {
-		type: Date,
+		type: String,
 		required:true,
-		format: Date
+		// format: Date
 	},
 	otp: {
 		default: false,
@@ -36,8 +36,8 @@ const orderSchema = new mongoose.Schema({
 		default: false
 	},
 	orderedAt:{
-		type: Date,
-		format:Date
+		type: String,
+		// format:Date
 		
 	}
 })
@@ -65,6 +65,10 @@ const otpSchema = new mongoose.Schema({
 	delivered:{
 		type: Boolean,
 		default: false
+	},
+	submittedAt:{
+		type:String,
+		required:true
 	}
 })
 
@@ -102,6 +106,14 @@ const userSchema = new mongoose.Schema({
 	createdAt: {
 		type: Date,
 		default: Date.now,
+	},
+	paid:{
+		type:Number,
+		default:0
+	},
+	unpaid:{
+		type:Number,
+		default:0
 	},
 
 	resetPasswordToken: String,

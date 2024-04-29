@@ -3,7 +3,7 @@ import Database from "@/database/database";
 import { Order, Product } from "@/models/userModel";
 import GetToken from "@/app/components/getToken";
 import mongoose from "mongoose";
-import dayjs from "dayjs";
+// import dayjs from "dayjs";
 import dateFormat from "@/app/components/dateFormat";
 
 Database()
@@ -33,7 +33,7 @@ export const POST = async (request: NextRequest) => {
 
                   //Change Format
                   const delivery_date = dateFormat(deliveryDate)
-                  console.log( 'delivery date',delivery_date)
+                  console.log( 'delivery date',delivery_date, typeof delivery_date)
 
                   //check if requirement fulfilled
                   if (requirement === 0) {
@@ -43,7 +43,7 @@ export const POST = async (request: NextRequest) => {
                   }
                   console.log("still workin...")
 
-                  console.log(delivery_date)
+                  // console.log(delivery_date)
                   // Create new Order
                   const newOrder = await Order.create({
                         product: productId,
@@ -51,6 +51,7 @@ export const POST = async (request: NextRequest) => {
                         orderId: orderNumber,
                         deliveryDate:  delivery_date,
                         orderedAt: dateFormat(new Date()),
+                        delivered:false,
                         otp: false,
                   })
 

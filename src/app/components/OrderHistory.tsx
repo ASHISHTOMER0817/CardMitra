@@ -1,20 +1,9 @@
 import React, { useState } from "react";
 import CardLayout from "./CardLayout";
 import Link from "next/link";
+import { order } from "@/interface/productList";
 
-
-interface orderHistory {
-	product: {
-		_id:string
-		name: string
-		price: number
-		commission: number
-	};
-	orderId:string,
-	_id:string
-}
-
-const OrderHistory = ({ data }: { data: orderHistory[] }) => {
+const OrderHistory = ({ data }: { data: order[] }) => {
 
 	return (
 		<>
@@ -22,7 +11,7 @@ const OrderHistory = ({ data }: { data: orderHistory[] }) => {
 				return (
 					<Link key={index} className="cursor-pointer" href={`/odrHistory/${_id}`}>
 						<CardLayout
-							quantity={0}
+							quantity={product?.requirement}
 							name={product?.name}
 							randomNo={65456141161}
 							price={product?.price}

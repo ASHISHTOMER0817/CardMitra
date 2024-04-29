@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import CardLayoutAdminDashboard from "@/app/components/CardLayoutAdminDashboard";
 import ProductDisplayFormat from "@/app/components/ProductDisplayFormat";
 import productList from "@/interface/productList";

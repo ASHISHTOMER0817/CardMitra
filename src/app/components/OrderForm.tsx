@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import axios from "axios";
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
