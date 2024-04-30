@@ -10,30 +10,28 @@ const CardLayout = ({
 	beforeDate,
 	quantity,
 	name,
-	randomNo,
 	price,
 	commission,
-	classList
+	classList,
 }: {
 	image?: ReactNode;
 	placeOrder?: ReactNode;
 	beforeDate?: ReactNode;
 	quantity: number;
 	name: string;
-	randomNo: number;
 	price: number;
 	commission: number;
-	classList?:string
+	classList?: string;
 }) => {
 	return (
-		<div className={`p-7 border rounded-2xl border-gray-400 ${classList}`}>
+		<div
+			className={`p-7 border rounded-2xl border-gray-400 ${classList}`}
+		>
 			<div className="flex items-center mb-4 gap-4">
 				<div className="mr-auto px-[10px] py-[5px] text-sm rounded-3xl border text-center bg-gray-200">
 					Quantity: {quantity}
 				</div>
 				{image}
-				{/* <IoHeartOutline className="text-red-500 border rounded-full p-2 w-10 h-10" />
-				<CiShoppingCart className="border rounded-full p-2 w-10 h-10" /> */}
 			</div>
 			<div className="flex justify-center gap-8 text-sm items-start">
 				<Image
@@ -42,15 +40,11 @@ const CardLayout = ({
 					alt={""}
 				/>
 				<section className="flex flex-col gap-4 justify-around">
-					<div className="text-wrap">
-						<div className="font-semibold text-base">
-							{" "}
-							{name}
-						</div>
-						<div className="text-gray-400 text-xs">
-							{randomNo}
-						</div>
+					<div className=" text-wrap font-semibold text-base">
+						{" "}
+						{name}
 					</div>
+
 					<div className=" flex">
 						<div>
 							<div className="text-nowrap font-bold text-primaryBgClr">
@@ -67,9 +61,6 @@ const CardLayout = ({
 						</div>
 					</div>
 					{placeOrder}
-					{/* <button className="bg-primaryBgClr px-[10px] py-[5px]  rounded-3xl border text-center w-auto text-white">
-						Fulfill Order
-					</button> */}
 				</section>
 			</div>
 			<hr className="my-4" />

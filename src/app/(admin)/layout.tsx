@@ -33,7 +33,7 @@ export default function RootLayout({
 					thirdSection={{
 						image: deals,
 						name: "Orders",
-						changeState: "/Orders",
+						changeState: "/orders",
 					}}
 					fourthSection={{
 						image: bookers,

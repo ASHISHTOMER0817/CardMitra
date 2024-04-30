@@ -53,7 +53,6 @@ const CardLayoutForDeals = ({ data }: { data: productList[] }) => {
 									}
 									quantity={requirement}
 									name={name}
-									randomNo={51925985156}
 									price={price}
 									commission={commission}
 								/>

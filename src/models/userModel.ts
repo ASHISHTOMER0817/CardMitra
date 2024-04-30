@@ -24,7 +24,7 @@ const orderSchema = new mongoose.Schema({
 	},
 	deliveryDate: {
 		type: String,
-		required:true,
+		required: true,
 		// format: Date
 	},
 	otp: {
@@ -35,16 +35,16 @@ const orderSchema = new mongoose.Schema({
 		type: Boolean,
 		default: false
 	},
-	orderedAt:{
+	orderedAt: {
 		type: String,
 		// format:Date
-		
+
 	}
 })
 
 const otpSchema = new mongoose.Schema({
-	orderObjectId:{
-		type:mongoose.Schema.Types.ObjectId,
+	orderObjectId: {
+		type: mongoose.Schema.Types.ObjectId,
 		ref: "orders"
 	},
 	contact: {
@@ -54,7 +54,7 @@ const otpSchema = new mongoose.Schema({
 	userObjectId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "users"
-	}, 
+	},
 	otp: {
 		type: Number,
 		required: true
@@ -62,13 +62,13 @@ const otpSchema = new mongoose.Schema({
 	trackingId: {
 		type: String,
 	},
-	delivered:{
+	delivered: {
 		type: Boolean,
 		default: false
 	},
-	submittedAt:{
-		type:String,
-		required:true
+	submittedAt: {
+		type: String,
+		required: true
 	}
 })
 
@@ -107,13 +107,13 @@ const userSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now,
 	},
-	paid:{
-		type:Number,
-		default:0
+	paid: {
+		type: Number,
+		default: 0
 	},
-	unpaid:{
-		type:Number,
-		default:0
+	unpaid: {
+		type: Number,
+		default: 0
 	},
 
 	resetPasswordToken: String,
@@ -130,8 +130,8 @@ const productSchema = new mongoose.Schema({
 		type: String,
 		// required: true,
 	},
-	image:{
-		types:Buffer,
+	image: {
+		types: Buffer,
 		// required:true
 	},
 	price: {
@@ -160,8 +160,8 @@ const productSchema = new mongoose.Schema({
 		type: String,
 		// required:true
 	},
-	site:{
-		type:String,
+	site: {
+		type: String,
 		// required:true
 	},
 	deals: {
@@ -172,10 +172,30 @@ const productSchema = new mongoose.Schema({
 	commission: {
 		type: Number,
 	},
-	show:{
-		type:Boolean,
-		default:true
+	show: {
+		type: Boolean,
+		default: true
+	},
+	info: {
+
+		first: {
+			type: String,
+			default:"",
+		},
+		second: {
+			type: String,
+			default:""
+		},
+		third: {
+			type: String,
+			default:""
+		},
+		fourth: {
+			type: String,
+			default:""
+		},
 	}
+
 
 });
 

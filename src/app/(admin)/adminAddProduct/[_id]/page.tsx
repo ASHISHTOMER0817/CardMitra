@@ -1,7 +1,7 @@
-'use client'
+"use client";
 import axios from "axios";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import downloadImg from "@/../public/downloadImg.svg";
 // import oneCard from "@/../public/oneCard.jpg";
 // import hdfcCard from "@/../public/hdfcCard.jpg";
@@ -14,114 +14,136 @@ import downloadImg from "@/../public/downloadImg.svg";
 // import sbi from "@/../public/SBI.png"
 import Dropdown from "@/app/components/dropdown";
 import Popup from "@/app/components/Popup";
+import productList from "@/interface/productList";
 
-export interface dropdown{
-	value:string,
-	label:string
+export interface dropdown {
+	value: string;
+	label: string;
 }
-const ProductForm = () => {
-	const [name, setName] = useState("Apple iPhone 15 (Blue, 128 GB)");
-	const [randomNumber, setRandomNumber] = useState("4645756778695");
-	const [price, setPrice] = useState(52999);
-	const [commission, setCommission] = useState(800);
+const ProductForm = ({params}:{params:{_id:string}}) => {
+
+	const [name, setName] = useState("");
+	const [price, setPrice] = useState(0);
+	const [commission, setCommission] = useState(0);
 	const [cards, setCards] = useState<dropdown>();
 	const [site, setSite] = useState<dropdown>();
 	const [productLink, setProductLink] = useState("");
-	const [image, setImage] = useState("");
-	const [requirement, setRequirement] = useState<number>()
-	const [address, setAddress] = useState("")
+	const [image, setImage] = useState<File>();
+	const [requirement, setRequirement] = useState<number>(0);
+	const [address, setAddress] = useState("");
+	const [info, setInfo] = useState({
+		first:"",
+		second:"",
+		third:"",
+		fourth:""
+	})
 
 	//function to set Card
-	const handleDropdownChangeCard = (option:dropdown) => {
+	const handleDropdownChangeCard = (option: dropdown) => {
 		setCards(option);
 	};
 
 	//function to set Site
-	const handleDropdownChangeSite = (option:dropdown) => {
+	const handleDropdownChangeSite = (option: dropdown) => {
 		setSite(option);
 	};
 
-	//  LABEL IN CONSOLE
-	console.log(cards?.label);
-	console.log(site?.label);
 
-	// CONVERT IMAGE TO BASE 64
-	function convertToBase64(e: any) {
-		console.log(e);
-		let reader = new FileReader();
-		reader.readAsDataURL(e.target.files[0]);
-		reader.onload = () => {
-			if (reader.result !== null) {
-				console.log(reader.result);
-				setImage(reader.result.toString()); // Convert reader.result to string
-			    } else {
-				console.log("Reader result is null");
-			    }
-		};
-		reader.onerror = (error) => {
-			console.log("error", error);
-		};
-	}
-	//SEND DATA TO BACKEND
-	async function postData() {
-		// e.preventDefault()
-		try {
-			const formData = {
-				name,
-				price,
-				commission,
-				cards:cards?.value,
-				site:site?.value,
-				productLink,
-				image,
-				address, 
-				requirement
-			};
-			console.log(formData);
 
-			const response = await axios.post("/api/admin/addProduct", {
-				formData
-			});
-			if(response.data.success){
-				Popup("success", "Product added successfully")
+	useEffect(()=>{
+		async function getData(){
+			try{
+				const response = await axios.get(`/api/admin/addProduct?_id=${params._id}`)
+				const product:productList = response.data.data;
+				setName(product.name)
+				setPrice(product.price)
+				setCommission(product.commission)
+				setProductLink(product.productLink)
+				setRequirement(product.requirement)
+				setAddress(product.address)
+				setInfo({...info,first:product.info.first})
+				setInfo({...info,second:product.info.second})
+				setInfo({...info,third:product.info.third})
+				setInfo({...info,fourth:product.info.fourth})
+				
+			}catch{
+				Popup("error", "something went wrong")
 			}
-			console.log(response.data.message, response.data.success);
+		}
+		getData()
+	},[params._id])
+
+	//SEND DATA TO BACKEND
+	async function postData(e:FormEvent) {
+		e.preventDefault()
+		try {
+			// Creating a formData instance
+			const formData = new FormData();
+			console.log(image)
+			formData.append("name", name);
+			formData.append("commission", commission.toString());
+			formData.append("productLink", productLink);
+			formData.append("price", price.toString());
+			formData.append("requirement", requirement.toString());
+			formData.append("address", address);
+			formData.append("card", cards?.label!);
+			formData.append("site", site?.label!);
+			formData.append("image", image!);
+	
+			// const response = await axios.post("/api/admin/addProduct", {
+			// 	formData,
+			// });
+
+			const response = await fetch('/api/admin/addProduct',{
+				method:'POST',
+				body:formData
+			})
+
+
+
+			// console.log(response.data)
+			if (response) {
+				Popup("success", "Product added successfully");
+			}
 		} catch {
-			Popup("error", 'Something went wrong, please try again later')
+			Popup(
+				"error",
+				"Something went wrong, please try again later"
+			);
 			console.log("Something went wrong, please try again later");
 		}
 	}
 
 	// Cards Array
-	const cardOptions:dropdown[] = [
+	const cardOptions: dropdown[] = [
 		{ value: "Amazon pay icici", label: "Amazon pay icici" },
 		{ value: "flipkart axis", label: "flipkart axis" },
 		{ value: "SBI cashback", label: "SBI cashback" },
 	];
 
-
 	//Site Array
-	const siteOptions:dropdown[] = [
+	const siteOptions: dropdown[] = [
 		{ value: "Amazon", label: "Amazon" },
 		{ value: "Flipkart", label: "Flipkart" },
 		{ value: "Mi App", label: "Mi App" },
 	];
 
 	return (
-		<div className="w-[90%] p-8">
+		<form onSubmit={postData} className="w-[90%] p-8" method="POST" encType="multipart/form-data">
 			<div className="flex gap-10 mb-8">
 				<div>
 					{image ? (
-						<Image
-							src={image}
-							alt="Uploaded"
-							style={{
-								maxWidth: "100%",
-								maxHeight: "100%",
-							}}
-							width={250}
-							height={300}
-						/>
+						// <Image
+						// 	src={image}
+						// 	alt="Uploaded"
+						// 	style={{
+						// 		maxWidth: "100%",
+						// 		maxHeight: "100%",
+						// 	}}
+						// 	width={250}
+						// 	height={300}
+						// />
+						<div></div>
 					) : (
 						<div
 							style={{
@@ -157,42 +179,36 @@ const ProductForm = () => {
 						</div>
 					)}
 
-					<input required
+					<input
+						required
 						type="file"
 						accept="image/*"
-						onChange={convertToBase64}
-						// value={image}
+						name="imageFile"
+						onChange={(e) =>
+							image !== null || undefined ? setImage(e.target.files?.[0]!) : ""
+						}
 					/>
 				</div>
 				<div className="">
-					<input required
-						id="price"
+					<input
+						required
+						id="name"
 						type="text"
 						value={name}
 						onChange={(e) => setName(e.target.value)}
-						className=" outline-none text-2xl font-bold mb-6 mt-4"
+						className=" outline-none border-b border-black text-2xl font-bold mb-6 mt-4"
 					/>
-					<div className="">
-						<input required
-							id="price"
-							type="text"
-							value={randomNumber}
-							onChange={(e) =>
-								setRandomNumber(e.target.value)
-							}
-							className=" outline-none text-base font-semibold mb-6"
-						/>
-					</div>
-					<div className="flex items-centergap-7 mb-4 font-normal">
+					<div className="flex items-center gap-7 mb-4 font-normal">
 						<div className=" flex flex-col items-start">
-							<input required
+							<input
+								required
 								id="price"
 								type="number"
 								value={price}
 								onChange={(e) =>
 									setPrice(+e.target.value)
 								}
-								className=" outline-none px-2 font-semibold text-primaryBgClr py-1"
+								className=" outline-none px-2 border-b border-black font-semibold text-primaryBgClr py-1"
 							/>
 							<label
 								draggable="true"
@@ -206,7 +222,8 @@ const ProductForm = () => {
 							</label>
 						</div>
 						<div className="flex-col flex items-start">
-							<input required
+							<input
+								required
 								id="commission"
 								type="number"
 								value={commission}
@@ -215,7 +232,7 @@ const ProductForm = () => {
 										+e.target.value
 									)
 								}
-								className="  outline-none font-semibold px-2 py-1"
+								className="  outline-none border-b border-black font-semibold px-2 py-1"
 							/>
 							<label
 								htmlFor="commission"
@@ -225,6 +242,14 @@ const ProductForm = () => {
 							</label>
 						</div>
 					</div>
+					<h5>** Points to remember while Ordering **</h5>
+					<ul className="list-disc">
+						<li>{info.first}</li>
+						<li>{info.second}</li>
+						<li>{info.third}</li>
+						<li>{info.fourth}</li>
+					</ul>
+
 				</div>
 			</div>
 			<div className="flex gap-6 mb-6">
@@ -259,29 +284,34 @@ const ProductForm = () => {
 					<label htmlFor="directLink" className="font-bold">
 						Direct Links:
 					</label>
-					<input required
+					<input
+						required
 						id="directLink"
 						type="text"
 						value={productLink}
 						onChange={(e) =>
 							setProductLink(e.target.value)
 						}
-						className=" border border-gray-300 rounded-full p-4 w-[59%]"
+						className=" border border-gray-300 rounded-full p-2 w-[59%]"
 						placeholder="Enter direct link"
 					/>
 				</div>
 				<div className=" flex flex-col w-full gap-6">
-					<label htmlFor="requirement" className="font-bold">
+					<label
+						htmlFor="requirement"
+						className="font-bold"
+					>
 						Requirement:
 					</label>
-					<input required
+					<input
+						required
 						id="requirement"
 						type="number"
 						value={requirement}
 						onChange={(e) =>
 							setRequirement(+e.target.value)
 						}
-						className=" border border-gray-300 rounded-full p-4 w-[59%]"
+						className=" border border-gray-300 rounded-full p-2 w-[59%]"
 						placeholder="Requirement"
 					/>
 				</div>
@@ -289,26 +319,25 @@ const ProductForm = () => {
 					<label htmlFor="address" className="font-bold">
 						Address:
 					</label>
-					<input required
+					<input
+						required
 						id="address"
 						type="text"
 						value={address}
-						onChange={(e) =>
-							setAddress(e.target.value)
-						}
-						className=" border border-gray-300 rounded-full p-4 w-[59%]"
+						onChange={(e) => setAddress(e.target.value)}
+						className=" border border-gray-300 rounded-full p-2 w-[59%]"
 						placeholder="Enter Address"
 					/>
 				</div>
-				<div
-					onClick={postData}
-					className="w-64 text-white bg-primaryBgClr p-1 rounded-full"
-					// type="submit"
+				<button
+					// onClick={postData}
+					className="w-64 p-2 text-white bg-primaryBgClr rounded-full"
+					type="submit"
 				>
 					Add Product
-				</div>
+				</button>
 			</div>
-		</div>
+		</form>
 	);
 };
 

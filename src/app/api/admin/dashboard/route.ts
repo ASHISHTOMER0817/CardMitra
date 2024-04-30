@@ -21,6 +21,7 @@ export async function GET(request: NextRequest) {
       try {
             const searchparams = request.nextUrl.searchParams
             const query = searchparams.get('query')
+            const _id = searchparams.get('_id')
             // console.log(query)
 
 
@@ -74,6 +75,13 @@ export async function GET(request: NextRequest) {
                               message: "Order history is being shown", status: false, data: orderHistory
                         })
                   }
+            }
+            else if(_id){
+                  const removeDeal = Product.findOneAndUpdate({_id:_id}, {$set:{show:false}})
+                  console.log('deal removed')
+                  return NextResponse.json({
+                        message: "deal removed", success: true
+                  }) 
             }
 
       } catch {

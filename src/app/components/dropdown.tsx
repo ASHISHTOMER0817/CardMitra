@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 
 import Select, {StylesConfig} from 'react-select';
-import { dropdown } from '../(admin)/adminAddProduct/page';
+import { dropdown } from '../(admin)/adminAddProduct/[product]/page';
 
 const Checkbox = ({ children, ...props }: JSX.IntrinsicElements['input']) => (
   <label style={{ marginRight: '1em' }}>

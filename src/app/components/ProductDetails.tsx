@@ -25,9 +25,6 @@ const ProductDetails = ({ data }: { data: productList }) => {
 							<h4 className="font-semibold mb-2">
 								{data?.name}
 							</h4>
-							<div className="text-[#12121280] text-xs">
-								6541651563516532
-							</div>
 						</div>
 						<div>
 							<div className="flex items-start gap-3">

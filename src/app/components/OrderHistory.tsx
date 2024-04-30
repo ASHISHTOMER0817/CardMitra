@@ -13,7 +13,6 @@ const OrderHistory = ({ data }: { data: order[] }) => {
 						<CardLayout
 							quantity={product?.requirement}
 							name={product?.name}
-							randomNo={65456141161}
 							price={product?.price}
 							commission={product?.commission}
 							classList="hover:border-blue-400"

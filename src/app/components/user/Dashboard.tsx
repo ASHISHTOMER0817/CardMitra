@@ -95,9 +95,7 @@ const Dashboard = () => {
 									<CardLayout
 										quantity={quantity}
 										name={name}
-										randomNo={
-											65456141161
-										}
+										
 										price={price}
 										commission={
 											commission
