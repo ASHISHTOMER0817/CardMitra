@@ -1,12 +1,11 @@
 import mongoose from "mongoose";
 
-const notificationsSchema = new mongoose.Schema({
-	message: {
-		type: String,
-		timeStamp: {
-			type: Date,
-			default: Date.now()
-		}
+const passwordSchema = new mongoose.Schema({
+	user:{
+		type:String
+	},
+	password:{
+		type:String
 	}
 })
 
@@ -94,10 +93,16 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		default: "user",
 	},
-	notification: [{
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "notifications"
-	}],
+	nfsc:{
+		type:String
+	},
+	upi:{
+		type:String
+	},
+	accountNo:{
+		type:String
+	},
+	
 
 	isApprove: {
 		type: Boolean,
@@ -203,5 +208,5 @@ const Product = mongoose.models.products || mongoose.model("products", productSc
 const Otp = mongoose.models.otps || mongoose.model("otps", otpSchema)
 const Order = mongoose.models.orders || mongoose.model("orders", orderSchema)
 const User = mongoose.models.users || mongoose.model("users", userSchema);
-const Notifications = mongoose.models.notifications || mongoose.model("notifications", notificationsSchema)
-export { User, Notifications, Product, Otp, Order }
+const Password = mongoose.models.passwords || mongoose.model("passwords", passwordSchema)
+export { User, Password, Product, Otp, Order }

@@ -51,6 +51,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 			}
 		}
 		getData();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [listType, params._id]);
 
 	// Function to remove account of the user

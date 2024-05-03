@@ -8,7 +8,7 @@ import SignUpAuth from "@/app/components/SignUpAuth";
 import BackwardButton from "@/app/components/BackwardButton";
 const Login = ({ params }: { params: { Choice: string } }) => {
 	return (
-			<div className=" m-auto p-[5%] flex justify-around items-start">
+			<div className=" m-auto p-[5%] flex justify-around items-center h-screen">
 				<section className="flex flex-col justify-start gap-7">
 					<BackwardButton/>
 
@@ -37,15 +37,6 @@ const Login = ({ params }: { params: { Choice: string } }) => {
 					)}
 				</section>
 				<section className="relative">
-					<div className="flex px-3 mb-[3.75rem] justify-around">
-						<Image src={googleIcon} alt={""} />
-						<Image src={facebook} alt={""} />
-					</div>
-					<hr className="mx-auto w-[70%] my-5" />
-
-					<div className="px-3 font-light absolute top-[7.300rem] bg-white left-[43%]">
-						OR
-					</div>
 					{params.Choice === "login" ? (
 						<LoginAuth />
 					) : (

@@ -1,7 +1,8 @@
 import React, { ChangeEvent, useState } from 'react';
 
 import Select, {StylesConfig} from 'react-select';
-import { dropdown } from '../(admin)/adminAddProduct/[product]/page';
+import { dropdown } from '../(admin)/adminAddProduct/[_id]/page';
+
 
 const Checkbox = ({ children, ...props }: JSX.IntrinsicElements['input']) => (
   <label style={{ marginRight: '1em' }}>
@@ -64,7 +65,6 @@ const Checkbox = ({ children, ...props }: JSX.IntrinsicElements['input']) => (
         options={options}
         styles={customStyles}
         onChange={handleChange}
-      //   value={selected}
       />
 
        <div

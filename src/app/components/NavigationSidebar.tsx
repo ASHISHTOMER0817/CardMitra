@@ -41,12 +41,12 @@ const NavigationSidebar = ({
 		changeState: string;
 	};
 	fifthSection: {
-		image: string;
+		image: ReactNode;
 		name: string;
 		changeState: string;
 	};
 }) => {
-	const [classList, setClassList] = useState(" items-center");
+	const [classList, setClassList] = useState("items-center");
 	const [visible, setVisible] = useState(
 		"hidden transition-all duration-500"
 	);
@@ -91,7 +91,7 @@ const NavigationSidebar = ({
 				<SideBar
 					img={icon[0]}
 					tab={"Dashboard"}
-					heading={"MENU"}
+					// heading={"MENU"}
 					classList={`mt-3 ${sectionMR}`}
 					changeState={secondSection}
 					tabClassList={visible}
@@ -113,14 +113,14 @@ const NavigationSidebar = ({
 
 				<hr className="border w-[100%]" />
 				<SideBar
-					img={fifthSection?.image}
+					reactIcon={fifthSection?.image}
 					tab={fifthSection?.name}
 					changeState={fifthSection?.changeState}
 					tabClassList={visible}
 				/>
 
 				<hr className="border w-[100%]" />
-				<SideBar
+				{/* <SideBar
 					img={icon[1]}
 					tab={"Notifications"}
 					changeState={"/notifications"}
@@ -133,7 +133,7 @@ const NavigationSidebar = ({
 					classList={"mt-auto"}
 					changeState={"/help"}
 					tabClassList={visible}
-				/>
+				/> */}
 			</section>
 			{/* <div className=""> */}
 

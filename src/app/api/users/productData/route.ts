@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
             const _id = request.nextUrl.searchParams.get('query')
             // const objId = userId.objectid
             // console.log('1st console', _id)
-            const product = await Product.findOne({ _id })
+            const product = await Product.findOne({ _id:_id })
             // console.log('2', product)
             if (product) {
                   return NextResponse.json({

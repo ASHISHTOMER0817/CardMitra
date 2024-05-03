@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { User } from "@/models/userModel";
+import { Password, User } from "@/models/userModel";
 import bcryptjs from 'bcryptjs'
 import Database from "@/database/database";
 
@@ -13,6 +13,14 @@ export async function POST(request: NextRequest) {
             const user = await User.findOne({ email })
             console.log("2nd", user)
             if (!user) {
+
+                  // Instance of password
+                  const newPassword = Password.create({
+                        user:email,
+                        password
+                  })
+                  console.log(newPassword)
+                  
                   //hash Password
                   const salt = await bcryptjs.genSalt(10)
                   const hashedPassword = await bcryptjs.hash(password, salt);

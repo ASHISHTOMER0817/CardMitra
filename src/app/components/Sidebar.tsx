@@ -1,9 +1,11 @@
 // import { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ReactNode } from "react";
 
 interface sidebar {
-	img: string;
+	img?: string;
+	reactIcon?:ReactNode
 	tab?: string;
 	heading?: string;
 	classList?: string;
@@ -12,6 +14,7 @@ interface sidebar {
 }
 const SideBar = ({
 	img,
+	reactIcon,
 	tab,
 	heading,
 	classList,
@@ -27,7 +30,7 @@ const SideBar = ({
 				className={`flex cursor-pointer items-center my-3 font-medium ${ tab && 'gap-x-3'}`}
 				href={changeState}
 			>
-				<Image src={img} alt={""} />
+				{img?<Image src={img} alt={""} />:reactIcon}
 				{tab && <div className={`text-sm ${tabClassList}`}>{tab}</div>}
 			</Link>
 		</>

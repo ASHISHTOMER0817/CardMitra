@@ -1,16 +1,16 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import CardLayout from "./CardLayout";
 import Image from "next/image";
-import deleteIcon from "@/../public/delete.svg";
 import edit from "@/../public/edit.svg";
 import productList from "@/interface/productList";
-// import Link from "next/link";
 import axios from "axios";
 import Popup from "./Popup";
 import Link from "next/link";
 
 const CardLayoutAdminDashboard = ({ data }: { data: productList[] }) => {
+	// console.log(data);
+
 	async function removeDeal(_id: string) {
 		try {
 			const response = await axios.get(
@@ -36,11 +36,9 @@ const CardLayoutAdminDashboard = ({ data }: { data: productList[] }) => {
 						price,
 						commission,
 						deals,
-						show,
 					},
 					index: number
 				) => {
-					console.log(_id.toString());
 					return (
 						<CardLayout
 							key={index}

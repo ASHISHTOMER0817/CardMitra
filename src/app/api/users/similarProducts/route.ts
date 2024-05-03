@@ -8,7 +8,7 @@ import { Product } from "@/models/userModel";
 Database()
 export async function GET() {
       try{
-            const products = await Product.find({isAvail: true}).limit(3)
+            const products = await Product.find({deals: true}).limit(3)
             // console.log('1st console',products)
             if(products){
                   return NextResponse.json(

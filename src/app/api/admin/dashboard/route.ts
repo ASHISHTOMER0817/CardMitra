@@ -51,16 +51,7 @@ export async function GET(request: NextRequest) {
                         order = Orders.length;
                   }
 
-
-
-
-
-
-
-
-
-
-                  const data = { orderHistory,deliveries, noOfAffiliate, order }
+                  const data = { orderHistory, deliveries, noOfAffiliate, order }
                   console.log(data)
                   if (orderHistory) {
                         return NextResponse.json({
@@ -77,7 +68,7 @@ export async function GET(request: NextRequest) {
                   }
             }
             else if(_id){
-                  const removeDeal = Product.findOneAndUpdate({_id:_id}, {$set:{show:false}})
+                  await Product.findOneAndUpdate({_id:_id}, {$set:{show:false}})
                   console.log('deal removed')
                   return NextResponse.json({
                         message: "deal removed", success: true

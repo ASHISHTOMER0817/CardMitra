@@ -3,6 +3,7 @@ import CardLayoutAdminDashboard from "@/app/components/CardLayoutAdminDashboard"
 import ProductDisplayFormat from "@/app/components/ProductDisplayFormat";
 import productList from "@/interface/productList";
 import axios from "axios";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const AdminOrderHistory = () => {
@@ -24,7 +25,13 @@ const AdminOrderHistory = () => {
 	}, []);
 
 	return (
-		<ProductDisplayFormat heading={"Order History"}>
+		<ProductDisplayFormat heading={"Order History"} Children={
+			<Link href="/adminAddProduct/newProduct"
+				className="w-36 py-3 px-4 text-white bg-primaryBgClr rounded-full"
+			>
+				Add Product
+			</Link>
+		}>
 			<CardLayoutAdminDashboard data={data} />
 		</ProductDisplayFormat>
 	);

@@ -11,6 +11,8 @@ import OdrHistory from "@/../public/odrHistory.svg";
 // import SideBar from "../components/Sidebar";
 // import { ToastContainer } from "react-toastify";
 // import { GlobalStateProvider } from "./components/globalVariable";
+import { CiUser } from "react-icons/ci";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -44,7 +46,7 @@ export default function RootLayout({
 						changeState: "/odrHistory"
 					}}
 					fifthSection={{
-						image: OdrHistory,
+						image: <CiUser className="w-[26px] h-[26px]"/>,
 						name: "Profile",
 						changeState: "/userProfile"
 					}} firstSection={"/dashboard"} secondSection={"/dashboard"}/>

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import OrderForm from "@/app/components/OrderForm";
@@ -6,10 +6,11 @@ import productList from "@/interface/productList";
 import CardLayoutForDeals from "@/app/components/CardLayoutForDeals";
 import ProductDetails from "@/app/components/ProductDetails";
 import Popup from "@/app/components/Popup";
+import { Data } from "../page";
 
 const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 	const [data, setData] = useState<productList>();
-	const [productList, setProductList] = useState<productList[]>([]);
+	const [productList, setProductList] = useState<Data>();
 
 	useEffect(() => {
 		async function getData() {
@@ -28,19 +29,20 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 	}, [params.placeorder]);
 
 	useEffect(() => {
-		async function similarProducts() {
+		async function getData() {
 			try {
-				const response = await axios
-					.get("/api/users/similarProducts")
-					.then();
-				setProductList(await response.data.data);
+				const response = await axios.get(
+					"/api/orders/products?limit=three"
+				);
+
+				setProductList(response.data.data);
 
 				console.log(response.data.data);
 			} catch (error) {
 				console.log(error);
 			}
 		}
-		similarProducts();
+		getData();
 	}, []);
 
 	// const placeOrder = () => {};
@@ -67,7 +69,7 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 						Similar Products
 					</div>
 					<div className="grid grid-flow-row gap-3 grid-cols-3">
-						<CardLayoutForDeals data={productList} />
+						<CardLayoutForDeals data={productList!} />
 					</div>
 				</section>
 			</div>

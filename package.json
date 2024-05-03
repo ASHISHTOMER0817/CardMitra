@@ -13,6 +13,7 @@
     "axios": "^1.6.8",
     "bcryptjs": "^2.4.3",
     "chart.js": "^4.4.2",
+    "cloudinary": "^2.2.0",
     "dayjs": "^1.11.10",
     "formidable": "^3.5.1",
     "jsonwebtoken": "^9.0.2",

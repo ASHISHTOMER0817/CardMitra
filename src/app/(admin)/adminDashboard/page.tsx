@@ -17,11 +17,10 @@ import AffiliateRequest from "@/app/components/admin/affiliateRequests";
 import Link from "next/link";
 
 interface dashboardData {
- OrderHistory:productList[]
+ orderHistory:productList[]
  deliveries: number
  noOfAffiliate:number
  order:number
-
 }
 const AdminDashboard = () => {
 	const [data, setData] = useState<dashboardData>();
@@ -58,6 +57,7 @@ const AdminDashboard = () => {
 					"/api/admin/dashboard?query=dashboard"
 				);
 				console.log(response.data.data);
+				console.log(typeof response.data.data.orderHistory)
 				setData(response.data.data);
 			} catch {
 				console.log("what is happening here !!");
@@ -109,7 +109,16 @@ const AdminDashboard = () => {
 					</Link>
 				</div>
 				<div className="grid grid-flow-row gap-3 grid-cols-3">
-					<CardLayoutAdminDashboard data={data?.OrderHistory!}/>
+					<CardLayoutAdminDashboard data={data?.orderHistory!}/>
+					{/* {
+						data?.OrderHistory.map(({name})=>{
+							return (
+								<>
+								<div> {name}</div>
+								</>
+							)
+						})
+					} */}
 				</div>
 			</section>
 

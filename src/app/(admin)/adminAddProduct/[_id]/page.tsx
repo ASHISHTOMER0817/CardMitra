@@ -3,6 +3,7 @@ import axios from "axios";
 import Image from "next/image";
 import React, { FormEvent, useEffect, useState } from "react";
 import downloadImg from "@/../public/downloadImg.svg";
+import Select from "react-select";
 // import oneCard from "@/../public/oneCard.jpg";
 // import hdfcCard from "@/../public/hdfcCard.jpg";
 // import iciciCard from "@/../public/iciciCard.jpg";
@@ -15,28 +16,31 @@ import downloadImg from "@/../public/downloadImg.svg";
 import Dropdown from "@/app/components/dropdown";
 import Popup from "@/app/components/Popup";
 import productList from "@/interface/productList";
+import { RxCross1 } from "react-icons/rx";
 
 export interface dropdown {
 	value: string;
 	label: string;
 }
-const ProductForm = ({params}:{params:{_id:string}}) => {
-
+const ProductForm = ({ params }: { params: { _id: string } }) => {
 	const [name, setName] = useState("");
 	const [price, setPrice] = useState(0);
 	const [commission, setCommission] = useState(0);
 	const [cards, setCards] = useState<dropdown>();
 	const [site, setSite] = useState<dropdown>();
 	const [productLink, setProductLink] = useState("");
-	const [image, setImage] = useState<File>();
+	const [image, setImage] = useState("");
+	const [file, setFile] = useState<File>();
 	const [requirement, setRequirement] = useState<number>(0);
 	const [address, setAddress] = useState("");
 	const [info, setInfo] = useState({
-		first:"",
-		second:"",
-		third:"",
-		fourth:""
-	})
+		first: "",
+		second: "",
+		third: "",
+		fourth: "",
+	});
+	// const [arr, setArr] = useState<string[]>([]);
+	// const [visible, setVisible] = useState(false);
 
 	//function to set Card
 	const handleDropdownChangeCard = (option: dropdown) => {
@@ -48,64 +52,58 @@ const ProductForm = ({params}:{params:{_id:string}}) => {
 		setSite(option);
 	};
 
-
-
-	useEffect(()=>{
-		async function getData(){
-			try{
-				const response = await axios.get(`/api/admin/addProduct?_id=${params._id}`)
-				const product:productList = response.data.data;
-				setName(product.name)
-				setPrice(product.price)
-				setCommission(product.commission)
-				setProductLink(product.productLink)
-				setRequirement(product.requirement)
-				setAddress(product.address)
-				setInfo({...info,first:product.info.first})
-				setInfo({...info,second:product.info.second})
-				setInfo({...info,third:product.info.third})
-				setInfo({...info,fourth:product.info.fourth})
-				
-			}catch{
-				Popup("error", "something went wrong")
+	useEffect(() => {
+		async function getData() {
+			try {
+				if (params._id !== "newProduct") {
+					const response = await axios.get(
+						`/api/admin/addProduct?_id=${params?._id}`
+					);
+					const product: productList = response.data.data;
+					setName(product.name);
+					setPrice(product.price);
+					setCommission(product.commission);
+					setProductLink(product.productLink);
+					setRequirement(product.requirement);
+					setAddress(product.address);
+					setInfo({ ...info, first: product.info.first });
+					setInfo({ ...info, second: product.info.second });
+					setInfo({ ...info, third: product.info.third });
+					setInfo({ ...info, fourth: product.info.fourth });
+				}
+				return;
+			} catch {
+				Popup("error", "something went wrong");
 			}
 		}
-		getData()
-	},[params._id])
+		getData();
+	}, [params?._id]);
 
 	//SEND DATA TO BACKEND
-	async function postData(e:FormEvent) {
-		e.preventDefault()
+	async function postData() {
+		// e.preventDefault();
 		try {
 			// Creating a formData instance
 			const formData = new FormData();
-			console.log(image)
-			formData.append("name", name);
-			formData.append("commission", commission.toString());
-			formData.append("productLink", productLink);
-			formData.append("price", price.toString());
-			formData.append("requirement", requirement.toString());
-			formData.append("address", address);
-			formData.append("card", cards?.label!);
-			formData.append("site", site?.label!);
-			formData.append("image", image!);
-	
-			// const response = await axios.post("/api/admin/addProduct", {
-			// 	formData,
-			// });
+			console.log(image);
+			// formData.append("name", name);
+			// formData.append("commission", commission.toString());
+			// formData.append("productLink", productLink);
+			// formData.append("price", price.toString());
+			// formData.append("requirement", requirement.toString());
+			// formData.append("address", address);
+			// formData.append("card", cards?.label!);
+			// formData.append("site", site?.label!);
+			formData.append("file", file!);
 
-			const response = await fetch('/api/admin/addProduct',{
-				method:'POST',
-				body:formData
-			})
-
-
-
-			// console.log(response.data)
-			if (response) {
+			const { data } = await axios.post("/api/admin/addProduct", {
+				formData,
+			});
+			console.log(data);
+			if (data) {
 				Popup("success", "Product added successfully");
 			}
-		} catch {
+		} catch (error: any) {
 			Popup(
 				"error",
 				"Something went wrong, please try again later"
@@ -128,8 +126,24 @@ const ProductForm = ({params}:{params:{_id:string}}) => {
 		{ value: "Mi App", label: "Mi App" },
 	];
 
+	// // Card array empty
+	// function emptyArr() {
+	// 	setArr([]);
+	// }
+
+	// // Expand card array List
+	// function showList() {
+	// 	setVisible(!visible);
+	// }
+
+	// // Function to handle item selection
+	// const addItemToArray = (itemText: string) => {
+	// 	setArr([...arr, itemText]); // Add itemText to selectedItems array
+	// 	// setMenuVisible(false); // Hide the dropdown after selecting an item
+	// };
+
 	return (
-		<form onSubmit={postData} className="w-[90%] p-8" method="POST" encType="multipart/form-data">
+		<form action={postData} className="w-[90%] p-8">
 			<div className="flex gap-10 mb-8">
 				<div>
 					{image ? (
@@ -156,8 +170,6 @@ const ProductForm = ({params}:{params:{_id:string}}) => {
 								flexDirection: "column",
 								borderRadius: "20px",
 							}}
-							// onDragOver={handleDragOver}
-							// onDrop={handleDrop}
 						>
 							<Image
 								src={downloadImg}
@@ -182,11 +194,16 @@ const ProductForm = ({params}:{params:{_id:string}}) => {
 					<input
 						required
 						type="file"
-						accept="image/*"
-						name="imageFile"
-						onChange={(e) =>
-							image !== null || undefined ? setImage(e.target.files?.[0]!) : ""
-						}
+						name="file"
+						onChange={({ target }) => {
+							if (target.files) {
+								const file = target.files[0];
+								setImage(
+									URL.createObjectURL(file)
+								);
+								setFile(file);
+							}
+						}}
 					/>
 				</div>
 				<div className="">
@@ -242,14 +259,55 @@ const ProductForm = ({params}:{params:{_id:string}}) => {
 							</label>
 						</div>
 					</div>
-					<h5>** Points to remember while Ordering **</h5>
-					<ul className="list-disc">
-						<li>{info.first}</li>
-						<li>{info.second}</li>
-						<li>{info.third}</li>
-						<li>{info.fourth}</li>
-					</ul>
-
+					<h6 className="text-red-500">
+						** Points to remember while Ordering **
+					</h6>
+					<div className="text-gray-500 flex flex-col gap-5 text-xs">
+						<input
+							type="text"
+							className="border-b border-b-black outline-none mt-8"
+							value={info.first}
+							onChange={(e) =>
+								setInfo({
+									...info,
+									first: e.target.value,
+								})
+							}
+						/>
+						<input
+							type="text"
+							className="border-b border-b-black outline-none"
+							value={info.second}
+							onChange={(e) =>
+								setInfo({
+									...info,
+									second: e.target.value,
+								})
+							}
+						/>
+						<input
+							type="text"
+							className="border-b border-b-black outline-none"
+							value={info.third}
+							onChange={(e) =>
+								setInfo({
+									...info,
+									third: e.target.value,
+								})
+							}
+						/>
+						<input
+							type="text"
+							className="border-b border-b-black outline-none"
+							value={info.fourth}
+							onChange={(e) =>
+								setInfo({
+									...info,
+									fourth: e.target.value,
+								})
+							}
+						/>
+					</div>
 				</div>
 			</div>
 			<div className="flex gap-6 mb-6">
@@ -279,7 +337,8 @@ const ProductForm = ({params}:{params:{_id:string}}) => {
 					</div>
 				</div>
 			</div>
-			<div className="grid grid-flow-row grid-cols-2 items-end gap-y-3">
+
+			<div className="grid grid-flow-row grid-cols-2 items-end gap-x-6 gap-y-3">
 				<div className=" flex flex-col w-full gap-6">
 					<label htmlFor="directLink" className="font-bold">
 						Direct Links:
@@ -292,7 +351,7 @@ const ProductForm = ({params}:{params:{_id:string}}) => {
 						onChange={(e) =>
 							setProductLink(e.target.value)
 						}
-						className=" border border-gray-300 rounded-full p-2 w-[59%]"
+						className=" border border-gray-300 rounded-full p-2 w-full"
 						placeholder="Enter direct link"
 					/>
 				</div>
@@ -311,7 +370,7 @@ const ProductForm = ({params}:{params:{_id:string}}) => {
 						onChange={(e) =>
 							setRequirement(+e.target.value)
 						}
-						className=" border border-gray-300 rounded-full p-2 w-[59%]"
+						className=" border border-gray-300 rounded-full p-2 w-full"
 						placeholder="Requirement"
 					/>
 				</div>
@@ -325,12 +384,11 @@ const ProductForm = ({params}:{params:{_id:string}}) => {
 						type="text"
 						value={address}
 						onChange={(e) => setAddress(e.target.value)}
-						className=" border border-gray-300 rounded-full p-2 w-[59%]"
+						className=" border border-gray-300 rounded-full p-2 w-full"
 						placeholder="Enter Address"
 					/>
 				</div>
 				<button
-					// onClick={postData}
 					className="w-64 p-2 text-white bg-primaryBgClr rounded-full"
 					type="submit"
 				>
