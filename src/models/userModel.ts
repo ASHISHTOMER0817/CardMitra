@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
 const passwordSchema = new mongoose.Schema({
-	user:{
-		type:String
+	user: {
+		type: String
 	},
-	password:{
-		type:String
+	password: {
+		type: String
 	}
 })
 
@@ -93,16 +93,16 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		default: "user",
 	},
-	nfsc:{
-		type:String
+	ifsc: {
+		type: String
 	},
-	upi:{
-		type:String
+	upi: {
+		type: String
 	},
-	accountNo:{
-		type:String
+	accountNo: {
+		type: String
 	},
-	
+
 
 	isApprove: {
 		type: Boolean,
@@ -161,10 +161,9 @@ const productSchema = new mongoose.Schema({
 	//       "https://github.com/shaswata49/Node_Project/blob/main/frontend/src/images/Product/IMG-20230926-WA0002.jpg?raw=true"
 	//     ]
 	//   },
-	cards: {
-		type: String,
-		// required:true
-	},
+	cards: [{
+		type: String
+	}],
 	site: {
 		type: String,
 		// required:true
@@ -185,19 +184,19 @@ const productSchema = new mongoose.Schema({
 
 		first: {
 			type: String,
-			default:"",
+			default: "",
 		},
 		second: {
 			type: String,
-			default:""
+			default: ""
 		},
 		third: {
 			type: String,
-			default:""
+			default: ""
 		},
 		fourth: {
 			type: String,
-			default:""
+			default: ""
 		},
 	}
 

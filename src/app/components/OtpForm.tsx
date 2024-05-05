@@ -20,8 +20,8 @@ const router = useRouter()
 	const handleTrackingIdChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setTrackingId(e.target.value);
 	};
-
-	const orderDetails = { otp, contact, trackingId, _id };
+	const order_id = _id
+	const orderDetails = { otp, contact, trackingId, order_id };
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();

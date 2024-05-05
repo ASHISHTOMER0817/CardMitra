@@ -8,17 +8,11 @@ import view from "@/../public/view.svg";
 import Link from "next/link";
 import acceptAffiliate from "../acceptAffiliate";
 import Popup from "../Popup";
+import { user } from "@/interface/productList";
 
-interface details {
-	name: string;
-	contact: string;
-	email: string;
-	_id: string;
-	isApprove: boolean;
-}
 
 const AffiliateRequest = () => {
-	const [users, setUsers] = useState<details[]>([]);
+	const [users, setUsers] = useState<user[]>([]);
 	const [refreshData, setRefreshData] = useState(false);
 
 	useEffect(() => {
@@ -27,6 +21,7 @@ const AffiliateRequest = () => {
 				const response = await axios.get(
 					"api/affiliate/affiliateRequest"
 				);
+				console.log(response.data.data)
 				setUsers(response.data.data); // Assuming API response is an array of user objects
 			} catch (error) {
 				console.error(
@@ -65,7 +60,7 @@ const AffiliateRequest = () => {
 	}
 
 	return (
-		<div className="container mx-auto my-8">
+		<div className="container mx-auto my-8 md:text-[10px]">
 			<h5 className="font-semibold text-lg mb-4 pb-2">
 				User List
 			</h5>
@@ -113,49 +108,6 @@ const AffiliateRequest = () => {
 										{contact}
 									</td>
 									<td className="px-4 py-5 text-center flex justify-start gap-2">
-										{/* <Image
-											onClick={() =>
-												acceptAffiliate(
-													true,
-													email
-												)
-											}
-											src={accept}
-											alt="Edit"
-											width={30}
-											height={30}
-											className="cursor-pointer"
-										/>
-										<Image
-											onClick={() =>
-												acceptAffiliate(
-													false, email
-												)
-											}
-											src={reject}
-											alt="Delete"
-											height={30}
-											width={30}
-											className="cursor-pointer"
-										/> */}
-										{/* <Link
-											href={`/adminBookers/${_id}`}
-										>
-											<Image
-												src={
-													view
-												}
-												alt="View"
-												width={
-													30
-												}
-												height={
-													30
-												}
-												className="cursor-pointer"
-											/>
-										</Link> */}
-
 										{!isApprove ? (
 											<>
 												<div

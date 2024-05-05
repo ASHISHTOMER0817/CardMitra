@@ -9,7 +9,7 @@ const  ProductDisplayFormat = ({ children, heading, Children }: { children: Reac
 	return (
 		<div className="flex flex-col mx-auto">
 			<Header heading={heading} Children={Children}/>
-			<div className="grid grid-flow-row gap-7 grid-cols-3">
+			<div className="grid grid-flow-row gap-7 grid-cols-3 md:gap-3">
 				{children}
 			</div>
 		</div>

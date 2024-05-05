@@ -1,44 +1,51 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
+import Popup from "./Popup";
+import { order } from "@/interface/productList";
 
-interface Order {
-	affiliateName: string;
-	orderId: string;
-	date: Date;
-	time: Date;
-	orderStatus: string;
-}
-
-const OrderTable = () => {
-	const [orders, setOrders] = useState<Order[]>([]);
+const ProductOrderList = ({_id}:{_id:string}) => {
+	const [orders, setOrders] = useState<order[]>([]);
 
 	useEffect(() => {
 		// Simulating data from the backend
-		const mockData: Order[] = [
-			{
-				affiliateName: "Affiliate 1",
-				orderId: "ORD001",
-				date: new Date("2023-04-22"),
-				time: new Date("2023-04-22T10:30:00"),
-				orderStatus: "Pending",
-			},
-			{
-				affiliateName: "Affiliate 2",
-				orderId: "ORD002",
-				date: new Date("2023-04-21"),
-				time: new Date("2023-04-21T14:45:00"),
-				orderStatus: "Completed",
-			},
-			{
-				affiliateName: "Affiliate 3",
-				orderId: "ORD003",
-				date: new Date("2023-04-20"),
-				time: new Date("2023-04-20T09:15:00"),
-				orderStatus: "Cancelled",
-			},
-		];
+		async function getData(){
+			try{
+				console.log('productOrderList',_id)
+				const response = await axios.get(`/api/users/orderData?productId=${_id}`)
+				setOrders(await response.data.data)
+				console.log(await response.data.data)
+			}catch{
+				Popup('error', 'Something went wrong, please refresh')
+			}
+		}
+		getData()
+		
+		// const mockData: Order[] = [
+		// 	{
+		// 		affiliateName: "Affiliate 1",
+		// 		orderId: "ORD001",
+		// 		date: new Date("2023-04-22"),
+		// 		time: new Date("2023-04-22T10:30:00"),
+		// 		orderStatus: "Pending",
+		// 	},
+		// 	{
+		// 		affiliateName: "Affiliate 2",
+		// 		orderId: "ORD002",
+		// 		date: new Date("2023-04-21"),
+		// 		time: new Date("2023-04-21T14:45:00"),
+		// 		orderStatus: "Completed",
+		// 	},
+		// 	{
+		// 		affiliateName: "Affiliate 3",
+		// 		orderId: "ORD003",
+		// 		date: new Date("2023-04-20"),
+		// 		time: new Date("2023-04-20T09:15:00"),
+		// 		orderStatus: "Cancelled",
+		// 	},
+		// ];
 
-		setOrders(mockData);
-	}, []);
+		// setOrders(mockData);
+	}, [_id]);
 
 	return (
 			<table className="w-full rounded-2xl overflow-hidden">
@@ -51,43 +58,43 @@ const OrderTable = () => {
 							Order ID
 						</th>
 						<th className="py-6 px-12 text-left">
-							Date
+							Order on
 						</th>
 						<th className="py-6 px-12 text-left">
-							Time
+							Delivery on
 						</th>
 						<th className="py-6 px-12 text-left">
 							Order Status
 						</th>
 					</tr>
 				</thead>
-				<tbody>
-					{orders.map((order, index) => (
+				{orders && orders.length <1 ? <tbody>
+					 {orders.map((order, index) => (
 						<tr
 							key={index}
 							className="even:bg-gray-100"
 						>
 							<td className="py-4 px-12">
-								{order.affiliateName}
+								{order.user.name}
 							</td>
 							<td className="py-4 px-12">
-								{order.orderId}
+								{order._id}
 							</td>
 							<td className="py-4 px-12">
-								{order.date.toLocaleDateString()}
+								{order.orderedAt}
 							</td>
 							<td className="py-4 px-12">
-								{order.time.toLocaleTimeString()}
+								{order.deliveryDate}
 							</td>
 							<td className="py-4 px-12">
-								{order.orderStatus}
+								{order.delivered? 'Delivered':'on the way'}
 							</td>
 						</tr>
-					))}
-				</tbody>
+					)) }
+				</tbody>: <div className="mt-24 ml-auto text-red-500">No order has been placed yet...</div>}
 			</table>
 		
 	);
 };
 
-export default OrderTable;
+export default ProductOrderList;

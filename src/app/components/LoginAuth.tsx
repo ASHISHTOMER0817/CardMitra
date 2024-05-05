@@ -16,31 +16,35 @@ const LoginAuth = () => {
 
 	const user = { email, password };
 
-	function checkSuccess(success: boolean, message: string) {
+	function checkSuccess(success: boolean, message: string, data: string) {
 		if (!success) {
-			Popup("error",message)
+			Popup("error", message);
 			console.log(error);
 			return;
 		} else {
-			router.push("/dashboard");
+			console.log('this is user/admin',data);
+			if (data === "user") {
+				console.log(data);
+				router.push("/dashboard");
+			} else if (data === "admin") {
+				router.push("/adminDashboard");
+			}
 		}
 	}
-
 
 	async function sendData(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		try {
-			const { success, message } = await (await axios.post(
-				"/api/users/login",
-				{ user }
-			)).data
-			checkSuccess(success, message);
+			const { success, message, data } = await (
+				await axios.post("/api/users/login", { user })
+			).data;
+			checkSuccess(success, message, data);
 		} catch (error: any) {
-			Popup("error", "Server error, please refresh")
+			Popup("error", "Server error, please refresh");
 		}
 	}
 
-	function PswrdNd() {}
+	// function PswrdNd() {}
 
 	return (
 		<form className="flex flex-col gap-y-6 mt-4" onSubmit={sendData}>
@@ -65,7 +69,10 @@ const LoginAuth = () => {
 				</div>
 			</div> */}
 
-			<button className='text-white border px-3 py-4 rounded-full bg-primaryBgClr w-96 cursor-pointer' type="submit">
+			<button
+				className="text-white border px-3 py-4 rounded-full bg-primaryBgClr w-96 cursor-pointer"
+				type="submit"
+			>
 				Login
 			</button>
 		</form>

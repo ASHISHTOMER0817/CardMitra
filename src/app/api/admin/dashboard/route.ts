@@ -22,6 +22,7 @@ export async function GET(request: NextRequest) {
             const searchparams = request.nextUrl.searchParams
             const query = searchparams.get('query')
             const _id = searchparams.get('_id')
+            const operation = searchparams.get('operation')
             // console.log(query)
 
 
@@ -33,8 +34,8 @@ export async function GET(request: NextRequest) {
 
 
                   // Today's date
-                const {deliveries} = await ordersToday()
-               
+                  const { deliveries } = await ordersToday()
+
                   //Affiliate Array
                   const affiliate = await User.find()
                   const noOfAffiliate = affiliate.length
@@ -46,7 +47,7 @@ export async function GET(request: NextRequest) {
                   const Orders = await Order.find({ orderedAt: todaysDate })
                   if (Orders.length <= 0) {
                         order = 0
-                  
+
                   } else {
                         order = Orders.length;
                   }
@@ -55,7 +56,7 @@ export async function GET(request: NextRequest) {
                   console.log(data)
                   if (orderHistory) {
                         return NextResponse.json({
-                              message: "Order history is being shown", status: false, data: data, 
+                              message: "Order history is being shown", status: false, data: data,
                         })
                   }
             } else if (query === 'orderHistory') {
@@ -67,12 +68,30 @@ export async function GET(request: NextRequest) {
                         })
                   }
             }
-            else if(_id){
-                  await Product.findOneAndUpdate({_id:_id}, {$set:{show:false}})
-                  console.log('deal removed')
-                  return NextResponse.json({
-                        message: "deal removed", success: true
-                  }) 
+            else if (_id) {
+                  const product = await Product.findOneAndUpdate({ _id: _id })
+                  if (operation === 'remove') {
+
+                        // await Product.findOneAndUpdate({ _id: _id }, { $set: { deals: false } })
+                        product.deals = false
+                        product.save()
+                        console.log('deal removed')
+                        return NextResponse.json({
+                              message: "deal removed", success: true
+                        })
+                  } else if (operation === 'add') {
+                        product.deals = true
+                        product.save()
+                        return NextResponse.json({
+                              message: "deal added back", success: true
+                        })
+                  } else if (operation === 'delete') {
+                        const deleteProduct = await Product.findOneAndDelete({ _id: _id })
+                        console.log(deleteProduct)
+                        return NextResponse.json({
+                              message: "Product Deleted", success: true
+                        })
+                  }
             }
 
       } catch {

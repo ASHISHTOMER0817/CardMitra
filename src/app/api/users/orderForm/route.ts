@@ -16,11 +16,11 @@ export const POST = async (request: NextRequest) => {
                   objectId,
                   deliveryDate
             } = reqBody.formData
-            const userId = GetToken()
-            if (userId) {
+            const {_id} = GetToken()
+            if (_id) {
 
                   // Object Id 
-                  const userObjectId = new mongoose.Types.ObjectId(userId)
+                  const userObjectId = new mongoose.Types.ObjectId(_id)
                   const productId = new mongoose.Types.ObjectId(objectId)
                   // console.log(productId)
 

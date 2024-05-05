@@ -20,9 +20,9 @@ export async function GET(request: NextRequest) {
                         data: product, message: 'Product data is being shown', success: true
                   })
             }
-            // return NextResponse.json({
-            //       message: "Something went wrong, Please refresh the page", success: false
-            // })
+            return NextResponse.json({
+                  message: "Something went wrong, Please refresh the page", success: false
+            })
       } catch (error) {
             return NextResponse.json({
                   message: "Something went wrong, Server error", success: false

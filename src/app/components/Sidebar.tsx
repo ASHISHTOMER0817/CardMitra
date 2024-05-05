@@ -30,7 +30,7 @@ const SideBar = ({
 				className={`flex cursor-pointer items-center my-3 font-medium ${ tab && 'gap-x-3'}`}
 				href={changeState}
 			>
-				{img?<Image src={img} alt={""} />:reactIcon}
+				{img? <Image src={img} className="min-w-[30px] min-h-7" alt={""} />:reactIcon}
 				{tab && <div className={`text-sm ${tabClassList}`}>{tab}</div>}
 			</Link>
 		</>

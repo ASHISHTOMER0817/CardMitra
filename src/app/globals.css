@@ -78,3 +78,32 @@ body {
     @apply text-lg
   }
 }
+
+h1, h2, h3{
+  @media (max-width:768px) {
+    font-size: 18px!important;
+  };
+}
+div, h6{
+  @media (max-width:768px) {
+    font-size: 12px!important;
+  };
+}
+
+ tbody{
+  @media (max-width:768px) {
+    font-size: 12px!important;
+  };
+}
+thead{
+  @media (max-width:768px) {
+    font-size: 14px!important;
+  }
+}
+
+h4, h5, a{
+  @media (max-width:768px) {
+    font-size: 12px !important;
+    line-height: normal;
+  }
+}

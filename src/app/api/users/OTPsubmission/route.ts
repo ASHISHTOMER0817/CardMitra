@@ -10,14 +10,14 @@ Database()
 export async function POST(request: NextRequest) {
 
       try {
-            const userId = GetToken();
+            const {_id} = GetToken();
             let reqBody = await request.json()
-            let { otp, contact, trackingId, _id } = reqBody.orderDetails
+            let { otp, contact, trackingId, order_id } = reqBody.orderDetails
             console.log('1st console', otp, contact, trackingId);
             otp = parseInt(otp)
             // Convert the userId and _id strings to mongoose.Types.ObjectId
-            const userObjectId = new mongoose.Types.ObjectId(userId);
-            const orderObjectId = new mongoose.Types.ObjectId(_id);
+            const userObjectId = new mongoose.Types.ObjectId(_id);
+            const orderObjectId = new mongoose.Types.ObjectId(order_id);
 
 
             // console.log('this is = ', orderObjectId)

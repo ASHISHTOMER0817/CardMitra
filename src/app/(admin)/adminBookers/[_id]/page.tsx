@@ -11,47 +11,44 @@ import { order } from "@/interface/productList";
 import Popup from "@/app/components/Popup";
 import { useRouter } from "next/navigation";
 import { RxCross1 } from "react-icons/rx";
+import {UserDetails} from "@/interface/productList"
 
-interface User {
-	user: {
-		name: string;
-		email: string;
-		contact: string;
-		bank_account_number: string;
-		IFSC_code: string;
-		UPI_ID: string;
-		unpaid:number
-	};
-	orderList: order[];
-	totalAmt: number
-}
+
+// User details function 
+ export async function getData({ _id, listType, amount, data }: { _id: string; listType: string; amount?: number; data: (userData:UserDetails) => void; }) {
+	try {
+		const response = await axios.get(
+			`/api/users/details?query=${_id}&listType=${listType}&paid=${amount}`
+		)
+		if(response.data.status === 250){
+			Popup("success", `${response.data.message} - Rs.${amount}`)
+			return;
+		}
+		data(response.data.data);
+
+	} catch {
+		console.log(
+			"Something went wrong, please try again later"
+		);
+	}
+} 
+
+
 const Bookers = ({ params }: { params: { _id: string } }) => {
-	const [data, setData] = useState<User>();
+	const [data, setData] = useState<UserDetails>();
 	const [listType, setListType] = useState("delivered");
 	const router = useRouter();
 	const [amount, setAmount] = useState<number>(0);
 	const [overlay, setOverlay] = useState("hidden");
 
-	useEffect(() => {
-		async function getData() {
-			try {
-				const response = await axios.get(
-					`/api/users/details?query=${params._id}&listType=${listType}&paid=${amount}`
-				)
-				if(response.data.status === 250){
-					Popup("success", `${response.data.message} - Rs.${amount}`)
-					return;
-				}
-				setData(response.data.data);
 
-			} catch {
-				console.log(
-					"Something went wrong, please try again later"
-				);
-			}
-		}
-		getData();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+
+	// passing value from child to parent
+	function userDetails(userData:UserDetails){
+		setData(userData)
+	}
+	useEffect(() => {
+		getData({_id:params._id, listType,amount, data: userDetails});
 	}, [listType, params._id]);
 
 	// Function to remove account of the user
@@ -147,11 +144,11 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 			<section className="flex justify-between items-center">
 				<div>
 					Bank Account Number:{" "}
-					{data?.user?.bank_account_number}
+					{data?.user?.accountNo}
 				</div>
-				<div>IFSC Code: {data?.user?.bank_account_number} </div>
+				<div>IFSC Code: {data?.user?.ifsc} </div>
 				<div className="mr-20">
-					UPI ID: {data?.user?.UPI_ID}
+					UPI ID: {data?.user?.upi}
 				</div>
 			</section>
 

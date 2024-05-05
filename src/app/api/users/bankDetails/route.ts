@@ -5,25 +5,25 @@ import { User } from "@/models/userModel";
 
 Database()
 
-export async function POST(request:NextRequest){
+export async function POST(request: NextRequest) {
 
-      try{
-            const {nfsc, upi, accountNo} = await request.json() 
-            const _id = GetToken()
+      try {
+            const { nfsc, upi, accountNo } = await(await request.json()).bankDetails
+            const {_id} = GetToken()
             const user = await User.updateOne({ _id: _id }, { $set: { nfsc, upi, accountNo } });
-            if(!user){
+            if (!user) {
                   return NextResponse.json({
-                        message: "Server error, please refresh the page", success:false
+                        message: "Server error, please refresh the page", success: false
                   })
             }
-            else{
+            else {
                   return NextResponse.json({
-                        message: "Bank details has been saved", success:false
+                        message: "Bank details saved", success: false
                   })
             }
-      }catch{
+      } catch {
             return NextResponse.json({
-                  message: "Something went wrong", success:false
+                  message: "Something went wrong", success: false
             })
       }
 }

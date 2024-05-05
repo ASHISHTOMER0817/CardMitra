@@ -15,8 +15,7 @@ const OrderHistory = ({ data }: { data: order[] }) => {
 							name={product?.name}
 							price={product?.price}
 							commission={product?.commission}
-							classList="hover:border-blue-400"
-						/>
+							classList="hover:border-blue-400" site={product.site}						/>
 					</Link>
 				);
 			})}

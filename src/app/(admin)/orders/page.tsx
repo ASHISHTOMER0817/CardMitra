@@ -27,7 +27,7 @@ const AdminOrderHistory = () => {
 	return (
 		<ProductDisplayFormat heading={"Order History"} Children={
 			<Link href="/adminAddProduct/newProduct"
-				className="w-36 py-3 px-4 text-white bg-primaryBgClr rounded-full"
+				className="w-36 text-center md:p-1 md:text-xs py-3 px-4 text-white bg-primaryBgClr rounded-full"
 			>
 				Add Product
 			</Link>

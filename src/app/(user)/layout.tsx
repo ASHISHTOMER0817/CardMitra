@@ -46,7 +46,7 @@ export default function RootLayout({
 						changeState: "/odrHistory"
 					}}
 					fifthSection={{
-						image: <CiUser className="w-[26px] h-[26px]"/>,
+						image: <CiUser className="w-[26px] h-[26px] min-w-[30px] min-h-7"/>,
 						name: "Profile",
 						changeState: "/userProfile"
 					}} firstSection={"/dashboard"} secondSection={"/dashboard"}/>

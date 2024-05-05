@@ -9,21 +9,7 @@ import Popup from "./Popup";
 import Link from "next/link";
 
 const CardLayoutAdminDashboard = ({ data }: { data: productList[] }) => {
-	// console.log(data);
-
-	async function removeDeal(_id: string) {
-		try {
-			const response = await axios.get(
-				`/api/admin/dashboard?_id=${_id}`
-			);
-
-			if (response.data.success) {
-				Popup("success", `Successfully removed`);
-			}
-		} catch {
-			Popup("error", "Something went wrong, please refresh");
-		}
-	}
+	console.log(data);
 
 	return (
 		<>
@@ -36,15 +22,19 @@ const CardLayoutAdminDashboard = ({ data }: { data: productList[] }) => {
 						price,
 						commission,
 						deals,
+						site,
 					},
 					index: number
 				) => {
 					return (
+						<Link key={index} href={`/orders/${_id}`}>
 						<CardLayout
-							key={index}
+							
 							classList="hover:border-primaryBgClr"
 							image={
-								<Link href={`/adminAddProduct/${_id.toString()}`}>
+								<Link
+									href={`/adminAddProduct/${_id}`}
+								>
 									<Image
 										src={edit}
 										alt={""}
@@ -58,14 +48,15 @@ const CardLayoutAdminDashboard = ({ data }: { data: productList[] }) => {
 							commission={commission}
 							placeOrder={
 								<>
-									<button className="bg-primaryBgClr p-[14px] font-semibold text-base rounded-full border text-center w-auto text-white">
+									<button className="bg-primaryBgClr p-[14px] font-semibold text-base rounded-full border text-center w-auto text-white md:w-[120px] md:p-[5px] md:mt-4 md:-ml-[68px] ">
 										{deals
 											? "Active"
 											: "In-Active"}
 									</button>
 								</>
 							}
-						/>
+							site={site}
+						/></Link>
 					);
 				}
 			)}{" "}

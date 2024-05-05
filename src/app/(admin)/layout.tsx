@@ -10,6 +10,7 @@ import deals from "@/../public/apps.svg";
 // import SideBar from "../components/Sidebar";
 import bookers from "@/../public/bookers.svg";
 import transactions from "@/../public/transactions.svg";
+import { Transactions } from "@/app/components/lib"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,9 +28,9 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={inter.className}>
 				<NavigationSidebar
+					firstSection={"/adminDashboard"}
+					secondSection={"/adminDashboard"}
 					icon={[dimHome, dimBell, dimHelp]}
-					main={children}
-
 					thirdSection={{
 						image: deals,
 						name: "Orders",
@@ -41,10 +42,12 @@ export default function RootLayout({
 						changeState: "/adminBookers",
 					}}
 					fifthSection={{
-						image: transactions,
+						image: <Transactions/>,
 						name: "Transactions",
 						changeState: "/transactions",
-					}} firstSection={"/adminDashboard"} secondSection={"/adminDashboard"}/>
+					}}
+					main={children}
+				/>
 			</body>
 		</html>
 	);
