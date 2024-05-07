@@ -41,7 +41,7 @@ const OtpList = () => {
 
 	return (
 		<div className="w-[90%] mx-10 my-8">
-			<h2 className="mb-16">Today&apos;s OTPs</h2>
+			<h3 className="mb-16 font-semibold">Today&apos;s OTPs</h3>
 			<div className="flex items-center mb-3">
 				<input
 					className="outline-none border-b mr-3 border-b-black"

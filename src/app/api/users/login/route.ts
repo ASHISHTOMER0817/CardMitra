@@ -1,17 +1,15 @@
 import { NextResponse, NextRequest } from "next/server";
 import { cookies } from "next/headers";
-import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import Database from "@/database/database";
 import { User } from "@/models/userModel";
-
+import * as jose from 'jose'
 
 Database()
 export async function POST(request: NextRequest) {
       try {
             const reqBody = await request.json()
             const { email, password } = reqBody.user;
-            // console.log(email, password)
             const user = await User.findOne({ email })
             const existingPassword = user.password
 
@@ -21,11 +19,22 @@ export async function POST(request: NextRequest) {
             console.log(tokenData)
             //check if user actually exist 
             if (user && verifyPassword) {
-                  console.log("EXIST", user, verifyPassword)
-                  const userDetails = jwt.sign(tokenData, process.env.TOKEN_SECRET_KEY!, { expiresIn: "7d" })
-                  const days = 7 * 24 * 60 * 60 * 1000
-                  if (user.role === 'user') cookies().set('token', userDetails, { expires: Date.now() + days })
-                  if (user.role === 'admin') cookies().set(process.env.ADMIN_TOKEN!, userDetails, { expires: Date.now() + days })
+
+                  const secret = new TextEncoder().encode(
+                        process.env.TOKEN_SECRET_KEY!
+                      )
+                      const alg = 'HS256'
+                      
+                      const joseToken = await new jose.SignJWT(tokenData)
+                        .setProtectedHeader({ alg })
+                        .setIssuedAt()
+                        .setIssuer('Guru')
+                        .setAudience('Orderee')
+                        .setExpirationTime('7 days')
+                        .sign(secret)
+
+                        const days = 7 * 24 * 60 * 60 * 1000                  
+                   cookies().set('joseToken', joseToken, { expires: Date.now() + days })
 
                   // Redirect the user/admin
                   // user.role === 'admin' ? redirect('/'): user.role === 'user' ? redirect('/dashboard'):''

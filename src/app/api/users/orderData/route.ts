@@ -1,8 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import Database from "@/database/database";
-import { Order, Product, User } from "@/models/userModel";
-// import GetToken from "@/app/components/getToken";
-import mongoose from "mongoose";
+import { Order } from "@/models/userModel";
 
 
 Database()

@@ -16,7 +16,7 @@ export const POST = async (request: NextRequest) => {
                   objectId,
                   deliveryDate
             } = reqBody.formData
-            const {_id} = GetToken()
+            const {_id} =await GetToken()
             if (_id) {
 
                   // Object Id 

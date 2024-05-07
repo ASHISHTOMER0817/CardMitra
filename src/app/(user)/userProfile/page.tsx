@@ -14,26 +14,30 @@ const UserProfile = () => {
 	const [accountNo, setAccountNo] = useState<string>("");
 	const [upi, setUpi] = useState<string>("");
 	const [overlay, setOverlay] = useState("hidden");
-	const [listType, setListType] = useState("");
+	const [listType, setListType] = useState("delivered");
 	const [data, setData] = useState<UserDetails>();
 
-	// passing value from child to parent
-	function userDetails(userData: UserDetails) {
-		setData(userData);
-	}
-	async function getToken(){
-		const {_id} = await GetToken();
-		return _id
-	}
-	
+	console.log('page.tsx')
 	useEffect(() => {
-		
-		getData({ _id, listType, data: userDetails });
-	},[]);
+		async function getToken() {
+			console.log('useEffect starts')
+			const { _id } = await GetToken();
+			console.log('page.tsx',_id);
+			getData({ _id, listType, data: userDetails });
+			// passing value from child to parent
+			function userDetails(userData: UserDetails) {
+				setData(userData);
+			}
+			console.log("this is getData", getData);
+			return;
+		}
+		getToken();
+		console.log(getToken());
+	},[listType]);
 
 	const bankDetails = { ifsc, accountNo, upi };
 
-      // Save bank details
+	// Save bank details
 	async function sendData() {
 		try {
 			const response = await axios.post("/api/users/bankDetails", {
@@ -54,12 +58,12 @@ const UserProfile = () => {
 		console.log(overlay);
 	}
 	return (
-		<div>
-			<div className="w-[90%] mx-10 mt-6 relative">
+		<>
+			<div className="w-[85%] mb-16 mx-auto mt-6 relative">
 				<div
 					className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}
 				></div>
-				<div
+				<form onSubmit={sendData}
 					className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4`}
 				>
 					<RxCross1
@@ -73,10 +77,12 @@ const UserProfile = () => {
 						placeholder="Bank Account Number"
 						className="outline-none border-b pb-2 border-black"
 						value={accountNo}
-						onChange={(e) => setAccountNo(e.target.value)}
+						onChange={(e) =>
+							setAccountNo(e.target.value)
+						}
 					/>{" "}
 					<input
-						type="number"
+						type="text"
 						required
 						placeholder="IFSC CODE"
 						className="outline-none border-b pb-2 border-black"
@@ -91,13 +97,15 @@ const UserProfile = () => {
 						value={upi}
 						onChange={(e) => setUpi(e.target.value)}
 					/>{" "}
-					<button onClick={sendData} className="px-3 py-1">
+					<button type="submit" className="px-3 hover:bg-gray-200 py-1">
 						Submit
 					</button>
-				</div>
+				</form>
 				<BackwardButton />
 				<div className="flex justify-between mb-10 items-center">
-					<h3>{data?.user?.name}</h3>
+					<h3 className="font-semibold">
+						{data?.user?.name}
+					</h3>
 					{/* <div className="flex gap-6 text-sm"> */}
 					{/* <button className="rounded-3xl flex text-center items-center justify-center w-36 py-1 bg-primaryBgClr">
                       <Image
@@ -116,14 +124,14 @@ const UserProfile = () => {
                       Accept
                 </button> */}
 
-					{!data?.user.accountNo && (
+					{ !data?.user.accountNo ?  (
 						<div
 							onClick={() => setOverlay("")}
 							className="rounded-3xl text-nowrap cursor-pointer bg-primaryBgClr flex py-2 px-4 border justify-center items-center  text-white"
 						>
 							fill Bank Details
 						</div>
-					)}
+					):''}
 				</div>
 				<h6 className="text-gray-400 mb-4 text-sm">PERSONAL</h6>
 				<section className=" flex justify-between items-center">
@@ -150,7 +158,7 @@ const UserProfile = () => {
 				<div className="flex justify-start gap-4 mt-8 mb-4 items-center ">
 					<h6
 						onClick={() => setListType("delivered")}
-						className={` text-gray-400 text-sm p-[10px] rounded-full ${
+						className={` text-gray-400 text-sm py-2 px-3 cursor-pointer rounded-full ${
 							listType === "delivered" &&
 							"bg-blue-100"
 						}`}
@@ -159,7 +167,7 @@ const UserProfile = () => {
 					</h6>
 					<h6
 						onClick={() => setListType("nonDelivered")}
-						className={` text-gray-400 text-sm p-[10px] rounded-full ${
+						className={` text-gray-400 text-sm py-2 px-3 cursor-pointer rounded-full ${
 							listType === "nonDelivered" &&
 							"bg-blue-100"
 						}`}
@@ -180,7 +188,7 @@ const UserProfile = () => {
 					<div>Loading...</div>
 				)}
 			</div>
-		</div>
+		</>
 	);
 };
 

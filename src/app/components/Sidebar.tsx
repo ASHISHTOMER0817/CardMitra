@@ -9,8 +9,9 @@ interface sidebar {
 	tab?: string;
 	heading?: string;
 	classList?: string;
-	changeState: string;
+	changeState?: string;
 	tabClassList: string;
+	deleteToken?:()=>void
 }
 const SideBar = ({
 	img,
@@ -20,15 +21,16 @@ const SideBar = ({
 	classList,
 	changeState,
 	tabClassList,
+	deleteToken
 }: sidebar) => {
 	return (
 		<>
 			{
 				heading && <div className={`font-semibold mb-3 ${classList}`}>{heading}</div>
 			}
-			<Link
+			<Link onClick={deleteToken}
 				className={`flex cursor-pointer items-center my-3 font-medium ${ tab && 'gap-x-3'}`}
-				href={changeState}
+				href={!changeState ? '': changeState}
 			>
 				{img? <Image src={img} className="min-w-[30px] min-h-7" alt={""} />:reactIcon}
 				{tab && <div className={`text-sm ${tabClassList}`}>{tab}</div>}

@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
 
             if (listType === "delivered") {
                   const data = { user, orderList, totalAmt }
-                  console.log(totalAmt)
+                  // console.log(totalAmt)
                   return NextResponse.json({
                         message: "delivered is being shown", data: data, success: true
                   })
@@ -51,6 +51,7 @@ export async function GET(request: NextRequest) {
                         message: "Paid to user, Status updated", success:true, status: 250
                   })
             }
+
       } catch {
             return NextResponse.json({
                   message: "Something went wrong, please try again later", success: false

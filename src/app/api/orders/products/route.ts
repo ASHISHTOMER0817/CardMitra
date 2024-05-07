@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from "next/server";
 import Database from "@/database/database";
 import { Product, User } from "@/models/userModel";
@@ -10,7 +9,7 @@ export async function GET(request: NextRequest) {
             console.log('its workin')
             const limit = request.nextUrl.searchParams.get('limit')
             // token 
-            const {_id} = GetToken()
+            const {_id} = await GetToken()
             const user = await User.findOne({ _id: _id })
             
                   if (limit === 'none') {
@@ -30,10 +29,6 @@ export async function GET(request: NextRequest) {
                   //       const products = await Product.find()
                   // }
             
-
-
-
-
       } catch (error) {
             return NextResponse.json({
                   message: 'Something went wrong, Please try again later', success: false, status: 500

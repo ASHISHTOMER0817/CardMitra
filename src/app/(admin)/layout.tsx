@@ -28,9 +28,9 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={inter.className}>
 				<NavigationSidebar
+					icon={[dimHome, dimBell, dimHelp]}
 					firstSection={"/adminDashboard"}
 					secondSection={"/adminDashboard"}
-					icon={[dimHome, dimBell, dimHelp]}
 					thirdSection={{
 						image: deals,
 						name: "Orders",

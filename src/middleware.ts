@@ -1,22 +1,37 @@
-// import GetToken from '@/app/components/getToken'
 import { NextResponse } from 'next/server'
 import { NextRequest } from 'next/server'
+import * as jose from 'jose'
+
+
 
 // This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
-      const userCookies = request.cookies.get('token')?.value || ''
-      const adminCookies = request.cookies.get(process.env.ADMIN_TOKEN!)?.value || ''
-      if (!userCookies && !adminCookies ) { return NextResponse.redirect(new URL('/Auth/login', request.url)) }
-      else {
+export async function middleware(request: NextRequest) {
+      const value = request.cookies.get('joseToken')?.value!
+      // Jose token
+      const secret = new TextEncoder().encode(
+            process.env.TOKEN_SECRET_KEY!,
+      )
+      const jwt = value
+
+      const { payload } = await jose.jwtVerify(jwt, secret, {
+            issuer: 'Guru',
+            audience: 'Orderee',
+      })
+
+      if (!value) { return NextResponse.redirect(new URL('/Auth/login', request.url)) }
+      else if (value) {
+
             const path = request.nextUrl.pathname
             const authPath = path === '/Auth/login' || path === '/Auth/signup'
-            const adminPath = path === '/adminAddProduct/' || path === `/adminAddProduct${'/'}` || path === '/adminBookers' || path === '/adminDashboard' || path === '/orders' || path === '/otpList' || path === '/transactions' || path === '/Auth'
+            const adminPath = path === '/adminAddProduct' || path === '/adminBookers' || path === '/adminDashboard' || path === '/orders' || path === '/otpList' || path === '/transactions' || authPath
             const userPath = path === '/dashboard' || path === '/deals' || path === '/odrHistory' || path === '/userProfile' || authPath
-            console.log(userCookies)
-            if (userCookies && adminPath  ) {
+            // Admin Dynamic paths
+            const adminDynamicPath = path.startsWith('/adminAddProduct/') || path.startsWith('/adminBookers/') || path.startsWith('/orders/')
+            const userDynamicPath = path.startsWith('/odrHistory/') || path.startsWith('/deals/')
+            if (payload.role === 'user' && (adminPath || adminDynamicPath)) {
                   return NextResponse.redirect(new URL('/error', request.url))
             }
-            else if (adminCookies && userPath) {
+            else if (payload.role === 'admin' && (userPath || userDynamicPath)) {
                   return NextResponse.redirect(new URL('/error', request.url))
             }
       }
@@ -24,7 +39,9 @@ export function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-      matcher: ['/dashboard', '/deals/:path*', '/odrHistory/:path*', '/userProfile',  '/adminAddProduct:path*', '/adminBookers', '/adminDashboard', '/orders', '/otpList', '/transactions', '/Auth/login']
+      matcher: ['/dashboard', '/deals/:path*', '/odrHistory/:path*', '/userProfile', '/adminAddProduct/:path*', '/adminBookers/:path*', '/adminDashboard', '/orders/:path*', '/otpList', '/transactions'
+            // , '/Auth/login', '/Auth/signup'
+      ]
 }
 
 

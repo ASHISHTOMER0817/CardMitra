@@ -10,7 +10,7 @@ Database()
 export async function GET() {
 
       try {
-            const {_id} = getToken()
+            const {_id} = await getToken()
             console.log('1', _id)
             // Convert the userId string to a mongoose.Schema.Types.ObjectId object
             const userObjectId = new mongoose.Types.ObjectId(_id);

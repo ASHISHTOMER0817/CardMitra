@@ -3,7 +3,7 @@ import axios from "axios";
 import Image from "next/image";
 import React, { FormEvent, useEffect, useState } from "react";
 import downloadImg from "@/../public/downloadImg.svg";
-import Select from "react-select";
+import Select, { MultiValue } from "react-select";
 // import oneCard from "@/../public/oneCard.jpg";
 // import hdfcCard from "@/../public/hdfcCard.jpg";
 // import iciciCard from "@/../public/iciciCard.jpg";
@@ -13,7 +13,7 @@ import Select from "react-select";
 // import amazonLogo from "@/../public/amazonLogo.webp"
 // import flipkartLogo from "@/../public/flipkartLogo.png"
 // import sbi from "@/../public/SBI.png"
-import Dropdown from "@/app/components/dropdown";
+import Dropdown, { customStyles } from "@/app/components/dropdown";
 import Popup from "@/app/components/Popup";
 import productList from "@/interface/productList";
 import { RxCross1 } from "react-icons/rx";
@@ -26,7 +26,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	const [name, setName] = useState("");
 	const [price, setPrice] = useState(0);
 	const [commission, setCommission] = useState(0);
-	const [cards, setCards] = useState<dropdown>();
+	const [cards, setCards] = useState<dropdown[]>();
 	const [site, setSite] = useState<dropdown>();
 	const [productLink, setProductLink] = useState("");
 	const [image, setImage] = useState("");
@@ -39,13 +39,10 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 		third: "",
 		fourth: "",
 	});
+	// const [cardsArr, setCardsArr] = useState<string[]>();
+	console.log(cards);
 	// const [arr, setArr] = useState<string[]>([]);
 	// const [visible, setVisible] = useState(false);
-
-	//function to set Card
-	const handleDropdownChangeCard = (option: dropdown) => {
-		setCards(option);
-	};
 
 	//function to set Site
 	const handleDropdownChangeSite = (option: dropdown) => {
@@ -77,6 +74,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 			}
 		}
 		getData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [params?._id]);
 
 	//SEND DATA TO BACKEND
@@ -126,21 +124,9 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 		{ value: "Mi App", label: "Mi App" },
 	];
 
-	// // Card array empty
-	// function emptyArr() {
-	// 	setArr([]);
-	// }
-
-	// // Expand card array List
-	// function showList() {
-	// 	setVisible(!visible);
-	// }
-
-	// // Function to handle item selection
-	// const addItemToArray = (itemText: string) => {
-	// 	setArr([...arr, itemText]); // Add itemText to selectedItems array
-	// 	// setMenuVisible(false); // Hide the dropdown after selecting an item
-	// };
+	const handleChange = (selectedOptions: any) => {
+		setCards(selectedOptions);
+	};
 
 	return (
 		<form action={postData} className="w-[90%] p-8">
@@ -317,9 +303,18 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 					</label>
 
 					<div className="relative inline-block">
-						<Dropdown
+						<Select
+							defaultValue={[
+								cardOptions[1],
+								cardOptions[2],
+							]}
+							isMulti
+							name="colors"
 							options={cardOptions}
-							onChange={handleDropdownChangeCard}
+							className="basic-multi-select"
+							classNamePrefix="select"
+							onChange={handleChange}
+							styles={customStyles}
 						/>
 					</div>
 				</div>

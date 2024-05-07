@@ -102,8 +102,6 @@ const userSchema = new mongoose.Schema({
 	accountNo: {
 		type: String
 	},
-
-
 	isApprove: {
 		type: Boolean,
 		default: false,

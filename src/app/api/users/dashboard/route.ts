@@ -12,15 +12,12 @@ Database()
 export async function GET() {
 
       try {
-            const {_id} = getToken()
-            console.log('1', _id)
+            const { _id } = await getToken()
             // Convert the userId string to a mongoose.Schema.Types.ObjectId object
             const userObjectId = new mongoose.Types.ObjectId(_id);
 
             const order = await Order.find({ user: userObjectId }).populate('product');
             // const todaysOrders = await Order.find({ createdAt: dateFormat(new Date()) }).populate('product')
-            console.log(order);
-
             return NextResponse.json({
                   data: order, message: 'User data successfully retrieved', success: true
             })

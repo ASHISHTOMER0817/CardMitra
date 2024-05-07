@@ -72,15 +72,15 @@ const AdminDashboard = () => {
 				<h3 className=" font-semibold mb-3">Dashboard</h3>
 				<div className="flex justify-between gap-2">
 					<div className="min-w-[31%] text-center py-8 rounded-3xl bg-[#F3F3F3] cursor-pointer">
-						<h3 className="text-[#1844E1]">
+						<h5 className="text-[#1844E1]">
 							{data?.deliveries}{" "}
-						</h3>{" "}
+						</h5>{" "}
 						<div> Today&apos;s delivery</div>
 					</div>
 					<div className="min-w-[31%] text-center py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer">
-						<h3 className="text-primaryBgClr">
+						<h5 className="text-primaryBgClr">
 							{data?.order}
-						</h3>
+						</h5>
 						<div>
 							{" "}
 							Orders placed <br />
@@ -88,9 +88,9 @@ const AdminDashboard = () => {
 						</div>
 					</div>
 					<div className="min-w-[31%] text-center py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer">
-						<h3 className="text-primaryBgClr">
+						<h5 className="text-primaryBgClr">
 							{data?.noOfAffiliate}
-						</h3>
+						</h5>
 						<div> Affiliates Joined</div>
 					</div>
 				</div>

@@ -10,7 +10,7 @@ Database()
 export async function POST(request: NextRequest) {
 
       try {
-            const {_id} = GetToken();
+            const {_id} = await GetToken();
             let reqBody = await request.json()
             let { otp, contact, trackingId, order_id } = reqBody.orderDetails
             console.log('1st console', otp, contact, trackingId);

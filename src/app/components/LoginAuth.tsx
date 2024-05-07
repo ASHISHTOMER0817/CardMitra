@@ -17,7 +17,7 @@ const LoginAuth = () => {
 	const user = { email, password };
 
 	function checkSuccess(success: boolean, message: string, data: string) {
-		if (!success) {
+		if (success === false) {
 			Popup("error", message);
 			console.log(error);
 			return;
@@ -38,6 +38,7 @@ const LoginAuth = () => {
 			const { success, message, data } = await (
 				await axios.post("/api/users/login", { user })
 			).data;
+			console.log(success, message, data)
 			checkSuccess(success, message, data);
 		} catch (error: any) {
 			Popup("error", "Server error, please refresh");

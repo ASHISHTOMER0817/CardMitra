@@ -49,16 +49,16 @@ const Dashboard = () => {
 			<h3 className="my-7 font-semibold">DashBoard</h3>
 			<div className="flex justify-between gap-2">
 				<div className="px-32 py-8 rounded-3xl  bg-[#F3F3F3] ">
-					<h3 className="text-[#1844E1]">Rs.300</h3>{" "}
+					<h5 className="text-[#1844E1]">Rs.300</h5>{" "}
 					Today&apos;s profile
 				</div>
 				<div className="px-32 py-8 rounded-3xl  bg-[#F3F3F3] ">
-					<h3 className="text-primaryBgClr">64</h3>
+					<h5 className="text-primaryBgClr">64</h5>
 					Orders placed <br />
 					till date
 				</div>
 				<div className="px-32 py-8 rounded-3xl  bg-[#F3F3F3]">
-					<h3 className="text-primaryBgClr">Rs. 6,800</h3>
+					<h5 className="text-primaryBgClr">Rs. 6,800</h5>
 					Commission earned
 				</div>
 			</div>
@@ -67,7 +67,7 @@ const Dashboard = () => {
 				<div className="text-primaryBgClr text-base">DETAILS</div>
 			</div>
 			<div>
-				<BarChart ChartData={userData} />
+				<BarChart ChartData={userData} options={{ maintainAspectRatio: false }} />
 			</div>
 			<div className="flex justify-between my-6">
 				<h4 className="font-semibold">Order History</h4>

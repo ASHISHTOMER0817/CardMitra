@@ -15,6 +15,7 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 	useEffect(() => {
 		async function getData() {
 			try {
+				console.log(params.placeorder)
 				const response = await axios.get(
 					`/api/users/productData?query=${params.placeorder}`
 				);

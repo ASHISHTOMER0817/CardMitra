@@ -61,9 +61,9 @@ const AffiliateRequest = () => {
 
 	return (
 		<div className="container mx-auto my-8 md:text-[10px]">
-			<h5 className="font-semibold text-lg mb-4 pb-2">
+			<h3 className="font-semibold text-lg mb-4 pb-2">
 				User List
-			</h5>
+			</h3>
 			<div className="rounded-lg overflow-hidden border border-gray-300">
 				<table className="min-w-full divide-y divide-gray-300">
 					<thead>

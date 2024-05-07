@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import BackwardButton from "@/app/components/BackwardButton";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -11,28 +11,33 @@ import { order } from "@/interface/productList";
 import Popup from "@/app/components/Popup";
 import { useRouter } from "next/navigation";
 import { RxCross1 } from "react-icons/rx";
-import {UserDetails} from "@/interface/productList"
+import { UserDetails } from "@/interface/productList";
 
-
-// User details function 
- export async function getData({ _id, listType, amount, data }: { _id: string; listType: string; amount?: number; data: (userData:UserDetails) => void; }) {
+// User details function
+export async function getData({
+	_id,
+	listType,
+	amount,
+	data,
+}: {
+	_id: string;
+	listType: string;
+	amount?: number;
+	data: (userData: UserDetails) => void;
+}) {
 	try {
 		const response = await axios.get(
 			`/api/users/details?query=${_id}&listType=${listType}&paid=${amount}`
-		)
-		if(response.data.status === 250){
-			Popup("success", `${response.data.message} - Rs.${amount}`)
+		);
+		if (response.data.status === 250) {
+			Popup("success", `${response.data.message} - Rs.${amount}`);
 			return;
 		}
 		data(response.data.data);
-
 	} catch {
-		console.log(
-			"Something went wrong, please try again later"
-		);
+		console.log("Something went wrong, please try again later");
 	}
-} 
-
+}
 
 const Bookers = ({ params }: { params: { _id: string } }) => {
 	const [data, setData] = useState<UserDetails>();
@@ -41,14 +46,13 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 	const [amount, setAmount] = useState<number>(0);
 	const [overlay, setOverlay] = useState("hidden");
 
-
-
 	// passing value from child to parent
-	function userDetails(userData:UserDetails){
-		setData(userData)
+	function userDetails(userData: UserDetails) {
+		setData(userData);
 	}
 	useEffect(() => {
-		getData({_id:params._id, listType,amount, data: userDetails});
+		console.log("useEffect running");
+		getData({ _id: params._id, listType, amount, data: userDetails });
 	}, [listType, params._id]);
 
 	// Function to remove account of the user
@@ -72,20 +76,20 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 	// 		Popup("error", "something went wrong, REFRESH");
 	// 	}
 	// }
-	function overlayFeature(){
-		setOverlay("hidden")
-		console.log(overlay)
+	function overlayFeature() {
+		setOverlay("hidden");
+		console.log(overlay);
 	}
 
-	function paymentUpdate(){
-
-	}
+	function paymentUpdate() {}
 	return (
-		<div className="w-[90%] mx-10 mt-6 relative">
+		<div className="w-[90%] mx-10 mt-6">
 			<div
 				className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}
 			></div>
-			<div className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4`}>
+			<div
+				className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4`}
+			>
 				<RxCross1
 					className=" cursor-pointer ml-auto"
 					onClick={overlayFeature}
@@ -97,13 +101,18 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 					placeholder="Amount"
 					className="outline-none border-b pb-2 border-black"
 					value={amount}
-					onChange={(e)=>setAmount(+e.target.value)}
+					onChange={(e) => setAmount(+e.target.value)}
 				/>{" "}
-				<button onClick={()=>setListType("reduce")} className="px-3 py-1">Submit</button>
+				<button
+					onClick={() => setListType("reduce")}
+					className="px-3 py-1"
+				>
+					Submit
+				</button>
 			</div>
 			<BackwardButton />
 			<div className="flex justify-between mb-10 items-center">
-				<h3>{data?.user?.name}</h3>
+				<h3 className="font-semibold">{data?.user?.name}</h3>
 				{/* <div className="flex gap-6 text-sm"> */}
 				{/* <button className="rounded-3xl flex text-center items-center justify-center w-36 py-1 bg-primaryBgClr">
 						<Image
@@ -142,14 +151,9 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 			<h6 className="text-gray-400 mb-4 text-sm">BANK DETAILS</h6>
 
 			<section className="flex justify-between items-center">
-				<div>
-					Bank Account Number:{" "}
-					{data?.user?.accountNo}
-				</div>
+				<div>Bank Account Number: {data?.user?.accountNo}</div>
 				<div>IFSC Code: {data?.user?.ifsc} </div>
-				<div className="mr-20">
-					UPI ID: {data?.user?.upi}
-				</div>
+				<div className="mr-20">UPI ID: {data?.user?.upi}</div>
 			</section>
 
 			<div className="flex justify-start gap-4 mt-8 mb-4 items-center ">

@@ -8,9 +8,9 @@ Database()
 export async function POST(request: NextRequest) {
 
       try {
-            const { nfsc, upi, accountNo } = await(await request.json()).bankDetails
-            const {_id} = GetToken()
-            const user = await User.updateOne({ _id: _id }, { $set: { nfsc, upi, accountNo } });
+            const { ifsc, upi, accountNo } = await(await request.json()).bankDetails
+            const {_id} = await GetToken()
+            const user = await User.updateOne({ _id: _id }, { $set: { ifsc, upi, accountNo } });
             if (!user) {
                   return NextResponse.json({
                         message: "Server error, please refresh the page", success: false
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
             }
             else {
                   return NextResponse.json({
-                        message: "Bank details saved", success: false
+                        message: "Bank details saved", success: true
                   })
             }
       } catch {
