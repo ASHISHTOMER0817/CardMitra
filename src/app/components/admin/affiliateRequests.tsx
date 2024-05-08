@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useState, useEffect, ReactNode } from "react";
 import axios from "axios";
 import Image from "next/image";
@@ -10,8 +10,7 @@ import acceptAffiliate from "../acceptAffiliate";
 import Popup from "../Popup";
 import { user } from "@/interface/productList";
 
-
-const AffiliateRequest = () => {
+const AffiliateRequest = ({ heading }: { heading?: string }) => {
 	const [users, setUsers] = useState<user[]>([]);
 	const [refreshData, setRefreshData] = useState(false);
 
@@ -19,9 +18,9 @@ const AffiliateRequest = () => {
 		const fetchData = async () => {
 			try {
 				const response = await axios.get(
-					"api/affiliate/affiliateRequest"
+					`api/affiliate/affiliateRequest?isApproved=${heading}`
 				);
-				console.log(response.data.data)
+				console.log(response.data.data);
 				setUsers(response.data.data); // Assuming API response is an array of user objects
 			} catch (error) {
 				console.error(
@@ -32,8 +31,7 @@ const AffiliateRequest = () => {
 		};
 
 		fetchData();
-	}, [refreshData]);
-
+	}, [heading, refreshData]);
 
 	async function isAccept(choice: boolean, _id: string) {
 		try {
@@ -41,9 +39,8 @@ const AffiliateRequest = () => {
 				`/api/affiliate/affiliateAcceptOrReject?choice=${choice}&objectId=${_id}`
 			);
 			const msg = response.data.message;
-			const status = response.data.status
+			const status = response.data.status;
 			if (status === 200) {
-				
 				Popup("success", msg);
 				setRefreshData(!refreshData);
 			}
@@ -60,12 +57,14 @@ const AffiliateRequest = () => {
 	}
 
 	return (
-		<div className="container mx-auto my-8 md:text-[10px]">
-			<h3 className="font-semibold text-lg mb-4 pb-2">
-				User List
-			</h3>
-			<div className="rounded-lg overflow-hidden border border-gray-300">
-				<table className="min-w-full divide-y divide-gray-300">
+		<div className={`${heading === 'approved' && 'w-[85%]'} mx-auto my-8 md:text-[10px]`}>
+			{heading === 'approved' && (
+				<h3 className="font-semibold mb-4 pb-2">
+					User List
+				</h3>
+			)}
+			<div className={`rounded-lg overflow-hidden ${heading ? 'border border-gray-300': '' } `}>
+				{users.length >0 ? <table className="min-w-full divide-y divide-gray-300">
 					<thead>
 						<tr>
 							<th className="px-4 py-2 text-left">
@@ -145,7 +144,6 @@ const AffiliateRequest = () => {
 													width={
 														30
 													}
-													
 													className="cursor-pointer h-auto"
 												/>
 											</Link>
@@ -155,7 +153,7 @@ const AffiliateRequest = () => {
 							)
 						)}
 					</tbody>
-				</table>
+				</table>: <div className="mx-auto w-fit mt-20 text-red-500">No data to show !!</div>}
 			</div>
 		</div>
 	);

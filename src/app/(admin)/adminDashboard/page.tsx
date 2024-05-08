@@ -106,7 +106,7 @@ const AdminDashboard = () => {
 					</Link>
 				</div>
 				<div>
-					<BarChart ChartData={userData} />
+					<BarChart ChartData={userData} options={{ maintainAspectRatio: false }}/>
 				</div>
 			</section>
 

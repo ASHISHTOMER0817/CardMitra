@@ -2,12 +2,14 @@
 import BackwardButton from "@/app/components/BackwardButton";
 import UserOrders from "@/app/components/userOrders";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { RxCross1 } from "react-icons/rx";
-import { getData } from "@/app/(admin)/adminBookers/[_id]/page";
+import { GetData } from "@/app/(admin)/adminBookers/[_id]/page";
 import { UserDetails } from "@/interface/productList";
 import Popup from "@/app/components/Popup";
 import GetToken from "@/app/components/getToken";
+import Loader from "@/app/components/loader";
+import Transactions from "@/app/components/transactions";
 
 const UserProfile = () => {
 	const [ifsc, setIfsc] = useState<string>("");
@@ -16,24 +18,25 @@ const UserProfile = () => {
 	const [overlay, setOverlay] = useState("hidden");
 	const [listType, setListType] = useState("delivered");
 	const [data, setData] = useState<UserDetails>();
+	const [transactions, setTransactions] = useState(false);
 
-	console.log('page.tsx')
+	console.log("page.tsx");
 	useEffect(() => {
 		async function getToken() {
-			console.log('useEffect starts')
+			console.log("useEffect starts");
 			const { _id } = await GetToken();
-			console.log('page.tsx',_id);
-			getData({ _id, listType, data: userDetails });
+			console.log("page.tsx", _id);
+			GetData({ _id, listType, data: userDetails });
 			// passing value from child to parent
 			function userDetails(userData: UserDetails) {
 				setData(userData);
 			}
-			console.log("this is getData", getData);
+			console.log("this is getData", GetData);
 			return;
 		}
 		getToken();
 		console.log(getToken());
-	},[listType]);
+	}, [listType]);
 
 	const bankDetails = { ifsc, accountNo, upi };
 
@@ -63,7 +66,8 @@ const UserProfile = () => {
 				<div
 					className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}
 				></div>
-				<form onSubmit={sendData}
+				<form
+					onSubmit={sendData}
 					className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4`}
 				>
 					<RxCross1
@@ -97,7 +101,10 @@ const UserProfile = () => {
 						value={upi}
 						onChange={(e) => setUpi(e.target.value)}
 					/>{" "}
-					<button type="submit" className="px-3 hover:bg-gray-200 py-1">
+					<button
+						type="submit"
+						className="px-3 hover:bg-gray-200 py-1"
+					>
 						Submit
 					</button>
 				</form>
@@ -124,14 +131,16 @@ const UserProfile = () => {
                       Accept
                 </button> */}
 
-					{ !data?.user.accountNo ?  (
+					{!data?.user.accountNo ? (
 						<div
 							onClick={() => setOverlay("")}
 							className="rounded-3xl text-nowrap cursor-pointer bg-primaryBgClr flex py-2 px-4 border justify-center items-center  text-white"
 						>
 							fill Bank Details
 						</div>
-					):''}
+					) : (
+						""
+					)}
 				</div>
 				<h6 className="text-gray-400 mb-4 text-sm">PERSONAL</h6>
 				<section className=" flex justify-between items-center">
@@ -157,35 +166,59 @@ const UserProfile = () => {
 
 				<div className="flex justify-start gap-4 mt-8 mb-4 items-center ">
 					<h6
-						onClick={() => setListType("delivered")}
+						onClick={() => {
+							setListType("delivered");
+							setTransactions(false);
+						}}
 						className={` text-gray-400 text-sm py-2 px-3 cursor-pointer rounded-full ${
 							listType === "delivered" &&
-							"bg-blue-100"
+						!transactions &&
+						"underline underline-offset-4 text-primaryBgClr"
 						}`}
 					>
 						Delivered List
 					</h6>
 					<h6
-						onClick={() => setListType("nonDelivered")}
+						onClick={() => {
+							setListType("nonDelivered");
+							setTransactions(false);
+						}}
 						className={` text-gray-400 text-sm py-2 px-3 cursor-pointer rounded-full ${
 							listType === "nonDelivered" &&
-							"bg-blue-100"
+						!transactions &&
+						"underline underline-offset-4 text-primaryBgClr"
 						}`}
 					>
 						non-delivered List
 					</h6>
+					<h6
+						onClick={() => setTransactions(true)}
+						className={` text-gray-400 text-sm py-2 px-3 cursor-pointer rounded-full ${
+							transactions &&
+						"underline underline-offset-4 text-primaryBgClr"
+						}`}
+					>
+						Transactions
+					</h6>
 				</div>
 
-				{data ? (
+				{transactions ? (
+					<Suspense fallback={<Loader />}>
+						<Transactions
+							userPage={true}
+							_id={data?.user?._id}
+						/>
+					</Suspense>
+				) : data ? (
 					data?.orderList?.length! > 0 ? (
 						<UserOrders data={data?.orderList!} />
 					) : (
 						<div className="mt-28 mx-auto w-fit text-sm text-red-500 font-serif">
-							User did not ordered any product yet
+							No Data to show !!
 						</div>
 					)
 				) : (
-					<div>Loading...</div>
+					<Loader />
 				)}
 			</div>
 		</>

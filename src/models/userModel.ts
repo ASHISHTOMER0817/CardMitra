@@ -37,7 +37,9 @@ const orderSchema = new mongoose.Schema({
 	orderedAt: {
 		type: String,
 		// format:Date
-
+	},
+	paid:{
+		type:Boolean
 	}
 })
 
@@ -201,9 +203,24 @@ const productSchema = new mongoose.Schema({
 
 });
 
+const transactionSchema = new mongoose.Schema({
+	user: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'users'
+	},
+	dateOfPayment: {
+		type: Date
+	},
+	amount: {
+		type: Number,
+		required:true
+	},
+})
+
 const Product = mongoose.models.products || mongoose.model("products", productSchema)
 const Otp = mongoose.models.otps || mongoose.model("otps", otpSchema)
 const Order = mongoose.models.orders || mongoose.model("orders", orderSchema)
 const User = mongoose.models.users || mongoose.model("users", userSchema);
 const Password = mongoose.models.passwords || mongoose.model("passwords", passwordSchema)
-export { User, Password, Product, Otp, Order }
+const Transactions = mongoose.models.transactions || mongoose.model("transactions", transactionSchema)
+export { User, Password, Product, Otp, Order, Transactions }

@@ -32,6 +32,7 @@ export interface order {
 	delivered: boolean
 	orderedAt: string
 	_id: string
+	paid:boolean
 }
 
 export interface otp {
@@ -63,4 +64,11 @@ export interface UserDetails {
 	user: user
 	orderList: order[]
 	totalAmt: number
+}
+
+export interface transactions{
+	_id:string
+	user:user
+	dateOfPayment:string
+	amount:number
 }

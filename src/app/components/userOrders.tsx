@@ -1,8 +1,8 @@
-import axios from "axios";
+// import axios from "axios";
 import React, { useState } from "react";
 // import Popup from "./Popup";
 import { order } from "@/interface/productList";
-import dateFormat from "./dateFormat";
+// import dateFormat from "./dateFormat";
 const UserOrders = ({ data }: { data: order[] }) => {
 	// const [datas, setDatas] = useState<order[]>(data)
 
@@ -28,12 +28,16 @@ const UserOrders = ({ data }: { data: order[] }) => {
 							Delivery Date
 						</th>
 						<th className="py-6 px-12 text-left">
-							delivery Status
-						</th>
-
-						<th className="py-6 px-12 text-left">
 							Order Date
 						</th>
+						<th className="py-6 px-12 text-left">
+							Product Name
+						</th>
+						<th className="py-6 px-12 text-left">
+							Price
+						</th>
+
+						
 					</tr>
 				</thead>
 				<tbody>
@@ -41,7 +45,7 @@ const UserOrders = ({ data }: { data: order[] }) => {
 						(
 							{
 								deliveryDate,
-								delivered,
+								product,
 								orderedAt,
 								orderId,
 							},
@@ -64,14 +68,16 @@ const UserOrders = ({ data }: { data: order[] }) => {
 										{deliveryDate}
 									</td>
 									<td className="py-4 px-12">
-										{delivered
-											? "Delivered"
-											: "Pending"}
-									</td>
-
-									<td className="py-4 px-12">
 										{orderedAt}
 									</td>
+									<td className="py-4 px-12">
+										{product.name}
+									</td>
+									<td className="py-4 px-12">
+										{product.price}
+									</td>
+
+									
 								</tr>
 							);
 						}

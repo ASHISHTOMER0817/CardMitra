@@ -1,14 +1,14 @@
 import Header from "@/app/components/Header";
 // import ProductDisplayFormat from "@/app/components/ProductDisplayFormat";
 import AffiliateRequest from "@/app/components/admin/affiliateRequests";
-import React from "react";
+import Loader from "@/app/components/loader";
+import React, { Suspense } from "react";
 
 const AdminBookers = () => {
 	return (
-		<div className="flex flex-col w-[90%] mx-7">
-			{/* <Header heading={"Bookers"} /> */}
-			<AffiliateRequest />
-		</div>
+		<Suspense fallback={<Loader />}>
+			<AffiliateRequest heading="approved" />
+		</Suspense>
 	);
 };
 

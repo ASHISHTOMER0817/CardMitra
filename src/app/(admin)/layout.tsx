@@ -10,7 +10,9 @@ import deals from "@/../public/apps.svg";
 // import SideBar from "../components/Sidebar";
 import bookers from "@/../public/bookers.svg";
 import transactions from "@/../public/transactions.svg";
-import { Transactions } from "@/app/components/lib"
+import { Transactions } from "@/app/components/lib";
+import Loader from "../components/loader";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,11 +44,13 @@ export default function RootLayout({
 						changeState: "/adminBookers",
 					}}
 					fifthSection={{
-						image: <Transactions/>,
+						image: <Transactions />,
 						name: "Transactions",
-						changeState: "/transactions",
+						changeState: "/adminTransactions",
 					}}
-					main={children}
+					main={
+							children
+					}
 				/>
 			</body>
 		</html>

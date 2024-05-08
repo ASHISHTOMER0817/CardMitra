@@ -1,7 +1,7 @@
 "use client";
 import BackwardButton from "@/app/components/BackwardButton";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 // import Image from "next/image";
 // import redCross from "@/../public/redCross.svg";
 // import accept from "@/../public/accept.svg";
@@ -12,9 +12,11 @@ import Popup from "@/app/components/Popup";
 import { useRouter } from "next/navigation";
 import { RxCross1 } from "react-icons/rx";
 import { UserDetails } from "@/interface/productList";
+import Loader from "@/app/components/loader";
+import Transactions from "@/app/components/transactions";
 
 // User details function
-export async function getData({
+export async function GetData({
 	_id,
 	listType,
 	amount,
@@ -31,7 +33,8 @@ export async function getData({
 		);
 		if (response.data.status === 250) {
 			Popup("success", `${response.data.message} - Rs.${amount}`);
-			return;
+
+			return "amount reduced";
 		}
 		data(response.data.data);
 	} catch {
@@ -44,15 +47,36 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 	const [listType, setListType] = useState("delivered");
 	const router = useRouter();
 	const [amount, setAmount] = useState<number>(0);
+	const [amountPayable, setAmountPayable] = useState(0);
 	const [overlay, setOverlay] = useState("hidden");
+	const [transactions, setTransactions] = useState(false);
 
-	// passing value from child to parent
-	function userDetails(userData: UserDetails) {
-		setData(userData);
-	}
 	useEffect(() => {
-		console.log("useEffect running");
-		getData({ _id: params._id, listType, amount, data: userDetails });
+		async function updatePage() {
+			console.log("useEffect running");
+			const isReduced = await GetData({
+				_id: params._id,
+				listType,
+				amount,
+				data: userDetails,
+			});
+			if ( isReduced) {
+				console.log(isReduced, 'really----')
+				// setTimeout(()=>{
+				// 	router.refresh()
+				// },1800)
+				setOverlay("")
+			}
+
+			// passing value from child to parent
+			function userDetails(userData: UserDetails) {
+				setData(userData);
+				console.log(userData?.totalAmt);
+				setAmountPayable(userData?.totalAmt);
+			}
+		}
+		updatePage();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [listType, params._id]);
 
 	// Function to remove account of the user
@@ -81,7 +105,8 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 		console.log(overlay);
 	}
 
-	function paymentUpdate() {}
+	console.log(data?.totalAmt);
+	// function paymentUpdate() {}
 	return (
 		<div className="w-[90%] mx-10 mt-6">
 			<div
@@ -104,8 +129,10 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 					onChange={(e) => setAmount(+e.target.value)}
 				/>{" "}
 				<button
-					onClick={() => setListType("reduce")}
-					className="px-3 py-1"
+					onClick={() => {
+						setListType("reduce");
+					}}
+					className="px-3 py-1 hover:bg-gray-200"
 				>
 					Submit
 				</button>
@@ -131,7 +158,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 						Accept
 					</button> */}
 
-				{listType === "delivered" && amount !== 0 && (
+				{listType == "delivered" && amountPayable > 0 && (
 					<div
 						onClick={() => setOverlay("")}
 						className="rounded-3xl text-nowrap cursor-pointer bg-primaryBgClr flex py-2 px-4 border justify-center items-center  text-white"
@@ -158,33 +185,56 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 
 			<div className="flex justify-start gap-4 mt-8 mb-4 items-center ">
 				<h6
-					onClick={() => setListType("delivered")}
-					className={` text-gray-400 text-sm p-[10px] rounded-full ${
-						listType === "delivered" && "bg-blue-100"
+					onClick={() => {
+						setListType("delivered");
+						setTransactions(false);
+					}}
+					className={` text-sm p-[10px] rounded-full cursor-pointer ${
+						listType === "delivered" &&
+						!transactions &&
+						"underline underline-offset-4 text-primaryBgClr"
 					}`}
 				>
 					Delivered List
 				</h6>
 				<h6
-					onClick={() => setListType("nonDelivered")}
-					className={` text-gray-400 text-sm p-[10px] rounded-full ${
-						listType === "nonDelivered" && "bg-blue-100"
+					onClick={() => {
+						setListType("nonDelivered");
+						setTransactions(false);
+					}}
+					className={` text-sm p-[10px] rounded-full cursor-pointer ${
+						listType === "nonDelivered" &&
+						!transactions &&
+						"underline underline-offset-4 text-primaryBgClr"
 					}`}
 				>
 					non-delivered List
 				</h6>
+				<h6
+					onClick={() => setTransactions(true)}
+					className={` text-sm p-[10px] rounded-full cursor-pointer ${
+						transactions &&
+						"underline underline-offset-4 text-primaryBgClr"
+					}`}
+				>
+					Transactions
+				</h6>
 			</div>
 
-			{data ? (
+			{transactions ? (
+				<Suspense fallback={<Loader classList="mt-20" />}>
+					<Transactions userPage={true} _id={params._id} />
+				</Suspense>
+			) : data ? (
 				data?.orderList?.length! > 0 ? (
 					<UserOrders data={data?.orderList!} />
 				) : (
 					<div className="mt-28 mx-auto w-fit text-sm text-red-500 font-serif">
-						User did not ordered any product yet
+						No Data to show !!
 					</div>
 				)
 			) : (
-				<div>Loading...</div>
+				<Loader classList="mt-20" />
 			)}
 		</div>
 	);

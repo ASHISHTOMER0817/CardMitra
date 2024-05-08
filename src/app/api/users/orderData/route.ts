@@ -8,10 +8,10 @@ export async function GET(request: NextRequest) {
 
       try {
             let odrId = request.nextUrl.searchParams.get('odrId')
-            let objectId = request.nextUrl.searchParams.get('objectId')
+            let productId = request.nextUrl.searchParams.get('productId')
             
             console.log('1st', odrId)
-            console.log('2nd', objectId)
+            console.log('2nd', productId)
             if (odrId) {
                  
                   const order = await Order.findOne({_id:odrId}).populate('product')
@@ -19,9 +19,9 @@ export async function GET(request: NextRequest) {
                   return NextResponse.json({
                         data: order, message: 'User data successfully retrieved', success: true
                   })
-            }else if(objectId){
+            }else if(productId){
                   console.log('objectId')
-                  const orderList = await Order.find({product:objectId}).populate('user')
+                  const orderList = await Order.find({product:productId}).populate('user')
                   console.log('this is orderList', orderList)
                   return NextResponse.json({
                         message: "Showing orderList", success: false, data:orderList
