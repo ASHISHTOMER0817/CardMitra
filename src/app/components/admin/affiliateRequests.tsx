@@ -9,9 +9,10 @@ import Link from "next/link";
 import acceptAffiliate from "../acceptAffiliate";
 import Popup from "../Popup";
 import { user } from "@/interface/productList";
+import Loader from "../loader";
 
 const AffiliateRequest = ({ heading }: { heading?: string }) => {
-	const [users, setUsers] = useState<user[]>([]);
+	const [users, setUsers] = useState<user[]>();
 	const [refreshData, setRefreshData] = useState(false);
 
 	useEffect(() => {
@@ -64,7 +65,7 @@ const AffiliateRequest = ({ heading }: { heading?: string }) => {
 				</h3>
 			)}
 			<div className={`rounded-lg overflow-hidden ${heading ? 'border border-gray-300': '' } `}>
-				{users.length >0 ? <table className="min-w-full divide-y divide-gray-300">
+				{!users? <Loader/> : users.length >0 ? <table className="min-w-full divide-y divide-gray-300">
 					<thead>
 						<tr>
 							<th className="px-4 py-2 text-left">

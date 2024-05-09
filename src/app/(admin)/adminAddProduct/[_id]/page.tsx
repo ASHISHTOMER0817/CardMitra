@@ -56,7 +56,8 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 					const response = await axios.get(
 						`/api/admin/addProduct?_id=${params?._id}`
 					);
-					const product: productList = response.data.data;
+					console.log(params._id)
+					const product: productList = await response.data.data;
 					setName(product.name);
 					setPrice(product.price);
 					setCommission(product.commission);

@@ -15,6 +15,7 @@ import axios from "axios";
 import productList from "@/interface/productList";
 import AffiliateRequest from "@/app/components/admin/affiliateRequests";
 import Link from "next/link";
+import Loader from "@/app/components/loader";
 
 interface dashboardData {
 	orderHistory: productList[];
@@ -70,14 +71,14 @@ const AdminDashboard = () => {
 		<div className="mx-6 w-[90%] mt-6 md:text-xs">
 			<section className="mt-9 ">
 				<h3 className=" font-semibold mb-3">Dashboard</h3>
-				<div className="flex justify-between gap-2">
-					<div className="min-w-[31%] text-center py-8 rounded-3xl bg-[#F3F3F3] cursor-pointer">
+				<div className="flex justify-start gap-2">
+					<div className=" text-center px-20 py-8 rounded-3xl bg-[#F3F3F3] cursor-pointer md:min-w-[31%]">
 						<h5 className="text-[#1844E1]">
 							{data?.deliveries}{" "}
 						</h5>{" "}
 						<div> Today&apos;s delivery</div>
 					</div>
-					<div className="min-w-[31%] text-center py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer">
+					<div className=" text-center px-20 py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer md:min-w-[31%]">
 						<h5 className="text-primaryBgClr">
 							{data?.order}
 						</h5>
@@ -87,7 +88,7 @@ const AdminDashboard = () => {
 							today
 						</div>
 					</div>
-					<div className="min-w-[31%] text-center py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer">
+					<div className=" text-center px-20 py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer md:min-w-[31%]">
 						<h5 className="text-primaryBgClr">
 							{data?.noOfAffiliate}
 						</h5>
@@ -106,7 +107,10 @@ const AdminDashboard = () => {
 					</Link>
 				</div>
 				<div>
-					<BarChart ChartData={userData} options={{ maintainAspectRatio: false }}/>
+					<BarChart
+						ChartData={userData}
+						options={{ maintainAspectRatio: false }}
+					/>
 				</div>
 			</section>
 
@@ -121,7 +125,8 @@ const AdminDashboard = () => {
 					</Link>
 				</div>
 				<div className="grid grid-flow-row gap-3 grid-cols-3">
-					{/* <CardLayoutAdminDashboard data={data?.orderHistory!}/> */}
+
+					{!data? <Loader/> :<CardLayoutAdminDashboard data={data?.orderHistory!}/>}
 				</div>
 			</section>
 

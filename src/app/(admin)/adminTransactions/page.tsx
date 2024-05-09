@@ -74,9 +74,9 @@ const AdminTransactions = () => {
 
 		<div className="w-[85%] mx-auto mt-6 ">
 			<h3 className="font-semibold my-12">Transactions</h3>
-		<Suspense fallback={<Loader />}>
+		{/* <Suspense fallback={<Loader />}> */}
 			<Transactions userPage={false} />
-		</Suspense>
+		{/* </Suspense> */}
 		</div>
 	);
 };

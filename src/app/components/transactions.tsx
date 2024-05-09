@@ -1,9 +1,10 @@
-'use client'
+"use client";
 import { transactions } from "@/interface/productList";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Popup from "./Popup";
 import dateFormat from "./dateFormat";
+import Loader from "./loader";
 
 const Transactions = ({
 	userPage,
@@ -12,7 +13,7 @@ const Transactions = ({
 	userPage: boolean;
 	_id?: string;
 }) => {
-	const [data, setData] = useState<transactions[]>([]);
+	const [data, setData] = useState<transactions[]>();
 	useEffect(() => {
 		async function getData() {
 			try {
@@ -33,14 +34,16 @@ const Transactions = ({
 
 	return (
 		<>
-			{data.length > 0 ? (
+			{!data ? (
+				<Loader />
+			) : data.length > 0 ? (
 				<table className="w-full rounded-2xl overflow-hidden">
 					<thead>
 						<tr className="bg-gray-200">
 							<th className="py-6 px-12 text-left">
 								Transaction ID
 							</th>
-							{userPage.toString() === 'false' && (
+							{userPage.toString() === "false" && (
 								<th className="py-6 px-12 text-left">
 									User name
 								</th>
@@ -79,7 +82,8 @@ const Transactions = ({
 										<td className="py-4 px-12">
 											{_id}
 										</td>
-										{userPage.toString() === "false" && (
+										{userPage.toString() ===
+											"false" && (
 											<td className="py-4 px-12">
 												{
 													user.name
@@ -87,9 +91,11 @@ const Transactions = ({
 											</td>
 										)}
 										<td className="py-4 px-12">
-											{
-											dateFormat(new Date(dateOfPayment))	
-											}
+											{dateFormat(
+												new Date(
+													dateOfPayment
+												)
+											)}
 										</td>
 
 										<td className="py-4 px-12">

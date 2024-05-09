@@ -7,10 +7,11 @@ const OrderHistory = ({ data }: { data: order[] }) => {
 
 	return (
 		<>
-			{data.map(({ product, _id}, index) => {
+			{data.map(({ product, _id, otp}, index) => {
 				return (
 					<Link key={index} className="cursor-pointer" href={`/odrHistory/${_id}`}>
 						<CardLayout
+						placeOrder={otp && <div className="mx-auto text-gray-500">OTP submitted</div>}
 							quantity={product?.requirement}
 							name={product?.name}
 							price={product?.price}

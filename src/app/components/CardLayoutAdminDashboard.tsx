@@ -8,7 +8,7 @@ import axios from "axios";
 import Popup from "./Popup";
 import Link from "next/link";
 
-const CardLayoutAdminDashboard = ({ data }: { data: productList[] }) => {
+const  CardLayoutAdminDashboard = ({ data }: { data: productList[] }) => {
 	console.log(data);
 
 	return (
@@ -38,7 +38,7 @@ const CardLayoutAdminDashboard = ({ data }: { data: productList[] }) => {
 									<Image
 										src={edit}
 										alt={""}
-										className=""
+										className="hover:bg-gray-200 hover:rounded-full"
 									/>
 								</Link>
 							}

@@ -8,8 +8,10 @@ import * as jose from 'jose'
 export async function middleware(request: NextRequest) {
       const value = request.cookies.get('joseToken')?.value!
 
+      const path = request.nextUrl.pathname
+      const authPath = path === '/Auth/login' || path === '/Auth/signup'
 
-      if (!value) { return NextResponse.redirect(new URL('/Auth/login', request.url)) }
+      if (!value && !authPath) { return NextResponse.redirect(new URL('/Auth/login', request.url)) }
       else if (value) {
             // Jose token
             const secret = new TextEncoder().encode(
@@ -22,10 +24,8 @@ export async function middleware(request: NextRequest) {
                   audience: 'Orderee',
             })
 
-            const path = request.nextUrl.pathname
-            const authPath = path === '/Auth/login' || path === '/Auth/signup'
-            const adminPath = path === '/adminAddProduct' || path === '/adminBookers' || path === '/adminDashboard' || path === '/orders' || path === '/otpList' || path === '/transactions' || authPath
-            const userPath = path === '/dashboard' || path === '/deals' || path === '/odrHistory' || path === '/userProfile' || authPath
+            const adminPath = path === '/adminAddProduct' || path === '/adminBookers' || path === '/adminDashboard' || path === '/orders' || path === '/otpList' || path === '/transactions'|| path === '/' || authPath
+            const userPath = path === '/dashboard' || path === '/deals' || path === '/odrHistory' || path === '/userProfile' || authPath || path === '/'
             // Admin Dynamic paths
             const adminDynamicPath = path.startsWith('/adminAddProduct/') || path.startsWith('/adminBookers/') || path.startsWith('/orders/')
             const userDynamicPath = path.startsWith('/odrHistory/') || path.startsWith('/deals/')
@@ -41,7 +41,7 @@ export async function middleware(request: NextRequest) {
 // See "Matching Paths" below to learn more
 export const config = {
       matcher: ['/dashboard', '/deals/:path*', '/odrHistory/:path*', '/userProfile', '/adminAddProduct/:path*', '/adminBookers/:path*', '/adminDashboard', '/orders/:path*', '/otpList', '/transactions'
-            // , '/Auth/login', '/Auth/signup'
+            , '/Auth/:path*', '/'
       ]
 }
 

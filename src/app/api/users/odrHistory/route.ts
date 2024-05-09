@@ -10,12 +10,12 @@ Database()
 export async function GET() {
 
       try {
-            const {_id} = await getToken()
+            const { _id } = await getToken()
             console.log('1', _id)
             // Convert the userId string to a mongoose.Schema.Types.ObjectId object
             const userObjectId = new mongoose.Types.ObjectId(_id);
 
-            const user = await Order.find({ user: userObjectId }).populate('product');
+            const user = await Order.find({ user: userObjectId, paid: { $ne: true } }).sort({ otp: 1 }).populate('product');
             console.log(user);
 
             if (user) {

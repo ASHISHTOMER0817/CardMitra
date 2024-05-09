@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
             const query = searchparams.get('query')
             const _id = searchparams.get('_id')
             const operation = searchparams.get('operation')
-            // console.log(query)
+            console.log('this is id', _id, operation)
 
 
 
@@ -69,7 +69,8 @@ export async function GET(request: NextRequest) {
                   }
             }
             else if (_id) {
-                  const product = await Product.findOneAndUpdate({ _id: _id })
+                  const product = await Product.findOne({ _id: _id })
+                  console.log('else if condition running', _id)
                   if (operation === 'remove') {
 
                         // await Product.findOneAndUpdate({ _id: _id }, { $set: { deals: false } })
@@ -77,19 +78,23 @@ export async function GET(request: NextRequest) {
                         product.save()
                         console.log('deal removed')
                         return NextResponse.json({
-                              message: "deal removed", success: true
+                              message: "deal removed", success: true,operation
                         })
                   } else if (operation === 'add') {
+                        console.log('add condition')
                         product.deals = true
                         product.save()
                         return NextResponse.json({
-                              message: "deal added back", success: true
+                              message: "deal added back", success: true, operation
                         })
                   } else if (operation === 'delete') {
-                        const deleteProduct = await Product.findOneAndDelete({ _id: _id })
-                        console.log(deleteProduct)
+                        const deleteProduct = await Product.findOneAndUpdate(
+                              { _id: _id },
+                              { $set: { show: false } },
+                              { new: true }
+                          );                        console.log(deleteProduct)
                         return NextResponse.json({
-                              message: "Product Deleted", success: true
+                              message: "Product Deleted", success: true, operation
                         })
                   }
             }

@@ -103,7 +103,7 @@ const ProductOrderList = ({ _id }: { _id: string }) => {
 					</tbody>
 				</table>
 			) : (
-				<div className="mt-24 ml-auto text-red-500">
+				<div className="mt-24 mx-auto text-red-500">
 					No order has been placed yet...
 				</div>
 			)}

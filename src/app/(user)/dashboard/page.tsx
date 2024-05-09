@@ -80,18 +80,18 @@ const Dashboard = () => {
 		<div className=" w-[85%] mx-auto mb-16">
 			<h3 className="my-7 font-semibold">Dashboard</h3>
 			<div className="flex justify-start gap-3">
-				<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] ">
+				<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%]">
 					<h5 className="text-[#1844E1]">{profit} </h5>{" "}
 					Today&apos;s Profit
 				</div>
-				<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] ">
+				<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%]">
 					<h5 className="text-primaryBgClr">
 						{ordersTillDate}
 					</h5>
 					Orders placed <br />
 					till date
 				</div>
-				<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3]">
+				<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%]">
 					<h5 className="text-primaryBgClr">
 						Rs. {commission}
 					</h5>

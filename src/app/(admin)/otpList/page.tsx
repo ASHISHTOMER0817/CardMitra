@@ -1,6 +1,7 @@
 'use client'
 import Popup from "@/app/components/Popup";
 import dateFormat from "@/app/components/dateFormat";
+import Loader from "@/app/components/loader";
 import {otp } from "@/interface/productList";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -9,7 +10,7 @@ import { IoIosRefresh } from "react-icons/io";
 
 const OtpList = () => {
 	const [date, setDate] = useState<Date>(new Date());
-	const [otpList, setOtpList] = useState<otp[]>([]);
+	const [otpList, setOtpList] = useState<otp[]>();
 	const [trackingId, setTrackingId] = useState("");
 	console.log(dateFormat(new Date()));
 
@@ -67,7 +68,7 @@ const OtpList = () => {
 				/>
 			</div>
 
-			<table className="w-full rounded-2xl overflow-hidden">
+			{!otpList? <Loader/> :otpList.length >0 ?<table className="w-full rounded-2xl overflow-hidden">
 				<thead>
 					<tr className="bg-gray-200">
 						<th className="py-6 px-12 text-left">
@@ -119,7 +120,7 @@ const OtpList = () => {
 						}
 					) :<div>Loading...</div>}
 				</tbody>
-			</table>
+			</table>: <div className="mx-auto w-fit mt-32 text-red-500">No data to show !!</div>}
 		</div>
 	);
 };

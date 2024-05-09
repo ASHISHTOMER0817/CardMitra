@@ -6,9 +6,7 @@ import React, { Suspense } from "react";
 
 const AdminBookers = () => {
 	return (
-		<Suspense fallback={<Loader />}>
 			<AffiliateRequest heading="approved" />
-		</Suspense>
 	);
 };
 
