@@ -11,6 +11,8 @@ export default function ProductDetails({
 	data: productList;
 	arr: string[];
 }) {
+
+	console.log(arr)
 	return (
 		<>
 			<section className=" text-left">

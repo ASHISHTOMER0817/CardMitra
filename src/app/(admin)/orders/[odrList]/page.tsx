@@ -12,6 +12,7 @@ import Popup from "@/app/components/Popup";
 import ProductDetails from "@/app/components/ProductDetails";
 import { useRouter } from "next/navigation";
 import Loader from "@/app/components/loader";
+import { pointsToRemember } from "@/app/components/pointsToRemember";
 
 const OrderList = ({ params }: { params: { odrList: string } }) => {
 	const [data, setData] = useState<productList>();
@@ -27,20 +28,27 @@ const OrderList = ({ params }: { params: { odrList: string } }) => {
 					`/api/users/productData?query=${params.odrList}`
 				);
 				// console.log(await response.data.data.info);
-				const { first, second, third, fourth } = await response
-					.data.data.info;
-				setArr(
-					(arr) =>
-						(arr = [
-							...arr,
-							first,
-							second,
-							third,
-							fourth,
-						])
-				);
+				// const { first, second, third, fourth } = await response
+				// 	.data.data.info;
+				// setArr(
+				// 	(arr) =>
+				// 		(arr = [
+				// 			...arr,
+				// 			first,
+				// 			second,
+				// 			third,
+				// 			fourth,
+				// 		])
+				// );
+
+				const {info, _id} = await response.data.data
+				console.log('here')
+				console.log( info)
+				setArr((arr)=>arr = pointsToRemember(info))
+				console.log(arr, 'this is something else', pointsToRemember(info))
+				
 				setData(await response.data.data);
-				setId(await response.data.data._id);
+				setId( _id);
 				console.log(arr);
 			} catch {
 				console.log(
@@ -51,6 +59,7 @@ const OrderList = ({ params }: { params: { odrList: string } }) => {
 			}
 		}
 		getData();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [params.odrList, refresh]);
 
 	async function dealOperation(_id: string, operation: string) {

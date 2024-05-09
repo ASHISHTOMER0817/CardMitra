@@ -5,6 +5,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import OtpForm from "@/app/components/OtpForm";
 import BackwardButton from "@/app/components/BackwardButton";
+import { pointsToRemember } from "@/app/components/pointsToRemember";
 
 
 interface productTypes {
@@ -15,6 +16,7 @@ interface productTypes {
 }
 const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 	const [data, setData] = useState<productTypes>();
+	const [arr, setArr] = useState<string[]>([])
 	useEffect(() => {
 		async function getData() {
 			try {
@@ -23,6 +25,8 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 					
 				);
 				console.log(response.data.data);
+				 const {info} = await response.data.data.product.info
+				 setArr(pointsToRemember(info))
 				setData(response.data.data);
 			} catch {
 				console.log(
@@ -38,7 +42,7 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 			{ data && <div className="mt-16 mx-32 w-full">
 					<section className="flex items-start text-sm justify-around">
 						<div className="flex flex-col items-start gap-10 justify-around">
-							<ProductDetails data={data?.product!} />
+							<ProductDetails data={data?.product!} arr={arr} />
 						</div>
 						<div className="border px-10 py-7 rounded-2xl">
 							<div className="text-base font-semibold text-primaryBgClr text-center">

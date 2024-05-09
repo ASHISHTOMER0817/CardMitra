@@ -7,10 +7,12 @@ import CardLayoutForDeals from "@/app/components/CardLayoutForDeals";
 import ProductDetails from "@/app/components/ProductDetails";
 import Popup from "@/app/components/Popup";
 import { Data } from "../page";
+import { pointsToRemember } from "@/app/components/pointsToRemember";
 
 const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 	const [data, setData] = useState<productList>();
 	const [productList, setProductList] = useState<Data>();
+	const [arr, setArr] = useState<string[]>([])
 
 	useEffect(() => {
 		async function getData() {
@@ -37,7 +39,8 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 				);
 
 				setProductList(response.data.data);
-
+				const {info} = response.data.data
+				setArr(pointsToRemember(info))
 				console.log(response.data.data);
 			} catch (error) {
 				console.log(error);
@@ -52,8 +55,7 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 			<div className="mt-16 mx-10 w-[90%]">
 				<section className="flex items-start text-sm justify-around">
 					<div className="flex flex-col items-start gap-10 justify-around">
-						<ProductDetails data={data!} />
-						{/* <TestProductDetails name={data?.name!} price={data?.price!} commission={data?.commission!} productLink={data?.productLink!}/> */}
+						<ProductDetails data={data!} arr={arr} />
 					</div>
 					<div className="border px-10 py-7 rounded-2xl">
 						<div className="text-base font-semibold text-primaryBgClr text-center">
