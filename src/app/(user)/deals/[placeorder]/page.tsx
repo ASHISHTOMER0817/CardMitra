@@ -3,9 +3,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import OrderForm from "@/app/components/OrderForm";
 import productList, { Data } from "@/interface/productList";
-import CardLayoutForDeals from "@/app/components/CardLayoutForDeals";
 import ProductDetails from "@/app/components/ProductDetails";
 import { pointsToRemember } from "@/app/components/pointsToRemember";
+import Loader from "@/app/components/loader";
+import CardLayout from "@/app/components/CardLayout";
+import Link from "next/link";
 
 const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 	const [data, setData] = useState<productList>();
@@ -70,8 +72,66 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 						Similar Products
 					</div>
 					<div className="grid grid-flow-row gap-3 grid-cols-3">
-						 <CardLayoutForDeals data={productList!} />
-						
+						 {/* <CardLayoutForDeals data={productList!} /> */}
+						 {!productList ? <Loader/> : productList.products.length >0 ? productList?.products.map(
+				(
+					{
+						_id,
+						requirement,
+						name,
+						price,
+						commission,
+						site,
+						image,
+						cards
+					},
+					index
+				) => {
+					return (
+						<>
+							<CardLayout
+								key={index}
+								
+								placeOrder={
+									<button
+										className={`bg-primaryBgClr p-[14px] font-semibold text-base ${
+											requirement >
+												0 &&
+												productList.user
+												.isApprove !==
+												false
+												? ""
+												: "bg-gray-400"
+										} rounded-full border text-center w-auto text-white`}
+									>
+										{requirement > 0 &&
+										productList.user
+											.isApprove !==
+											false ? (
+											<Link
+												href={`/deals/${_id.toString()}`}
+											>
+												Fulfill
+												Order
+											</Link>
+										) : (
+											"Fulfill Order"
+										)}
+									</button>
+								}
+								
+								quantity={requirement}
+								name={name}
+								price={price}
+								commission={commission}
+								site={site}
+								deviceImage={image}
+								cards={cards}
+							/>
+						</>
+					);
+				}
+			): <div className="text-red-500 font-serif mx-auto w-fit ">No other products to order</div>}
 					</div>
 				</section>
 			</div>
