@@ -82,11 +82,8 @@ const Dashboard = () => {
 								name,
 								price,
 								commission,
-							}: {
-								quantity: number;
-								name: string;
-								price: number;
-								commission: number;
+								image,
+								cards
 							},
 							index: number
 						) => {
@@ -95,12 +92,9 @@ const Dashboard = () => {
 									<CardLayout
 										quantity={quantity}
 										name={name}
-										
+
 										price={price}
-										commission={
-											commission
-										}
-									/>
+										commission={commission} site={""} deviceImage={image} cards={cards}									/>
 								</div>
 							);
 						}

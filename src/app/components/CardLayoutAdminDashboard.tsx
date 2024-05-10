@@ -23,6 +23,8 @@ const  CardLayoutAdminDashboard = ({ data }: { data: productList[] }) => {
 						commission,
 						deals,
 						site,
+						image,
+						cards
 					},
 					index: number
 				) => {
@@ -30,33 +32,27 @@ const  CardLayoutAdminDashboard = ({ data }: { data: productList[] }) => {
 						<Link key={index} href={`/orders/${_id}`}>
 						<CardLayout
 							
-							classList="hover:border-primaryBgClr"
-							image={
-								<Link
+								classList="hover:border-primaryBgClr"
+								image={<Link
 									href={`/adminAddProduct/${_id}`}
 								>
 									<Image
 										src={edit}
 										alt={""}
-										className="hover:bg-gray-200 hover:rounded-full"
-									/>
-								</Link>
-							}
-							quantity={requirement}
-							name={name}
-							price={price}
-							commission={commission}
-							placeOrder={
-								<>
+										className="hover:bg-gray-200 hover:rounded-full" />
+								</Link>}
+								quantity={requirement}
+								name={name}
+								price={price}
+								commission={commission}
+								placeOrder={<>
 									<button className="bg-primaryBgClr p-[14px] font-semibold text-base rounded-full border text-center w-auto text-white md:w-[120px] md:p-[5px] md:mt-4 md:-ml-[68px] ">
 										{deals
 											? "Active"
 											: "In-Active"}
 									</button>
-								</>
-							}
-							site={site}
-						/></Link>
+								</>}
+								site={site} deviceImage={image} cards={cards}/></Link>
 					);
 				}
 			)}{" "}

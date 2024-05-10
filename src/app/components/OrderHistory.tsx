@@ -11,12 +11,12 @@ const OrderHistory = ({ data }: { data: order[] }) => {
 				return (
 					<Link key={index} className="cursor-pointer" href={`/odrHistory/${_id}`}>
 						<CardLayout
-						placeOrder={otp && <div className="mx-auto text-gray-500">OTP submitted</div>}
+							placeOrder={otp && <div className="mx-auto text-gray-500">OTP submitted</div>}
 							quantity={product?.requirement}
 							name={product?.name}
 							price={product?.price}
 							commission={product?.commission}
-							classList="hover:border-blue-400" site={product.site}						/>
+							classList="hover:border-blue-400" site={product.site} deviceImage={product.image} cards={product.cards}						/>
 					</Link>
 				);
 			})}

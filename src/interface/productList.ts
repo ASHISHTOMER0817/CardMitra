@@ -20,6 +20,7 @@ interface productList {
 		third: string
 		fourth: string
 	}
+	image:string
 }
 export default productList
 
