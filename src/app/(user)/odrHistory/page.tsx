@@ -1,8 +1,8 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import OrderHistory from "@/app/components/OrderHistory";
 import axios from "axios";
-import ProductDisplayFormat from "@/app/components/ProductDisplayFormat";
+import Header from "@/app/components/Header";
 const OdrHistory = () => {
 	const [data, setData] = useState([]);
 
@@ -21,11 +21,11 @@ const OdrHistory = () => {
 		getData();
 	}, []);
 	return (
-		<div className="mx-8">
-			<ProductDisplayFormat heading={"Order History"}>
-				{" "}
+		<div className="flex flex-col mx-auto w-11/12">
+			<Header heading={"Order History"} />
+			<div className="grid grid-flow-row gap-7 grid-cols-3 md:gap-3">
 				<OrderHistory data={data} />
-			</ProductDisplayFormat>
+			</div>
 		</div>
 	);
 };

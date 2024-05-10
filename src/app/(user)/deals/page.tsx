@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import productList, { user } from "@/interface/productList";
 import CardLayoutForDeals from "@/app/components/CardLayoutForDeals";
-import ProductDisplayFormat from "@/app/components/ProductDisplayFormat";
 import Popup from "@/app/components/Popup";
 
 export interface Data {
