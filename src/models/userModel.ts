@@ -136,7 +136,7 @@ const productSchema = new mongoose.Schema({
 		// required: true,
 	},
 	image: {
-		types: Buffer,
+		type: String,
 		// required:true
 	},
 	price: {

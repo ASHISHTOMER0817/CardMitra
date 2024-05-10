@@ -26,7 +26,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	const [name, setName] = useState("");
 	const [price, setPrice] = useState(0);
 	const [commission, setCommission] = useState(0);
-	const [cards, setCards] = useState<dropdown[]>();
+	const [cards, setCards] = useState<dropdown[]>([]);
 	const [site, setSite] = useState<dropdown>();
 	const [productLink, setProductLink] = useState("");
 	const [image, setImage] = useState("");
@@ -39,6 +39,21 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 		third: "",
 		fourth: "",
 	});
+
+	// Cards Array
+	const cardOptions: dropdown[] = [
+		{ value: "Amazon pay icici", label: "Amazon pay icici" },
+		{ value: "flipkart axis", label: "flipkart axis" },
+		{ value: "SBI cashback", label: "SBI cashback" },
+	];
+
+	//Site Array
+	const siteOptions: dropdown[] = [
+		{ value: "Amazon", label: "Amazon" },
+		{ value: "Flipkart", label: "Flipkart" },
+		{ value: "Mi App", label: "Mi App" },
+	];
+
 	// const [cardsArr, setCardsArr] = useState<string[]>();
 	console.log(cards);
 	// const [arr, setArr] = useState<string[]>([]);
@@ -56,8 +71,9 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 					const response = await axios.get(
 						`/api/admin/addProduct?_id=${params?._id}`
 					);
-					console.log(params._id)
-					const product: productList = await response.data.data;
+					console.log(params._id);
+					const product: productList = await response.data
+						.data;
 					setName(product.name);
 					setPrice(product.price);
 					setCommission(product.commission);
@@ -82,26 +98,32 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	async function postData() {
 		// e.preventDefault();
 		try {
+			cards.entries;
+
 			// Creating a formData instance
 			const formData = new FormData();
 			console.log(image);
-			// formData.append("name", name);
-			// formData.append("commission", commission.toString());
-			// formData.append("productLink", productLink);
-			// formData.append("price", price.toString());
-			// formData.append("requirement", requirement.toString());
-			// formData.append("address", address);
-			// formData.append("card", cards?.label!);
-			// formData.append("site", site?.label!);
-			formData.append("file", file!);
+			formData.append("name", name);
+			formData.append("commission", commission.toString());
+			formData.append("productLink", productLink);
+			formData.append("price", price.toString());
+			formData.append("requirement", requirement.toString());
+			formData.append("address", address);
 
-			const { data } = await axios.post("/api/admin/addProduct", {
-				formData,
-			});
-			console.log(data);
-			if (data) {
-				Popup("success", "Product added successfully");
-			}
+			formData.append("card", JSON.stringify(cards));
+			formData.append("site", site?.label!);
+			formData.append("file", file!);
+			formData.append("info", JSON.stringify(info));
+
+			// const group = {formData, name}
+			const response = await axios.post(
+				"/api/admin/addProduct",
+				formData
+			);
+			console.log(response);
+			// if (response.data) {
+			// 	Popup("success", "Product added successfully");
+			// }
 		} catch (error: any) {
 			Popup(
 				"error",
@@ -111,88 +133,101 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 		}
 	}
 
-	// Cards Array
-	const cardOptions: dropdown[] = [
-		{ value: "Amazon pay icici", label: "Amazon pay icici" },
-		{ value: "flipkart axis", label: "flipkart axis" },
-		{ value: "SBI cashback", label: "SBI cashback" },
-	];
-
-	//Site Array
-	const siteOptions: dropdown[] = [
-		{ value: "Amazon", label: "Amazon" },
-		{ value: "Flipkart", label: "Flipkart" },
-		{ value: "Mi App", label: "Mi App" },
-	];
-
 	const handleChange = (selectedOptions: any) => {
 		setCards(selectedOptions);
 	};
 
 	return (
-		<form action={postData} className="w-[90%] p-8">
+		<form onSubmit={postData} className="w-[90%] p-8">
 			<div className="flex gap-10 mb-8">
-				<div>
+				<label htmlFor="image">
 					{image ? (
-						// <Image
-						// 	src={image}
-						// 	alt="Uploaded"
-						// 	style={{
-						// 		maxWidth: "100%",
-						// 		maxHeight: "100%",
-						// 	}}
-						// 	width={250}
-						// 	height={300}
-						// />
-						<div></div>
+						<>
+							<Image
+								src={image}
+								alt="Uploaded"
+								style={{
+									maxWidth: "100%",
+									maxHeight: "100%",
+								}}
+								width={250}
+								height={300}
+							/>
+							<input
+								required
+								type="file"
+								name="file"
+								className="hidden"
+								id="image"
+								onChange={({ target }) => {
+									if (target.files) {
+										const file =
+											target
+												.files[0];
+										console.log(file);
+										setImage(
+											URL.createObjectURL(
+												file
+											)
+										);
+										console.log(
+											URL.createObjectURL(
+												file
+											)
+										);
+										setFile(file);
+									}
+								}}
+							/>
+						</>
 					) : (
-						<div
-							style={{
-								width: "300px",
-								height: "300px",
-								border: "2px dotted #ccc",
-								display: "flex",
-								justifyContent: "center",
-								alignItems: "center",
-								flexDirection: "column",
-								borderRadius: "20px",
-							}}
+						<label
+							htmlFor="image"
+							className="w-60 h-80 border-2 border-dotted border-[#ccc] flex flex-col justify-center items-center rounded-[20px]"
 						>
 							<Image
 								src={downloadImg}
 								alt=""
 								className="w-9 h-9"
 							/>
-							<span>Drag and Drop</span>
-							<span>or</span>
+							{/* <span>Drag and Drop</span>
+							<span>or</span> */}
 							<span>
 								Browse Image
-								{/* <input
-											type="file"
-											
-											style={{
-												display: "none",
-											}}
-										/> */}
+								<input
+									required
+									type="file"
+									name="file"
+									className="hidden"
+									id="image"
+									onChange={({
+										target,
+									}) => {
+										if (target.files) {
+											const file =
+												target
+													.files[0];
+											console.log(
+												file
+											);
+											setImage(
+												URL.createObjectURL(
+													file
+												)
+											);
+											console.log(
+												URL.createObjectURL(
+													file
+												)
+											);
+											setFile(file);
+										}
+									}}
+								/>
 							</span>
-						</div>
+						</label>
 					)}
-
-					<input
-						required
-						type="file"
-						name="file"
-						onChange={({ target }) => {
-							if (target.files) {
-								const file = target.files[0];
-								setImage(
-									URL.createObjectURL(file)
-								);
-								setFile(file);
-							}
-						}}
-					/>
-				</div>
+				</label>
 				<div className="">
 					<input
 						required
