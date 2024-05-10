@@ -24,7 +24,7 @@ export async function GetData({
 }: {
 	_id: string;
 	listType: string;
-	amount?: number;
+	amount: number;
 	data: (userData: UserDetails) => void;
 }) {
 	try {
@@ -45,7 +45,6 @@ export async function GetData({
 const Bookers = ({ params }: { params: { _id: string } }) => {
 	const [data, setData] = useState<UserDetails>();
 	const [listType, setListType] = useState("delivered");
-	const router = useRouter();
 	const [amount, setAmount] = useState<number>(0);
 	const [amountPayable, setAmountPayable] = useState(0);
 	const [overlay, setOverlay] = useState("hidden");
@@ -60,12 +59,12 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 				amount,
 				data: userDetails,
 			});
-			if ( isReduced) {
-				console.log(isReduced, 'really----')
+			if (isReduced) {
+				console.log(isReduced, "really----");
 				// setTimeout(()=>{
 				// 	router.refresh()
 				// },1800)
-				setOverlay("")
+				setOverlay("");
 			}
 
 			// passing value from child to parent
@@ -76,7 +75,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 			}
 		}
 		updatePage();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [listType, params._id]);
 
 	// Function to remove account of the user
@@ -106,7 +105,6 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 	}
 
 	console.log(data?.totalAmt);
-	// function paymentUpdate() {}
 	return (
 		<div className="w-[90%] mx-10 mt-6">
 			<div
@@ -140,24 +138,6 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 			<BackwardButton />
 			<div className="flex justify-between mb-10 items-center">
 				<h3 className="font-semibold">{data?.user?.name}</h3>
-				{/* <div className="flex gap-6 text-sm"> */}
-				{/* <button className="rounded-3xl flex text-center items-center justify-center w-36 py-1 bg-primaryBgClr">
-						<Image
-							onClick={() =>
-								acceptAffiliate(
-									true,
-									user?.email!
-								)
-							}
-							src={accept}
-							alt="accept"
-							width={30}
-							height={30}
-							className="cursor-pointer"
-						/>{" "}
-						Accept
-					</button> */}
-
 				{listType == "delivered" && amountPayable > 0 && (
 					<div
 						onClick={() => setOverlay("")}
