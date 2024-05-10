@@ -1,42 +1,56 @@
 import { NextResponse, NextRequest } from "next/server";
 import Database from "@/database/database";
 import { Order, Transactions, User } from "@/models/userModel";
-import { Product } from "@/models/userModel";
-import mongoose from "mongoose";
+import GetToken from "@/app/components/getToken";
 
 Database()
 
 export async function GET(request: NextRequest) {
       try {
+            console.log('hello')
             const searchparams = request.nextUrl.searchParams
 
             // Searchparams
-            const _id = searchparams.get('query')
+            let userId = searchparams.get('query')
+            
             const listType = searchparams.get('listType')
             const amount = searchparams.get('paid')
-            const user = await User.findOne({ _id })
-
+            const user = await User.findOne({ userId })
+            // console.log(listType, userId, amount)
+            console.log(user)
             let orderList;
 
-            orderList = await Order.find({ user: _id, delivered: true, paid: false }).populate("product")
+            if(!userId){
+                  const {role,_id } = await GetToken()
+                  console.log('if condtion')
+                  console.log(role, _id)
+                  if(role === 'user'){
+                        userId = _id
+                  }
+            }
+            console.log('skip if condition')
+            console.log(userId)
+            orderList = await Order.find({ user: userId, delivered: true, paid: false }).populate("product")
+            console.log('this is orderlist',orderList)
             // console.log('starts here', orderList)
             // Current amount to pay
             let total = 0;
             for (let i = 0; i < orderList.length; i++) {
                   total += orderList[i].product.price;
             }
-            const totalAmt = user.unpaid + total;
+            const totalAmt = user.unpaid + total
             const unpaid = user.unpaid
+            console.log(totalAmt, unpaid)
 
             if (listType === "delivered") {
-                  // console.log('condition reached delivered', totalAmt, _id, listType)
+                  console.log('condition reached delivered', totalAmt, userId, listType)
                   const data = { user, orderList, totalAmt, unpaid }
                   // console.log(totalAmt)
                   return NextResponse.json({
                         message: "delivered is being shown", data: data, success: true
                   })
             } else if (listType === "nonDelivered") {
-                  orderList = await Order.find({ user: _id, delivered: false }).populate("product")
+                  orderList = await Order.find({ user: userId, delivered: false }).populate("product")
                   const data = { user, orderList }
                   // console.log(user, orderList, 'HMM these are nonDelivred',)
                   return NextResponse.json({
@@ -45,18 +59,18 @@ export async function GET(request: NextRequest) {
             } else if (listType === "reduce") {
                   // const userId = new mongoose.Types.ObjectId(_id!)
                   orderList = await Order.updateMany(
-                        { user: _id, delivered: true, paid: false },
+                        { user: userId, delivered: true, paid: false },
                         { $set: { paid: true } }
                   );
                   console.log(orderList)
-                  console.log('this is -- ',_id,'--', totalAmt - +amount!)
+                  console.log('this is -- ',userId,'--', totalAmt - +amount!)
                   user.unpaid = totalAmt - +amount!
                   // console.log(totalAmt - +amount!)
                   user.paid += +amount!
                   user.save()
                   // const userId = new mongoose.Types.ObjectId(_id!)
                    Transactions.create({
-                        user: _id,
+                        user: userId,
                         dateOfPayment: new Date(),
                         amount: +amount!
                   })

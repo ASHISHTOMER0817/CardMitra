@@ -44,7 +44,7 @@ const AdminOrderHistory = () => {
 			) : data.length > 0 ? (
 				<CardLayoutAdminDashboard data={data} />
 			) : (
-				<div className="text-red-500 text-sm mx-auto w-fit">
+				<div className="text-red-500 text-sm mx-auto w-fit font-serif">
 					Currently there are no orders
 				</div>
 			)}

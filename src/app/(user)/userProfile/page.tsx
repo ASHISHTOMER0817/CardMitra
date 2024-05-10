@@ -4,10 +4,8 @@ import UserOrders from "@/app/components/userOrders";
 import axios from "axios";
 import React, { Suspense, useEffect, useState } from "react";
 import { RxCross1 } from "react-icons/rx";
-import { GetData } from "@/app/(admin)/adminBookers/[_id]/page";
 import { UserDetails } from "@/interface/productList";
 import Popup from "@/app/components/Popup";
-import GetToken from "@/app/components/getToken";
 import Loader from "@/app/components/loader";
 import Transactions from "@/app/components/transactions";
 
@@ -22,20 +20,25 @@ const UserProfile = () => {
 
 	console.log("page.tsx");
 	useEffect(() => {
-		async function getToken() {
-			console.log("useEffect starts");
-			const { _id } = await GetToken();
-			console.log("page.tsx", _id);
-			GetData({ _id, listType, data: userDetails });
-			// passing value from child to parent
-			function userDetails(userData: UserDetails) {
-				setData(userData);
+		async function getData() {
+			try {
+				console.log("useEffect starts");
+				const response = await axios.get(
+					`/api/users/details?listType=${listType}`
+				);
+				console.log(response.data.message);
+				setData(response.data.data);
+				if (!response.data.success) {
+					Popup(
+						"error",
+						"something went wrong, please refresh"
+					);
+				}
+			} catch {
+				Popup("error", "something went wrong, please refresh");
 			}
-			console.log("this is getData", GetData);
-			return;
 		}
-		getToken();
-		console.log(getToken());
+		getData();
 	}, [listType]);
 
 	const bankDetails = { ifsc, accountNo, upi };
@@ -58,7 +61,6 @@ const UserProfile = () => {
 
 	function overlayFeature() {
 		setOverlay("hidden");
-		console.log(overlay);
 	}
 	return (
 		<>
@@ -172,8 +174,8 @@ const UserProfile = () => {
 						}}
 						className={` text-gray-400 text-sm py-2 px-3 cursor-pointer rounded-full ${
 							listType === "delivered" &&
-						!transactions &&
-						"underline underline-offset-4 text-primaryBgClr"
+							!transactions &&
+							"underline underline-offset-4 text-primaryBgClr"
 						}`}
 					>
 						Delivered List
@@ -185,8 +187,8 @@ const UserProfile = () => {
 						}}
 						className={` text-gray-400 text-sm py-2 px-3 cursor-pointer rounded-full ${
 							listType === "nonDelivered" &&
-						!transactions &&
-						"underline underline-offset-4 text-primaryBgClr"
+							!transactions &&
+							"underline underline-offset-4 text-primaryBgClr"
 						}`}
 					>
 						non-delivered List
@@ -195,7 +197,7 @@ const UserProfile = () => {
 						onClick={() => setTransactions(true)}
 						className={` text-gray-400 text-sm py-2 px-3 cursor-pointer rounded-full ${
 							transactions &&
-						"underline underline-offset-4 text-primaryBgClr"
+							"underline underline-offset-4 text-primaryBgClr"
 						}`}
 					>
 						Transactions

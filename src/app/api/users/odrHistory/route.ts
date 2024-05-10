@@ -17,12 +17,8 @@ export async function GET() {
 
             const user = await Order.find({ user: userObjectId, paid: { $ne: true } }).sort({ otp: 1 }).populate('product');
             console.log(user);
-
-            if (user) {
-                  return NextResponse.json({ data: user, message: 'User data successfully retrieved', success: true });
-            }
-            return console.error("error")
+            return NextResponse.json({ data: user, message: 'User data successfully retrieved', success: true });
       } catch (error) {
-            return console.log(error)
+            return NextResponse.json({ message: 'operation failed, try again', success: false });
       }
 }

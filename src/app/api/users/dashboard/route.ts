@@ -4,7 +4,6 @@ import Database from "@/database/database";
 import getToken from "@/app/components/getToken"
 import { Product } from "@/models/userModel";
 import mongoose from "mongoose";
-import dateFormat from "@/app/components/dateFormat";
 
 
 
@@ -23,6 +22,8 @@ export async function GET() {
             })
 
       } catch (error) {
-            return console.log(error)
+            return NextResponse.json({
+                  message: 'Something is mussing, please come later', success: true
+            })
       }
 }

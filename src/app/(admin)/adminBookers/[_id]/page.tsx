@@ -1,7 +1,7 @@
 "use client";
 import BackwardButton from "@/app/components/BackwardButton";
 import axios from "axios";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useCallback, useEffect, useState } from "react";
 // import Image from "next/image";
 // import redCross from "@/../public/redCross.svg";
 // import accept from "@/../public/accept.svg";
@@ -15,66 +15,32 @@ import { UserDetails } from "@/interface/productList";
 import Loader from "@/app/components/loader";
 import Transactions from "@/app/components/transactions";
 
-// User details function
-export async function GetData({
-	_id,
-	listType,
-	amount,
-	data,
-}: {
-	_id: string;
-	listType: string;
-	amount: number;
-	data: (userData: UserDetails) => void;
-}) {
-	try {
-		const response = await axios.get(
-			`/api/users/details?query=${_id}&listType=${listType}&paid=${amount}`
-		);
-		if (response.data.status === 250) {
-			Popup("success", `${response.data.message} - Rs.${amount}`);
-
-			return "amount reduced";
-		}
-		data(response.data.data);
-	} catch {
-		console.log("Something went wrong, please try again later");
-	}
-}
-
 const Bookers = ({ params }: { params: { _id: string } }) => {
 	const [data, setData] = useState<UserDetails>();
 	const [listType, setListType] = useState("delivered");
 	const [amount, setAmount] = useState<number>(0);
-	const [amountPayable, setAmountPayable] = useState(0);
 	const [overlay, setOverlay] = useState("hidden");
 	const [transactions, setTransactions] = useState(false);
-
+	
 	useEffect(() => {
-		async function updatePage() {
-			console.log("useEffect running");
-			const isReduced = await GetData({
-				_id: params._id,
-				listType,
-				amount,
-				data: userDetails,
-			});
-			if (isReduced) {
-				console.log(isReduced, "really----");
-				// setTimeout(()=>{
-				// 	router.refresh()
-				// },1800)
-				setOverlay("");
-			}
-
-			// passing value from child to parent
-			function userDetails(userData: UserDetails) {
-				setData(userData);
-				console.log(userData?.totalAmt);
-				setAmountPayable(userData?.totalAmt);
+		async function getData() {
+			try {
+				console.log("useEffect running");
+				const response = await axios.get(
+					`/api/users/details?query=${params._id}&listType=${listType}&paid=${amount}`
+				);
+				setData(response.data.data);
+				if (response.data.status === 250) {
+					Popup("success", `${response.data.message} - Rs.${amount}`);
+					console.log("really----");
+					setOverlay("");
+				}
+			} catch {
+				Popup("error", "something went wrong!!");
 			}
 		}
-		updatePage();
+		getData();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [listType, params._id]);
 
@@ -138,7 +104,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 			<BackwardButton />
 			<div className="flex justify-between mb-10 items-center">
 				<h3 className="font-semibold">{data?.user?.name}</h3>
-				{listType == "delivered" && amountPayable > 0 && (
+				{listType == "delivered" &&  !data?.totalAmt && 0 > 0 && (
 					<div
 						onClick={() => setOverlay("")}
 						className="rounded-3xl text-nowrap cursor-pointer bg-primaryBgClr flex py-2 px-4 border justify-center items-center  text-white"

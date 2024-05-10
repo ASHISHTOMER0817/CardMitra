@@ -154,7 +154,7 @@ const AffiliateRequest = ({ heading }: { heading?: string }) => {
 							)
 						)}
 					</tbody>
-				</table>: <div className="mx-auto w-fit mt-20 text-red-500">No data to show !!</div>}
+				</table>: <div className="mx-auto w-fit mt-20 text-red-500 font-serif">No data to show !!</div>}
 			</div>
 		</div>
 	);

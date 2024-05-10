@@ -78,7 +78,7 @@ const NavigationSidebar = ({
 				Popup("success", response.data.message);
 				setTimeout(() => {
 					router.refresh();
-				}, 2000);
+				}, 1500);
 			}
 		} catch {
 			Popup("error", "failed to logout, refresh the page");
