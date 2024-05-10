@@ -1,7 +1,5 @@
-import Header from "@/app/components/Header";
 import AffiliateRequest from "@/app/components/admin/affiliateRequests";
-import Loader from "@/app/components/loader";
-import React, { Suspense } from "react";
+import React from "react";
 
 const AdminBookers = () => {
 	return (

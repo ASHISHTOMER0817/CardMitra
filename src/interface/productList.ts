@@ -73,3 +73,8 @@ export interface transactions{
 	dateOfPayment:string
 	amount:number
 }
+
+export interface Data {
+	products: productList[];
+	user: user;
+}

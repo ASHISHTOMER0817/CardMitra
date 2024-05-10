@@ -1,9 +1,9 @@
-"use client";
+'use client'
 import axios from "axios";
 import Image from "next/image";
-import React, { FormEvent, useEffect, useState } from "react";
+import React, {useEffect, useState } from "react";
 import downloadImg from "@/../public/downloadImg.svg";
-import Select, { MultiValue } from "react-select";
+import Select from "react-select";
 // import oneCard from "@/../public/oneCard.jpg";
 // import hdfcCard from "@/../public/hdfcCard.jpg";
 // import iciciCard from "@/../public/iciciCard.jpg";

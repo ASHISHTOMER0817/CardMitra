@@ -1,14 +1,13 @@
-import { IoHeartOutline } from "react-icons/io5";
 import CardLayout from "./CardLayout";
 import React from "react";
-import { CiShoppingCart } from "react-icons/ci";
 import Link from "next/link";
-// import productList from "@/interface/productList";
-import { Data } from "../(user)/deals/page";
+import { Data } from "@/interface/productList";
+import Loader from "./loader";
+
 const CardLayoutForDeals = ({ data }: { data: Data }) => {
 	return (
 		<>
-			{data?.products.map(
+			{!data ? <Loader/> : data.products.length >0 ? data?.products.map(
 				(
 					{
 						_id,
@@ -66,7 +65,7 @@ const CardLayoutForDeals = ({ data }: { data: Data }) => {
 						</>
 					);
 				}
-			)}
+			): <div className="text-red-500 font-serif mx-auto w-fit ">No other products to order</div>}
 		</>
 	);
 };

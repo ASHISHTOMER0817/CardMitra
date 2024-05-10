@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import { transactions } from "@/interface/productList";
 import axios from "axios";
 import React, { useEffect, useState } from "react";

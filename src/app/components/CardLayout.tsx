@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import React, { ReactNode, useEffect, useState } from "react";
 import Image from "next/image";
 import amazon from "@/../public/static/amazon.svg";

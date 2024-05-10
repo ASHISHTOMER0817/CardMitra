@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import React, { useEffect, useState } from "react";
 import OrderHistory from "@/app/components/OrderHistory";
 import axios from "axios";

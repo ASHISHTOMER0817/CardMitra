@@ -1,4 +1,4 @@
-"use client";
+'use client'
 // import ProductDetails from "@/app/components/ProductDetails";
 import ProductOrderList from "@/app/components/ProductOrderList";
 import productList from "@/interface/productList";
@@ -27,19 +27,7 @@ const OrderList = ({ params }: { params: { odrList: string } }) => {
 				const response = await axios.get(
 					`/api/users/productData?query=${params.odrList}`
 				);
-				// console.log(await response.data.data.info);
-				// const { first, second, third, fourth } = await response
-				// 	.data.data.info;
-				// setArr(
-				// 	(arr) =>
-				// 		(arr = [
-				// 			...arr,
-				// 			first,
-				// 			second,
-				// 			third,
-				// 			fourth,
-				// 		])
-				// );
+				
 
 				const {info, _id} = await response.data.data
 				console.log('here')

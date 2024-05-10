@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import React, { useState, useEffect, ReactNode } from "react";
 import axios from "axios";
 import Image from "next/image";

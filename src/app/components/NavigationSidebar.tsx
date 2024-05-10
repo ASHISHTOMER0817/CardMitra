@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import React, { ReactNode, useState } from "react";
 import logo from "@/../public/logo.svg";
 import "react-toastify/dist/ReactToastify.css";

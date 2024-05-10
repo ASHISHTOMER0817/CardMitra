@@ -5,7 +5,7 @@ import NavigationSidebar from "../components/NavigationSidebar";
 import dimHome from "@/../public/dimHome.svg";
 import dimBell from "@/../public/dimBell.svg";
 import dimHelp from "@/../public/dimHelp.svg";
-import deals from "@/../public/apps.svg";
+import deals from "@/../public/deals.svg";
 // import OdrHistory from "@/../public/odrHistory.svg";
 // import SideBar from "../components/Sidebar";
 import bookers from "@/../public/bookers.svg";

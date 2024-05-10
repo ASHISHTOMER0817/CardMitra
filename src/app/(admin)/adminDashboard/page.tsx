@@ -1,16 +1,7 @@
-"use client";
+'use client'
 import React, { useEffect, useState } from "react";
-import NavigationSidebar from "../../components/NavigationSidebar";
-import SideBar from "../../components/Sidebar";
-import heroicon from "@/../public/heroicon.svg";
-import Heroicon from "@/app/components/Heroicon";
 import BarChart from "@/app/components/BarChart";
-import OrderHistory from "@/app/components/OrderHistory";
 import CardLayoutAdminDashboard from "@/app/components/CardLayoutAdminDashboard";
-import CardLayout from "@/app/components/CardLayout";
-import Image from "next/image";
-import deleteIcon from "@/../public/delete.svg";
-import edit from "@/../public/edit.svg";
 import axios from "axios";
 import productList from "@/interface/productList";
 import AffiliateRequest from "@/app/components/admin/affiliateRequests";

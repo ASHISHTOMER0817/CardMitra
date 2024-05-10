@@ -1,11 +1,11 @@
-"use client";
+'use client'
 import CardLayoutAdminDashboard from "@/app/components/CardLayoutAdminDashboard";
 import Header from "@/app/components/Header";
 import Loader from "@/app/components/loader";
 import productList from "@/interface/productList";
 import axios from "axios";
 import Link from "next/link";
-import React, { Suspense, useEffect, useState } from "react";
+import React, {useEffect, useState } from "react";
 
 const AdminOrderHistory = () => {
 	const [data, setData] = useState<productList[]>();

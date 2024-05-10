@@ -1,13 +1,13 @@
-"use client";
+'use client'
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import OrderForm from "@/app/components/OrderForm";
-import productList from "@/interface/productList";
+import productList, { Data } from "@/interface/productList";
 import CardLayoutForDeals from "@/app/components/CardLayoutForDeals";
 import ProductDetails from "@/app/components/ProductDetails";
 import Popup from "@/app/components/Popup";
-import { Data } from "../page";
 import { pointsToRemember } from "@/app/components/pointsToRemember";
+import Loader from "@/app/components/loader";
 
 const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 	const [data, setData] = useState<productList>();
@@ -72,7 +72,8 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 						Similar Products
 					</div>
 					<div className="grid grid-flow-row gap-3 grid-cols-3">
-						<CardLayoutForDeals data={productList!} />
+						 <CardLayoutForDeals data={productList!} />
+						
 					</div>
 				</section>
 			</div>

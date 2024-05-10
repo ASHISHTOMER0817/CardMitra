@@ -1,7 +1,7 @@
-"use client";
+'use client'
 import BackwardButton from "@/app/components/BackwardButton";
 import axios from "axios";
-import React, { Suspense, useCallback, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 // import Image from "next/image";
 // import redCross from "@/../public/redCross.svg";
 // import accept from "@/../public/accept.svg";
