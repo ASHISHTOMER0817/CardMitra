@@ -35,7 +35,6 @@ const Deals = () => {
 		<div className=" my-12 ">
 			<h3 className="mb-8 mr-auto ml-10 font-semibold">Deals</h3>
 			<div className=" ml-8 grid grid-flow-row grid-cols-3 gap-3">
-
 			<CardLayoutForDeals data={data!} />
 			</div>
 		</div>

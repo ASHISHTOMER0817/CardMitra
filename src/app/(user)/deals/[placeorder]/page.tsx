@@ -5,9 +5,7 @@ import OrderForm from "@/app/components/OrderForm";
 import productList, { Data } from "@/interface/productList";
 import CardLayoutForDeals from "@/app/components/CardLayoutForDeals";
 import ProductDetails from "@/app/components/ProductDetails";
-import Popup from "@/app/components/Popup";
 import { pointsToRemember } from "@/app/components/pointsToRemember";
-import Loader from "@/app/components/loader";
 
 const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 	const [data, setData] = useState<productList>();
