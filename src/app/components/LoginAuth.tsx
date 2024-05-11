@@ -5,24 +5,23 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { AxiosResponse } from "axios";
 import Popup from "./Popup";
+import Loader from "./loader";
 
 const LoginAuth = () => {
 	const router = useRouter();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [error, setError] = useState("");
-	const [otp, setOtp] = useState("");
-	const [verifyotp, setVerifyOtp] = useState(false);
+	const [loader, setLoader] = useState(false);
 
 	const user = { email, password };
 
 	function checkSuccess(success: boolean, message: string, data: string) {
 		if (success === false) {
 			Popup("error", message);
-			console.log(error);
+			setLoader(false);
 			return;
 		} else {
-			console.log('this is user/admin',data);
+			console.log("this is user/admin", data);
 			if (data === "user") {
 				console.log(data);
 				router.push("/dashboard");
@@ -35,10 +34,11 @@ const LoginAuth = () => {
 	async function sendData(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		try {
+			setLoader(true);
 			const { success, message, data } = await (
 				await axios.post("/api/users/login", { user })
 			).data;
-			console.log(success, message, data)
+			console.log(success, message, data);
 			checkSuccess(success, message, data);
 		} catch (error: any) {
 			Popup("error", "Server error, please refresh");
@@ -48,35 +48,42 @@ const LoginAuth = () => {
 	// function PswrdNd() {}
 
 	return (
-		<form className="flex flex-col gap-y-6 mt-4" onSubmit={sendData}>
-			<>
-				<InputSpace
-					type="email"
-					value={email}
-					placeholder="Email"
-					onChange={(value) => setEmail(value)}
-				/>
-				<InputSpace
-					type="password"
-					value={password}
-					placeholder="Password"
-					onChange={(value) => setPassword(value)}
-				/>
-			</>
+		<>
+			{loader && <Loader />}
+			<form
+				className="flex flex-col gap-y-6 mt-4 sm:gap-y-4"
+				onSubmit={sendData}
+			>
+				<>
+					<InputSpace
+						type="email"
+						value={email}
+						placeholder="Email"
+						onChange={(value) => setEmail(value)}
+					/>
+					<InputSpace
+						type="password"
+						value={password}
+						placeholder="Password"
+						onChange={(value) => setPassword(value)}
+					/>
+				</>
 
-			{/* <div className="text-sm">
+				{/* <div className="text-sm">
 				<div className="float-right text-primaryBgClr cursor-pointer">
 					Forgot Password{" "}
 				</div>
 			</div> */}
 
-			<button
-				className="text-white border px-3 py-4 rounded-full bg-primaryBgClr w-96 cursor-pointer"
-				type="submit"
-			>
-				Login
-			</button>
-		</form>
+				<button
+					disabled={loader}
+					className="text-white border px-3 py-4 rounded-full bg-primaryBgClr w-96 cursor-pointer sm:w-48 sm:py-2"
+					type="submit"
+				>
+					Login
+				</button>
+			</form>
+		</>
 	);
 };
 

@@ -1,16 +1,17 @@
 'use client'
 import React from "react";
-import Image from "next/image";
-import googleIcon from "@/../public/flat-color-icons_google.svg";
-import facebook from "@/../public/logos_facebook.svg";
 import LoginAuth from "@/app/components/LoginAuth";
 import SignUpAuth from "@/app/components/SignUpAuth";
 import BackwardButton from "@/app/components/BackwardButton";
+import { ToastContainer } from "@/app/components/nextToast";
+import "react-toastify/dist/ReactToastify.css";
+
 const Login = ({ params }: { params: { Choice: string } }) => {
-	return (
-			<div className=" m-auto p-[5%] flex justify-around items-center h-screen">
-				<section className="flex flex-col justify-start gap-7">
-					<BackwardButton/>
+	return (	<>
+	<ToastContainer/>
+			<div className=" m-auto p-[5%] flex justify-around items-center h-screen sm:flex-col">
+				<section className={`flex flex-col justify-start gap-7 sm:gap-2 ${params.Choice === 'login'?'sm:mr-[50px]':'sm:mr-[100px]'}`}>
+					<BackwardButton pageType="homePage"/>
 
 					<h5 className=" text-primaryBgClr">
 						{params.Choice === "login"
@@ -44,6 +45,7 @@ const Login = ({ params }: { params: { Choice: string } }) => {
 					)}
 				</section>
 			</div>
+			</>
 		
 	);
 };

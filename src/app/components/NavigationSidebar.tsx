@@ -15,7 +15,6 @@ import { ToastContainer } from "@/app/components/nextToast";
 import Popup from "./Popup";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { CiLogout } from "react-icons/ci";
 import { TbLogout2 } from "react-icons/tb";
 
 // import dimHome from "@/../public/dimHome.svg";
@@ -112,7 +111,6 @@ const NavigationSidebar = ({
 				<SideBar
 					img={icon[0]}
 					tab={"Dashboard"}
-					// heading={"MENU"}
 					classList={`mt-3 ${sectionMR}`}
 					changeState={secondSection}
 					tabClassList={visible}
@@ -146,19 +144,10 @@ const NavigationSidebar = ({
 					reactIcon={
 						<TbLogout2 className="text-gray-700 w-6 h-6" />
 					}
-					// img={icon[1]}
 					tab={"Logout"}
-					// changeState={"/"}
 					tabClassList={visible}
 				/>
-				{/*<SideBar
-					img={icon[2]}
-					tab={"Chat support"}
-					heading={"SUPPORT"}
-					classList={"mt-auto"}
-					changeState={"/help"}
-					tabClassList={visible}
-				/> */}
+				
 			</section>
 			{main}
 			<ToastContainer />

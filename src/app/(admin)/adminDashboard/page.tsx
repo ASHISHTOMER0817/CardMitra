@@ -63,28 +63,28 @@ const AdminDashboard = () => {
 
 			<section className="mt-9 ">
 				<h3 className=" font-semibold mb-3">Dashboard</h3>
-				<div className="flex justify-start gap-2">
-					<div className=" text-center px-20 py-8 rounded-3xl bg-[#F3F3F3] cursor-pointer md:min-w-[31%]">
-						<h5 className="text-[#1844E1]">
+				<div className="flex justify-start gap-2 sm:gap-1">
+					<div className=" text-center px-20 py-8 rounded-3xl bg-[#F3F3F3] cursor-pointer md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-0 sm:px-0">
+						<h5 className="text-[#1844E1] sm:text-xs">
 							{data?.deliveries}{" "}
 						</h5>{" "}
-						<div> Today&apos;s delivery</div>
+						<div className="sm:text-[10px]"> Today&apos;s delivery</div>
 					</div>
-					<div className=" text-center px-20 py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer md:min-w-[31%]">
-						<h5 className="text-primaryBgClr">
+					<div className=" text-center px-20 py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-0 sm:px-0">
+						<h5 className="text-primaryBgClr sm:text-xs">
 							{data?.order}
 						</h5>
-						<div>
+						<div className="sm:text-[10px]">
 							{" "}
 							Orders placed <br />
 							today
 						</div>
 					</div>
-					<div className=" text-center px-20 py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer md:min-w-[31%]">
-						<h5 className="text-primaryBgClr">
+					<div className=" text-center px-20 py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-0 sm:px-0">
+						<h5 className="text-primaryBgClr sm:text-xs">
 							{data?.noOfAffiliate}
 						</h5>
-						<div> Affiliates Joined</div>
+						<div className="sm:text-[10px]"> Affiliates Joined</div>
 					</div>
 				</div>
 			</section>
@@ -129,7 +129,7 @@ const AdminDashboard = () => {
 					</h4>
 					<Link
 						href={"/adminBookers"}
-						className="text-primaryBgClr hover:text-green-300 text-base"
+						className="text-primaryBgClr hover:text-green-300 text-base sm:text-xs"
 					>
 						VIEW ALL
 					</Link>

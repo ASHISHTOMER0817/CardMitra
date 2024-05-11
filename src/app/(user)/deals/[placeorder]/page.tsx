@@ -8,6 +8,7 @@ import { pointsToRemember } from "@/app/components/pointsToRemember";
 import Loader from "@/app/components/loader";
 import CardLayout from "@/app/components/CardLayout";
 import Link from "next/link";
+import BackwardButton from "@/app/components/BackwardButton";
 
 const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 	const [data, setData] = useState<productList>();
@@ -53,6 +54,7 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 	return (
 		<>
 			<div className="mt-16 mx-10 w-[90%]">
+				<BackwardButton/> 
 				<section className="flex items-start text-sm justify-around">
 					<div className="flex flex-col items-start gap-10 justify-around">
 						<ProductDetails data={data!} arr={arr} />
@@ -72,7 +74,6 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 						Similar Products
 					</div>
 					<div className="grid grid-flow-row gap-3 grid-cols-3">
-						 {/* <CardLayoutForDeals data={productList!} /> */}
 						 {!productList ? <Loader/> : productList.products.length >0 ? productList?.products.map(
 				(
 					{

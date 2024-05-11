@@ -2,54 +2,66 @@ import React, { FormEvent, useState } from "react";
 import InputSpace from "./InputSpace";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Popup from "./Popup";
+import Loader from "./loader";
 const SingUpAuth = () => {
 	const router = useRouter();
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [contact, setContact] = useState("");
-	const [error, setError] = useState("");
+	const [loader, setLoader] = useState(false);
 
-	const user = { name, email, password, contact };
+	// console.log(Popup("error", 'something went wrong'))
 
-	async function sendData(e:FormEvent<HTMLFormElement>) {
-		e.preventDefault()
+	async function sendData(e: FormEvent<HTMLFormElement>) {
+		e.preventDefault();
 		try {
+			console.log('starting')
+			setLoader(true);
 			// Validate form inputs
 
-			// if (name.length < 5) {
-			// 	// Handle name validation error
-			// 	setError("Name must be at least 5 characters long");
-			// 	return;
-			// }
-			// if (contact.length < 10) {
-			// 	// Handle phone number validation error
-			// 	setError(
-			// 		"Phone number must be at least 10 digits long"
-			// 	);
-			// 	return;
-			// }
-			// if (
-			// 	!/[a-z]/.test(password) ||
-			// 	!/[A-Z]/.test(password) ||
-			// 	!/\d/.test(password)
-			// ) {
-			// 	// Handle password validation error
-			// 	setError(
-			// 		"Password must contain at least one lowercase letter, one uppercase letter, and one digit"
-			// 	);
-			// 	return;
-			// }
+			if (name.length < 4) {
+				// Handle name validation error
 
-			
+				Popup("error","Name must be at least 5 characters long");
+				console.log()
+				setLoader(false);
+				return;
+			}
+			if ( contact.length < 10 || contact.length > 10) {
+				// Handle phone number validation error
+				Popup(
+					"error",
+					"Phone number must be 10 digits long"
+				);
+				setLoader(false);
+				return;
+			}
+			if (
+				!/[a-z]/.test(password) ||
+				!/[A-Z]/.test(password) ||
+				!/\d/.test(password)
+			) {
+				// Handle password validation error
+				Popup(
+					"error",
+					"Password must contain at least one lowercase letter, one uppercase letter, and one digit"
+				);
+				setLoader(false);
+				return;
+			}
+			const user = { name, email, password, contact };
+			console.log('crossed if conditions', name, email, password, contact)
 			const response = await axios.post("/api/users/signup", {
 				user,
 			});
-			// console.log("user")
+			console.log("data sent")
 			const success = await response.data.success;
 			if (!success) {
-				setError( response.data.message);
+				Popup("error", response.data.message);
 				console.log(success, response.data.message);
+				setLoader(false);
 				return;
 			} else {
 				router.push("/Auth/login");
@@ -57,45 +69,52 @@ const SingUpAuth = () => {
 				return;
 			}
 		} catch (error) {
-			setError("Something went wrong,Please try again later");
+			Popup("error", "Something went wrong,Please try again later");
 			console.log("Something went wrong ", error);
 		}
 	}
 
 	return (
-		<form onSubmit={sendData} className="flex flex-col gap-y-7 mt-4">
-			<InputSpace
-				type="text"
-				value={name}
-				placeholder="Name"
-				onChange={(value) => setName(value)}
-			/>
-			<InputSpace
-				type="text"
-				value={email}
-				placeholder="Email"
-				onChange={(value) => setEmail(value)}
-			/>
-			<InputSpace
-				type="text"
-				value={contact}
-				placeholder="Phone Number"
-				onChange={(value) => setContact(value)}
-			/>
-			<InputSpace
-				type="password"
-				value={password}
-				placeholder="Password"
-				onChange={(value) => setPassword(value)}
-			/>
-			
-			<button
-				type="submit"
-				className="text-white border rounded-full py-4 px-3 bg-primaryBgClr w-96"
+		<>
+			{loader && <Loader />}
+			<form
+				onSubmit={sendData}
+				className="flex flex-col gap-y-7 mt-4 sm:gap-y-4"
 			>
-				Sign Up
-			</button>
-		</form>
+				<InputSpace
+					type="text"
+					value={name}
+					placeholder="Name"
+					onChange={(value) => setName(value)}
+				/>
+				<InputSpace
+					type="text"
+					value={email}
+					placeholder="Email"
+					onChange={(value) => setEmail(value)}
+				/>
+				<InputSpace
+					type="text"
+					value={contact}
+					placeholder="Phone Number"
+					onChange={(value) => setContact(value)}
+				/>
+				<InputSpace
+					type="password"
+					value={password}
+					placeholder="Password"
+					onChange={(value) => setPassword(value)}
+				/>
+
+				<button
+					type="submit"
+					disabled={loader}
+					className="text-white border cursor-pointer rounded-full py-4 px-3 bg-primaryBgClr w-96 sm:w-48 sm:py-2"
+				>
+					Sign Up
+				</button>
+			</form>
+		</>
 	);
 };
 

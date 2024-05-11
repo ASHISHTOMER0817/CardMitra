@@ -7,6 +7,7 @@ import Database from "@/database/database";
 Database()
 export async function POST(request: NextRequest) {
       try {
+            console.log('sarva startin bro')
             const reqBody = await request.json()
             const { name, email, password, contact } = reqBody.user;
             console.log('1st', reqBody)

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import BarChart from "@/app/components/BarChart";
 import axios from "axios";
@@ -35,7 +35,7 @@ const Dashboard = () => {
 				fill: false,
 				borderColor: "rgb(75, 192, 192)",
 				tension: 0.1,
-				width:'300px'
+				width: "300px",
 			},
 		],
 	});
@@ -79,39 +79,44 @@ const Dashboard = () => {
 	return (
 		<div className=" w-[85%] mx-auto mb-16">
 			<h3 className="my-7 font-semibold">Dashboard</h3>
-			<div className="flex justify-start gap-3">
-				<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%]">
-					<h5 className="text-[#1844E1]">{profit} </h5>{" "}
-					Today&apos;s Profit
+			<div className="flex justify-start gap-3 sm:gap-1">
+				<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-0 sm:px-0">
+					<h5 className="text-[#1844E1] sm:text-xs">{profit} </h5>{" "}
+					<div className="sm:text-[10px]">Today&apos;s Profit</div>
 				</div>
-				<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%]">
-					<h5 className="text-primaryBgClr">
+				<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-0 sm:px-0">
+					<h5 className="text-primaryBgClr sm:text-xs">
 						{ordersTillDate}
 					</h5>
-					Orders placed <br />
-					till date
+					<div className="sm:text-[10px]">
+						Orders placed <br />
+						till date
+					</div>
 				</div>
-				<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%]">
-					<h5 className="text-primaryBgClr">
+				<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-0 sm:px-0">
+					<h5 className="text-primaryBgClr sm:text-xs">
 						Rs. {commission}
 					</h5>
-					Commission earned
+					<div className="sm:text-[10px]">Commission earned</div>
 				</div>
 			</div>
 			<div className="flex justify-between items-center my-6">
 				<h4 className="font-semibold">Overview</h4>
-				<div className="text-primaryBgClr text-base">
+				<h5 className="text-primaryBgClr text-base">
 					DETAILS
-				</div>
+				</h5>
 			</div>
 			<div className="hello">
-				<BarChart ChartData={userData} options={{ maintainAspectRatio: false }} />
+				<BarChart
+					ChartData={userData}
+					options={{ maintainAspectRatio: false }}
+				/>
 			</div>
-			<div className="flex justify-between my-6">
+			<div className="flex justify-between my-6 items-center">
 				<h4 className="font-semibold">Order History</h4>
 
-				<Link
-					className="text-primaryBgClr text-base"
+				<Link 
+					className="text-primaryBgClr text-base sm:text-xs"
 					href={"/odrHistory"}
 				>
 					VIEW ALL
@@ -119,15 +124,15 @@ const Dashboard = () => {
 			</div>
 
 			{data === undefined ? (
-				<div className="mt-20 mb-20 mx-auto w-fit">
+				<div className="mt-20 mb-20 mx-auto w-fit sm:text-[10px]">
 					Loading...
 				</div>
 			) : data.length < 1 ? (
-				<div className="mt-10 mx-auto w-fit">
+				<div className="mt-10 mx-auto w-fit font-serif text-red-500 sm:text-[10px]">
 					You have not placed any product yet...
 				</div>
 			) : (
-				<div className="grid grid-flow-row gap-3 grid-cols-3">
+				<div className="grid grid-flow-row gap-3 grid-cols-3 sm:gap-1">
 					<OrderHistory data={data.slice(0, 3)} />
 				</div>
 			)}

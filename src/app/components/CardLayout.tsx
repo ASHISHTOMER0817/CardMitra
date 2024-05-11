@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { ReactNode, useEffect, useState } from "react";
 import Image from "next/image";
 import amazon from "@/../public/static/amazon.svg";
@@ -22,7 +22,7 @@ const CardLayout = ({
 	deviceImage,
 	cards,
 }: {
-	image?:ReactNode
+	image?: ReactNode;
 	placeOrder?: ReactNode;
 	quantity: number;
 	name: string;
@@ -58,7 +58,7 @@ const CardLayout = ({
 			}
 		}
 		forLoop();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
@@ -66,14 +66,14 @@ const CardLayout = ({
 			className={`p-7 border rounded-2xl md:p-2 border-gray-400 ${classList}`}
 		>
 			<div className="flex items-center mb-4 gap-4">
-				<div className="mr-auto px-[10px] py-[5px] text-sm rounded-3xl border text-center bg-gray-200">
+				<div className="mr-auto px-[10px] py-[5px] text-sm rounded-3xl border text-center bg-gray-200 sm:text-[10px] sm:px-1 sm:py-0">
 					Quantity: {quantity}
 				</div>
 				{image}
 			</div>
 			<div className="flex justify-center gap-8 text-sm items-start md:gap-1">
 				<Image
-					className="w-24 h-[150px] md:w-[85px] md:h-[120px]"
+					className="w-24 h-[150px] md:w-[85px] sm:h-[60px]"
 					src={
 						deviceImage
 							? `/uploads/${deviceImage}`
@@ -82,26 +82,26 @@ const CardLayout = ({
 					alt={""}
 				/>
 				<section className="flex flex-col gap-4 justify-around md:gap-0">
-					<div className=" text-wrap font-semibold  text-base md:h-10 md:leading-4">
+					<div className=" text-wrap font-semibold  text-base md:h-10 md:leading-[14px] sm:text-[11px]">
 						{" "}
 						{name}
 					</div>
 
 					<div className=" flex md:flex-col">
 						<div>
-							<div className="text-nowrap font-bold text-primaryBgClr">
+							<div className="text-nowrap font-bold text-primaryBgClr sm:leading-4 sm:text-[10px]">
 								Rs. {price}
 							</div>
-							<div className="md:text-[10px]">
+							<div className="md:text-[10px] sm:leading-4">
 								Price/Unit
 							</div>
 						</div>
-						<hr className="rotate-90 my-5 mx-4 w-[20px] h-3px md:mx-0 md:my-[2px] md:rotate-0 md:w-[70px]" />
+						<hr className="rotate-90 my-5 mx-4 w-[20px] h-3px md:mx-0 md:my-[2px] md:rotate-0 md:w-[70px] sm:w-[50px]" />
 						<div>
-							<div className="font-bold text-red-500">
+							<div className="font-bold text-red-500 sm:leading-4 sm:text-[10px]">
 								Rs. {commission}
 							</div>
-							<div className="md:text-[10px]">
+							<div className="md:text-[10px] sm:leading-4 sm:text-[10px]">
 								Commission
 							</div>
 						</div>
@@ -110,23 +110,21 @@ const CardLayout = ({
 				</section>
 			</div>
 			<hr className="my-4" />
-			<div className="flex justify-between items-center">
-				<div className="flex justify-center gap-2">
-					{siteImage ? (
-						<Image
-							src={siteImage}
-							width={40}
-							height={40}
-							alt={""}
-						/>
-					) : null}
-					{/* <Image src={shopsy} width={20} height={20} alt={""}/> */}
-				</div>
+			<div className="flex justify-between items-center sm:w-4">
+				{siteImage ? (
+					<Image
+						src={siteImage}
+						width={40}
+						height={40}
+						alt={""}
+					/>
+				) : null}
+
 				<div className="flex flex-col justify-start items-start gap-2 text-sm font-semibold text-gray-600">
 					{cards.map((card) => {
 						return (
 							<>
-								<div>{card}</div>
+								<div className="sm:font-light sm:text-[10px] sm:leading-3">{card}</div>
 							</>
 						);
 					})}

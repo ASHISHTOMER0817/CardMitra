@@ -84,7 +84,13 @@ h1, h2, h3{
     font-size: 18px!important;
   };
 }
-div, h6{
+h4{
+  @media (max-width:768px) {
+    font-size: 14px!important;
+  };
+}
+
+h5{
   @media (max-width:768px) {
     font-size: 12px!important;
   };
@@ -101,9 +107,9 @@ thead{
   }
 }
 
-h4, h5, a{
+/* h4, h5, a{
   @media (max-width:768px) {
     font-size: 12px !important;
     line-height: normal;
   }
-}
+} */
