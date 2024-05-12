@@ -34,9 +34,11 @@ export const customStyles: StylesConfig = {
 function Dropdown({
 	options,
 	onChange,
+	value
 }: {
 	options: dropdown[];
 	onChange: any;
+	value:dropdown
 }) {
 	const [isClearable, setIsClearable] = useState(true);
 	const [isSearchable, setIsSearchable] = useState(true);
@@ -57,7 +59,7 @@ function Dropdown({
 			<Select
 				className="basic-single rounded-full"
 				classNamePrefix="select"
-				defaultValue={options[0]}
+				defaultValue={ options[0]}
 				isDisabled={isDisabled}
 				isLoading={isLoading}
 				isClearable={isClearable}
@@ -67,6 +69,7 @@ function Dropdown({
 				options={options}
 				styles={customStyles}
 				onChange={handleChange}
+				value={value}
 			/>
 
 			<div

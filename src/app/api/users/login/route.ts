@@ -17,15 +17,17 @@ export async function POST(request: NextRequest) {
             const verifyPassword = await bcrypt.compare(password, existingPassword)
             const tokenData = { email, password, _id: user._id, role: user.role }
             console.log(tokenData)
-            //check if user actually exist 
+
+            //if user doesn't exist
             if (user && verifyPassword) {
+                  //check if user actually exist 
 
                   const secret = new TextEncoder().encode(
                         process.env.TOKEN_SECRET_KEY!
-                      )
-                      const alg = 'HS256'
-                      
-                      const joseToken = await new jose.SignJWT(tokenData)
+                  )
+                  const alg = 'HS256'
+
+                  const joseToken = await new jose.SignJWT(tokenData)
                         .setProtectedHeader({ alg })
                         .setIssuedAt()
                         .setIssuer('Guru')
@@ -33,8 +35,8 @@ export async function POST(request: NextRequest) {
                         .setExpirationTime('7 days')
                         .sign(secret)
 
-                        const days = 7 * 24 * 60 * 60 * 1000                  
-                   cookies().set('joseToken', joseToken, { expires: Date.now() + days })
+                  const days = 7 * 24 * 60 * 60 * 1000
+                  cookies().set('joseToken', joseToken, { expires: Date.now() + days })
 
                   // Redirect the user/admin
                   // user.role === 'admin' ? redirect('/'): user.role === 'user' ? redirect('/dashboard'):''
@@ -45,15 +47,9 @@ export async function POST(request: NextRequest) {
                         message: 'login successful', success: true, data: user.role
                   })
             }
-
-            //if user doesn't exist
-            console.log("NOT EXIST", user, verifyPassword)
+      } catch {
             return NextResponse.json({
                   message: "email or password doesn't match!", success: false
-            })
-      } catch (error) {
-            return NextResponse.json({
-                  message: "Something went wrong; Please try again later", success: false
             })
       }
 

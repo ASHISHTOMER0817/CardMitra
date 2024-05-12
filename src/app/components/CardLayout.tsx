@@ -29,27 +29,27 @@ const CardLayout = ({
 	price: number;
 	commission: number;
 	classList?: string;
-	site: string;
+	site: {value:string, label:string};
 	deviceImage: string;
-	cards: string[];
+	cards: {value:string, label:string}[];
 }) => {
 	const [siteImage, setsiteImage] = useState("");
 	console.log(siteImage);
 	const siteArr = [
-		{ name: "amazon", image: amazon },
-		{ name: "flipkart", image: flipkart },
-		{ name: "jiomart", image: jiomart },
-		{ name: "shopsy", image: shopsy },
-		{ name: "vivo", image: vivo },
-		{ name: "mi", image: mi },
-		{ name: "oppo", image: oppo },
-		{ name: "samsung", image: samsung },
+		{ name: "Amazon", image: amazon },
+		{ name: "Flipkart", image: flipkart },
+		{ name: "Jiomart", image: jiomart },
+		{ name: "Shopsy", image: shopsy },
+		{ name: "Vivo", image: vivo },
+		{ name: "MI", image: mi },
+		{ name: "Oppo", image: oppo },
+		{ name: "Samsung", image: samsung },
 	];
 
 	useEffect(() => {
 		function forLoop() {
 			for (let i = 0; i < siteArr.length; i++) {
-				if (siteArr[i].name === site) {
+				if (siteArr[i].name === site.label) {
 					setsiteImage(siteArr[i].image);
 					console.log(true);
 					return;
@@ -80,6 +80,8 @@ const CardLayout = ({
 							: phoneImage
 					}
 					alt={""}
+					width={100}
+					height={150}
 				/>
 				<section className="flex flex-col gap-4 justify-around md:gap-0">
 					<div className=" text-wrap font-semibold  text-base md:h-10 md:leading-[14px] sm:text-[11px]">
@@ -121,10 +123,10 @@ const CardLayout = ({
 				) : null}
 
 				<div className="flex flex-col justify-start items-start gap-2 text-sm font-semibold text-gray-600">
-					{cards.map((card) => {
+					{cards.map(({label}) => {
 						return (
 							<>
-								<div className="sm:font-light sm:text-[10px] sm:leading-3">{card}</div>
+								<div className="sm:font-light sm:text-[10px] sm:leading-3">{label}</div>
 							</>
 						);
 					})}

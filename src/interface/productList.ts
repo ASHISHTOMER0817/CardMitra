@@ -3,8 +3,10 @@ import { ObjectId } from "mongoose"
 interface productList {
 	productLink: string
 	requirement: number
-	cards: string[]
-	site: string
+	cards: { value: string, label: string,_id?:string }[]
+	site: {
+		value: string, label: string,_id?:string
+	}
 	quantity: number
 	name: string
 	randomNo: number
@@ -20,7 +22,7 @@ interface productList {
 		third: string
 		fourth: string
 	}
-	image:string
+	image: string
 }
 export default productList
 
@@ -33,7 +35,7 @@ export interface order {
 	delivered: boolean
 	orderedAt: string
 	_id: string
-	paid:boolean
+	paid: boolean
 }
 
 export interface otp {
@@ -43,7 +45,7 @@ export interface otp {
 	otp: number
 	trackingId: string
 	delivered: boolean
-	_id:string
+	_id: string
 }
 
 export interface user {
@@ -58,7 +60,7 @@ export interface user {
 	isApprove: boolean
 	createdAt: Date
 	unpaid: number
-	_id:string
+	_id: string
 }
 
 export interface UserDetails {
@@ -67,11 +69,11 @@ export interface UserDetails {
 	totalAmt: number
 }
 
-export interface transactions{
-	_id:string
-	user:user
-	dateOfPayment:string
-	amount:number
+export interface transactions {
+	_id: string
+	user: user
+	dateOfPayment: string
+	amount: number
 }
 
 export interface Data {

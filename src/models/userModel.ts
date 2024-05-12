@@ -38,8 +38,8 @@ const orderSchema = new mongoose.Schema({
 		type: String,
 		// format:Date
 	},
-	paid:{
-		type:Boolean
+	paid: {
+		type: Boolean
 	}
 })
 
@@ -162,11 +162,20 @@ const productSchema = new mongoose.Schema({
 	//     ]
 	//   },
 	cards: [{
-		type: String
+		value: {
+			type: String
+		},
+		label: {
+			type: String
+		}
 	}],
 	site: {
-		type: String,
-		// required:true
+		value: {
+			type: String
+		},
+		label: {
+			type: String
+		}
 	},
 	deals: {
 		type: Boolean,
@@ -213,7 +222,7 @@ const transactionSchema = new mongoose.Schema({
 	},
 	amount: {
 		type: Number,
-		required:true
+		required: true
 	},
 })
 

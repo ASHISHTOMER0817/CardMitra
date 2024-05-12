@@ -13,7 +13,7 @@ export default function ProductDetails({
 }) {
 
 	console.log(arr)
-	return (
+return (
 		<>
 			<section className=" text-left">
 				<div className="bg-[#FC08081A] text-[#FC0808] text-center px-4 py-1 mb-3 rounded-full">
@@ -55,7 +55,7 @@ export default function ProductDetails({
 								</div>
 							</div>
 						</div>
-						{arr.length > 0 && (
+						{  arr.length > 0 && (
 							<div className="flex flex-col gap-4 items-start">
 								<div>
 									Keep in mind while
@@ -80,14 +80,21 @@ export default function ProductDetails({
 				</div>
 			</section>
 			<section className="w-full flex justify-between items-start">
-				<div>
+				<div className="flex flex-col items-end">
 					<h6 className="mb-2">bank cards to use</h6>
-					<div className="text-gray-500 font-semibold">
+					{data?.cards && data?.cards.map((card, index)=>{
+						return (
+							<div key={index} className="text-gray-500 font-semibold">
+						{card}
+					</div>
+						)
+					})}
+					{/* <div className="text-gray-500 font-semibold">
 						Amazon Pay
 					</div>
 					<div className="text-gray-500 font-semibold">
 						Amazon Pay
-					</div>
+					</div> */}
 				</div>
 				<div>
 					<h6 className="mb-2">Website</h6>

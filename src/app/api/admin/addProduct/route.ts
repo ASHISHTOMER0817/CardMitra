@@ -13,25 +13,21 @@ Database();
 
 export async function POST(request: NextRequest) {
       try {
-
             const formData = await request.formData()
-            // console.log(formData)
+            console.log(formData)
+            const name = formData.get('name')
             const file = formData.get('file') as File
             const commission = formData.get('commission')
             const productLink = formData.get('productLink')
             const price = formData.get('price')
             const requirement = formData.get('requirement')
             const address = formData.get('address')
-            const card: any = formData.get('card')
-            const site = formData.get('site')
-            const infoList:any = formData.get('info')
+            const cardObj: any = formData.get('card')
+            const siteObj:any = formData.get('site')
+            const infoList: any = formData.get('info')
 
-            const cardArr:dropdown[] = JSON.parse(card)
-            // console.log(cardArr)
-            const valueArr = []
-            for(let i=0;i<cardArr.length;i++){
-                  valueArr.push(cardArr[i].value)
-            }
+            const cards: dropdown[] = JSON.parse(cardObj)
+            const site:dropdown = JSON.parse(siteObj)
             const info = JSON.parse(infoList)
 
             // console.log(file)
@@ -48,15 +44,17 @@ export async function POST(request: NextRequest) {
             const bytes = await file.arrayBuffer();
             await fs.writeFile(filePath, Buffer.from(bytes));
 
+            console.log('still working ')
             const newProduct = Product.create({
+                  name,
                   commission: +commission!,
                   productLink,
                   price: +price!,
                   requirement: +requirement!,
-                  address: address,
+                  address,
                   site,
-                  cards:valueArr,
-                  image:newFileName,
+                  cards,
+                  image: newFileName,
                   info
 
             })
@@ -65,6 +63,8 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({
                   message: 'image uploaded successfully', success: true,
             })
+
+
       } catch {
             return NextResponse.json({
                   message: 'image upload failed', success: false,

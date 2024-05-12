@@ -26,7 +26,7 @@ const AdminOrderHistory = () => {
 	}, []);
 
 	return (
-		<div className="flex flex-col mx-auto w-11/12">
+		<div className="flex flex-col mx-auto w-[85%]">
 			<Header
 				heading={"Order History"}
 				Children={
