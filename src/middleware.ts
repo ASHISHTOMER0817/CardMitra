@@ -9,9 +9,10 @@ export async function middleware(request: NextRequest) {
       const value = request.cookies.get('joseToken')?.value!
 
       const path = request.nextUrl.pathname
-      const authPath = path === '/Auth/login' || path === '/Auth/signup'
+      const authPath = path === '/Auth/login' || path === '/Auth/signup' || path === '/'
 
-      if (!value && !authPath) { return NextResponse.redirect(new URL('/Auth/login', request.url)) }
+      if (!value && !authPath) {
+             return NextResponse.redirect(new URL('/Auth/login', request.url)) }
       else if (value) {
             // Jose token
             const secret = new TextEncoder().encode(
@@ -24,8 +25,8 @@ export async function middleware(request: NextRequest) {
                   audience: 'Orderee',
             })
 
-            const adminPath = path === '/adminAddProduct' || path === '/adminBookers' || path === '/adminDashboard' || path === '/orders' || path === '/otpList' || path === '/transactions'|| path === '/' || authPath
-            const userPath = path === '/dashboard' || path === '/deals' || path === '/odrHistory' || path === '/userProfile' || authPath || path === '/'
+            const adminPath = path === '/adminAddProduct' || path === '/adminBookers' || path === '/adminDashboard' || path === '/orders' || path === '/otpList' || path === '/transactions' || authPath
+            const userPath = path === '/dashboard' || path === '/deals' || path === '/odrHistory' || path === '/userProfile' || authPath
             // Admin Dynamic paths
             const adminDynamicPath = path.startsWith('/adminAddProduct/') || path.startsWith('/adminBookers/') || path.startsWith('/orders/')
             const userDynamicPath = path.startsWith('/odrHistory/') || path.startsWith('/deals/')
