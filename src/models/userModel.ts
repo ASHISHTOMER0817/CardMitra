@@ -64,12 +64,11 @@ const otpSchema = new mongoose.Schema({
 		type: String,
 	},
 	delivered: {
-		type: Boolean,
-		default: false
+		type: String,
+		default: 'undelivered'
 	},
 	submittedAt: {
-		type: String,
-		required: true
+		type: Date
 	}
 })
 
@@ -207,6 +206,9 @@ const productSchema = new mongoose.Schema({
 			type: String,
 			default: ""
 		},
+	},
+	zipCode:{
+		type:String
 	}
 
 
@@ -225,6 +227,17 @@ const transactionSchema = new mongoose.Schema({
 		required: true
 	},
 })
+
+// const cancelledOrderSchema = new mongoose.Schema({
+// 	user: {
+// 		type: mongoose.Schema.Types.ObjectId,
+// 		ref: 'users'
+// 	},
+// 	orderObjectId: {
+// 		type: mongoose.Schema.Types.ObjectId,
+// 		ref: "orders"
+// 	},
+// })
 
 const Product = mongoose.models.products || mongoose.model("products", productSchema)
 const Otp = mongoose.models.otps || mongoose.model("otps", otpSchema)

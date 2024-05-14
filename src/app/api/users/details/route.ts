@@ -12,70 +12,83 @@ export async function GET(request: NextRequest) {
 
             // Searchparams
             let userId = searchparams.get('query')
-            
+
             const listType = searchparams.get('listType')
             const amount = searchparams.get('paid')
-            const user = await User.findOne({ userId })
-            // console.log(listType, userId, amount)
-            console.log(user)
             let orderList;
 
-            if(!userId){
-                  const {role,_id } = await GetToken()
+            if (!userId) {
+                  const { role, _id } = await GetToken()
                   console.log('if condtion')
                   console.log(role, _id)
-                  if(role === 'user'){
+                  if (role === 'user') {
                         userId = _id
                   }
             }
-            console.log('skip if condition')
-            console.log(userId)
+            const user = await User.findOne({ _id: userId })
+            // console.log(listType, userId, amount)
+            console.log(user)
+
+            // console.log('skip if condition')
+            // console.log(userId)
             orderList = await Order.find({ user: userId, delivered: true, paid: false }).populate("product")
-            console.log('this is orderlist',orderList)
-            // console.log('starts here', orderList)
+            console.log('this is orderlist', orderList)
+
             // Current amount to pay
             let total = 0;
-            for (let i = 0; i < orderList.length; i++) {
-                  total += orderList[i].product.price;
+            if (orderList.length > 0) {
+                  for (let i = 0; i < orderList.length; i++) {
+                        total += orderList[i].product.price;
+                  }
             }
+            console.log('helll', user)
             const totalAmt = user.unpaid + total
             const unpaid = user.unpaid
+            console.log('lrkjghlkhf')
             console.log(totalAmt, unpaid)
 
+            let deliveredData = { user, orderList, totalAmt, unpaid }
+
+            // Delivered but not paid List
             if (listType === "delivered") {
                   console.log('condition reached delivered', totalAmt, userId, listType)
-                  const data = { user, orderList, totalAmt, unpaid }
-                  // console.log(totalAmt)
+
+                  console.log(deliveredData)
                   return NextResponse.json({
-                        message: "delivered is being shown", data: data, success: true
+                        message: "delivered is being shown", data: deliveredData, success: true
                   })
+
+                  // Non delivered Products list
             } else if (listType === "nonDelivered") {
                   orderList = await Order.find({ user: userId, delivered: false }).populate("product")
                   const data = { user, orderList }
-                  // console.log(user, orderList, 'HMM these are nonDelivred',)
                   return NextResponse.json({
                         message: "nonDelivered is being shown", data: data, success: true
                   })
+
+                  // Paid to user
             } else if (listType === "reduce") {
-                  // const userId = new mongoose.Types.ObjectId(_id!)
                   orderList = await Order.updateMany(
                         { user: userId, delivered: true, paid: false },
                         { $set: { paid: true } }
                   );
                   console.log(orderList)
-                  console.log('this is -- ',userId,'--', totalAmt - +amount!)
+                  console.log('this is -- ', userId, '--', totalAmt - +amount!)
                   user.unpaid = totalAmt - +amount!
-                  // console.log(totalAmt - +amount!)
                   user.paid += +amount!
-                  user.save()
-                  // const userId = new mongoose.Types.ObjectId(_id!)
-                   Transactions.create({
+                  await user.save()
+                  Transactions.create({
                         user: userId,
                         dateOfPayment: new Date(),
                         amount: +amount!
                   })
+
+                  // Delete and add updated totalAmt to deliveryData
+                  delete deliveredData.totalAmt;
+                  deliveredData.totalAmt = user.unpaid
+
                   return NextResponse.json({
-                        message: "Paid to user, Status updated", success: true, status: 250
+                        message: `${amount} paid to ${user.name}`, success: true, status: 250, data: deliveredData
                   })
             }
             else if (listType === 'transactions') {

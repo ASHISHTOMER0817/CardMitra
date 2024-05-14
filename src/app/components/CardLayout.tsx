@@ -1,6 +1,7 @@
 "use client";
 import React, { ReactNode, useEffect, useState } from "react";
 import Image from "next/image";
+import phoneImage from "@/../public/phoneImage.jpg";
 import amazon from "@/../public/static/amazon.svg";
 import flipkart from "@/../public/static/flipkart.svg";
 import jiomart from "@/../public/static/jiomart.png";
@@ -9,7 +10,7 @@ import vivo from "@/../public/static/vivo.webp";
 import oppo from "@/../public/static/oppo.png";
 import mi from "@/../public/static/mi.jpg";
 import samsung from "@/../public/static/samsung.png";
-import phoneImage from "@/../public/phoneImage.jpg";
+
 const CardLayout = ({
 	image,
 	placeOrder,
@@ -35,6 +36,7 @@ const CardLayout = ({
 }) => {
 	const [siteImage, setsiteImage] = useState("");
 	console.log(siteImage);
+	
 	const siteArr = [
 		{ name: "Amazon", image: amazon },
 		{ name: "Flipkart", image: flipkart },
@@ -47,6 +49,7 @@ const CardLayout = ({
 	];
 
 	useEffect(() => {
+		// setsiteImage(forLoop(site.label))
 		function forLoop() {
 			for (let i = 0; i < siteArr.length; i++) {
 				if (siteArr[i].name === site.label) {
@@ -54,7 +57,7 @@ const CardLayout = ({
 					console.log(true);
 					return;
 				}
-				console.log(false);
+				// console.log(false);
 			}
 		}
 		forLoop();
@@ -64,7 +67,7 @@ const CardLayout = ({
 	return (
 		<div
 			className={`p-7 border rounded-2xl md:p-2 border-gray-400 ${classList}`}
-		>
+		>    
 			<div className="flex items-center mb-4 gap-4">
 				<div className="mr-auto px-[10px] py-[5px] text-sm rounded-3xl border text-center bg-gray-200 sm:text-[10px] sm:px-1 sm:py-0">
 					Quantity: {quantity}

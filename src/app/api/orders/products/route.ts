@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
                         const products = await Product.find({ deals: true })
 
                         const data = { products, user }
-                        console.log('1st console', products)
+                        // console.log('1st console', products)
 
                         return NextResponse.json({ data: data, success: true, status: 200 })
                   }
@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
             }else if(productId){
                   console.log('else if condition')
                   const product = await Product.findOne({_id:productId})
-                  console.log(product)
+                  // console.log(product)
                   return NextResponse.json({
                         message:'showing the existing product', success:true, data:product
                   }) 

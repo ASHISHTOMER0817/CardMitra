@@ -39,7 +39,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 		third: "",
 		fourth: "",
 	});
-	// const [existingCards, setExistingCards] = useState("")
+	const [zipCode, setZipCode] = useState("");
 
 	// Cards Array
 	const cardOptions: dropdown[] = [
@@ -63,6 +63,10 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	//function to set Site
 	const handleDropdownChangeSite = (option: dropdown) => {
 		setSite(option);
+	};
+	// Function to set Cards
+	const handleChange = (selectedOptions: any) => {
+		setCards(selectedOptions);
 	};
 
 	useEffect(() => {
@@ -93,9 +97,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 					setCards(product.cards);
 					// const newSite = delete product.site._id
 					// console.log('newSite', newSite)
-					setSite( product.site);
-					
-
+					setSite(product.site);
 				}
 				return;
 			} catch {
@@ -105,7 +107,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 		getData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [params?._id]);
-	console.log(cards, site)
+	console.log(cards, site);
 
 	//SEND DATA TO BACKEND
 	async function postData() {
@@ -142,10 +144,6 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 			console.log("Something went wrong, please try again later");
 		}
 	}
-
-	const handleChange = (selectedOptions: any) => {
-		setCards(selectedOptions);
-	};
 
 	return (
 		<form onSubmit={postData} className="w-[90%] p-8">
@@ -339,17 +337,21 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 					</div>
 				</div>
 			</div>
-			<div className="flex gap-6 mb-6">
-				<div className="mb-4 flex flex-col w-full gap-6">
+			{/* <div className="flex gap-6 mb-6">
+				
+
+				
+			</div> */}
+
+			<div className="grid grid-flow-row grid-cols-2 items-end gap-x-6 gap-y-3">
+			<div className="mb-4 flex flex-col w-full gap-6">
 					<label htmlFor="bank" className="font-bold">
 						Offers available on bank cards
 					</label>
 
 					<div className="relative inline-block">
 						<Select
-							defaultValue={
-								cardOptions
-							}
+							defaultValue={cardOptions}
 							isMulti
 							name="colors"
 							options={cardOptions}
@@ -357,12 +359,11 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 							classNamePrefix="select"
 							onChange={handleChange}
 							styles={customStyles}
-							value={cards? cards: cardOptions[0]}
+							value={cards ? cards : cardOptions[0]}
 						/>
 					</div>
 				</div>
-
-				<div className="mb-4 flex flex-col w-full gap-6">
+			<div className="mb-4 flex flex-col w-full gap-6">
 					<label htmlFor="website" className="font-bold">
 						Websites
 					</label>
@@ -371,13 +372,10 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 						<Dropdown
 							options={siteOptions}
 							onChange={handleDropdownChangeSite}
-							value={site? site: siteOptions[0]}
+							value={site ? site : siteOptions[0]}
 						/>
 					</div>
 				</div>
-			</div>
-
-			<div className="grid grid-flow-row grid-cols-2 items-end gap-x-6 gap-y-3">
 				<div className=" flex flex-col w-full gap-6">
 					<label htmlFor="directLink" className="font-bold">
 						Direct Links:
@@ -427,13 +425,35 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 						placeholder="Enter Address"
 					/>
 				</div>
-				<button
-					className="w-64 p-2 text-white bg-primaryBgClr rounded-full"
-					type="submit"
-				>
-					Add Product
-				</button>
+				<div className=" flex flex-col w-full gap-6">
+					<label htmlFor="address" className="font-bold">
+						Zip Code:
+					</label>
+					<input
+						required
+						id="zipcode"
+						type="text"
+						value={zipCode}
+						onChange={(e) => setZipCode(e.target.value)}
+						className=" border border-gray-300 rounded-full p-2 w-full"
+						placeholder="Enter Zip Code"
+					/>
+				</div>
 			</div>
+				<div className="ml-auto w-fit flex gap-3 mt-8">
+					<button
+						className="w-64 p-2 text-red-500 border-red-500 border rounded-full"
+						type="reset"
+					>
+						Cancel
+					</button>
+					<button
+						className="w-64 p-2 text-white bg-primaryBgClr rounded-full"
+						type="submit"
+					>
+						Add Product
+					</button>
+				</div>
 		</form>
 	);
 };

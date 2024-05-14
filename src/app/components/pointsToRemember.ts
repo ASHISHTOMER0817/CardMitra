@@ -1,13 +1,14 @@
-export function pointsToRemember({ group }: { group?: { first?: string, second?: string, third?: string, fourth?: string } }): string[] {
-      if (!group) {
-          return []; // Return empty array if group is undefined
-      }
-  
-      const { first = '', second = '', third = '', fourth = '' } = group;
-  
-      // Filter out empty or falsy values from the array
-      const arr: string[] = [first, second, third, fourth].filter(value => !!value);
-  
-      return arr;
-  }
-  
+				// function to convert the object into an array
+
+			export default	function pointsToRemember({obj}:{obj:{first:string, second:string, third:string, fourth:string}}) {
+					const values = Object.values(obj);
+					const nonEmptyValues:string[] = values.filter(value => value !== '');
+				    
+					if (nonEmptyValues.length === 0) {
+					  return []; // Return an empty array for an empty object
+					}
+				    
+					  // Return all non-empty values (up to 4)
+					console.log([...nonEmptyValues])
+					return [...nonEmptyValues];
+				    }

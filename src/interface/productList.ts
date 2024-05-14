@@ -44,8 +44,9 @@ export interface otp {
 	userObjectId: user
 	otp: number
 	trackingId: string
-	delivered: boolean
+	delivered: string
 	_id: string
+	submittedAt:Date
 }
 
 export interface user {

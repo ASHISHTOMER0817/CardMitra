@@ -51,9 +51,9 @@ const NavigationSidebar = ({
 		changeState: string;
 	};
 }) => {
-	const [classList, setClassList] = useState("items-center");
+	const [classList, setClassList] = useState("items-start");
 	const [visible, setVisible] = useState(
-		"hidden transition-all duration-500"
+		"opacity-0 transition-all duration-500"
 	);
 	const [sectionMR, setSectionMr] = useState("");
 	const router = useRouter();
@@ -77,7 +77,7 @@ const NavigationSidebar = ({
 				Popup("success", response.data.message);
 				setTimeout(() => {
 					router.refresh();
-				}, 1000);
+				}, 200);
 			}
 		} catch {
 			Popup("error", "failed to logout, refresh the page");
@@ -87,18 +87,18 @@ const NavigationSidebar = ({
 	return (
 		<div className="flex items-start">
 			<section
-				className={` px-4 py-6 gap-3 transition-all duration-500 flex flex-col min-h-screen w-fit top-0 justify-start border-r-[5px] border-r-gray-300 sticky ${classList}`}
+				className={` px-4 py-6 gap-3 transition-all duration-300 flex flex-col min-h-screen w-20 top-0 justify-start border-r-[5px] border-r-gray-300 sticky ${classList}`}
 				onMouseEnter={() =>
 					hoverability(
-						"items-start",
-						"",
+						"items-start w-44",
+						"opacity-100",
 						" transition-all duration-500"
 					)
 				}
 				onMouseLeave={() =>
 					hoverability(
-						" items-center",
-						"hidden",
+						" items-start",
+						"opacity-0",
 						"transition-all duration-500"
 					)
 				}
@@ -115,14 +115,14 @@ const NavigationSidebar = ({
 					changeState={secondSection}
 					tabClassList={visible}
 				/>
-				<hr className="border w-[100%]" />
+				<hr className="border w-[87%]" />
 				<SideBar
 					img={thirdSection.image}
 					tab={thirdSection.name}
 					changeState={thirdSection.changeState}
 					tabClassList={visible}
 				/>
-				<hr className="border w-[100%]" />
+				<hr className="border w-[87%]" />
 				<SideBar
 					img={fourthSection.image}
 					tab={fourthSection.name}
@@ -130,7 +130,7 @@ const NavigationSidebar = ({
 					tabClassList={visible}
 				/>
 
-				<hr className="border w-[100%]" />
+				<hr className="border w-[87%]" />
 				<SideBar
 					reactIcon={fifthSection?.image}
 					tab={fifthSection?.name}
@@ -138,7 +138,7 @@ const NavigationSidebar = ({
 					tabClassList={visible}
 				/>
 
-				<hr className="border w-[100%]" />
+				<hr className="border w-[87%]" />
 				<SideBar
 					deleteToken={DeleteToken}
 					reactIcon={

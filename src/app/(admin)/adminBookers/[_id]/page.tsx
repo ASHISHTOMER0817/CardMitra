@@ -18,9 +18,11 @@ import Transactions from "@/app/components/transactions";
 const Bookers = ({ params }: { params: { _id: string } }) => {
 	const [data, setData] = useState<UserDetails>();
 	const [listType, setListType] = useState("delivered");
-	const [amount, setAmount] = useState<number>(0);
+	const [amount, setAmount] = useState<number>();
 	const [overlay, setOverlay] = useState("hidden");
 	const [transactions, setTransactions] = useState(false);
+	const [refresh, setRefresh] = useState(false)
+	const router = useRouter()
 	
 	useEffect(() => {
 		async function getData() {
@@ -31,9 +33,10 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 				);
 				setData(response.data.data);
 				if (response.data.status === 250) {
-					Popup("success", `${response.data.message} - Rs.${amount}`);
+					Popup("success", response.data.message);
 					console.log("really----");
-					setOverlay("");
+					// setRefresh(true)
+					
 				}
 			} catch {
 				Popup("error", "something went wrong!!");
@@ -43,6 +46,10 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [listType, params._id]);
+	// if(refresh){
+	// 	setRefresh(false)
+	// 	router.refresh()
+	// }
 
 	// Function to remove account of the user
 	// async function removeAccount() {
@@ -65,10 +72,10 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 	// 		Popup("error", "something went wrong, REFRESH");
 	// 	}
 	// }
-	function overlayFeature() {
-		setOverlay("hidden");
-		console.log(overlay);
-	}
+	// function overlayFeature() {
+	// 	setOverlay("hidden");
+	// 	console.log(overlay);
+	// }
 
 	console.log(data?.totalAmt);
 	return (
@@ -79,9 +86,9 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 			<div
 				className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4`}
 			>
-				<RxCross1
-					className=" cursor-pointer ml-auto"
-					onClick={overlayFeature}
+				<RxCross1 width={20} height={20}
+					className=" cursor-pointer ml-auto hover:bg-gray-100 active:bg-gray-100 rounded-full"
+					onClick={()=>setOverlay("hidden")}
 				/>
 				<h4>Write the amount you paid</h4>
 				<input
@@ -94,7 +101,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 				/>{" "}
 				<button
 					onClick={() => {
-						setListType("reduce");
+						setListType("reduce"); setOverlay('hidden')
 					}}
 					className="px-3 py-1 hover:bg-gray-200"
 				>
@@ -104,7 +111,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 			<BackwardButton />
 			<div className="flex justify-between mb-10 items-center">
 				<h3 className="font-semibold">{data?.user?.name}</h3>
-				{listType == "delivered" &&  !data?.totalAmt && 0 > 0 && (
+				{(listType === "delivered" || listType === "reduce") &&  data?.totalAmt!  > 0 && (
 					<div
 						onClick={() => setOverlay("")}
 						className="rounded-3xl text-nowrap cursor-pointer bg-primaryBgClr flex py-2 px-4 border justify-center items-center  text-white"
@@ -120,7 +127,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 				<div>Contact: {data?.user?.contact} </div>
 			</section>
 
-			<hr className="border w-4/5 my-7" />
+			<hr className="border w-full my-7" />
 			<h6 className="text-gray-400 mb-4 text-sm">BANK DETAILS</h6>
 
 			<section className="flex justify-between items-center">
@@ -136,7 +143,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 						setTransactions(false);
 					}}
 					className={` text-sm p-[10px] rounded-full cursor-pointer ${
-						listType === "delivered" &&
+						(listType === "delivered" || listType === "reduce") &&
 						!transactions &&
 						"underline underline-offset-4 text-primaryBgClr"
 					}`}
@@ -172,11 +179,11 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 					<Transactions userPage={true} _id={params._id} />
 				</Suspense>
 			) : data ? (
-				data?.orderList?.length! > 0 ? (
+				data?.orderList?.length > 0 ? (
 					<UserOrders data={data?.orderList!} />
 				) : (
 					<div className="mt-28 mx-auto w-fit text-sm text-red-500 font-serif">
-						No Data to show !!
+						User was In-active !!
 					</div>
 				)
 			) : (

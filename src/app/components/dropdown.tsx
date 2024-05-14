@@ -34,11 +34,11 @@ export const customStyles: StylesConfig = {
 function Dropdown({
 	options,
 	onChange,
-	value
+	value,
 }: {
 	options: dropdown[];
 	onChange: any;
-	value:dropdown
+	value: dropdown;
 }) {
 	const [isClearable, setIsClearable] = useState(true);
 	const [isSearchable, setIsSearchable] = useState(true);
@@ -55,11 +55,10 @@ function Dropdown({
 		}
 	};
 	return (
-		<>
 			<Select
 				className="basic-single rounded-full"
 				classNamePrefix="select"
-				defaultValue={ options[0]}
+				defaultValue={options[0]}
 				isDisabled={isDisabled}
 				isLoading={isLoading}
 				isClearable={isClearable}
@@ -72,44 +71,7 @@ function Dropdown({
 				value={value}
 			/>
 
-			<div
-				style={{
-					color: "hsl(0, 0%, 40%)",
-					display: "inline-block",
-					fontSize: 12,
-					fontStyle: "italic",
-					marginTop: "1em",
-				}}
-			>
-				{/* <Checkbox
-          checked={isClearable}
-          onChange={() => setIsClearable((state) => !state)}
-        >
-          Clearable
-        </Checkbox>
-        <Checkbox
-          checked={isSearchable}
-          onChange={() => setIsSearchable((state) => !state)}
-        >
-          Searchable
-        </Checkbox>
-        <Checkbox
-          checked={isDisabled}
-          onChange={() => setIsDisabled((state) => !state)}
-        >
-          Disabled
-        </Checkbox>
-        <Checkbox
-          checked={isLoading}
-          onChange={() => setIsLoading((state) => !state)}
-        >
-          Loading
-        </Checkbox>
-        <Checkbox checked={isRtl} onChange={() => setIsRtl((state) => !state)}>
-          RTL
-        </Checkbox> */}
-			</div>
-		</>
+			
 	);
 }
 

@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
                   const orderHistory = await Product.find({ deals: true }).limit(3)
 
 
-                  // Today's date
+                  // Recent deliveries
                   const { deliveries } = await ordersToday()
 
                   //Affiliate Array

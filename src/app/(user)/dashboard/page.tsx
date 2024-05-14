@@ -3,13 +3,19 @@ import React, { useEffect, useState } from "react";
 import BarChart from "@/app/components/BarChart";
 import axios from "axios";
 import OrderHistory from "@/app/components/OrderHistory";
-import { order } from "@/interface/productList";
+import { order, otp } from "@/interface/productList";
 import Popup from "@/app/components/Popup";
 import dateFormat from "@/app/components/dateFormat";
 import Link from "next/link";
+import Loader from "@/app/components/loader";
+import DashboardOverlay from "@/app/components/user/productOverlay";
 
+interface group {
+	order:order[]
+	otpAction: otp[]
+}
 const Dashboard = () => {
-	const [data, setData] = useState<order[]>();
+	const [data, setData] = useState<group>();
 	const [profit, setProfit] = useState(0);
 	const [commission, setCommission] = useState(0);
 	const [ordersTillDate, setOrdersTillDate] = useState(0);
@@ -77,7 +83,17 @@ const Dashboard = () => {
 	}
 
 	return (
-		<div className=" w-[85%] mx-auto mb-16">
+		<>
+		{!data ? <Loader/> : <div className=" w-[85%] mx-auto mb-16">
+			
+			{data.otpAction.length >0 ?
+			data.otpAction.map(({orderObjectId, delivered})=>{
+				return (
+					<>
+					<DashboardOverlay data={{orderObjectId:orderObjectId.product,delivered:delivered}}/>
+					</>
+				)
+			}) :''}
 			<h3 className="my-7 font-semibold">Dashboard</h3>
 			<div className="flex justify-start gap-3 sm:gap-1">
 				<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-0 sm:px-0">
@@ -123,20 +139,17 @@ const Dashboard = () => {
 				</Link>
 			</div>
 
-			{data === undefined ? (
-				<div className="mt-20 mb-20 mx-auto w-fit sm:text-[10px]">
-					Loading...
-				</div>
-			) : data.length < 1 ? (
+			{ data.order.length < 1 ? (
 				<div className="mt-10 mx-auto w-fit font-serif text-red-500 sm:text-[10px]">
 					You have not placed any product yet...
 				</div>
 			) : (
 				<div className="grid grid-flow-row gap-3 grid-cols-3 sm:gap-1">
-					<OrderHistory data={data.slice(0, 3)} />
+					<OrderHistory data={data.order.slice(0, 3)} />
 				</div>
 			)}
-		</div>
+		</div>}
+		</>
 	);
 };
 

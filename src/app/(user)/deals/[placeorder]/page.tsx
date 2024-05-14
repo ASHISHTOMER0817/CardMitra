@@ -1,29 +1,42 @@
-'use client'
+"use client";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import OrderForm from "@/app/components/OrderForm";
 import productList, { Data } from "@/interface/productList";
 import ProductDetails from "@/app/components/ProductDetails";
-import { pointsToRemember } from "@/app/components/pointsToRemember";
+import pointsToRemember from "@/app/components/pointsToRemember";
 import Loader from "@/app/components/loader";
 import CardLayout from "@/app/components/CardLayout";
 import Link from "next/link";
 import BackwardButton from "@/app/components/BackwardButton";
 
+
+
+ export interface MyArrayItem {
+	0: string; // First element in the subarray (e.g., 'first', 'second', 'third', 'fourth')
+	1: string; // Second element in the subarray (e.g., '1st', 'kjhgvfcghjkmjhgvf', etc.)
+    }
 const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 	const [data, setData] = useState<productList>();
 	const [productList, setProductList] = useState<Data>();
-	const [arr, setArr] = useState<string[]>([])
+	const [arr, setArr] = useState<Array<MyArrayItem>>([]);
 
 	useEffect(() => {
 		async function getData() {
 			try {
-				console.log(params.placeorder)
+				console.log(params.placeorder);
 				const response = await axios.get(
 					`/api/users/productData?query=${params.placeorder}`
 				);
 				console.log(params.placeorder);
 				setData(response.data.data);
+				const { info } = await response.data.data;
+				console.log(info);
+
+				console.log(Object.entries(info))
+				setArr(Object.entries(info))
+
+
 				console.log(response.data.message, response.data.data);
 			} catch (error) {
 				console.log(error);
@@ -35,14 +48,15 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 	useEffect(() => {
 		async function getData() {
 			try {
+				console.log("yes this is working");
 				const response = await axios.get(
 					"/api/orders/products?limit=three"
 				);
 
 				setProductList(response.data.data);
-				const {info} = response.data.data
-				setArr(pointsToRemember(info))
-				console.log(response.data.data);
+				//     setArr(pointsToRemember(info))
+				// setArr(pointsToRemember(info))
+				// console.log("so this is i want", response.data.data);
 			} catch (error) {
 				console.log(error);
 			}
@@ -57,7 +71,7 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 				<BackwardButton/> 
 				<section className="flex items-start text-sm justify-around">
 					<div className="flex flex-col items-start gap-10 justify-around">
-						<ProductDetails data={data!} arr={arr} />
+						{!data && !arr ? '' :<ProductDetails data={data!} arr={arr} />}
 					</div>
 					<div className="border px-10 py-7 rounded-2xl">
 						<div className="text-base font-semibold text-primaryBgClr text-center">
@@ -95,7 +109,7 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 								
 								placeOrder={
 									<button
-										className={`bg-primaryBgClr p-[14px] font-semibold text-base ${
+										className={`bg-primaryBgClr p-[14px] active:bg-green-600 font-semibold text-base ${
 											requirement >
 												0 &&
 												productList.user

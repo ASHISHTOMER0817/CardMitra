@@ -35,9 +35,16 @@ const LoginAuth = () => {
 		e.preventDefault();
 		try {
 			setLoader(true);
-			const { success, message, data } = await (
-				await axios.post("/api/users/login", { user })
-			).data;
+			if(!email || !password){
+				setLoader(false)
+				Popup('error', 'Fill the form!!')
+				return;
+			}
+			const response =
+				await axios.post("/api/users/login", { user }
+			)
+			const  { success, message, data } = response.data
+			// const success = response
 			console.log(success, message, data);
 			checkSuccess(success, message, data);
 		} catch (error: any) {
@@ -56,12 +63,14 @@ const LoginAuth = () => {
 			>
 				<>
 					<InputSpace
+					
 						type="email"
 						value={email}
 						placeholder="Email"
 						onChange={(value) => setEmail(value)}
 					/>
 					<InputSpace
+					
 						type="password"
 						value={password}
 						placeholder="Password"

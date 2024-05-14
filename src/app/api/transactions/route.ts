@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
                   })
             } else {
                   console.log('else condition')
-                  const userTransactions = await Transactions.find({ user: _id })
+                  const userTransactions = await Transactions.find({ user: _id }).sort({dateOfPayment:-1})
                   console.log(userTransactions)
 
                   return NextResponse.json({

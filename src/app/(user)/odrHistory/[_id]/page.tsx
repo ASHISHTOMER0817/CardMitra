@@ -5,8 +5,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import OtpForm from "@/app/components/OtpForm";
 import BackwardButton from "@/app/components/BackwardButton";
-import { pointsToRemember } from "@/app/components/pointsToRemember";
 import Loader from "@/app/components/loader";
+import { MyArrayItem } from "../../deals/[placeorder]/page";
 
 // interface productTypes {
 // 	product: productList;
@@ -16,7 +16,7 @@ import Loader from "@/app/components/loader";
 // }
 const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 	const [data, setData] = useState<order>();
-	const [arr, setArr] = useState<string[]>([]);
+	const [arr, setArr] = useState<Array<MyArrayItem>>([]);
 	useEffect(() => {
 		async function getData() {
 			try {
@@ -27,7 +27,7 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 				console.log(response.data.data);
 				const { info } = response.data.data.product;
 				console.log(info)
-				setArr(pointsToRemember(info));
+				setArr(Object.entries(info));
 				setData(response.data.data);
 				console.log('end here')
 				return;

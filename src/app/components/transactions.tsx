@@ -108,7 +108,7 @@ const Transactions = ({
 					</tbody>
 				</table>
 			) : (
-				<div className="text-red-500 font-serif">No data to show !!</div>
+				<div className="text-red-500 font-serif mx-auto mt-20 w-fit">No data to show !!</div>
 			)}
 		</>
 	);

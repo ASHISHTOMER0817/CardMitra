@@ -7,7 +7,7 @@ export default function Loader({classList}:{classList?:string}) {
 				color="#36d7b7"
 				  cssOverride={{}}
 				loading
-				size={20}
+				size={30}
 				speedMultiplier={2}
 			/>
 		</div>

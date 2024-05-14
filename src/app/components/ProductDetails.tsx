@@ -3,14 +3,52 @@ import Link from "next/link";
 import Image from "next/image";
 import phoneImage from "@/../public/phoneImage.jpg"
 import cardVerticalLine from "@/../public/cardVerticalLine.svg";
+import amazon from "@/../public/static/amazon.svg";
+import flipkart from "@/../public/static/flipkart.svg";
+import jiomart from "@/../public/static/jiomart.png";
+import shopsy from "@/../public/static/shopsy.jpg";
+import vivo from "@/../public/static/vivo.webp";
+import oppo from "@/../public/static/oppo.png";
+import mi from "@/../public/static/mi.jpg";
+import samsung from "@/../public/static/samsung.png";
+import { useEffect, useState } from "react";
+import { MyArrayItem } from "../(user)/deals/[placeorder]/page";
 
 export default function ProductDetails({
 	data,
 	arr,
 }: {
 	data: productList;
-	arr: string[];
+	arr: Array<MyArrayItem>
 }) {
+	const [siteImage, setSiteImage] = useState("")
+	console.log(arr)
+	const siteArr = [
+		{ name: "Amazon", image: amazon },
+		{ name: "Flipkart", image: flipkart },
+		{ name: "Jiomart", image: jiomart },
+		{ name: "Shopsy", image: shopsy },
+		{ name: "Vivo", image: vivo },
+		{ name: "MI", image: mi },
+		{ name: "Oppo", image: oppo },
+		{ name: "Samsung", image: samsung },
+	];
+
+	useEffect(() => {
+		// setsiteImage(forLoop(site.label))
+		function forLoop() {
+			for (let i = 0; i < siteArr.length; i++) {
+				if (siteArr[i].name === data?.site.label) {
+					setSiteImage(siteArr[i].image);
+					console.log(true);
+					return;
+				}
+				// console.log(false);
+			}
+		}
+		forLoop();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	console.log(arr)
 return (
@@ -21,11 +59,13 @@ return (
 				</div>
 				<div className="flex gap-10 justify-start items-start">
 					<Image
-						className=" w-40"
-						src={phoneImage}
+						className="w-80"
+						src={`/uploads/${data?.image}`}
 						alt={""}
+						width={470}
+						height={550}
 					/>
-					<div className="flex flex-col gap-5 justify-center">
+					<div className="flex flex-col gap-12 justify-center">
 						<div className="text-left">
 							<h4 className="font-semibold mb-2">
 								{data?.name}
@@ -57,11 +97,11 @@ return (
 						</div>
 						{  arr.length > 0 && (
 							<div className="flex flex-col gap-4 items-start">
-								<div>
+								<div className="font-semibold">
 									Keep in mind while
 									ordering :-
 								</div>
-								<ul className="flex flex-col gap-1">
+								<ul className="flex flex-col gap-4 text-gray-700">
 									{arr.map((e, index) => {
 										return (
 											<li
@@ -69,7 +109,7 @@ return (
 													index
 												}
 											>
-												{e}
+												{e[1]}
 											</li>
 										);
 									})}
@@ -82,13 +122,13 @@ return (
 			<section className="w-full flex justify-between items-start">
 				<div className="flex flex-col items-end">
 					<h6 className="mb-2">bank cards to use</h6>
-					{data?.cards && data?.cards.map((card, index)=>{
+					{data?.cards ? data?.cards.map(({label}, index)=>{
 						return (
 							<div key={index} className="text-gray-500 font-semibold">
-						{card}
+						{label}
 					</div>
 						)
-					})}
+					}):''}
 					{/* <div className="text-gray-500 font-semibold">
 						Amazon Pay
 					</div>
@@ -107,7 +147,7 @@ return (
 								: "#"
 						}
 					>
-						{data?.site}
+						<Image src={amazon} alt="icon"/>
 					</Link>
 				</div>
 			</section>

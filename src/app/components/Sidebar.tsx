@@ -33,7 +33,7 @@ const SideBar = ({
 				href={!changeState ? '': changeState}
 			>
 				{img? <Image src={img} className="min-w-[30px] min-h-7" alt={""} />:reactIcon}
-				{tab && <div className={`text-sm ${tabClassList}`}>{tab}</div>}
+				{tab && <div className={`text-sm text-nowrap ${tabClassList}`}>{tab}</div>}
 			</Link>
 		</>
 	);
