@@ -86,7 +86,7 @@ const LoginAuth = () => {
 
 				<button
 					disabled={loader}
-					className="text-white border px-3 py-4 rounded-full bg-primaryBgClr w-96 cursor-pointer sm:w-48 sm:py-2"
+					className="text-white border px-3 py-4 rounded-full hover:bg-green-600 bg-primaryBgClr w-96 cursor-pointer sm:w-48 sm:py-2"
 					type="submit"
 				>
 					Login

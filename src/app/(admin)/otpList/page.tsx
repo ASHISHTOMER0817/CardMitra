@@ -1,6 +1,5 @@
 "use client";
 import Popup from "@/app/components/Popup";
-import dateFormat from "@/app/components/dateFormat";
 import Dropdown from "@/app/components/dropdown";
 import Loader from "@/app/components/loader";
 import { otp } from "@/interface/productList";
@@ -8,14 +7,14 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { IoIosRefresh } from "react-icons/io";
 import { dropdown } from "../adminAddProduct/[_id]/page";
+import MyDatePicker from "@/app/components/MyDatePicker";
+import "flatpickr/dist/flatpickr.min.css";
 
 const OtpList = () => {
-	const [date, setDate] = useState(new Date() || '');
+	const [startDate, setStartDate] = useState(new Date());
+	const [endDate, setEndDate] = useState("");
 	const [otpList, setOtpList] = useState<otp[]>();
-	const [trackingId, setTrackingId] = useState("");
-	const [pincode, setPincode] = useState("");
-	// const [site, setSite] = useState<dropdown>()
-	// console.log(dateFormat(new Date()));
+	const [trackingOrzip, setTrackingOrzip] = useState("");
 	const [dropdownStates, setDropdownStates] = useState(
 		otpList ? otpList.map(() => null) : []
 	);
@@ -27,10 +26,15 @@ const OtpList = () => {
 	useEffect(() => {
 		async function getData() {
 			try {
-				console.log(action)
-				const jsonString = JSON.stringify(action)
+				const dates = { startDate, endDate };
+				console.log("these are dates", dates);
+				console.log("its running boys");
+				const dateString = JSON.stringify(dates);
+				console.log(dateString);
+				console.log(action);
+				const jsonString = JSON.stringify(action);
 				const response = await axios.get(
-					`/api/admin/otpList?date=${date}&trackingId=${trackingId}&pincode=${pincode}&action=${jsonString}`
+					`/api/admin/otpList?date=${dateString}&action=${jsonString}`
 				);
 				setOtpList(response.data.data);
 				console.log(response.data.data);
@@ -40,30 +44,43 @@ const OtpList = () => {
 			}
 		}
 		getData();
-	}, [date, pincode, trackingId, action]);
+	}, [action, startDate, endDate]);
 
-	const sendDropdownStates = () => {
-		setDropdownStates(dropdownStates);
-	};
 
-	const handleSearch = () => {
-		// Update the trackingId state with the input value
-		setTrackingId(trackingId);
-	};
+	async function getData() {
+		try {
+			console.log(trackingOrzip);
+			const response = await axios.get(
+				`/api/admin/otpList?trackingId=${trackingOrzip}`
+			);
+			setOtpList(response.data.data);
+			console.log(response.data.data);
+		} catch {
+			Popup("error", "Something went wrong, Please refresh");
+		}
+	}
 
 	const otpAction: dropdown[] = [
 		{ value: "undelivered", label: "undelivered" },
 		{ value: "delivered", label: "delivered" },
-		{ value: "OTP issue", label: "OTP issue" },
+		{ value: "wrong OTP", label: "wrong OTP" },
 		{ value: "cancelled", label: "cancelled" },
 	];
 
-	//function to set Site
-	// const handleDropdownChangeSite = (option: dropdown) => {
-	// 	setSite(option);
-	// };
-	// console.log(dropdownStates)
+	const handleDateRangeSelect = (startDate: Date, endDate: Date) => {
+		console.log("Selected Start Date:", startDate);
+		setStartDate(startDate);
+		console.log("Selected End Date:", endDate);
+		setEndDate(endDate.toDateString());
+	};
 
+	function selectOption(successful: string) {
+		for (let i = 0; i < otpAction.length; i++) {
+			if (otpAction[i].value === successful) {
+				return otpAction[i];
+			}
+		}
+	}
 	return (
 		<div className="w-[90%] mx-10 my-8">
 			<h3 className="mb-16 font-semibold">Recent Deliveries</h3>
@@ -71,26 +88,28 @@ const OtpList = () => {
 				<input
 					className="outline-none border-b mr-3 border-b-black"
 					type="text"
-					value={trackingId}
-					onChange={(e) => setTrackingId(e.target.value)}
-					placeholder="Tracking ID"
+					value={trackingOrzip}
+					onChange={(e) => setTrackingOrzip(e.target.value)}
+					placeholder="Tracking ID / Zip Code"
 				/>{" "}
 				<button
-					onClick={handleSearch}
+					onClick={getData}
 					className="border-b mr-4 border-b-black px-3 hover:text-gray-700"
 				>
 					Search
 				</button>
 				<IoIosRefresh
 					onClick={() => {
-						setTrackingId("");
-						setDate(new Date());
-						setTrackingId("");
+						setStartDate(new Date());
+						setTrackingOrzip("");
 					}}
 					className="cursor-pointer rounded-full hover:bg-gray-200"
 				/>
-				<input type="date" name="date" id="date" value={date.getFullYear()+'-'+String(date.getMonth()).padStart(2,'0')+'-'+date.getDate()} onChange={(e)=>setDate(new Date(e.target.value))} className="ml-auto outline-none border-b border-b-black" />
-				
+				<div className="ml-auto flex justify-end gap-3 items-center">
+					<MyDatePicker
+						onDateRangeSelect={handleDateRangeSelect}
+					/>
+				</div>
 			</div>
 
 			{!otpList ? (
@@ -127,6 +146,7 @@ const OtpList = () => {
 										trackingId,
 										userObjectId,
 										_id,
+										delivered,
 									},
 									index
 								) => {
@@ -160,7 +180,7 @@ const OtpList = () => {
 													}
 													onChange={(
 														option: any
-													) =>{
+													) => {
 														setDropdownStates(
 															(
 																prevStates
@@ -173,24 +193,26 @@ const OtpList = () => {
 																	index
 																] =
 																	{
-																		...option,
+							 											...option,
 																		_id,
 																	};
 
-																
 																return newStates;
 															}
 														);
-														setAction({_id:_id, label:option.label})
-														console.log('this is option state change', option.label,_id)
-														}
-													}
-													value={
-														dropdownStates[
-															index
-														] ||
-														otpAction[0]
-													}
+														setAction(
+															{
+																_id: _id,
+																label: option.label,
+															}
+														);
+														console.log(
+															"this is option state change",
+															option.label,
+															_id
+														);
+													}}
+													value={selectOption(delivered)!}
 												/>
 											</td>
 										</tr>

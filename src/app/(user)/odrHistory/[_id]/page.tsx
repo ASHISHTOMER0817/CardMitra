@@ -64,11 +64,11 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 					</section>
 
 					<hr className="my-5" />
-					<section className="my-1 mb-3">
+					{/* <section className="my-1 mb-3">
 						<div className="text-base font-semibold mb-4">
-							{/* Similar Products */}
+							Similar Products
 						</div>
-					</section>
+					</section> */}
 				</div>
 			)}
 		</div>

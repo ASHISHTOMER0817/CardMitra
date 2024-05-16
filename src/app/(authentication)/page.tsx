@@ -76,7 +76,7 @@ export default function Home() {
 						effortlessly <br /> with our comprehensive
 						solution
 					</h3>
-					<button className="px-7 py-4 mb-10 mt-6 rounded-[36px] bg-primaryBgClr font-bold text-white">
+					<button className="px-7 py-4 mb-10 mt-6 rounded-[36px] bg-primaryBgClr hover:bg-green-600 font-bold text-white">
 						<Link href={"/Auth/signup"} className="text-xl">Become a Afilliate</Link>
 					</button>
 				</section>
@@ -220,7 +220,7 @@ export default function Home() {
 									setNumber(value)
 								}
 							/>
-							<button type="submit" className="py-4 w-96 font-extrabold hover:text-gray-200 bg-primaryBgClr text-white rounded-3xl">
+							<button type="submit" className="py-4 w-96 font-extrabold hover:bg-green-600 bg-primaryBgClr text-white rounded-3xl">
 								Send Request
 							</button>
 						</form>

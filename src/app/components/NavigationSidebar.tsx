@@ -53,7 +53,7 @@ const NavigationSidebar = ({
 }) => {
 	const [classList, setClassList] = useState("items-start");
 	const [visible, setVisible] = useState(
-		"opacity-0 transition-all duration-500"
+		"opacity-0"
 	);
 	const [sectionMR, setSectionMr] = useState("");
 	const router = useRouter();
@@ -91,14 +91,14 @@ const NavigationSidebar = ({
 				onMouseEnter={() =>
 					hoverability(
 						"items-start w-44",
-						"opacity-100",
+						"opacity-100 transition-all duration-700 ",
 						" transition-all duration-500"
 					)
 				}
 				onMouseLeave={() =>
 					hoverability(
 						" items-start",
-						"opacity-0",
+						"opacity-0 ",
 						"transition-all duration-500"
 					)
 				}

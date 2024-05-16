@@ -1,7 +1,7 @@
 import productList from "@/interface/productList";
 import Link from "next/link";
 import Image from "next/image";
-import phoneImage from "@/../public/phoneImage.jpg"
+import phoneImage from "@/../public/phoneImage.jpg";
 import cardVerticalLine from "@/../public/cardVerticalLine.svg";
 import amazon from "@/../public/static/amazon.svg";
 import flipkart from "@/../public/static/flipkart.svg";
@@ -19,10 +19,10 @@ export default function ProductDetails({
 	arr,
 }: {
 	data: productList;
-	arr: Array<MyArrayItem>
+	arr: Array<MyArrayItem>;
 }) {
-	const [siteImage, setSiteImage] = useState("")
-	console.log(arr)
+	const [siteImage, setSiteImage] = useState();
+	console.log(arr);
 	const siteArr = [
 		{ name: "Amazon", image: amazon },
 		{ name: "Flipkart", image: flipkart },
@@ -50,8 +50,8 @@ export default function ProductDetails({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	console.log(arr)
-return (
+	console.log(arr);
+	return (
 		<>
 			<section className=" text-left">
 				<div className="bg-[#FC08081A] text-[#FC0808] text-center px-4 py-1 mb-3 rounded-full">
@@ -74,7 +74,7 @@ return (
 						<div>
 							<div className="flex items-start gap-3">
 								<div className="">
-									<div className="font-semibold text-primaryBgClr">
+									<div className="font-semibold text-black">
 										{data?.price}
 									</div>
 									<div className="md:text-xs">
@@ -86,7 +86,7 @@ return (
 									alt={""}
 								/>
 								<div className="">
-									<div className="font-semibold text-red-500">
+									<div className="font-semibold text-primaryBgClr">
 										{data?.commission}
 									</div>
 									<div className="md:text-xs">
@@ -95,7 +95,7 @@ return (
 								</div>
 							</div>
 						</div>
-						{  arr.length > 0 && (
+						{arr.length > 0 && (
 							<div className="flex flex-col gap-4 items-start">
 								<div className="font-semibold">
 									Keep in mind while
@@ -122,19 +122,22 @@ return (
 			<section className="w-full flex justify-between items-start">
 				<div className="flex flex-col items-end">
 					<h6 className="mb-2">bank cards to use</h6>
-					{data?.cards ? data?.cards.map(({label}, index)=>{
-						return (
-							<div key={index} className="text-gray-500 font-semibold">
-						{label}
-					</div>
-						)
-					}):''}
-					{/* <div className="text-gray-500 font-semibold">
-						Amazon Pay
-					</div>
-					<div className="text-gray-500 font-semibold">
-						Amazon Pay
-					</div> */}
+					{data?.cards
+						? data?.cards.map(({ label }, index) => {
+								return (
+									<div
+										key={index}
+										className="text-gray-500 font-semibold"
+									>
+										{label}
+									</div>
+								);
+						  })
+						: ""}
+				</div>
+				<div>
+					<h6 className="mb-2">Zip Code</h6>
+					<div>{data?.zipCode}</div>
 				</div>
 				<div>
 					<h6 className="mb-2">Website</h6>
@@ -147,7 +150,12 @@ return (
 								: "#"
 						}
 					>
-						<Image src={amazon} alt="icon"/>
+						<Image
+							src={!siteImage ? amazon : siteImage}
+							width={30}
+							height={30}
+							alt="icon"
+						/>
 					</Link>
 				</div>
 			</section>

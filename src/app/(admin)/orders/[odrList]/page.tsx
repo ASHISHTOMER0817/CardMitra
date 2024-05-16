@@ -12,11 +12,11 @@ import Popup from "@/app/components/Popup";
 import ProductDetails from "@/app/components/ProductDetails";
 import { useRouter } from "next/navigation";
 import Loader from "@/app/components/loader";
-import { pointsToRemember } from "@/app/components/pointsToRemember";
+import { MyArrayItem } from "@/app/(user)/deals/[placeorder]/page";
 
 const OrderList = ({ params }: { params: { odrList: string } }) => {
 	const [data, setData] = useState<productList>();
-	const [arr, setArr] = useState<string[]>([]);
+	const [arr, setArr] = useState<Array<MyArrayItem>>([]);
 	const [_id, setId] = useState("");
 	const [refresh, setRefresh] = useState(false)
 	const router = useRouter();
@@ -32,8 +32,7 @@ const OrderList = ({ params }: { params: { odrList: string } }) => {
 				const {info, _id} = await response.data.data
 				console.log('here')
 				console.log( info)
-				setArr((arr)=>arr = pointsToRemember(info))
-				console.log(arr, 'this is something else', pointsToRemember(info))
+				setArr(Object.entries(info))
 				
 				setData(await response.data.data);
 				setId( _id);
@@ -76,41 +75,16 @@ const OrderList = ({ params }: { params: { odrList: string } }) => {
 		}
 	}
 
-	// Fetching creating an array for list of points
-	// useEffect(() => {
-	// 	function appendPoints() {
-	// 		if (data && data.info) {
-	// 			const { first, second, third, fourth } = data.info;
-	// 			console.log(first, second, third, fourth);
-
-	// 			const check =(point:string)=> {
-	// 				if (point) {
-	// 					setArr((arr) => [...arr, point]);
-	// 				}
-	// 			}
-
-	// 			check(first);
-	// 			check(second);
-	// 			check(third);
-	// 			check(fourth);
-	// 		}
-	// 	}
-
-	// 	appendPoints();
-	// 	console.log(arr);
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, []);
-
 	return (
 		<div className="m-10 flex flex-col mx-auto w-4/5 gap-9">
 			<BackwardButton />
 			{!data? <Loader/> :<div className="flex justify-between items-start">
 				<div>
-					<ProductDetails data={data!} arr={arr} />
+					<ProductDetails data={data} arr={arr} />
 				</div>
 				<div
 					className={`flex ${
-						!data?.deals
+						data?.deals
 							? "items-start"
 							: "items-center"
 					} justify-center gap-5`}

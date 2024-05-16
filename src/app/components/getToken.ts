@@ -3,7 +3,7 @@ import * as jose from 'jose'
 
 export default async function GetToken() {
 
-      console.log('getToken running')
+      // console.log('getToken running')
       const value = cookies().get('joseToken')?.value!
       // Jose token
       const secret = new TextEncoder().encode(
@@ -17,6 +17,6 @@ export default async function GetToken() {
       })
 
       const { email, _id, role } = payload
-      console.log(email, _id, role)
+      // console.log(email, _id, role)
       return { email, _id, role }
 }

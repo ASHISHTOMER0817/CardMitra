@@ -15,7 +15,7 @@ import Link from "next/link";
 const DashboardOverlay = ({
 	data,
 }: {
-	data: { orderObjectId: productList; delivered: string };
+	data: { orderObjectId: productList; delivered: string; order_id:string };
 }) => {
 	const [siteImage, setSiteImage] = useState("");
 	const { name, image, cards, site, _id } = data.orderObjectId;
@@ -47,20 +47,20 @@ const DashboardOverlay = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	return (
-		<div className="fixed top-0 right-0 w-4/12 h-36 bg-gray-100 rounded-xl p-4 flex">
+		<div className="fixed top-0 right-0 w-[26%] text-sm h-24 bg-gray-400 rounded-xl p-2 flex">
 			{/* Left column */}
 			<Image
 				src={image ? `/uploads/${image}` : phoneImage}
 				alt="User Image"
-				className="w-16 h-28 rounded-lg"
-				width={30}
-				height={45}
+				className="w-24 h-auto rounded-lg"
+				width={200}
+				height={300}
 			/>
 
 			{/* Middle column */}
-			<div className="flex-1 flex flex-col justify-center items-center space-y-2">
-				<h5>{name}</h5>
-				<div className="flex justify-center items-end">
+			<div className="flex-1 flex flex-col ml-1 justify-center items-start space-y-2 ">
+				<div className="text-[16px]">{name}</div>
+				<div className="flex justify-between gap-5 items-start ">
 					<Image
 						src={siteImage}
 						alt="Icon"
@@ -78,17 +78,17 @@ const DashboardOverlay = ({
 
 			{/* Right column */}
 			<div className="flex flex-col justify-between items-center">
-				{data.delivered === "OTP issue" ? (
+				{data.delivered === "wrong OTP" ? (
 					<>
-						<button className="px-2 py-1 w-full text-gray-500 border-gray-500 border rounded-full mb-2">
+						<button className="px-2 py-1 w-full hover:bg-gray-100 text-gray-500 border-gray-500 border rounded-full mb-2">
 							Cancel
 						</button>
-						<button className="px-2 py-1 text-primaryBgClr border-primaryBgClr border rounded-full">
-							<Link href={`/odrHistory/${_id}`}></Link>SUBMIT OTP
+						<button className="px-2 py-1 hover:bg-gray-100 text-gray-500 border-gray-500 border rounded-full">
+							<Link href={`/odrHistory/${data.order_id}`}>SUBMIT OTP</Link>
 						</button>
 					</>
 				) : data.delivered === "cancelled" ? (
-					<button className="px-2 py-1 mt-auto text-primaryBgClr border-primaryBgClr border rounded-full">
+					<button className="px-2 py-1 mt-auto hover:bg-gray-100 text-gray-500 border-gray-500 border rounded-full">
 						<Link href={'/odrHistory?listType=cancelled'}></Link>VIEW
 					</button>
 				) : null}

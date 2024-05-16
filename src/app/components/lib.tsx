@@ -1,19 +1,10 @@
 import { Order } from "@/models/userModel";
 import dateFormat from "./dateFormat";
-// import { User } from "@/models/userModel";
 import Image from "next/image";
-// import multer from "multer";
-// import path from "path";
-// import fs from "fs";
 import transactions from "@/../public/transactions.svg";
-import amazon from "@/../public/static/amazon.svg";
-import flipkart from "@/../public/static/flipkart.svg";
-import jiomart from "@/../public/static/jiomart.png";
-import shopsy from "@/../public/static/shopsy.jpg";
-import vivo from "@/../public/static/vivo.webp";
-import oppo from "@/../public/static/oppo.png";
-import mi from "@/../public/static/mi.jpg";
-import samsung from "@/../public/static/samsung.png";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc"
+dayjs.extend(utc)
 
 //today's date
 export const todaysDate = dateFormat(new Date());
@@ -37,6 +28,30 @@ export const Transactions = () => {
 	);
 };
 
-
-
-
+export function convertDates(initial: string, last: string) {
+	let startDate;
+	let endDate;
+	// console.log(typeof initial, typeof last, initial, last);
+    
+	if (!initial) {
+	  startDate = dayjs().startOf("day").local()
+	} else {
+	  startDate = dayjs(new Date(initial)).startOf('day').local()
+	}
+    
+	// console.log(startDate.toDate());
+    
+	if (!last) {
+	  endDate = startDate.endOf("day").local()
+	} else {
+	  endDate = dayjs(new Date(last)).endOf("day").local();
+	}
+    
+	console.log(endDate.toDate());
+    
+	console.log("Start Date (IST):", startDate);
+	console.log("End Date (IST):", endDate);
+	console.log("-----------------------------------------------------------------------------------------------------");
+    
+	return { startDate,endDate };
+    }

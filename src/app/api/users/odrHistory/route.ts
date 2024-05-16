@@ -14,6 +14,7 @@ export async function GET(request:NextRequest) {
 
             // SearchParams
             const listType = request.nextUrl.searchParams.get('listType')
+            console.log('this is listytpe',listType)
             if(listType === 'undelivered'){
                   const orderList = await Order.find({ user: _id, paid: { $ne: true },delivered:false }).sort({ otp: 1 }).populate('product');
                   return NextResponse.json({ data: orderList, message: 'User data successfully retrieved', success: true });
@@ -24,8 +25,10 @@ export async function GET(request:NextRequest) {
                   return NextResponse.json({ data: orderList, message: 'User data successfully retrieved', success: true });
 
             }
-            else if(listType === 'OTP issue'){
-                  const orderList = await Otp.find({ userObjectId: _id, delivered:'OTP issue' }).sort({ submittedAt: 1 }).populate({path:'orderObjectId',populate:{path:'product'}});
+            else if(listType === 'wrong OTP'){
+                  console.log('wrong otp else if')
+                  const orderList = await Otp.find({ userObjectId: _id, delivered:'wrong OTP' }).sort({ submittedAt: 1 }).populate({path:'orderObjectId',populate:{path:'product', model:'products'}});
+                  console.log(orderList)
                   return NextResponse.json({ data: orderList, message: 'User data successfully retrieved', success: true });
 
             }

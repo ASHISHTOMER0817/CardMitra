@@ -31,8 +31,8 @@ const orderSchema = new mongoose.Schema({
 		type: Boolean
 	},
 	delivered: {
-		type: Boolean,
-		default: false
+		type: String,
+		
 	},
 	orderedAt: {
 		type: String,
@@ -69,6 +69,9 @@ const otpSchema = new mongoose.Schema({
 	},
 	submittedAt: {
 		type: Date
+	},
+	zipCode:{
+		type:String
 	}
 })
 

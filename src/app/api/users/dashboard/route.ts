@@ -15,7 +15,7 @@ export async function GET() {
             // Convert the userId string to a mongoose.Schema.Types.ObjectId object
             const userObjectId = new mongoose.Types.ObjectId(_id);
             console.log(userObjectId)
-            const otpAction = await Otp.find({userObjectId:_id,delivered:'OTP issue' ||'cancelled'}).populate({path:'orderObjectId',populate:{path:'product'}})
+            const otpAction = await Otp.find({userObjectId:_id,delivered:'wrong OTP' ||'cancelled'}).populate({path:'orderObjectId',populate:{path:'product'}})
             console.log(otpAction, 'otpaction is this')
             const order = await Order.find({ user: userObjectId }).populate('product');
             const group = {order, otpAction}

@@ -22,7 +22,8 @@ interface productList {
 		third: string
 		fourth: string
 	}
-	image: string
+	image: string,
+	zipCode:string
 }
 export default productList
 

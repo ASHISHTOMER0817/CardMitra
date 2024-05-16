@@ -1,78 +1,92 @@
 import { NextResponse, NextRequest } from "next/server";
 import Database from "@/database/database";
-import ordersToday from "@/app/components/lib";
+// import ordersToday from "@/app/components/lib";
 import { Order, Otp } from "@/models/userModel";
-import { todaysDate } from "@/app/components/lib";
-import dateFormat from "@/app/components/dateFormat";
+// import { todaysDate } from "@/app/components/lib";
+// import dateFormat from "@/app/components/dateFormat";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc"
+import { convertDates } from "@/app/components/lib";
 dayjs.extend(utc)
 
 Database()
 export async function GET(request: NextRequest) {
       try {
             const dateParams = request.nextUrl.searchParams.get('date')
-            const trackingParams = request.nextUrl.searchParams.get('trackingId')
-            const pincode = request.nextUrl.searchParams.get('pincode')
+            const trackingOrzip = request.nextUrl.searchParams.get('trackingId')
             const actionString = request.nextUrl.searchParams.get('action')
+
+            if (trackingOrzip) {
+                  console.log('yes it is woring')
+                  if (trackingOrzip.length === 6) {
+                        console.log('fi condition')
+                        const otpList = await Otp.find({ zipCode: trackingOrzip }).populate("userObjectId")
+                        console.log(otpList, 'th is the that product')
+                        return NextResponse.json({
+                              message: "everything is fine", success: true, data: otpList
+                        })
+                  } else {
+                        console.log('esle condition')
+                        const otpList = await Otp.find({ trackingId: trackingOrzip }).populate("userObjectId")
+                        console.log(otpList, 'th is the that product')
+
+                        console.log('hello')
+
+                        return NextResponse.json({
+                              message: "everything is fine", success: true, data: otpList
+                        })
+                  }
+            }
+
+            console.log('crossed if condition')
+
             if (dateParams) {
-
-                  // Parse the date string using Day.js
-                  const newDate = dayjs(dateParams).utc();
-
-                  // Set startDate to the beginning of the day (00:00:00.000)
-                  const startDate = newDate.startOf('day').toDate(); // Convert Day.js object to Date object
-
-                  // Set endDate to just before midnight (23:59:59.999)
-                  const endDate = newDate.endOf('day').toDate(); // Convert Day.js object to Date object
-
-                  console.log(startDate); // Output: Date object representing 2024-05-14T00:00:00.000Z
-                  console.log(endDate); // Output: Date object representing 2024-05-14T23:59:59.999Z
+                  let dates = JSON.parse(dateParams)
+                  console.log(typeof dates.startDate, dates.startDate, new Date(dates.startDate), new Date())
 
 
+                  // Obtain the local time zone offset in minutes
+                 
+                  const range = convertDates(dates.startDate,dates.endDate)
+                  const endDate = range.endDate
+                  console.log('route',range.startDate, new Date(endDate.toDate()),)
+                  if (actionString && actionString !== '' && JSON.parse(actionString)._id) {
+                        console.log('if conditon')
 
-
-
-                  // console.log(actionString, 'this is action')
-                  // console.log(JSON.parse(actionString!))
-                  // console.log('if condition')
-                  let actionObject = JSON.parse(actionString!)
-
-                  // let actionObject;
-                  if (actionObject._id) {
+                        const actionObject = JSON.parse(actionString) 
                         // otpList document
-                        const otpDocument = await Otp.findOneAndUpdate({ _id: actionObject }, { $set: { delivered: actionObject.label } })
+                        const otpDocument = await Otp.findOneAndUpdate({ _id: actionObject._id }, { $set: { delivered: actionObject.label } })
                         console.log(otpDocument)
-                        
+
+                        const otpList = await Otp.find({
+                              submittedAt: {
+                                    $gte: range.startDate,
+                                    $lt: range.endDate
+                              },
+                        }).populate('userObjectId');
+
+                        return NextResponse.json({
+                              message: 'Query successful',
+                              success: true,
+                              data: otpList,
+                        });
+                  } else {
+                        console.log('eslse conition', typeof range.startDate, typeof range.endDate)
+
+                        const otpList = await Otp.find({
+                              submittedAt: {
+                                    $gte: range.startDate, 
+                                    $lt: range.endDate
+                              },
+                        }).populate('userObjectId');
+
+                        return NextResponse.json({
+                              message: 'Query successful',
+                              success: true,
+                              data: otpList,
+                        })
                   }
-
-                  const otpList = await Otp.find({
-                        submittedAt: {
-                              $gte: startDate, // Convert to a JavaScript Date object
-                              $lt: endDate, // Convert to a JavaScript Date object
-                        },
-                  }
-                  ).populate("userObjectId")
-
-                  // console.log(otpList)
-                  return NextResponse.json({
-                        message: "everything is fine", success: true, data: otpList
-                  })
-            } else if (trackingParams) {
-                  const otpList = await Otp.find({ trackingId: trackingParams }).populate("userObjectId")
-                  console.log('hello')
-
-                  return NextResponse.json({
-                        message: "everything is fine", success: true, data: otpList
-                  })
             }
-            else if (pincode) {
-                  const otpList = await Otp.find({ pincode: pincode })
-                  return NextResponse.json({
-                        message: "everything is fine", success: true, data: otpList
-                  })
-            }
-
       } catch {
             return NextResponse.json({
                   message: "Something went wrong", success: false

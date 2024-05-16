@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import Database from "@/database/database";
-import { Order, Product, User } from "@/models/userModel";
+import { Order, Otp, Product, User } from "@/models/userModel";
 // import Dashboard from "@/app/(user)/dashboard/page";
 // import dateFormat from "@/app/components/dateFormat";
 import ordersToday, { todaysDate } from "@/app/components/lib";
+import dayjs, { Dayjs } from "dayjs";
+import utc from "dayjs/plugin/utc"
+dayjs.extend(utc)
 
 Database()
 export async function GET(request: NextRequest) {
@@ -34,7 +37,18 @@ export async function GET(request: NextRequest) {
 
 
                   // Recent deliveries
-                  const { deliveries } = await ordersToday()
+                  const startDate = dayjs()
+                  console.log(startDate)
+
+
+                  const otpList = await Otp.find({
+                        submittedAt: {
+                              $gte: dayjs().startOf('day').toDate(), // Convert Day.js object to JavaScript Date object
+                              $lt: dayjs().endOf('day').toDate(), // Convert Day.js object to JavaScript Date object
+                        },
+                  })
+                  const deliveries = otpList.length
+
 
                   //Affiliate Array
                   const affiliate = await User.find()

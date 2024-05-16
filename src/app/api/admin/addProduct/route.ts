@@ -23,12 +23,13 @@ export async function POST(request: NextRequest) {
             const requirement = formData.get('requirement')
             const address = formData.get('address')
             const cardObj: any = formData.get('card')
-            const siteObj:any = formData.get('site')
+            const siteObj: any = formData.get('site')
             const infoList: any = formData.get('info')
 
             const cards: dropdown[] = JSON.parse(cardObj)
-            const site:dropdown = JSON.parse(siteObj)
+            const site: dropdown = JSON.parse(siteObj)
             const info = JSON.parse(infoList)
+            const zipCode = formData.get('zipCode')
 
             // console.log(file)
             if (!file) {
@@ -55,7 +56,8 @@ export async function POST(request: NextRequest) {
                   site,
                   cards,
                   image: newFileName,
-                  info
+                  info,
+                  zipCode
 
             })
             console.log(newProduct)

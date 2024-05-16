@@ -11,8 +11,8 @@ import Loader from "@/app/components/loader";
 import DashboardOverlay from "@/app/components/user/productOverlay";
 
 interface group {
-	order:order[]
-	otpAction: otp[]
+	order: order[];
+	otpAction: otp[];
 }
 const Dashboard = () => {
 	const [data, setData] = useState<group>();
@@ -84,71 +84,97 @@ const Dashboard = () => {
 
 	return (
 		<>
-		{!data ? <Loader/> : <div className=" w-[85%] mx-auto mb-16">
-			
-			{data.otpAction.length >0 ?
-			data.otpAction.map(({orderObjectId, delivered})=>{
-				return (
-					<>
-					<DashboardOverlay data={{orderObjectId:orderObjectId.product,delivered:delivered}}/>
-					</>
-				)
-			}) :''}
-			<h3 className="my-7 font-semibold">Dashboard</h3>
-			<div className="flex justify-start gap-3 sm:gap-1">
-				<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-0 sm:px-0">
-					<h5 className="text-[#1844E1] sm:text-xs">{profit} </h5>{" "}
-					<div className="sm:text-[10px]">Today&apos;s Profit</div>
-				</div>
-				<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-0 sm:px-0">
-					<h5 className="text-primaryBgClr sm:text-xs">
-						{ordersTillDate}
-					</h5>
-					<div className="sm:text-[10px]">
-						Orders placed <br />
-						till date
+			<div className=" w-[85%] mx-auto mb-16">
+				{!data
+					? ""
+					: data.otpAction.length > 0
+					? data?.otpAction.map(
+							({ orderObjectId, delivered }) => {
+								return (
+									<>
+										<DashboardOverlay
+											data={{
+												orderObjectId:orderObjectId.product,delivered:delivered,order_id:orderObjectId._id
+											}}
+										/>
+									</>
+								);
+							}
+					  )
+					: ""}
+				<h3 className="my-7 font-semibold">Dashboard</h3>
+				<div className="flex justify-start gap-3 sm:gap-1">
+					<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-0 sm:px-0">
+						<h5 className="text-[#1844E1] sm:text-xs">
+							{profit}{" "}
+						</h5>{" "}
+						<div className="sm:text-[10px]">
+							Today&apos;s Profit
+						</div>
+					</div>
+					<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-0 sm:px-0">
+						<h5 className="text-primaryBgClr sm:text-xs">
+							{ordersTillDate}
+						</h5>
+						<div className="sm:text-[10px]">
+							Orders placed <br />
+							till date
+						</div>
+					</div>
+					<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-0 sm:px-0">
+						<h5 className="text-primaryBgClr sm:text-xs">
+							Rs. {commission}
+						</h5>
+						<div className="sm:text-[10px]">
+							Commission earned
+						</div>
 					</div>
 				</div>
-				<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-0 sm:px-0">
-					<h5 className="text-primaryBgClr sm:text-xs">
-						Rs. {commission}
+				<div className="flex justify-between items-center my-6">
+					<h4 className="font-semibold">Overview</h4>
+					<h5 className="text-primaryBgClr text-base">
+						DETAILS
 					</h5>
-					<div className="sm:text-[10px]">Commission earned</div>
 				</div>
-			</div>
-			<div className="flex justify-between items-center my-6">
-				<h4 className="font-semibold">Overview</h4>
-				<h5 className="text-primaryBgClr text-base">
-					DETAILS
-				</h5>
-			</div>
-			<div className="hello">
-				<BarChart
-					ChartData={userData}
-					options={{ maintainAspectRatio: false }}
-				/>
-			</div>
-			<div className="flex justify-between my-6 items-center">
-				<h4 className="font-semibold">Order History</h4>
+				<div className="hello">
+					<BarChart
+						ChartData={userData}
+						options={{
+							maintainAspectRatio: false,
+						}}
+					/>
+				</div>
+				<div className="flex justify-between my-6 items-center">
+					<h4 className="font-semibold">Order History</h4>
 
-				<Link 
-					className="text-primaryBgClr text-base sm:text-xs"
-					href={"/odrHistory"}
-				>
-					VIEW ALL
-				</Link>
-			</div>
+					<Link
+						className="text-primaryBgClr text-base sm:text-xs"
+						href={"/odrHistory"}
+					>
+						VIEW ALL
+					</Link>
+				</div>
 
-			{ data.order.length < 1 ? (
-				<div className="mt-10 mx-auto w-fit font-serif text-red-500 sm:text-[10px]">
-					You have not placed any product yet...
-				</div>
-			) : (
-				<div className="grid grid-flow-row gap-3 grid-cols-3 sm:gap-1">
-					<OrderHistory data={data.order.slice(0, 3)} />
-				</div>
-			)}
-		</div>}
+				{!data ? (
+					<Loader />
+				) : data.order.length < 1 ? (
+					<div className="mt-10 mx-auto w-fit font-serif text-red-500 sm:text-[10px]">
+						You have not placed any product yet...
+					</div>
+				) : (
+					<div className="grid grid-flow-row gap-3 grid-cols-3 sm:gap-1">
+						{
+							data.order.slice(0,3).map(({product, otp,_id, delivered},index)=>{
+								return (
+									<OrderHistory product={product} _id={_id} otp={otp} delivered={delivered} key={index}							
+						/>
+								)
+							})
+						}
+						
+					</div>
+				)}
+			</div>
 		</>
 	);
 };

@@ -58,15 +58,15 @@ const Deals = () => {
 									<CardLayout
 										key={index}
 										placeOrder={
-											<button
-												className={`bg-primaryBgClr p-[14px] font-semibold text-base ${
+											<button onClick={()=>!data.user.isApprove ? Popup('info', "You are not verified yet"):''}
+												className={` p-[14px] font-semibold text-base ${
 													requirement >
 														0 &&
 													data
 														.user
 														.isApprove !==
 														false
-														? ""
+														? " hover:bg-green-600 bg-primaryBgClr"
 														: "bg-gray-400"
 												} rounded-full border text-center w-auto text-white sm:-ml-[34px] sm:mr-[17px] sm:mt-1 sm:px-1 sm:py-0.5 sm:font-medium sm:text-[10px] sm:text-nowrap sm:leading-4`}
 											>

@@ -22,6 +22,7 @@ const CardLayout = ({
 	site,
 	deviceImage,
 	cards,
+	// zipCode
 }: {
 	image?: ReactNode;
 	placeOrder?: ReactNode;
@@ -32,9 +33,10 @@ const CardLayout = ({
 	classList?: string;
 	site: {value:string, label:string};
 	deviceImage: string;
-	cards: {value:string, label:string}[];
+	cards: {value:string, label:string}[]
+	// zipCode:string
 }) => {
-	const [siteImage, setsiteImage] = useState("");
+	const [siteImage, setsiteImage] = useState();
 	console.log(siteImage);
 	
 	const siteArr = [
@@ -76,7 +78,7 @@ const CardLayout = ({
 			</div>
 			<div className="flex justify-center gap-8 text-sm items-start md:gap-1">
 				<Image
-					className="w-24 h-[150px] md:w-[85px] sm:h-[60px]"
+					className="w-40 h-[150px] md:w-[85px] sm:h-[60px]"
 					src={
 						deviceImage
 							? `/uploads/${deviceImage}`
@@ -94,7 +96,7 @@ const CardLayout = ({
 
 					<div className=" flex md:flex-col">
 						<div>
-							<div className="text-nowrap font-bold text-primaryBgClr sm:leading-4 sm:text-[10px]">
+							<div className="text-nowrap font-bold text-black sm:leading-4 sm:text-[10px]">
 								Rs. {price}
 							</div>
 							<div className="md:text-[10px] sm:leading-4">
@@ -103,7 +105,7 @@ const CardLayout = ({
 						</div>
 						<hr className="rotate-90 my-5 mx-4 w-[20px] h-3px md:mx-0 md:my-[2px] md:rotate-0 md:w-[70px] sm:w-[50px]" />
 						<div>
-							<div className="font-bold text-red-500 sm:leading-4 sm:text-[10px]">
+							<div className="font-bold  text-primaryBgClr sm:leading-4 sm:text-[10px]">
 								Rs. {commission}
 							</div>
 							<div className="md:text-[10px] sm:leading-4 sm:text-[10px]">
@@ -123,10 +125,11 @@ const CardLayout = ({
 						height={40}
 						alt={""}
 					/>
-				) : null}
+				) : ''}
+				
 
-				<div className="flex flex-col justify-start items-start gap-2 text-sm font-semibold text-gray-600">
-					{cards.map(({label}) => {
+				<div className="flex flex-col justify-start items-start text-sm font-semibold text-gray-600">
+					{cards?.map(({label}) => {
 						return (
 							<>
 								<div className="sm:font-light sm:text-[10px] sm:leading-3">{label}</div>
@@ -134,11 +137,6 @@ const CardLayout = ({
 						);
 					})}
 				</div>
-
-				{/* <div className="flex flex-col justify-end text-sm items-end">
-					<div className="ml-auto font-semibold">30 Mar, 24</div>
-					<div className="text-xs">Fulfill By Date</div>
-				</div> */}
 			</div>
 		</div>
 	);

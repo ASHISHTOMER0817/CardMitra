@@ -8,7 +8,6 @@ const ProductOrderList = ({ _id }: { _id: string }) => {
 	const [orders, setOrders] = useState<order[]>();
 
 	useEffect(() => {
-		// Simulating data from the backend
 		async function getData() {
 			try {
 				console.log("productOrderList", _id);
@@ -23,31 +22,6 @@ const ProductOrderList = ({ _id }: { _id: string }) => {
 		}
 		getData();
 
-		// const mockData: Order[] = [
-		// 	{
-		// 		affiliateName: "Affiliate 1",
-		// 		orderId: "ORD001",
-		// 		date: new Date("2023-04-22"),
-		// 		time: new Date("2023-04-22T10:30:00"),
-		// 		orderStatus: "Pending",
-		// 	},
-		// 	{
-		// 		affiliateName: "Affiliate 2",
-		// 		orderId: "ORD002",
-		// 		date: new Date("2023-04-21"),
-		// 		time: new Date("2023-04-21T14:45:00"),
-		// 		orderStatus: "Completed",
-		// 	},
-		// 	{
-		// 		affiliateName: "Affiliate 3",
-		// 		orderId: "ORD003",
-		// 		date: new Date("2023-04-20"),
-		// 		time: new Date("2023-04-20T09:15:00"),
-		// 		orderStatus: "Cancelled",
-		// 	},
-		// ];
-
-		// setOrders(mockData);
 	}, [_id]);
 
 	return (

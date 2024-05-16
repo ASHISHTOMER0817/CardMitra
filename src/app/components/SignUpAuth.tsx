@@ -109,7 +109,7 @@ const SingUpAuth = () => {
 				<button
 					type="submit"
 					disabled={loader}
-					className="text-white border cursor-pointer rounded-full py-4 px-3 bg-primaryBgClr w-96 sm:w-48 sm:py-2"
+					className="text-white border cursor-pointer rounded-full py-4 px-3 hover:bg-green-600 bg-primaryBgClr w-96 sm:w-48 sm:py-2"
 				>
 					Sign Up
 				</button>

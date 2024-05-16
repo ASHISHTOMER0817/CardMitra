@@ -51,7 +51,7 @@ export const POST = async (request: NextRequest) => {
                         orderId: orderNumber,
                         deliveryDate:  delivery_date,
                         orderedAt: dateFormat(new Date()),
-                        delivered:false,
+                        delivered:'undelivered',
                         otp: false,
                   })
 

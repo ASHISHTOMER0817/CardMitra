@@ -105,7 +105,7 @@ const UserProfile = () => {
 					/>{" "}
 					<button
 						type="submit"
-						className="px-3 hover:bg-gray-200 py-1"
+						className="px-3 hover:bg-gray-100 py-1"
 					>
 						Submit
 					</button>
