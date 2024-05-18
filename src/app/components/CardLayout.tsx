@@ -11,6 +11,17 @@ import oppo from "@/../public/static/oppo.png";
 import mi from "@/../public/static/mi.jpg";
 import samsung from "@/../public/static/samsung.png";
 
+const siteArr = [
+	{ name: "Amazon", image: amazon },
+	{ name: "Flipkart", image: flipkart },
+	{ name: "Jiomart", image: jiomart },
+	{ name: "Shopsy", image: shopsy },
+	{ name: "Vivo", image: vivo },
+	{ name: "MI", image: mi },
+	{ name: "Oppo", image: oppo },
+	{ name: "Samsung", image: samsung },
+];
+
 const CardLayout = ({
 	image,
 	placeOrder,
@@ -22,7 +33,6 @@ const CardLayout = ({
 	site,
 	deviceImage,
 	cards,
-	// zipCode
 }: {
 	image?: ReactNode;
 	placeOrder?: ReactNode;
@@ -31,31 +41,18 @@ const CardLayout = ({
 	price: number;
 	commission: number;
 	classList?: string;
-	site: {value:string, label:string};
+	site: { value: string; label: string };
 	deviceImage: string;
-	cards: {value:string, label:string}[]
-	// zipCode:string
+	cards: { value: string; label: string }[];
 }) => {
-	const [siteImage, setsiteImage] = useState();
-	console.log(siteImage);
-	
-	const siteArr = [
-		{ name: "Amazon", image: amazon },
-		{ name: "Flipkart", image: flipkart },
-		{ name: "Jiomart", image: jiomart },
-		{ name: "Shopsy", image: shopsy },
-		{ name: "Vivo", image: vivo },
-		{ name: "MI", image: mi },
-		{ name: "Oppo", image: oppo },
-		{ name: "Samsung", image: samsung },
-	];
+	const [siteImage, setSiteImage] = useState();
 
 	useEffect(() => {
 		// setsiteImage(forLoop(site.label))
 		function forLoop() {
 			for (let i = 0; i < siteArr.length; i++) {
 				if (siteArr[i].name === site.label) {
-					setsiteImage(siteArr[i].image);
+					setSiteImage(siteArr[i].image);
 					console.log(true);
 					return;
 				}
@@ -69,14 +66,14 @@ const CardLayout = ({
 	return (
 		<div
 			className={`p-7 border rounded-2xl md:p-2 border-gray-400 ${classList}`}
-		>    
+		>
 			<div className="flex items-center mb-4 gap-4">
 				<div className="mr-auto px-[10px] py-[5px] text-sm rounded-3xl border text-center bg-gray-200 sm:text-[10px] sm:px-1 sm:py-0">
 					Quantity: {quantity}
 				</div>
 				{image}
 			</div>
-			<div className="flex justify-center gap-8 text-sm items-start md:gap-1">
+			<div className="flex justify-center text-sm items-start md:gap-1">
 				<Image
 					className="w-40 h-[150px] md:w-[85px] sm:h-[60px]"
 					src={
@@ -117,22 +114,21 @@ const CardLayout = ({
 				</section>
 			</div>
 			<hr className="my-4" />
-			<div className="flex justify-between items-center sm:w-4">
-				{siteImage ? (
-					<Image
-						src={siteImage}
-						width={40}
-						height={40}
-						alt={""}
-					/>
-				) : ''}
-				
+			<div className="flex justify-between items-center sm:w-4 min-h-10">
+				<Image
+					src={!siteImage ? shopsy : siteImage}
+					width={40}
+					height={40}
+					alt={""}
+				/>
 
 				<div className="flex flex-col justify-start items-start text-sm font-semibold text-gray-600">
-					{cards?.map(({label}) => {
+					{cards?.map(({ label }) => {
 						return (
 							<>
-								<div className="sm:font-light sm:text-[10px] sm:leading-3">{label}</div>
+								<div className="sm:font-light sm:text-[10px] sm:leading-3">
+									{label}
+								</div>
 							</>
 						);
 					})}

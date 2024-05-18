@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
 
             // console.log('this is = ', orderObjectId)
             // Saving delivery Date in OTP List 
-            const singleorder = await Order.findOne({ _id: orderObjectId }).populate('product')
+            // const singleorder = await Order.findOne({ _id: orderObjectId }).populate('product')
             // console.log(singleorder)
             // Check if an order exists with the given orderObjectId
             const existingOrder = await Otp.findOne({ orderObjectId: orderObjectId });
@@ -40,10 +40,10 @@ export async function POST(request: NextRequest) {
             } else {
                   // Create a new order
                   console.log("hello else condition")
-                  console.log('so this is zipcode', singleorder.product.zipCode)
-                  const newOrder = await Otp.create({ otp, contact, trackingId, userObjectId, delivered: 'undelivered', orderObjectId, submittedAt: new Date(), zipCode: singleorder.product.zipCode});
+                  const order = await Order.findOneAndUpdate({ _id: order_id }, { $set: { otp: true } }, { new: true }).populate('product')
+                  console.log('so this is zipcode', order.product.zipCode)
+                  const newOrder = await Otp.create({ otp, contact, trackingId, userObjectId, delivered: 'undelivered', orderObjectId, submittedAt: new Date(), zipCode: order.product.zipCode });
                   console.log('2nd console', newOrder);
-                  const order = await Order.findOneAndUpdate({ _id:order_id }, { $set: { otp: true } })
                   console.log('wow ', order)
                   return NextResponse.json({ message: 'Order created successfully', success: true });
             }

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { transactions } from "@/interface/productList";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -39,7 +39,7 @@ const Transactions = ({
 			) : data.length > 0 ? (
 				<table className="w-full rounded-2xl overflow-hidden">
 					<thead>
-						<tr className="bg-gray-200">
+						<tr className="bg-green-100 text-[#2f4f4f]">
 							<th className="py-6 px-12 text-left">
 								Transaction ID
 							</th>
@@ -79,18 +79,18 @@ const Transactions = ({
 										key={index}
 										className="even:bg-gray-100"
 									>
-										<td className="py-4 px-12">
+										<td className="py-4 px-12 text-sm">
 											{_id}
 										</td>
 										{userPage.toString() ===
 											"false" && (
-											<td className="py-4 px-12">
+											<td className="py-4 px-12 font-semibold">
 												{
 													user.name
 												}
 											</td>
 										)}
-										<td className="py-4 px-12">
+										<td className="py-4 px-12 text-gray-500">
 											{dateFormat(
 												new Date(
 													dateOfPayment
@@ -98,7 +98,7 @@ const Transactions = ({
 											)}
 										</td>
 
-										<td className="py-4 px-12">
+										<td className="py-4 px-12 text-primaryBgClr">
 											{amount}
 										</td>
 									</tr>
@@ -108,7 +108,9 @@ const Transactions = ({
 					</tbody>
 				</table>
 			) : (
-				<div className="text-red-500 font-serif mx-auto mt-20 w-fit">No data to show !!</div>
+				<div className="text-red-500 font-serif mx-auto mt-20 w-fit">
+					No data to show !!
+				</div>
 			)}
 		</>
 	);

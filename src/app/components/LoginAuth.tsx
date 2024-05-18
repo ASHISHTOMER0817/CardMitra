@@ -48,6 +48,7 @@ const LoginAuth = () => {
 			console.log(success, message, data);
 			checkSuccess(success, message, data);
 		} catch (error: any) {
+			setLoader(false)
 			Popup("error", "Server error, please refresh");
 		}
 	}

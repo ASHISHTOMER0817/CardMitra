@@ -48,8 +48,6 @@ const AdminDashboard = () => {
 				const response = await axios.get(
 					"/api/admin/dashboard?query=dashboard"
 				);
-				console.log(response.data.data);
-				console.log(typeof response.data.data.orderHistory);
 				setData(response.data.data);
 			} catch {
 				console.log("what is happening here !!");
@@ -101,7 +99,7 @@ const AdminDashboard = () => {
 				<div className="flex justify-between mb-3 items-center">
 					<h4 className="font-semibold">Overview</h4>
 					<Link
-						href={""}
+						href={"/orders"}
 						className="text-primaryBgClr text-base"
 					>
 						DETAILS
@@ -130,7 +128,7 @@ const AdminDashboard = () => {
 						<Loader />
 					) : (
 						<CardLayoutAdminDashboard
-							data={data?.orderHistory!}
+							data={data?.orderHistory}
 						/>
 					)}
 				</div>
@@ -148,7 +146,7 @@ const AdminDashboard = () => {
 						VIEW ALL
 					</Link>
 				</div>
-				<AffiliateRequest />
+				<AffiliateRequest heading={""} />
 			</section>
 		</div>
 	);

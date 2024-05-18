@@ -53,7 +53,7 @@ export default function ProductDetails({
 	console.log(arr);
 	return (
 		<>
-			<section className=" text-left">
+			<section className=" text-left mb-4">
 				<div className="bg-[#FC08081A] text-[#FC0808] text-center px-4 py-1 mb-3 rounded-full">
 					Quantity left: {data?.requirement}{" "}
 				</div>
@@ -101,7 +101,7 @@ export default function ProductDetails({
 									Keep in mind while
 									ordering :-
 								</div>
-								<ul className="flex flex-col gap-4 text-gray-700">
+								<ul className="flex flex-col text-sm gap-0.5 text-gray-700">
 									{arr.map((e, index) => {
 										return (
 											<li
@@ -151,7 +151,7 @@ export default function ProductDetails({
 						}
 					>
 						<Image
-							src={!siteImage ? amazon : siteImage}
+							src={!siteImage ? shopsy : siteImage}
 							width={30}
 							height={30}
 							alt="icon"
@@ -159,7 +159,7 @@ export default function ProductDetails({
 					</Link>
 				</div>
 			</section>
-			<section className="text-wrap flex text-gray-600 text-sm  flex-col justify-start mt-3 gap-2">
+			<section className="text-wrap flex text-gray-600 text-sm flex-col justify-start mt-4 gap-2">
 				<div className=" text-black text-lg">Address</div>
 				{data?.address}
 			</section>

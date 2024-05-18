@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useState, useEffect, ReactNode } from "react";
 import axios from "axios";
 import Image from "next/image";
@@ -11,7 +11,7 @@ import Popup from "../Popup";
 import { user } from "@/interface/productList";
 import Loader from "../loader";
 
-const AffiliateRequest = ({ heading }: { heading?: string }) => {
+const AffiliateRequest = ({ heading }: { heading: string }) => {
 	const [users, setUsers] = useState<user[]>();
 	const [refreshData, setRefreshData] = useState(false);
 
@@ -58,26 +58,31 @@ const AffiliateRequest = ({ heading }: { heading?: string }) => {
 	}
 
 	return (
-		<div className={`${heading === 'approved' && 'w-[85%]'} mx-auto my-8 md:text-[10px]`}>
-			{heading === 'approved' && (
-				<h3 className="font-semibold mb-4 pb-2">
-					User List
-				</h3>
+		<div
+			className={`${
+				heading === "approved" && "w-[85%]"
+			} mx-auto my-8 md:text-[10px]`}
+		>
+			{heading === "approved" && (
+				<h3 className="font-semibold mb-4 pb-2">User List</h3>
 			)}
-			<div className={`rounded-lg overflow-hidden ${heading ? 'border border-gray-300': '' } `}>
-				{!users? <Loader/> : users.length >0 ? <table className="min-w-full divide-y divide-gray-300">
+			{/* <div className={`rounded-lg overflow-hidden ${heading ? 'border border-gray-300': '' } `}> */}
+			{!users ? (
+				<Loader />
+			) : users.length > 0 ? (
+				<table className="w-full rounded-2xl overflow-hidden">
 					<thead>
-						<tr>
-							<th className="px-4 py-2 text-left">
+						<tr className="bg-green-100 text-[#2f4f4f]">
+							<th className="py-6 px-12 text-left">
 								Name
 							</th>
-							<th className="px-4 py-2 text-left">
+							<th className="py-6 px-12 text-left">
 								Email
 							</th>
-							<th className="px-4 py-2 text-left">
+							<th className="py-6 px-12 text-left">
 								Contact No
 							</th>
-							<th className="px-4 py-2 text-left">
+							<th className="py-6 px-12 text-left">
 								Action
 							</th>
 						</tr>
@@ -96,18 +101,18 @@ const AffiliateRequest = ({ heading }: { heading?: string }) => {
 							) => (
 								<tr
 									key={index}
-									className="border-b"
+									className="even:bg-gray-100"
 								>
-									<td className="px-4 py-5 text-left">
+									<td className="py-4 px-12 font-semibold text-primaryBgClr">
 										{name}
 									</td>
-									<td className="px-4 py-5 text-left">
+									<td className="py-4 px-12 text-gray-500">
 										{email}
 									</td>
-									<td className="px-4 py-5 text-left">
+									<td className="py-4 px-12 text-gray-500 text-sm">
 										{contact}
 									</td>
-									<td className="px-4 py-5 text-center flex justify-start gap-2">
+									<td className="py-4 px-12 text-gray-500 flex justify-start gap-2">
 										{!isApprove ? (
 											<>
 												<div
@@ -145,7 +150,14 @@ const AffiliateRequest = ({ heading }: { heading?: string }) => {
 													width={
 														30
 													}
-													className="cursor-pointer h-auto"
+													className={`cursor-pointer h-auto ${
+														!(
+															index %
+															2
+														)
+															? "hover:bg-gray-200"
+															: "hover:bg-[#d3d1d1]"
+													} rounded-full`}
 												/>
 											</Link>
 										)}
@@ -154,8 +166,13 @@ const AffiliateRequest = ({ heading }: { heading?: string }) => {
 							)
 						)}
 					</tbody>
-				</table>: <div className="mx-auto w-fit mt-20 text-red-500 font-serif">No data to show !!</div>}
-			</div>
+				</table>
+			) : (
+				<div className="mx-auto w-fit mt-20 text-red-500 font-serif">
+					No data to show !!
+				</div>
+			)}
+			{/* </div> */}
 		</div>
 	);
 };

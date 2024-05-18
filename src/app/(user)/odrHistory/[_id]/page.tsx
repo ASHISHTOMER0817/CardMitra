@@ -45,7 +45,7 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 			{!data ? (
 				<Loader />
 			) : (
-				<div className="mt-16 mx-32 w-full">
+				<div className="mt-16 ml-8 w-full">
 					<BackwardButton/>
 					<section className="flex items-start text-sm justify-around">
 						<div className="flex flex-col items-start gap-10 justify-around">

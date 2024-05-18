@@ -3,9 +3,9 @@ import { ObjectId } from "mongoose"
 interface productList {
 	productLink: string
 	requirement: number
-	cards: { value: string, label: string,_id?:string }[]
+	cards: { value: string, label: string, _id?: string }[]
 	site: {
-		value: string, label: string,_id?:string
+		value: string, label: string
 	}
 	quantity: number
 	name: string
@@ -23,7 +23,7 @@ interface productList {
 		fourth: string
 	}
 	image: string,
-	zipCode:string
+	zipCode: string
 }
 export default productList
 
@@ -33,7 +33,7 @@ export interface order {
 	orderId: string
 	deliveryDate: string
 	otp: boolean
-	delivered: boolean
+	delivered: string
 	orderedAt: string
 	_id: string
 	paid: boolean
@@ -47,7 +47,8 @@ export interface otp {
 	trackingId: string
 	delivered: string
 	_id: string
-	submittedAt:Date
+	submittedAt: Date,
+	zipCode: number
 }
 
 export interface user {

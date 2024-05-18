@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import Database from "@/database/database";
 import { Order, Transactions, User } from "@/models/userModel";
 import GetToken from "@/app/components/getToken";
+import { order } from "@/interface/productList";
 
 Database()
 
@@ -22,7 +23,11 @@ export async function GET(request: NextRequest) {
                   console.log('if condtion')
                   console.log(role, _id)
                   if (role === 'user') {
-                        userId = _id
+                        const userInfo = await User.findOne({_id:_id})
+                        console.log(userInfo)
+                        return NextResponse.json({
+                              message: 'here is your details', data:userInfo, success:true
+                        })
                   }
             }
             const user = await User.findOne({ _id: userId })
@@ -31,7 +36,7 @@ export async function GET(request: NextRequest) {
 
             // console.log('skip if condition')
             // console.log(userId)
-            orderList = await Order.find({ user: userId, delivered: true, paid: false }).populate("product")
+            orderList = await Order.find({ user: userId, delivered: 'delivered', paid: false }).populate("product")
             console.log('this is orderlist', orderList)
 
             // Current amount to pay
@@ -41,11 +46,10 @@ export async function GET(request: NextRequest) {
                         total += orderList[i].product.price;
                   }
             }
-            console.log('helll', user)
             const totalAmt = user.unpaid + total
             const unpaid = user.unpaid
-            console.log('lrkjghlkhf')
-            console.log(totalAmt, unpaid)
+            // console.log('lrkjghlkhf')
+            // console.log(totalAmt, unpaid)
 
             let deliveredData = { user, orderList, totalAmt, unpaid }
 
@@ -60,7 +64,7 @@ export async function GET(request: NextRequest) {
 
                   // Non delivered Products list
             } else if (listType === "nonDelivered") {
-                  orderList = await Order.find({ user: userId, delivered: false }).populate("product")
+                  orderList = await Order.find({ user: userId, delivered: 'undelivered' }).populate("product")
                   const data = { user, orderList }
                   return NextResponse.json({
                         message: "nonDelivered is being shown", data: data, success: true

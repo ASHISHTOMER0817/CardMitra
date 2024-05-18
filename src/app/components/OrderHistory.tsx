@@ -12,25 +12,21 @@ const OrderHistory = ({
 	product: productList;
 	_id: string;
 	otp: boolean;
-	delivered: boolean;
+	delivered: string;
 }) => {
 	// console.log(data[0]?.product?.site)
 	return (
 		<Link className="cursor-pointer" href={`/odrHistory/${_id}`}>
 			<CardLayout
 				placeOrder={
-					otp ? (
-						delivered ? (
-							<div className="mx-auto bg-green-200 rounded-full px-3 py-0.5 text-green-700">
-								Delivered
-							</div>
-						) : (
-							<div className="mx-auto bg-orange-200 rounded-full px-2 py-1 text-orange-700">
-								OTP submitted
-							</div>
-						)
+					otp && delivered === "undelivered" ? (
+						<div className="mx-auto bg-orange-200 rounded-full px-2 py-1 text-orange-700">
+							OTP submitted
+						</div>
 					) : (
-						""
+						<div className="mx-auto bg-green-200 rounded-full px-3 py-0.5 text-green-700">
+							{delivered}
+						</div>
 					)
 				}
 				quantity={product?.requirement}

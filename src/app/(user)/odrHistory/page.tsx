@@ -7,28 +7,25 @@ import { order, otp } from "@/interface/productList";
 import Loader from "@/app/components/loader";
 const OdrHistory = () => {
 	const [data, setData] = useState<order[]>([]);
-	const [otpData, setOtpData] = useState<otp[]>([]);
+
 	const [listType, setListType] = useState("undelivered");
 
 	useEffect(() => {
 		async function getData() {
 			try {
 				const response = await axios.get(
-					`/api/users/odrHistory?listType=${listType}`
+					`/api/users/odrHistory`
 				);
 				console.log(response.data.data);
-				if (listType === "cancelled" || listType === "wrong OTP") {
-					setOtpData(response.data.data);
-				}
 				setData(response.data.data);
 			} catch {
 				console.log("please try again later");
 			}
 		}
 		getData();
-	}, [listType]);
+	}, []);
 	return (
-		<div className="flex flex-col mx-auto w-[90%]">
+		<div className="flex flex-col mx-auto">
 			<Header
 				heading={"Order History"}
 				Children={
@@ -89,27 +86,25 @@ const OdrHistory = () => {
 					</nav>
 				}
 			/>
-			<div className="grid grid-flow-row gap-7 grid-cols-3 md:gap-3">
-				{" "}
-				{(listType === "cancelled" ||
-				listType === "wrong OTP") ? (
-					!otpData ? (
-						<Loader />
-					) : data.length < 1 ? (
-						<div className="mx-auto w-fit text-red-500 font-serif my-20">
-							You don&apos;t have any order
-							history...
-						</div>
-					) : (
-						otpData?.map(({ orderObjectId }, index) => {
-							const {
-								product,
-								_id,
-								otp,
-								delivered,
-							} = orderObjectId;
+
+			{!data ? (
+				<Loader />
+			) : data.length < 1 ? (
+				<div className="mx-auto w-fit text-red-500 font-serif my-20">
+					You don&apos;t have any order history...
+				</div>
+			) : (
+				<div className="grid grid-flow-row gap-7 grid-cols-3 md:gap-3">
+					{data.map(
+						(
+							{ product, _id, otp, delivered },
+							index
+						) => {
+							const show =
+								listType === "all" ||
+								listType === delivered;
 							return (
-								<>
+								show && (
 									<OrderHistory
 										key={index}
 										product={product}
@@ -119,94 +114,12 @@ const OdrHistory = () => {
 											delivered
 										}
 									/>
-								</>
-							);
-						})
-					)
-				) : !data ? (
-					<Loader />
-				) : data.length < 1 ? (
-					<div className="mx-auto w-fit text-red-500 font-serif my-20">
-						You don&apos;t have any order history...
-					</div>
-				) : (
-					data.map(
-						(
-							{ product, _id, otp, delivered },
-							index
-						) => {
-							return (
-								<OrderHistory
-									key={index}
-									product={product}
-									_id={_id}
-									otp={otp}
-									delivered={delivered}
-								/>
+								)
 							);
 						}
-					)
-				)}
-			</div>
-			{/* <div className="grid grid-flow-row gap-7 grid-cols-3 md:gap-3">
-				{listType === "cancelled" ||
-				listType === "wrong OTP" ? (
-					!otpData ? (
-						<Loader />
-					) : (
-						otpData.map(({ orderObjectId }, index) => (
-							<OrderHistory
-								key={index}
-								{...orderObjectId}
-							/>
-						))
-					)
-				) : listType === "delivered" ? (
-					!data ? (
-						<Loader />
-					) : (
-						data.map(
-							(
-								{
-									product,
-									_id,
-									otp,
-									delivered,
-								},
-								index
-							) => (
-								<OrderHistory
-									key={index}
-									product={product}
-									_id={_id}
-									otp={otp}
-									delivered={delivered}
-								/>
-							)
-						)
-					)
-				) : // Default case (listType === 'undelivered' or 'all')
-				data.length < 1 ? (
-					<div className="mx-auto w-fit text-red-500 font-serif my-20">
-						You don&apos;t have any order history...
-					</div>
-				) : (
-					data.map(
-						(
-							{ product, _id, otp, delivered },
-							index
-						) => (
-							<OrderHistory
-								key={index}
-								product={product}
-								_id={_id}
-								otp={otp}
-								delivered={delivered}
-							/>
-						)
-					)
-				)}
-			</div> */}
+					)}
+				</div>
+			)}
 		</div>
 	);
 };

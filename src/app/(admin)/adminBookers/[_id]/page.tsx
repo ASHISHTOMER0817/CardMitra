@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import BackwardButton from "@/app/components/BackwardButton";
 import axios from "axios";
 import React, { Suspense, useEffect, useState } from "react";
@@ -21,9 +21,9 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 	const [amount, setAmount] = useState<number>();
 	const [overlay, setOverlay] = useState("hidden");
 	const [transactions, setTransactions] = useState(false);
-	const [refresh, setRefresh] = useState(false)
-	const router = useRouter()
-	
+	const [refresh, setRefresh] = useState(false);
+	const router = useRouter();
+
 	useEffect(() => {
 		async function getData() {
 			try {
@@ -36,7 +36,6 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 					Popup("success", response.data.message);
 					console.log("really----");
 					// setRefresh(true)
-					
 				}
 			} catch {
 				Popup("error", "something went wrong!!");
@@ -79,16 +78,18 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 
 	console.log(data?.totalAmt);
 	return (
-		<div className="w-[90%] mx-10 mt-6">
+		<div className="w-[90%] mx-10 mt-6 relative">
 			<div
 				className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}
 			></div>
 			<div
 				className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4`}
 			>
-				<RxCross1 width={20} height={20}
+				<RxCross1
+					width={20}
+					height={20}
 					className=" cursor-pointer ml-auto hover:bg-gray-100 active:bg-gray-100 rounded-full"
-					onClick={()=>setOverlay("hidden")}
+					onClick={() => setOverlay("hidden")}
 				/>
 				<h4>Write the amount you paid</h4>
 				<input
@@ -101,7 +102,8 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 				/>{" "}
 				<button
 					onClick={() => {
-						setListType("reduce"); setOverlay('hidden')
+						setListType("reduce");
+						setOverlay("hidden");
 					}}
 					className="px-3 py-1 hover:bg-gray-200"
 				>
@@ -111,14 +113,15 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 			<BackwardButton />
 			<div className="flex justify-between mb-10 items-center">
 				<h3 className="font-semibold">{data?.user?.name}</h3>
-				{(listType === "delivered" || listType === "reduce") &&  data?.totalAmt!  > 0 && (
-					<div
-						onClick={() => setOverlay("")}
-						className="rounded-3xl text-nowrap cursor-pointer bg-primaryBgClr flex py-2 px-4 border justify-center items-center  text-white"
-					>
-						pay Rs.{data?.totalAmt}
-					</div>
-				)}
+				{(listType === "delivered" || listType === "reduce") &&
+					data?.totalAmt! > 0 && (
+						<div
+							onClick={() => setOverlay("")}
+							className="rounded-3xl text-nowrap cursor-pointer bg-primaryBgClr flex py-2 px-4 border justify-center items-center  text-white"
+						>
+							pay Rs.{data?.totalAmt}
+						</div>
+					)}
 			</div>
 			<h6 className="text-gray-400 mb-4 text-sm">PERSONAL</h6>
 			<section className=" flex justify-between items-center">
@@ -143,7 +146,8 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 						setTransactions(false);
 					}}
 					className={` text-sm p-[10px] rounded-full cursor-pointer ${
-						(listType === "delivered" || listType === "reduce") &&
+						(listType === "delivered" ||
+							listType === "reduce") &&
 						!transactions &&
 						"underline underline-offset-4 text-primaryBgClr"
 					}`}

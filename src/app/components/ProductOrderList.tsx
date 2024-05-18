@@ -14,14 +14,13 @@ const ProductOrderList = ({ _id }: { _id: string }) => {
 				const response = await axios.get(
 					`/api/users/orderData?productId=${_id}`
 				);
-				setOrders( response.data.data);
-				console.log( response.data.data);
+				setOrders(response.data.data);
+				console.log(response.data.data);
 			} catch {
 				Popup("error", "Something went wrong, please refresh");
 			}
 		}
 		getData();
-
 	}, [_id]);
 
 	return (
@@ -68,9 +67,7 @@ const ProductOrderList = ({ _id }: { _id: string }) => {
 									{order.deliveryDate}
 								</td>
 								<td className="py-4 px-12">
-									{order.delivered
-										? "Delivered"
-										: "on the way"}
+									{order.delivered}
 								</td>
 							</tr>
 						))}

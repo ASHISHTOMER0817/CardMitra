@@ -38,12 +38,12 @@ const router = useRouter()
 				Popup("success", "OTP submitted")
 				setTimeout(() => {
 					router.back()
-				}, 2500);
+				},500);
 
+				setOtp('');
+				setContact("");
+				setTrackingId("")
 			}
-			setOtp('');
-			setContact("");
-			setTrackingId("")
 		} catch (error) {
 			console.log(error);
 			Popup("error", "Something went wrong, please refresh")

@@ -9,10 +9,12 @@ import { IoIosRefresh } from "react-icons/io";
 import { dropdown } from "../adminAddProduct/[_id]/page";
 import MyDatePicker from "@/app/components/MyDatePicker";
 import "flatpickr/dist/flatpickr.min.css";
-
+import "@/app/globals.css";
+import { useRouter } from "next/navigation";
 const OtpList = () => {
-	const [startDate, setStartDate] = useState(new Date());
-	const [endDate, setEndDate] = useState("");
+	const [startDate, setStartDate] = useState<Date | null>(null);
+	const [endDate, setEndDate] = useState<Date | null>(null);
+
 	const [otpList, setOtpList] = useState<otp[]>();
 	const [trackingOrzip, setTrackingOrzip] = useState("");
 	const [dropdownStates, setDropdownStates] = useState(
@@ -22,11 +24,13 @@ const OtpList = () => {
 		_id: "",
 		label: "",
 	});
+	
 
 	useEffect(() => {
 		async function getData() {
 			try {
 				const dates = { startDate, endDate };
+
 				console.log("these are dates", dates);
 				console.log("its running boys");
 				const dateString = JSON.stringify(dates);
@@ -46,20 +50,6 @@ const OtpList = () => {
 		getData();
 	}, [action, startDate, endDate]);
 
-
-	async function getData() {
-		try {
-			console.log(trackingOrzip);
-			const response = await axios.get(
-				`/api/admin/otpList?trackingId=${trackingOrzip}`
-			);
-			setOtpList(response.data.data);
-			console.log(response.data.data);
-		} catch {
-			Popup("error", "Something went wrong, Please refresh");
-		}
-	}
-
 	const otpAction: dropdown[] = [
 		{ value: "undelivered", label: "undelivered" },
 		{ value: "delivered", label: "delivered" },
@@ -67,11 +57,9 @@ const OtpList = () => {
 		{ value: "cancelled", label: "cancelled" },
 	];
 
-	const handleDateRangeSelect = (startDate: Date, endDate: Date) => {
-		console.log("Selected Start Date:", startDate);
-		setStartDate(startDate);
-		console.log("Selected End Date:", endDate);
-		setEndDate(endDate.toDateString());
+	const handleDateRangeSelect = (start: Date | null, end: Date | null) => {
+		setStartDate(start);
+		setEndDate(end);
 	};
 
 	function selectOption(successful: string) {
@@ -92,22 +80,15 @@ const OtpList = () => {
 					onChange={(e) => setTrackingOrzip(e.target.value)}
 					placeholder="Tracking ID / Zip Code"
 				/>{" "}
-				<button
-					onClick={getData}
-					className="border-b mr-4 border-b-black px-3 hover:text-gray-700"
-				>
-					Search
-				</button>
+				
 				<IoIosRefresh
-					onClick={() => {
-						setStartDate(new Date());
-						setTrackingOrzip("");
-					}}
+					onClick={() =>location.reload()}
 					className="cursor-pointer rounded-full hover:bg-gray-200"
 				/>
 				<div className="ml-auto flex justify-end gap-3 items-center">
 					<MyDatePicker
 						onDateRangeSelect={handleDateRangeSelect}
+						// setCurrentDate={setCurrentDate}
 					/>
 				</div>
 			</div>
@@ -115,9 +96,12 @@ const OtpList = () => {
 			{!otpList ? (
 				<Loader />
 			) : otpList.length > 0 ? (
-				<table className="w-full rounded-2xl overflow-hidden">
+				<table className="w-full rounded-2xl">
 					<thead>
 						<tr className="bg-gray-200">
+							<th className="py-6 px-12 text-left">
+								Zipcode
+							</th>
 							<th className="py-6 px-12 text-left">
 								Tracking ID
 							</th>
@@ -137,24 +121,20 @@ const OtpList = () => {
 					</thead>
 					<tbody>
 						{otpList ? (
-							otpList.map(
-								(
-									{
-										// deliveryDate,
-										contact,
-										otp,
-										trackingId,
-										userObjectId,
-										_id,
-										delivered,
-									},
-									index
-								) => {
+							otpList.map(({zipCode, contact, otp, trackingId, userObjectId, _id, delivered, }, index ) => {
+
+									const show = trackingId.includes(trackingOrzip) || String(zipCode).includes(trackingOrzip) || !trackingOrzip;
+									console.log('show is: ', show);
+										
 									return (
+
+										show &&
+
 										<tr
 											key={index}
 											className="even:bg-gray-100"
 										>
+											<td className="py-4 px-12">{zipCode}</td>
 											<td className="py-4 px-12">
 												{
 													trackingId
@@ -193,7 +173,7 @@ const OtpList = () => {
 																	index
 																] =
 																	{
-							 											...option,
+																		...option,
 																		_id,
 																	};
 
@@ -212,7 +192,11 @@ const OtpList = () => {
 															_id
 														);
 													}}
-													value={selectOption(delivered)!}
+													value={
+														selectOption(
+															delivered
+														)!
+													}
 												/>
 											</td>
 										</tr>

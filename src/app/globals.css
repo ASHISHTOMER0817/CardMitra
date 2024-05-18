@@ -107,6 +107,11 @@ thead{
   }
 }
 
+.select__menu{
+
+  z-index: 999;
+}
+
 /* h4, h5, a{
   @media (max-width:768px) {
     font-size: 12px !important;

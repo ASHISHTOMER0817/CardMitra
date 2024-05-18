@@ -28,13 +28,8 @@ export async function GET(request: NextRequest) {
             const operation = searchparams.get('operation')
             console.log('this is id', _id, operation)
 
-
-
-
             if (query === 'dashboard') {
-
                   const orderHistory = await Product.find({ deals: true }).limit(3)
-
 
                   // Recent deliveries
                   const startDate = dayjs()
