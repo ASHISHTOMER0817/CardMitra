@@ -1,30 +1,31 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
-import NavigationSidebar from "../components/NavigationSidebar";
+// import NavigationSidebar from "../components/NavigationSidebar";
 import dashboard from "@/../public/dashboard.svg";
-import dimBell from "@/../public/dimBell.svg";
-import dimHelp from "@/../public/dimHelp.svg";
+// import dimBell from "@/../public/dimBell.svg";
+// import dimHelp from "@/../public/dimHelp.svg";
 import deals from "@/../public/deals.svg";
 // import OdrHistory from "@/../public/odrHistory.svg";
 // import SideBar from "../components/Sidebar";
 import bookers from "@/../public/bookers.svg";
 import transactions from "@/../public/transactions.svg";
-import { Transactions } from "@/app/components/lib";
-import Loader from "../components/loader";
-import { Suspense } from "react";
+// import { Transactions } from "@/app/components/lib";
+// import Loader from "../components/loader";
+// import { Suspense } from "react";
 import Navigation from "../components/Navigation";
+import "react-toastify/dist/ReactToastify.css";
 
-
-import dealsActive from "@/../public/active_icons/deals_active.svg"
-import dashboardActive from "@/../public/active_icons/dashboard_active.svg"
+import dealsActive from "@/../public/active_icons/deals_active.svg";
+import dashboardActive from "@/../public/active_icons/dashboard_active.svg";
 // import odrHistoryActive from "@/../public/active_icons/odrHistory_active.svg"
-import profileActive from "@/../public/active_icons/profile_active.svg"
+// import profileActive from "@/../public/active_icons/profile_active.svg"
 
 import bookersActive from "@/../public/active_icons/bookersActive.svg";
 import transactionInactive from "@/../public/active_icons/transactionInactive.svg";
+import { ToastContainer } from "../components/nextToast";
 
-const inter = Inter({ subsets: ["latin"] }); 
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
 	title: "Create Next App",
@@ -32,13 +33,28 @@ export const metadata: Metadata = {
 };
 
 const options = [
-	{icon: dashboard, name: 'Dashboard', link: '/adminDashboard', activeIcon: dashboardActive},
-	{icon:deals, name:'Deals', link: '/orders', activeIcon: dealsActive},
-	{icon:bookers, name:'Bookers', link: '/adminBookers', activeIcon: bookersActive},
-	{icon:transactionInactive, name:'Transactions', link: '/adminTransactions', activeIcon: transactions},
-	
+	{
+		icon: dashboard,
+		name: "Dashboard",
+		link: "/adminDashboard",
+		activeIcon: dashboardActive,
+	},
+	{ icon: deals, name: "Deals", link: "/orders", activeIcon: dealsActive },
+	{
+		icon: bookers,
+		name: "Bookers",
+		link: "/adminBookers",
+		activeIcon: bookersActive,
+	},
+	{
+		icon: transactionInactive,
+		name: "Transactions",
+		link: "/adminTransactions",
+		activeIcon: transactions,
+	},
+
 	// {icon:dimBell, name:'Deals', link: '/deals'},
-]
+];
 
 export default function RootLayout({
 	children,
@@ -47,11 +63,11 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={inter.className} style={{display: 'flex'}}>
-
+			<body className={inter.className} style={{ display: "flex" }}>
 				<Navigation options={options} />
 				<div className="w-full px-6 py-4 ml-20">
 					{children}
+					<ToastContainer />
 				</div>
 			</body>
 			{/* <body className={inter.className}>

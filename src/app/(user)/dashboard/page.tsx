@@ -8,7 +8,7 @@ import Popup from "@/app/components/Popup";
 import dateFormat from "@/app/components/dateFormat";
 import Link from "next/link";
 import Loader from "@/app/components/loader";
-import DashboardOverlay from "@/app/components/user/productOverlay";
+import DashboardOverlay from "@/app/components/user/DashboardOverlay";
 
 interface group {
 	order: order[];
@@ -51,12 +51,12 @@ const Dashboard = () => {
 				const response = await axios.get(
 					"/api/users/dashboard"
 				);
-				console.log(response.data.data);
-
+				// console.log(response.data.data);
+				console.log(response.data.data.otpAction.length);
 				setData(response.data.data);
 
 				loops(response.data.data);
-				console.log(response.data.message);
+				// console.log(response.data.message);
 			} catch {
 				Popup("error", "Something went wrong, please refresh");
 				console.log("Please try again later");
@@ -85,32 +85,43 @@ const Dashboard = () => {
 	return (
 		<>
 			<div className=" w-[85%] mx-auto mb-16">
-				{!data
-					? ""
-					: data.otpAction.length > 0
-					? data?.otpAction.map(
-							({
-								orderObjectId,
-								delivered,
-								_id,
-							}) => {
-								return (
-									<>
-										<DashboardOverlay
-											data={{
-												orderObjectId:
-													orderObjectId.product,
-												delivered:
-													delivered,
-												order_id: orderObjectId._id,
-												_id: _id,
-											}}
-										/>
-									</>
-								);
-							}
-					  )
-					: ""}
+				<div
+					className={`fixed top-2 right-2 w-[26%] text-sm bg-[#D0D6E0] rounded-2xl p-2 flex flex-col gap-4 bg-transparent `}
+				>
+					{!data
+						? ""
+						: data.otpAction.length > 0
+						? data.otpAction.map(
+								({
+									orderObjectId,
+									delivered,
+									_id,
+								}) => {
+									return (
+										<>
+											<DashboardOverlay
+												data={{
+													orderObjectId:
+														orderObjectId.product,
+													delivered:
+														delivered,
+													order_id: orderObjectId._id,
+													_id: _id,
+												}}
+											/>
+										</>
+									);
+								}
+						  )
+						: ""}
+					{/* {data?.otpAction.map(() => {
+						return (
+							<>
+								<div>hello-hello-hello</div>
+							</>
+						);
+					})} */}
+				</div>
 				<h3 className="my-7 font-semibold">Dashboard</h3>
 				<div className="flex justify-start gap-3 sm:gap-1">
 					<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-0 sm:px-0">

@@ -74,7 +74,8 @@ const otpSchema = new mongoose.Schema({
 		type: String
 	},
 	acknowledgment: {
-		type: Boolean
+		type: Boolean,
+		default: false
 	}
 })
 

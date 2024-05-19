@@ -68,7 +68,7 @@ const DashboardOverlay = ({
 
 	return (
 		<div
-			className={`fixed top-2 right-2 w-[26%] text-sm h-24 bg-[#D0D6E0] rounded-2xl p-2 flex ${
+			className={` text-sm h-24 bg-[#D0D6E0] rounded-2xl p-2 flex ${
 				acknowledge && "hidden"
 			}`}
 		>
@@ -83,7 +83,7 @@ const DashboardOverlay = ({
 
 			{/* Middle column */}
 			<div className="flex-1 flex flex-col ml-1 justify-center items-start space-y-2 ">
-				<div className="text-[16px]">{name}</div>
+				<div className="text-[16px] font-semibold">{name}</div>
 				<div className="flex justify-between gap-5 items-start ">
 					<Image
 						src={siteImage}
@@ -127,7 +127,7 @@ const DashboardOverlay = ({
 							acknowledged(otpObjectId);
 							setAcknowledge(true);
 						}}
-						className="px-2 py-1 mt-auto hover:bg-gray-100 text-gray-500 border-gray-500 border rounded-full"
+						className="px-2 py-1 mt-auto min-w-[100px] hover:bg-gray-100 text-gray-500 border-gray-500 border rounded-full"
 					>
 						{/* <Link
 							href={
