@@ -32,7 +32,7 @@ const orderSchema = new mongoose.Schema({
 	},
 	delivered: {
 		type: String,
-		
+
 	},
 	orderedAt: {
 		type: String,
@@ -70,8 +70,11 @@ const otpSchema = new mongoose.Schema({
 	submittedAt: {
 		type: Date
 	},
-	zipCode:{
-		type:String
+	zipCode: {
+		type: String
+	},
+	acknowledgment: {
+		type: Boolean
 	}
 })
 
@@ -210,8 +213,8 @@ const productSchema = new mongoose.Schema({
 			default: ""
 		},
 	},
-	zipCode:{
-		type:String
+	zipCode: {
+		type: String
 	}
 
 

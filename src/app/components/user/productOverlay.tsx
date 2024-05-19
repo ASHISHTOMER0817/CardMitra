@@ -11,15 +11,23 @@ import oppo from "@/../public/static/oppo.png";
 import mi from "@/../public/static/mi.jpg";
 import samsung from "@/../public/static/samsung.png";
 import Link from "next/link";
+import axios from "axios";
+import Popup from "../Popup";
 
 const DashboardOverlay = ({
 	data,
 }: {
-	data: { orderObjectId: productList; delivered: string; order_id:string };
+	data: {
+		orderObjectId: productList;
+		delivered: string;
+		order_id: string;
+		_id: string;
+	};
 }) => {
 	const [siteImage, setSiteImage] = useState("");
 	const { name, image, cards, site, _id } = data.orderObjectId;
-
+	const otpObjectId = data._id;
+	const [acknowledge, setAcknowledge] = useState(false);
 	const siteArr = [
 		{ name: "Amazon", image: amazon },
 		{ name: "Flipkart", image: flipkart },
@@ -46,13 +54,29 @@ const DashboardOverlay = ({
 		forLoop();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	async function acknowledged(acknowledgment: string) {
+		try {
+			const response = await axios.get(
+				`/api/users/dashboard?query=${acknowledgment}`
+			);
+			console.log(response.data.data);
+		} catch {
+			Popup("error", "server error, please refresh");
+		}
+	}
+
 	return (
-		<div className="fixed top-0 right-0 w-[26%] text-sm h-24 bg-gray-400 rounded-xl p-2 flex">
+		<div
+			className={`fixed top-2 right-2 w-[26%] text-sm h-24 bg-[#D0D6E0] rounded-2xl p-2 flex ${
+				acknowledge && "hidden"
+			}`}
+		>
 			{/* Left column */}
 			<Image
 				src={image ? `/uploads/${image}` : phoneImage}
 				alt="User Image"
-				className="w-24 h-auto rounded-lg"
+				className="w-20 h-auto rounded-lg"
 				width={200}
 				height={300}
 			/>
@@ -80,16 +104,37 @@ const DashboardOverlay = ({
 			<div className="flex flex-col justify-between items-center">
 				{data.delivered === "wrong OTP" ? (
 					<>
-						<button className="px-2 py-1 w-full hover:bg-gray-100 text-gray-500 border-gray-500 border rounded-full mb-2">
+						<button
+							onClick={() => {
+								acknowledged(otpObjectId);
+								setAcknowledge(true);
+							}}
+							className="px-2 py-1 w-full hover:bg-gray-100 text-gray-500 border-gray-500 border rounded-full mb-2"
+						>
 							Cancel
 						</button>
 						<button className="px-2 py-1 hover:bg-gray-100 text-gray-500 border-gray-500 border rounded-full">
-							<Link href={`/odrHistory/${data.order_id}`}>SUBMIT OTP</Link>
+							<Link
+								href={`/odrHistory/${data.order_id}`}
+							>
+								SUBMIT OTP
+							</Link>
 						</button>
 					</>
 				) : data.delivered === "cancelled" ? (
-					<button className="px-2 py-1 mt-auto hover:bg-gray-100 text-gray-500 border-gray-500 border rounded-full">
-						<Link href={'/odrHistory?listType=cancelled'}></Link>VIEW
+					<button
+						onClick={() => {
+							acknowledged(otpObjectId);
+							setAcknowledge(true);
+						}}
+						className="px-2 py-1 mt-auto hover:bg-gray-100 text-gray-500 border-gray-500 border rounded-full"
+					>
+						{/* <Link
+							href={
+								"/odrHistory?listType=cancelled"
+							}
+						></Link> */}
+						OK
 					</button>
 				) : null}
 			</div>

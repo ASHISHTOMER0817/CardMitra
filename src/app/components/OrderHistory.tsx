@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CardLayout from "./CardLayout";
 import Link from "next/link";
 import productList, { order, otp } from "@/interface/productList";
+import StatusBadge from "./StatusBadge";
 
 const OrderHistory = ({
 	product,
@@ -16,17 +17,20 @@ const OrderHistory = ({
 }) => {
 	// console.log(data[0]?.product?.site)
 	return (
-		<Link className="cursor-pointer" href={`/odrHistory/${_id}`}>
+		<Link
+			className="cursor-pointer"
+			href={
+				delivered !== "cancelled" && delivered !== "delivered"
+					? `/odrHistory/${_id}`
+					: ""
+			}
+		>
 			<CardLayout
 				placeOrder={
 					otp && delivered === "undelivered" ? (
-						<div className="mx-auto bg-orange-200 rounded-full px-2 py-1 text-orange-700">
-							OTP submitted
-						</div>
+						<StatusBadge status={"OTP submitted"} />
 					) : (
-						<div className="mx-auto bg-green-200 rounded-full px-3 py-0.5 text-green-700">
-							{delivered}
-						</div>
+						<StatusBadge status={delivered} />
 					)
 				}
 				quantity={product?.requirement}

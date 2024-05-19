@@ -14,6 +14,16 @@ import samsung from "@/../public/static/samsung.png";
 import { useEffect, useState } from "react";
 import { MyArrayItem } from "../(user)/deals/[placeorder]/page";
 
+const siteArr = [
+	{ name: "Amazon", image: amazon },
+	{ name: "Flipkart", image: flipkart },
+	{ name: "Jiomart", image: jiomart },
+	{ name: "Shopsy", image: shopsy },
+	{ name: "Vivo", image: vivo },
+	{ name: "MI", image: mi },
+	{ name: "Oppo", image: oppo },
+	{ name: "Samsung", image: samsung },
+];
 export default function ProductDetails({
 	data,
 	arr,
@@ -22,23 +32,14 @@ export default function ProductDetails({
 	arr: Array<MyArrayItem>;
 }) {
 	const [siteImage, setSiteImage] = useState();
-	console.log(arr);
-	const siteArr = [
-		{ name: "Amazon", image: amazon },
-		{ name: "Flipkart", image: flipkart },
-		{ name: "Jiomart", image: jiomart },
-		{ name: "Shopsy", image: shopsy },
-		{ name: "Vivo", image: vivo },
-		{ name: "MI", image: mi },
-		{ name: "Oppo", image: oppo },
-		{ name: "Samsung", image: samsung },
-	];
+	console.log(data?.site.label);
 
 	useEffect(() => {
 		// setsiteImage(forLoop(site.label))
 		function forLoop() {
 			for (let i = 0; i < siteArr.length; i++) {
 				if (siteArr[i].name === data?.site.label) {
+					console.log(data?.site.label);
 					setSiteImage(siteArr[i].image);
 					console.log(true);
 					return;
@@ -151,7 +152,7 @@ export default function ProductDetails({
 						}
 					>
 						<Image
-							src={!siteImage ? shopsy : siteImage}
+							src={siteImage ? siteImage : shopsy}
 							width={30}
 							height={30}
 							alt="icon"

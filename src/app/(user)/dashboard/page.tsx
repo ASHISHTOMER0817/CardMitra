@@ -89,12 +89,21 @@ const Dashboard = () => {
 					? ""
 					: data.otpAction.length > 0
 					? data?.otpAction.map(
-							({ orderObjectId, delivered }) => {
+							({
+								orderObjectId,
+								delivered,
+								_id,
+							}) => {
 								return (
 									<>
 										<DashboardOverlay
 											data={{
-												orderObjectId:orderObjectId.product,delivered:delivered,order_id:orderObjectId._id
+												orderObjectId:
+													orderObjectId.product,
+												delivered:
+													delivered,
+												order_id: orderObjectId._id,
+												_id: _id,
 											}}
 										/>
 									</>
@@ -163,15 +172,33 @@ const Dashboard = () => {
 					</div>
 				) : (
 					<div className="grid grid-flow-row gap-3 grid-cols-3 sm:gap-1">
-						{
-							data.order.slice(0,3).map(({product, otp,_id, delivered},index)=>{
-								return (
-									<OrderHistory product={product} _id={_id} otp={otp} delivered={delivered} key={index}							
-						/>
-								)
-							})
-						}
-						
+						{data.order
+							.slice(0, 3)
+							.map(
+								(
+									{
+										product,
+										otp,
+										_id,
+										delivered,
+									},
+									index
+								) => {
+									return (
+										<OrderHistory
+											product={
+												product
+											}
+											_id={_id}
+											otp={otp}
+											delivered={
+												delivered
+											}
+											key={index}
+										/>
+									);
+								}
+							)}
 					</div>
 				)}
 			</div>

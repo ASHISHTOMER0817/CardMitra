@@ -7,6 +7,7 @@ import { Order, Otp } from "@/models/userModel";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc"
 import { convertDates } from "@/app/components/lib";
+import { otp } from "@/interface/productList";
 dayjs.extend(utc)
 
 Database()
@@ -46,18 +47,18 @@ export async function GET(request: NextRequest) {
 
 
                   // Obtain the local time zone offset in minutes
-                 
-                  const range = convertDates(dates.startDate,dates.endDate)
+
+                  const range = convertDates(dates.startDate, dates.endDate)
                   const endDate = range.endDate
-                  console.log('route',range.startDate, new Date(endDate.toDate()),)
+                  console.log('route', range.startDate, new Date(endDate.toDate()),)
                   if (actionString && actionString !== '' && JSON.parse(actionString)._id) {
                         console.log('if conditon')
 
-                        const actionObject = JSON.parse(actionString) 
+                        const actionObject = JSON.parse(actionString)
                         // otpList document
                         const otpDocument = await Otp.findOneAndUpdate({ _id: actionObject._id }, { $set: { delivered: actionObject.label } })
                         console.log(otpDocument)
-
+                        await Order.findOneAndUpdate({ _id: otpDocument.orderObjectId }, { $set: { delivered: actionObject.label } })
                         const otpList = await Otp.find({
                               submittedAt: {
                                     $gte: range.startDate,
@@ -75,7 +76,7 @@ export async function GET(request: NextRequest) {
 
                         const otpList = await Otp.find({
                               submittedAt: {
-                                    $gte: range.startDate, 
+                                    $gte: range.startDate,
                                     $lt: range.endDate
                               },
                         }).populate('userObjectId');

@@ -18,6 +18,7 @@ import Popup from "@/app/components/Popup";
 import productList from "@/interface/productList";
 import Loader from "@/app/components/loader";
 import { useRouter } from "next/navigation";
+import { RxCross1 } from "react-icons/rx";
 
 export interface dropdown {
 	value: string;
@@ -43,7 +44,8 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	});
 	const [zipCode, setZipCode] = useState("");
 	const [loader, setLoader] = useState(false);
-	const router = useRouter()
+	const [overlay, setOverlay] = useState("");
+	const router = useRouter();
 
 	// Cards Array
 	const cardOptions: dropdown[] = [
@@ -56,7 +58,15 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	const siteOptions: dropdown[] = [
 		{ value: "Amazon", label: "Amazon" },
 		{ value: "Flipkart", label: "Flipkart" },
-		{ value: "Mi App", label: "Mi App" },
+		{ value: "MI", label: "MI" },
+		{ value: "Amazon", label: "Amazon" },
+		{ value: "Flipkart", label: "Flipkart" },
+		{ value: "Jiomart", label: "Jiomart" },
+		{ value: "Shopsy", label: "Shopsy" },
+		{ value: "Vivo", label: "Vivo" },
+		{ value: "MI", label: "MI" },
+		{ value: "Oppo", label: "Oppo" },
+		{ value: "Samsung", label: "Samsung" },
 	];
 
 	// const [cardsArr, setCardsArr] = useState<string[]>();
@@ -118,10 +128,9 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	console.log(cards, site);
 
 	//SEND DATA TO BACKEND
-	async function postData(e:FormEvent<HTMLFormElement>) {
+	async function postData(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		try {
-			
 			// Creating a formData instance
 			const formData = new FormData();
 			formData.append("name", name);
@@ -144,7 +153,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 			console.log(response);
 			if (response.data.success) {
 				Popup("success", "Product added successfully");
-				router.back()
+				router.back();
 			}
 		} catch (error: any) {
 			Popup("error", "Something went wrong, try again later");
@@ -152,7 +161,20 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 		}
 	}
 
+	// handle Droped Images
+	const handleDrop = (event: any) => {
+		event.preventDefault();
+		const { files } = event.dataTransfer;
+		if (files && files[0]) {
+			const droppedFile = files[0];
+			setImage(URL.createObjectURL(droppedFile));
+			setFile(droppedFile);
+		}
+	};
 
+	const handleDragOver = (event: any) => {
+		event.preventDefault();
+	};
 
 	return (
 		<form onSubmit={postData} className="w-[90%] p-8">
@@ -160,10 +182,45 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 				<Loader />
 			) : (
 				<>
+					{/* <div
+						className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}
+					></div>
+					<div
+						className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4`}
+					>
+						<RxCross1
+							width={20}
+							height={20}
+							className=" cursor-pointer ml-auto hover:bg-gray-100 active:bg-gray-100 rounded-full"
+							onClick={() => setOverlay("hidden")}
+						/>
+						<h4>Write, what you want to add to {}</h4>
+						<input
+							type="number"
+							required
+							placeholder="Amount"
+							className="outline-none border-b pb-2 border-black"
+							value={amount}
+							onChange={(e) =>
+								setAmount(+e.target.value)
+							}
+						/>{" "}
+						<button
+							onClick={() => {
+								setListType("reduce");
+								setOverlay("hidden");
+							}}
+							className="px-3 py-1 hover:bg-gray-200"
+						>
+							Submit
+						</button>
+					</div> */}
 					<div className="flex gap-10 mb-8">
 						<label
 							htmlFor="image"
 							className="cursor-pointer"
+							onDragOver={handleDragOver}
+							onDrop={handleDrop}
 						>
 							{image ? (
 								<>
@@ -223,7 +280,6 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 										<input
 											required
 											type="file"
-											// name="file"
 											className="hidden"
 											id="image"
 											onChange={({
@@ -235,19 +291,13 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 													const file =
 														target
 															.files[0];
-													// console.log(
-													// 	file
-													// );
+
 													setImage(
 														URL.createObjectURL(
 															file
 														)
 													);
-													// console.log(
-													// 	URL.createObjectURL(
-													// 		file
-													// 	)
-													// );
+
 													setFile(
 														file
 													);
@@ -514,7 +564,8 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 						</div>
 					</div>
 					<div className="ml-auto w-fit flex gap-3 mt-8">
-						<button onClick={()=>router.back()}
+						<button
+							onClick={() => router.back()}
 							className="w-64 p-2 text-red-500 hover:bg-gray-100 border-red-500 border rounded-full"
 							type="reset"
 						>

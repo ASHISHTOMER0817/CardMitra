@@ -69,11 +69,12 @@ export async function GET(request: NextRequest) {
                         })
                   }
             } else if (query === 'orderHistory') {
-                  const orderHistory = await Product.find({ show: true }).sort({ deals: -1 })
+                  const orderHistory = await Product.find({ show: true }).sort({ deals: -1 });
+                  const orders = await Order.find({}).sort({ orderedAt: -1 }).populate('user', 'name').populate('product')
                   console.log('1st console', orderHistory)
                   if (orderHistory) {
                         return NextResponse.json({
-                              message: "Order history is being shown", status: false, data: orderHistory
+                              message: "Order history is being shown", status: false, data: { orderHistory, orders }
                         })
                   }
             }
@@ -87,7 +88,7 @@ export async function GET(request: NextRequest) {
                         product.save()
                         console.log('deal removed')
                         return NextResponse.json({
-                              message: "deal removed", success: true,operation
+                              message: "deal removed", success: true, operation
                         })
                   } else if (operation === 'add') {
                         console.log('add condition')
@@ -101,7 +102,7 @@ export async function GET(request: NextRequest) {
                               { _id: _id },
                               { $set: { show: false } },
                               { new: true }
-                          );                        console.log(deleteProduct)
+                        ); console.log(deleteProduct)
                         return NextResponse.json({
                               message: "Product Deleted", success: true, operation
                         })

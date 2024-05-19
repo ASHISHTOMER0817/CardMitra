@@ -25,24 +25,27 @@ export async function POST(request: NextRequest) {
             // const singleorder = await Order.findOne({ _id: orderObjectId }).populate('product')
             // console.log(singleorder)
             // Check if an order exists with the given orderObjectId
-            const existingOrder = await Otp.findOne({ orderObjectId: orderObjectId });
-            console.log('1.5th console', existingOrder)
-            if (existingOrder) {
+            const existingOtp = await Otp.findOne({ orderObjectId: orderObjectId });
+            const existingOrder = await Order.findOne({ _id: order_id })
+            console.log('1.5th console', existingOtp)
+            if (existingOtp) {
                   // Update the existing order
-                  existingOrder.otp = otp;
-                  existingOrder.contact = contact;
-                  existingOrder.trackingId = trackingId;
-                  // existingOrder.userObjectId = userObjectId;
+                  existingOtp.otp = otp;
+                  existingOtp.contact = contact;
+                  existingOtp.trackingId = trackingId;
+                  // existingOtp.userObjectId = userObjectId;
+                  if (existingOtp.delivered === 'wrong OTP') { existingOtp.delivered = 'undelivered'; existingOrder.delivered = 'undelivered' }
 
-                  const updatedOrder = await existingOrder.save();
-                  console.log('2nd console', updatedOrder);
+                  const updatedOtp = await existingOtp.save();
+                  const updateOrder = await existingOrder.save()
+                  console.log('2nd console', updatedOtp);
                   return NextResponse.json({ message: 'Order updated successfully', success: true });
             } else {
                   // Create a new order
                   console.log("hello else condition")
                   const order = await Order.findOneAndUpdate({ _id: order_id }, { $set: { otp: true } }, { new: true }).populate('product')
                   console.log('so this is zipcode', order.product.zipCode)
-                  const newOrder = await Otp.create({ otp, contact, trackingId, userObjectId, delivered: 'undelivered', orderObjectId, submittedAt: new Date(), zipCode: order.product.zipCode });
+                  const newOrder = await Otp.create({ otp, contact, trackingId, userObjectId, delivered: 'undelivered', orderObjectId, submittedAt: new Date(), zipCode: order.product.zipCode, acknowledgment: false });
                   console.log('2nd console', newOrder);
                   console.log('wow ', order)
                   return NextResponse.json({ message: 'Order created successfully', success: true });
