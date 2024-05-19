@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
-// import NavigationSidebar from "../components/NavigationSidebar";
 import dashboard from "@/../public/dashboard.svg";
 // import dimBell from "@/../public/dimBell.svg";
 // import dimHelp from "@/../public/dimHelp.svg";
@@ -70,31 +69,6 @@ export default function RootLayout({
 					<ToastContainer />
 				</div>
 			</body>
-			{/* <body className={inter.className}>
-				<NavigationSidebar
-					icon={[dashboard, dimBell, dimHelp]}
-					firstSection={"/adminDashboard"}
-					secondSection={"/adminDashboard"}
-					thirdSection={{
-						image: deals,
-						name: "Orders",
-						changeState: "/orders",
-					}}
-					fourthSection={{
-						image: bookers,
-						name: "Bookers",
-						changeState: "/adminBookers",
-					}}
-					fifthSection={{
-						image: <Transactions />,
-						name: "Transactions",
-						changeState: "/adminTransactions",
-					}}
-					main={
-							children
-					}
-				/>
-			</body> */}
 		</html>
 	);
 }

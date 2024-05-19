@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
-import NavigationSidebar from "../components/NavigationSidebar";
 import dashboard from "@/../public/dashboard.svg";
 import deals from "@/../public/deals.svg";
 import OdrHistory from "@/../public/odrHistory.svg";
