@@ -120,7 +120,7 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 																.user
 																.isApprove !==
 																false
-																? " active:bg-green-600"
+																? " hover:bg-green-600"
 																: " bg-gray-400"
 														} rounded-full border text-center w-auto text-white`}
 													>

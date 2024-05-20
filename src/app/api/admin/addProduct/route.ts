@@ -4,7 +4,7 @@ import Database from '@/database/database';
 import path from 'path';
 import fs from 'fs/promises';
 import { NextRequest, NextResponse } from 'next/server';
-import { Product } from '@/models/userModel';
+import { Options, Product } from '@/models/userModel';
 import { dropdown } from '@/app/(admin)/adminAddProduct/[_id]/page';
 
 
@@ -13,6 +13,39 @@ Database();
 
 export async function POST(request: NextRequest) {
       try {
+            const query = request.nextUrl.searchParams.get('query')
+            if (query === 'option') {
+                  const formData = await request.formData()
+                  const optionName: any = formData.get('optionName')
+                  const addOption = formData.get('addOption')
+                  const optionObject: dropdown = JSON.parse(optionName)
+                  if (addOption === 'card') {
+                        const options = await Options.findOneAndUpdate({ id: 'options' }, { $push: { cards: optionObject } })
+                        console.log(options, 'this is the options document')
+                        return NextResponse.json({
+                              message: 'card has been added', success: true
+                        })
+                  }
+                  const file = formData.get('file') as File
+
+                  if (!file) {
+                        return NextResponse.json({
+                              message: 'upload an image', status: 400, success: false
+                        })
+                  }
+                  const uploadDir = path.join(process.cwd(), 'public', 'static');
+                  const newFileName = optionObject.value + '.svg'
+                  const filePath = path.join(uploadDir, newFileName);
+                  const bytes = await file.arrayBuffer();
+                  await fs.writeFile(filePath, Buffer.from(bytes));
+                  console.log('still working ')
+                  const options = await Options.findOneAndUpdate({ id: 'options' }, { $push: { sites: optionObject } })
+                  console.log(options, 'successful')
+                  return NextResponse.json({
+                        message: 'Site has been added', success: true
+                  })
+
+            }
             const formData = await request.formData()
             console.log(formData)
             const name = formData.get('name')
@@ -46,7 +79,7 @@ export async function POST(request: NextRequest) {
             await fs.writeFile(filePath, Buffer.from(bytes));
 
             console.log('still working ')
-            const newProduct = Product.create({
+            const newProduct = await Product.create({
                   name,
                   commission: +commission!,
                   productLink,

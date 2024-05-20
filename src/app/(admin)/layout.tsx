@@ -38,7 +38,7 @@ const options = [
 		link: "/adminDashboard",
 		activeIcon: dashboardActive,
 	},
-	{ icon: deals, name: "Deals", link: "/orders", activeIcon: dealsActive },
+	{ icon: deals, name: "Orders", link: "/orders", activeIcon: dealsActive },
 	{
 		icon: bookers,
 		name: "Bookers",

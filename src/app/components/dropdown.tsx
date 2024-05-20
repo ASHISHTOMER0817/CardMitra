@@ -35,10 +35,12 @@ function Dropdown({
 	options,
 	onChange,
 	value,
+	className,
 }: {
 	options: dropdown[];
 	onChange: any;
 	value: dropdown;
+	className?: string;
 }) {
 	const [isClearable, setIsClearable] = useState(true);
 	const [isSearchable, setIsSearchable] = useState(true);
@@ -55,23 +57,21 @@ function Dropdown({
 		}
 	};
 	return (
-			<Select
-				className="basic-single rounded-full"
-				classNamePrefix="select"
-				defaultValue={options[0]}
-				isDisabled={isDisabled}
-				isLoading={isLoading}
-				isClearable={isClearable}
-				isRtl={isRtl}
-				isSearchable={isSearchable}
-				name="color"
-				options={options}
-				styles={customStyles}
-				onChange={handleChange}
-				value={value}
-			/>
-
-			
+		<Select
+			className={`basic-single rounded-full ${className}`}
+			classNamePrefix="select"
+			defaultValue={options[0]}
+			isDisabled={isDisabled}
+			isLoading={isLoading}
+			isClearable={isClearable}
+			isRtl={isRtl}
+			isSearchable={isSearchable}
+			name="color"
+			options={options}
+			styles={customStyles}
+			onChange={handleChange}
+			value={value}
+		/>
 	);
 }
 

@@ -5,7 +5,7 @@ import phoneImage from "@/../public/phoneImage.jpg";
 import cardVerticalLine from "@/../public/cardVerticalLine.svg";
 import amazon from "@/../public/static/amazon.svg";
 import flipkart from "@/../public/static/flipkart.svg";
-import jiomart from "@/../public/static/jiomart.png";
+// import jiomart from "@/../public/static/jiomart.png";
 import shopsy from "@/../public/static/shopsy.jpg";
 import vivo from "@/../public/static/vivo.webp";
 import oppo from "@/../public/static/oppo.png";
@@ -14,16 +14,16 @@ import samsung from "@/../public/static/samsung.png";
 import { useEffect, useState } from "react";
 import { MyArrayItem } from "../(user)/deals/[placeorder]/page";
 
-const siteArr = [
-	{ name: "Amazon", image: amazon },
-	{ name: "Flipkart", image: flipkart },
-	{ name: "Jiomart", image: jiomart },
-	{ name: "Shopsy", image: shopsy },
-	{ name: "Vivo", image: vivo },
-	{ name: "MI", image: mi },
-	{ name: "Oppo", image: oppo },
-	{ name: "Samsung", image: samsung },
-];
+// const siteArr = [
+// 	{ name: "Amazon", image: amazon },
+// 	{ name: "Flipkart", image: flipkart },
+// 	{ name: "Jiomart", image: jiomart },
+// 	{ name: "Shopsy", image: shopsy },
+// 	{ name: "Vivo", image: vivo },
+// 	{ name: "MI", image: mi },
+// 	{ name: "Oppo", image: oppo },
+// 	{ name: "Samsung", image: samsung },
+// ];
 export default function ProductDetails({
 	data,
 	arr,
@@ -34,22 +34,22 @@ export default function ProductDetails({
 	const [siteImage, setSiteImage] = useState();
 	console.log(data?.site.label);
 
-	useEffect(() => {
-		// setsiteImage(forLoop(site.label))
-		function forLoop() {
-			for (let i = 0; i < siteArr.length; i++) {
-				if (siteArr[i].name === data?.site.label) {
-					console.log(data?.site.label);
-					setSiteImage(siteArr[i].image);
-					console.log(true);
-					return;
-				}
-				// console.log(false);
-			}
-		}
-		forLoop();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	// useEffect(() => {
+	// 	// setsiteImage(forLoop(site.label))
+	// 	function forLoop() {
+	// 		for (let i = 0; i < siteArr.length; i++) {
+	// 			if (siteArr[i].name === data?.site.label) {
+	// 				console.log(data?.site.label);
+	// 				setSiteImage(siteArr[i].image);
+	// 				console.log(true);
+	// 				return;
+	// 			}
+	// 			// console.log(false);
+	// 		}
+	// 	}
+	// 	forLoop();
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, []);
 
 	console.log(arr);
 	return (
@@ -152,7 +152,11 @@ export default function ProductDetails({
 						}
 					>
 						<Image
-							src={siteImage ? siteImage : shopsy}
+							src={
+								data?.site?.label
+									? `/static/${data?.site?.label}.svg`
+									: "/static/samsung.png"
+							}
 							width={30}
 							height={30}
 							alt="icon"

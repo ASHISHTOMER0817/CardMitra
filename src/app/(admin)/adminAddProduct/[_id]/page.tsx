@@ -19,6 +19,7 @@ import productList from "@/interface/productList";
 import Loader from "@/app/components/loader";
 import { useRouter } from "next/navigation";
 import { RxCross1 } from "react-icons/rx";
+import { IoAddSharp } from "react-icons/io5";
 
 export interface dropdown {
 	value: string;
@@ -44,30 +45,45 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	});
 	const [zipCode, setZipCode] = useState("");
 	const [loader, setLoader] = useState(false);
-	const [overlay, setOverlay] = useState("");
+	const [overlay, setOverlay] = useState("hidden");
 	const router = useRouter();
+	const [siteOptions, setSiteOptions] = useState<dropdown[]>([]);
+	const [cardOptions, setCardOptions] = useState<dropdown[]>([]);
+	const [addOption, setAddOption] = useState("");
+	const [optionName, setOptionName] = useState("");
+	const [optionFile, setOptionFile] = useState<File>();
+	const [updateOptions, setUpdateOptions] = useState(false);
 
 	// Cards Array
-	const cardOptions: dropdown[] = [
-		{ value: "Amazon pay icici", label: "Amazon pay icici" },
-		{ value: "flipkart axis", label: "flipkart axis" },
-		{ value: "SBI cashback", label: "SBI cashback" },
-	];
+	// const cardOptions: dropdown[] = [
+	// 	{
+	// 		value: "Amazon pay icici credit card",
+	// 		label: "Amazon pay icici credit card",
+	// 	},
+	// 	{
+	// 		value: "flipkart axis credit card",
+	// 		label: "flipkart axis credit card",
+	// 	},
+	// 	{ value: "Axis credit card", label: "Axis credit card" },
+	// 	{ value: "HDFC credit card", label: "HDFC credit card" },
+	// 	{ value: "SBI credit card", label: "SBI credit card" },
+	// 	{ value: "SBI cashback", label: "SBI cashback" },
+	// ];
 
 	//Site Array
-	const siteOptions: dropdown[] = [
-		{ value: "Amazon", label: "Amazon" },
-		{ value: "Flipkart", label: "Flipkart" },
-		{ value: "MI", label: "MI" },
-		{ value: "Amazon", label: "Amazon" },
-		{ value: "Flipkart", label: "Flipkart" },
-		{ value: "Jiomart", label: "Jiomart" },
-		{ value: "Shopsy", label: "Shopsy" },
-		{ value: "Vivo", label: "Vivo" },
-		{ value: "MI", label: "MI" },
-		{ value: "Oppo", label: "Oppo" },
-		{ value: "Samsung", label: "Samsung" },
-	];
+	// const siteOptions: dropdown[] = [
+	// 	// { value: "Amazon", label: "Amazon" },
+	// 	// { value: "Flipkart", label: "Flipkart" },
+	// 	// { value: "MI", label: "MI" },
+	// 	{ value: "Amazon", label: "Amazon" },
+	// 	{ value: "Flipkart", label: "Flipkart" },
+	// 	{ value: "Jiomart", label: "Jiomart" },
+	// 	{ value: "Shopsy", label: "Shopsy" },
+	// 	{ value: "Vivo", label: "Vivo" },
+	// 	{ value: "MI", label: "MI" },
+	// 	{ value: "Oppo", label: "Oppo" },
+	// 	{ value: "Samsung", label: "Samsung" },
+	// ];
 
 	// const [cardsArr, setCardsArr] = useState<string[]>();
 	// console.log(cards);
@@ -83,6 +99,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 		setCards(selectedOptions);
 	};
 
+	// Edit a existing product
 	useEffect(() => {
 		async function getData() {
 			try {
@@ -127,12 +144,58 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	}, [params?._id]);
 	console.log(cards, site);
 
+	useEffect(() => {
+		async function getDate() {
+			try {
+				const response = await axios.get("/api/admin/options");
+				setCardOptions(response.data.data.cardOptions);
+				setSiteOptions(response.data.data.siteOptions);
+				if (response.data.success !== true) {
+					Popup("error", "server error, please refresh");
+				}
+			} catch {
+				Popup("error", "server error, please refresh");
+			}
+		}
+		getDate();
+	}, [updateOptions]);
+
+	async function AddOption(option: string) {
+		try {
+			const optionObject = JSON.stringify({
+				value: option,
+				label: option,
+			});
+			const formData = new FormData();
+			formData.append("optionName", optionObject);
+
+			if (addOption === "site") {
+				formData.append("file", optionFile!);
+			}
+			formData.append("addOption", addOption);
+			const response = await axios.post(
+				"/api/admin/addProduct?query=option",
+				formData
+			);
+
+			if (response.data.success !== true) {
+				Popup("error", "server error, please refresh");
+			} else if (response.data.success) {
+				Popup("success", response.data.message);
+				setUpdateOptions(!updateOptions);
+			}
+		} catch {
+			Popup("error", "server error, please refresh");
+		}
+	}
+
 	//SEND DATA TO BACKEND
 	async function postData(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		try {
 			// Creating a formData instance
 			const formData = new FormData();
+
 			formData.append("name", name);
 			formData.append("commission", commission!.toString());
 			formData.append("productLink", productLink);
@@ -145,11 +208,12 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 			formData.append("file", file!);
 			formData.append("info", JSON.stringify(info));
 			formData.append("zipCode", zipCode);
-			console.log(zipCode);
+			// console.log(zipCode);
 			const response = await axios.post(
 				`/api/admin/addProduct?query=newProduct`,
 				formData
 			);
+
 			console.log(response);
 			if (response.data.success) {
 				Popup("success", "Product added successfully");
@@ -177,44 +241,71 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	};
 
 	return (
-		<form onSubmit={postData} className="w-[90%] p-8">
+		<form onSubmit={postData} className="w-[90%] p-8 relative">
 			{loader ? (
 				<Loader />
 			) : (
 				<>
-					{/* <div
+					<div
 						className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}
 					></div>
 					<div
 						className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4`}
 					>
 						<RxCross1
-							width={20}
-							height={20}
-							className=" cursor-pointer ml-auto hover:bg-gray-100 active:bg-gray-100 rounded-full"
+							width={30}
+							height={30}
+							className=" cursor-pointer ml-auto p-1 hover:bg-gray-100 active:bg-gray-100 rounded-full"
 							onClick={() => setOverlay("hidden")}
 						/>
-						<h4>Write, what you want to add to {}</h4>
+						<h4>
+							Write, {addOption} name you want to
+							add
+						</h4>
 						<input
-							type="number"
+							type="text"
 							required
-							placeholder="Amount"
+							placeholder={`${
+								addOption === "site"
+									? "Site Name"
+									: "Card name"
+							}`}
 							className="outline-none border-b pb-2 border-black"
-							value={amount}
+							value={optionName}
 							onChange={(e) =>
-								setAmount(+e.target.value)
+								setOptionName(e.target.value)
 							}
+						/>{" "}
+						<input
+							type="file"
+							// required
+							placeholder="site image"
+							className={`outline-none border-b pb-2 border-black ${
+								addOption === "site"
+									? ""
+									: "hidden"
+							}`}
+							// value={optionName}
+							onChange={({ target }) => {
+								if (target.files) {
+									setOptionFile(
+										target.files[0]
+									);
+								}
+							}}
 						/>{" "}
 						<button
 							onClick={() => {
-								setListType("reduce");
+								// setListType("reduce");
 								setOverlay("hidden");
+								optionName &&
+									AddOption(optionName);
 							}}
 							className="px-3 py-1 hover:bg-gray-200"
 						>
-							Submit
+							Add
 						</button>
-					</div> */}
+					</div>
 					<div className="flex gap-10 mb-8">
 						<label
 							htmlFor="image"
@@ -273,8 +364,8 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 										alt=""
 										className="w-9 h-9"
 									/>
-									{/* <span>Drag and Drop</span>
-							<span>or</span> */}
+									<span>Drag and Drop</span>
+									<span>or</span>
 									<span>
 										Browse Image
 										<input
@@ -442,13 +533,13 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 								Offers available on bank cards
 							</label>
 
-							<div className="relative inline-block">
+							<div className="relative flex gap-1">
 								<Select
 									defaultValue={cardOptions}
 									isMulti
 									name="colors"
 									options={cardOptions}
-									className="basic-multi-select"
+									className="basic-multi-select flex-1"
 									classNamePrefix="select"
 									onChange={handleChange}
 									styles={customStyles}
@@ -458,7 +549,17 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 											: cardOptions[0]
 									}
 								/>
+								<IoAddSharp
+									onClick={() => {
+										setOverlay("");
+										setAddOption(
+											"card"
+										);
+									}}
+									className="border border-gray-500 rounded-full p-2 hover:bg-gray-100 w-10 h-10"
+								/>
 							</div>
+							{/* <Image src={} alt={""}/> */}
 						</div>
 						<div className="mb-4 flex flex-col w-full gap-6">
 							<label
@@ -468,7 +569,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 								Websites
 							</label>
 
-							<div className="relative inline-block">
+							<div className="relative flex gap-1">
 								<Dropdown
 									options={siteOptions}
 									onChange={
@@ -479,6 +580,16 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 											? site
 											: siteOptions[0]
 									}
+									className="flex-1"
+								/>
+								<IoAddSharp
+									onClick={() => {
+										setOverlay("");
+										setAddOption(
+											"site"
+										);
+									}}
+									className="border border-gray-500 rounded-full p-2 hover:bg-gray-100 w-10 h-10"
 								/>
 							</div>
 						</div>

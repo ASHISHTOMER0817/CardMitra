@@ -64,6 +64,7 @@ export interface user {
 	createdAt: Date
 	unpaid: number
 	_id: string
+	paid: number
 }
 
 export interface UserDetails {

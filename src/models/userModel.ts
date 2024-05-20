@@ -235,16 +235,28 @@ const transactionSchema = new mongoose.Schema({
 	},
 })
 
-// const cancelledOrderSchema = new mongoose.Schema({
-// 	user: {
-// 		type: mongoose.Schema.Types.ObjectId,
-// 		ref: 'users'
-// 	},
-// 	orderObjectId: {
-// 		type: mongoose.Schema.Types.ObjectId,
-// 		ref: "orders"
-// 	},
-// })
+const dropDownOptionsSchema = new mongoose.Schema({
+	id: {
+		type: String,
+		default: 'options'
+	},
+	cards: [{
+		value: {
+			type: String
+		},
+		label: {
+			type: String
+		}
+	}],
+	sites: [{
+		value: {
+			type: String
+		},
+		label: {
+			type: String
+		}
+	}],
+})
 
 const Product = mongoose.models.products || mongoose.model("products", productSchema)
 const Otp = mongoose.models.otps || mongoose.model("otps", otpSchema)
@@ -252,4 +264,5 @@ const Order = mongoose.models.orders || mongoose.model("orders", orderSchema)
 const User = mongoose.models.users || mongoose.model("users", userSchema);
 const Password = mongoose.models.passwords || mongoose.model("passwords", passwordSchema)
 const Transactions = mongoose.models.transactions || mongoose.model("transactions", transactionSchema)
-export { User, Password, Product, Otp, Order, Transactions }
+const Options = mongoose.models.options || mongoose.model('options', dropDownOptionsSchema)
+export { User, Password, Product, Otp, Order, Transactions, Options }

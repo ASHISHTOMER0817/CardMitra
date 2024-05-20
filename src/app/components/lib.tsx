@@ -1,10 +1,10 @@
-import { Order } from "@/models/userModel";
+import { Options, Order } from "@/models/userModel";
 import dateFormat from "./dateFormat";
 import Image from "next/image";
 import transactions from "@/../public/transactions.svg";
 import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc"
-dayjs.extend(utc)
+import utc from "dayjs/plugin/utc";
+dayjs.extend(utc);
 
 //today's date
 export const todaysDate = dateFormat(new Date());
@@ -28,30 +28,37 @@ export const Transactions = () => {
 	);
 };
 
+export async function options() {
+	const options = await Options.findOne({ id: "options" });
+	return options;
+}
+
 export function convertDates(initial: string, last: string) {
 	let startDate;
 	let endDate;
 	// console.log(typeof initial, typeof last, initial, last);
-    
+
 	if (!initial) {
-	  startDate = dayjs().startOf("day").local()
+		startDate = dayjs().startOf("day").local();
 	} else {
-	  startDate = dayjs(new Date(initial)).startOf('day').local()
+		startDate = dayjs(new Date(initial)).startOf("day").local();
 	}
-    
+
 	// console.log(startDate.toDate());
-    
+
 	if (!last) {
-	  endDate = startDate.endOf("day").local()
+		endDate = startDate.endOf("day").local();
 	} else {
-	  endDate = dayjs(new Date(last)).endOf("day").local();
+		endDate = dayjs(new Date(last)).endOf("day").local();
 	}
-    
+
 	console.log(endDate.toDate());
-    
+
 	console.log("Start Date (IST):", startDate);
 	console.log("End Date (IST):", endDate);
-	console.log("-----------------------------------------------------------------------------------------------------");
-    
-	return { startDate,endDate };
-    }
+	console.log(
+		"-----------------------------------------------------------------------------------------------------"
+	);
+
+	return { startDate, endDate };
+}

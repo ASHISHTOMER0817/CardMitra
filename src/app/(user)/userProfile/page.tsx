@@ -8,6 +8,7 @@ import { UserDetails, user } from "@/interface/productList";
 import Popup from "@/app/components/Popup";
 import Loader from "@/app/components/loader";
 import Transactions from "@/app/components/transactions";
+import { LiaRupeeSignSolid } from "react-icons/lia";
 
 const UserProfile = () => {
 	const [ifsc, setIfsc] = useState("");
@@ -107,10 +108,31 @@ const UserProfile = () => {
 					</button>
 				</form>
 				<BackwardButton />
-				<div className="flex justify-between mb-10 items-center">
+				<div className="flex justify-between mb-2 items-start">
 					<h3 className="font-semibold text-primaryBgClr">
 						{data?.name}
 					</h3>
+					<div className="p-4 flex flex-col justify-center items-center bg-gray-200 rounded-[20px]">
+						<div className="flex justify-center items-center text-lg">
+							Earnings:{" "}
+							<LiaRupeeSignSolid
+								width={20}
+								height={20}
+								className="text-primaryBgClr"
+							/>{" "}
+							<div className="text-primaryBgClr">
+								{data?.paid}
+							</div>
+						</div>
+						<div className="text-gray-600 flex justify-center items-center text-[11px] ">
+							pending amount:{" "}
+							<LiaRupeeSignSolid
+								width={10}
+								height={10}
+							/>
+							<div>{data?.unpaid}</div>
+						</div>
+					</div>
 					{!data
 						? ""
 						: !data?.accountNo && (
@@ -144,7 +166,7 @@ const UserProfile = () => {
 					<div className="mr-20">UPI ID: {data?.upi}</div>
 				</section>
 
-				<h6 className="text-gray-400 text-sm mt-14 cursor-pointer rounded-full font-semibold">
+				<h6 className="text-gray-400 text-sm mt-10 mb-4 rounded-full font-semibold">
 					TRANSACTIONS
 				</h6>
 				<Transactions userPage={true} _id={data?._id} />

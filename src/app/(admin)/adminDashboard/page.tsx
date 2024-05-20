@@ -33,8 +33,8 @@ const AdminDashboard = () => {
 		],
 		datasets: [
 			{
-				label: "My First Dataset",
-				data: [65, 59, 80, 81, 56, 55, 40, 65, 87, 30, 62],
+				label: "Order placed monthly",
+				data: [65, 59, 80, 81, 56, 500],
 				fill: false,
 				borderColor: "rgb(75, 192, 192)",
 				tension: 0.1,
@@ -58,7 +58,6 @@ const AdminDashboard = () => {
 
 	return (
 		<div className="mx-6 w-[90%] mt-6 md:text-xs">
-			
 			<section className="mt-9 ">
 				<h3 className=" font-semibold mb-3">Dashboard</h3>
 				<div className="flex justify-start gap-2 sm:gap-1">

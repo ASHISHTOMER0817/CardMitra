@@ -5,7 +5,6 @@ export default async function Database() {
 			.connect(process.env.DB_URI!)
 			.then(() => console.log("the MONGODB is connected"));
 		const connection = mongoose.connection;
-
 		connection.on("connected", () => {
 			console.log("MongoDB connected successfully");
 		});

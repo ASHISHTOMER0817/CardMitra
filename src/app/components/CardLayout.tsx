@@ -2,25 +2,25 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import Image from "next/image";
 import phoneImage from "@/../public/phoneImage.jpg";
-import amazon from "@/../public/static/amazon.svg";
-import flipkart from "@/../public/static/flipkart.svg";
-import jiomart from "@/../public/static/jiomart.png";
-import shopsy from "@/../public/static/shopsy.jpg";
-import vivo from "@/../public/static/vivo.webp";
-import oppo from "@/../public/static/oppo.png";
-import mi from "@/../public/static/mi.jpg";
-import samsung from "@/../public/static/samsung.png";
+// import amazon from "@/../public/static/amazon.svg";
+// import flipkart from "@/../public/static/flipkart.svg";
+// import jiomart from "@/../public/static/jiomart.png";
+// import shopsy from "@/../public/static/shopsy.jpg";
+// import vivo from "@/../public/static/vivo.webp";
+// import oppo from "@/../public/static/oppo.png";
+// import mi from "@/../public/static/mi.jpg";
+// import samsung from "@/../public/static/samsung.png";
 
-const siteArr = [
-	{ name: "Amazon", image: amazon },
-	{ name: "Flipkart", image: flipkart },
-	{ name: "Jiomart", image: jiomart },
-	{ name: "Shopsy", image: shopsy },
-	{ name: "Vivo", image: vivo },
-	{ name: "MI", image: mi },
-	{ name: "Oppo", image: oppo },
-	{ name: "Samsung", image: samsung },
-];
+// const siteArr = [
+// 	{ name: "Amazon", image: amazon },
+// 	{ name: "Flipkart", image: flipkart },
+// 	{ name: "Jiomart", image: jiomart },
+// 	{ name: "Shopsy", image: shopsy },
+// 	{ name: "Vivo", image: vivo },
+// 	{ name: "MI", image: mi },
+// 	{ name: "Oppo", image: oppo },
+// 	{ name: "Samsung", image: samsung },
+// ];
 
 const CardLayout = ({
 	image,
@@ -46,18 +46,19 @@ const CardLayout = ({
 	cards: { value: string; label: string }[];
 }) => {
 	const [siteImage, setSiteImage] = useState();
-
 	useEffect(() => {
 		// setsiteImage(forLoop(site.label))
+
 		function forLoop() {
-			for (let i = 0; i < siteArr.length; i++) {
-				if (siteArr[i].name === site.label) {
-					setSiteImage(siteArr[i].image);
-					console.log(true);
-					return;
-				}
-				// console.log(false);
-			}
+			// for (let i = 0; i < siteArr.length; i++) {
+			// 	if (siteArr[i].name === site.label) {
+			// 		setSiteImage(siteArr[i].image);
+			// 		console.log(true);
+			// 		return;
+			// 	}
+			// 	// console.log(false);
+			// }
+			// for (let i = 0; i < 7; i++) {}
 		}
 		forLoop();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -116,7 +117,12 @@ const CardLayout = ({
 			<hr className="my-4" />
 			<div className="flex justify-between items-center sm:w-4 min-h-10">
 				<Image
-					src={!siteImage ? shopsy : siteImage}
+					src={
+						// `/cards/HDFC credit card.svg`
+						site.label
+							? `/static/${site.label}.svg`
+							: "/static/samsung.png"
+					}
 					width={40}
 					height={40}
 					alt={""}
