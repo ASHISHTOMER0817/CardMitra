@@ -115,7 +115,7 @@ const UserProfile = () => {
 						{data?.name}
 					</h3>
 					<div className="p-4 flex flex-col justify-center items-center bg-gray-200 rounded-[20px] sm:py-1 sm:text-[10px]">
-						<div className="flex justify-center items-center text-lg">
+						<div className="flex justify-center items-center text-lg sm:text-sm">
 							Earnings:{" "}
 							<LiaRupeeSignSolid
 								width={20}
