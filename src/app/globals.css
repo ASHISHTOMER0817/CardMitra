@@ -27,89 +27,98 @@ body {
 } */
 
 .loginBgImage {
-  background-image: url('/loginBgImage.jpg');
+	background-image: url("/loginBgImage.jpg");
 }
 
 .responsiveLink > div:hover {
-  color: rgb(195, 203, 211);
-  cursor: pointer;
+	color: rgb(195, 203, 211);
+	cursor: pointer;
 }
 
 .form :nth-child(odd) {
-  margin-bottom: 6px;
-  font-size: small;
-  font-weight: 500;
-  
+	margin-bottom: 6px;
+	font-size: small;
+	font-weight: 500;
 }
 
 .form :nth-child(even) {
-  margin-bottom: 12px;
-  padding: 16px 12px;
-  width: 384px;
-  outline: none;
-  border: 1px solid;
-  border-radius: 999px;
+	margin-bottom: 12px;
+	padding: 16px 12px;
+	width: 384px;
+	outline: none;
+	border: 1px solid;
+	border-radius: 999px;
 }
 
+@media (max-width: 639px) {
+	.form :nth-child(even) {
+		width: 12rem !important;
+		padding-left: 1.5rem;
+		padding-top: 0.5rem;
+		padding-bottom: 0.5rem;
+		font-size: 12px;
+	}
+}
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+	.text-balance {
+		text-wrap: balance;
+	}
 }
 
 @layer base {
-  h1 {
-    @apply text-5xl
-  }
-  h2 {
-    @apply text-4xl
-  }
-  h3 {
-    @apply text-3xl
-  }
-  h4 {
-    @apply text-2xl
-  }
-  h5 {
-    @apply text-xl
-  }
-  h6 {
-    @apply text-lg
-  }
+	h1 {
+		@apply text-5xl;
+	}
+	h2 {
+		@apply text-4xl;
+	}
+	h3 {
+		@apply text-3xl;
+	}
+	h4 {
+		@apply text-2xl;
+	}
+	h5 {
+		@apply text-xl;
+	}
+	h6 {
+		@apply text-lg;
+	}
 }
 
-h1, h2, h3{
-  @media (max-width:768px) {
-    font-size: 18px!important;
-  };
+h1,
+h2,
+h3 {
+	@media (max-width: 768px) {
+		font-size: 18px !important;
+	}
 }
-h4{
-  @media (max-width:768px) {
-    font-size: 14px!important;
-  };
-}
-
-h5{
-  @media (max-width:768px) {
-    font-size: 12px!important;
-  };
+h4 {
+	@media (max-width: 768px) {
+		font-size: 14px !important;
+	}
 }
 
- tbody{
-  @media (max-width:768px) {
-    font-size: 12px!important;
-  };
-}
-thead{
-  @media (max-width:768px) {
-    font-size: 14px!important;
-  }
+h5 {
+	@media (max-width: 768px) {
+		font-size: 12px !important;
+	}
 }
 
-.select__menu{
+tbody {
+	@media (max-width: 768px) {
+		font-size: 12px !important;
+	}
+}
+thead {
+	@media (max-width: 768px) {
+		font-size: 14px !important;
+	}
+}
 
-  z-index: 999;
+.select__menu {
+	z-index: 999;
 }
 
 /* h4, h5, a{

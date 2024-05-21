@@ -55,54 +55,54 @@ export default function ProductDetails({
 	return (
 		<>
 			<section className=" text-left mb-4">
-				<div className="bg-[#FC08081A] text-[#FC0808] text-center px-4 py-1 mb-3 rounded-full">
+				<div className="bg-[#FC08081A] text-[#FC0808] text-center px-4 py-1 mb-3 rounded-full sm:w-fit sm:text-nowrap sm:ml-10">
 					Quantity left: {data?.requirement}{" "}
 				</div>
-				<div className="flex gap-10 justify-start items-start">
+				<div className="flex gap-10 justify-start items-start sm:flex-col sm:gap-0">
 					<Image
-						className="w-80"
+						className="w-80 sm:w-56"
 						src={`/uploads/${data?.image}`}
 						alt={""}
 						width={470}
 						height={550}
 					/>
-					<div className="flex flex-col gap-12 justify-center">
-						<div className="text-left">
-							<h4 className="font-semibold mb-2">
-								{data?.name}
-							</h4>
-						</div>
-						<div>
-							<div className="flex items-start gap-3">
-								<div className="">
-									<div className="font-semibold text-black">
-										{data?.price}
-									</div>
-									<div className="md:text-xs">
-										Price/ Unit
-									</div>
+					<div className="flex flex-col gap-12 justify-center sm:gap-2 sm:mt-2 sm:text-lg">
+						{/* <div className=""> */}
+						<h4 className="font-semibold mb-2 sm:font-bold text-left">
+							{data?.name}
+						</h4>
+						{/* </div> */}
+						{/* <div> */}
+						<div className="flex items-start gap-3 sm:text-sm">
+							<div className="">
+								<div className="font-semibold text-black">
+									{data?.price}
 								</div>
-								<Image
-									src={cardVerticalLine}
-									alt={""}
-								/>
-								<div className="">
-									<div className="font-semibold text-primaryBgClr">
-										{data?.commission}
-									</div>
-									<div className="md:text-xs">
-										Commission
-									</div>
+								<div className="md:text-xs">
+									Price/ Unit
+								</div>
+							</div>
+							<Image
+								src={cardVerticalLine}
+								alt={""}
+							/>
+							<div className="">
+								<div className="font-semibold text-primaryBgClr">
+									{data?.commission}
+								</div>
+								<div className="md:text-xs">
+									Commission
 								</div>
 							</div>
 						</div>
+						{/* </div> */}
 						{arr.length > 0 && (
 							<div className="flex flex-col gap-4 items-start">
 								<div className="font-semibold">
 									Keep in mind while
 									ordering :-
 								</div>
-								<ul className="flex flex-col text-sm gap-0.5 text-gray-700">
+								<ul className="flex flex-col text-sm gap-0.5 text-gray-700 sm:text-[13px]">
 									{arr.map((e, index) => {
 										return (
 											<li
@@ -120,15 +120,17 @@ export default function ProductDetails({
 					</div>
 				</div>
 			</section>
-			<section className="w-full flex justify-between items-start">
-				<div className="flex flex-col items-end">
-					<h6 className="mb-2">bank cards to use</h6>
+			<section className="w-full flex justify-between items-start ">
+				<div className="flex flex-col items-end ">
+					<h6 className="mb-2 sm:text-[12px] sm:font-semibold">
+						bank cards to use
+					</h6>
 					{data?.cards
 						? data?.cards.map(({ label }, index) => {
 								return (
 									<div
 										key={index}
-										className="text-gray-500 font-semibold"
+										className="text-gray-500 font-semibold sm:text-[12px]"
 									>
 										{label}
 									</div>
@@ -137,14 +139,18 @@ export default function ProductDetails({
 						: ""}
 				</div>
 				<div>
-					<h6 className="mb-2">Zip Code</h6>
+					<h6 className="mb-2 sm:text-[12px] sm:font-semibold">
+						Zip Code
+					</h6>
 					<div>{data?.zipCode}</div>
 				</div>
 				<div>
-					<h6 className="mb-2">Website</h6>
+					<h6 className="mb-2 sm:text-[12px] sm:font-semibold">
+						Website
+					</h6>
 
 					<Link
-						className="text-primaryBgClr font-semibold hover:text-green-800"
+						className="text-primaryBgClr font-semibold hover:text-green-800 sm:text-[12px]"
 						href={
 							data?.productLink
 								? data?.productLink
@@ -164,8 +170,10 @@ export default function ProductDetails({
 					</Link>
 				</div>
 			</section>
-			<section className="text-wrap flex text-gray-600 text-sm flex-col justify-start mt-4 gap-2">
-				<div className=" text-black text-lg">Address</div>
+			<section className="text-wrap flex text-gray-600 text-sm flex-col justify-start mt-4 gap-2 sm:mb-8">
+				<div className=" text-black text-lg sm:text-[12px] font-semibold">
+					Address
+				</div>
 				{data?.address}
 			</section>
 		</>

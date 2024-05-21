@@ -29,7 +29,7 @@ const OdrHistory = () => {
 			<Header
 				heading={"Order History"}
 				Children={
-					<nav className="flex justify-end items-center gap-3 text-gray-800">
+					<nav className="flex justify-end items-center gap-3 text-gray-800 sm:text-xs">
 						<div
 							onClick={() => setListType("all")}
 							className={`${
@@ -79,7 +79,7 @@ const OdrHistory = () => {
 							className={`${
 								listType === "wrong OTP" &&
 								"underline-offset-4 underline text-primaryBgClr"
-							}  hover:text-primaryBgClr cursor-pointer`}
+							}  hover:text-primaryBgClr cursor-pointer sm:text-nowrap`}
 						>
 							wrong OTP
 						</div>
@@ -90,11 +90,11 @@ const OdrHistory = () => {
 			{!data ? (
 				<Loader />
 			) : data.length < 1 ? (
-				<div className="mx-auto w-fit text-red-500 font-serif my-20">
+				<div className="mx-auto w-fit text-red-500 font-serif my-20 sm:text-xs">
 					You don&apos;t have any order history...
 				</div>
 			) : (
-				<div className="grid grid-flow-row gap-7 grid-cols-3 md:gap-3">
+				<div className="grid grid-flow-row gap-7 grid-cols-3 md:gap-3 sm:gap-1 sm:grid-cols-2 sm:-ml-5 sm:-mr-[50px]">
 					{data.map(
 						(
 							{ product, _id, otp, delivered },

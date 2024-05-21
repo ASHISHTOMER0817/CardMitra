@@ -20,16 +20,16 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 	useEffect(() => {
 		async function getData() {
 			try {
-				console.log('starts')
+				console.log("starts");
 				const response = await axios.get(
 					`/api/users/orderData?odrId=${params._id}`
 				);
 				console.log(response.data.data);
 				const { info } = response.data.data.product;
-				console.log(info)
+				console.log(info);
 				setArr(Object.entries(info));
 				setData(response.data.data);
-				console.log('end here')
+				console.log("end here");
 				return;
 			} catch {
 				console.log(
@@ -46,8 +46,8 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 				<Loader />
 			) : (
 				<div className="mt-16 ml-8 w-full">
-					<BackwardButton/>
-					<section className="flex items-start text-sm justify-around">
+					<BackwardButton />
+					<section className="flex items-start text-sm justify-around sm:flex-col">
 						<div className="flex flex-col items-start gap-10 justify-around">
 							<ProductDetails
 								data={data.product!}
@@ -63,7 +63,7 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 						</div>
 					</section>
 
-					<hr className="my-5" />
+					{/* <hr className="my-5" /> */}
 					{/* <section className="my-1 mb-3">
 						<div className="text-base font-semibold mb-4">
 							Similar Products

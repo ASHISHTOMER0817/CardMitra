@@ -182,7 +182,7 @@ const Dashboard = () => {
 						You have not placed any product yet...
 					</div>
 				) : (
-					<div className="grid grid-flow-row gap-3 grid-cols-3 sm:gap-1">
+					<div className="grid grid-flow-row gap-3 grid-cols-3 sm:gap-1 sm:grid-cols-2">
 						{data.order
 							.slice(0, 3)
 							.map(

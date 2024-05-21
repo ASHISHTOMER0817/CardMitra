@@ -31,9 +31,9 @@ const Deals = () => {
 	}, []);
 
 	return (
-		<div className=" my-12 ">
+		<div className=" my-12 sm:-mr-5 sm:-ml-7">
 			<h3 className="mb-8 mr-auto ml-10 font-semibold">Deals</h3>
-			<div className=" ml-8 grid grid-flow-row grid-cols-3 gap-3 sm:ml-2 sm:gap-1">
+			<div className=" ml-8 grid grid-flow-row grid-cols-3 gap-3 sm:ml-2 sm:gap-1 sm:grid-cols-2">
 				{/* <CardLayoutForDeals data={data!} /> */}
 
 				{!data ? (
@@ -58,7 +58,17 @@ const Deals = () => {
 									<CardLayout
 										key={index}
 										placeOrder={
-											<button onClick={()=>!data.user.isApprove ? Popup('info', "You are not verified yet"):''}
+											<button
+												onClick={() =>
+													!data
+														.user
+														.isApprove
+														? Popup(
+																"info",
+																"You are not verified yet"
+														  )
+														: ""
+												}
 												className={` p-[14px] font-semibold text-base ${
 													requirement >
 														0 &&
@@ -68,7 +78,7 @@ const Deals = () => {
 														false
 														? " hover:bg-green-600 bg-primaryBgClr"
 														: "bg-gray-400"
-												} rounded-full border text-center w-auto text-white sm:-ml-[34px] sm:mr-[17px] sm:mt-1 sm:px-1 sm:py-0.5 sm:font-medium sm:text-[10px] sm:text-nowrap sm:leading-4`}
+												} rounded-full border text-center w-auto text-white sm:-ml-[82px] sm:mr-[17px] sm:mt-1 sm:px-1 sm:py-0.5 sm:font-medium sm:text-[10px] sm:text-nowrap sm:leading-4`}
 											>
 												{requirement >
 													0 &&

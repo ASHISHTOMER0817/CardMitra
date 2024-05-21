@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import axios from "axios";
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
@@ -62,22 +62,19 @@ const OrderForm = ({ objectId }: { objectId: string }) => {
 		setAddress("");
 	};
 
-	// function runPopup(statement: string) {}
-
 	return (
 		<form
 			className="form flex flex-col justify-start"
 			onSubmit={handleSubmit}
 		>
-			<label htmlFor="number">
-				Order Number 
-			</label>
+			<label htmlFor="number">Order Number</label>
 			<input
 				type="text"
 				placeholder="Order Number"
 				value={orderNumber}
 				onChange={handleOrderNumberChange}
 				required
+				className="sm:w-48 sm:py-2 sm:pl-6"
 			/>
 
 			<label htmlFor="date">Date of Delivery</label>
@@ -87,6 +84,7 @@ const OrderForm = ({ objectId }: { objectId: string }) => {
 				value={deliveryDate}
 				onChange={handleDeliveryDateChange}
 				required
+				className="sm:w-48 sm:py-2 sm:pl-6"
 			/>
 
 			<label htmlFor="address">Address</label>
@@ -96,11 +94,12 @@ const OrderForm = ({ objectId }: { objectId: string }) => {
 				value={address}
 				onChange={handleAddressChange}
 				required
+				className="sm:w-48 sm:py-2 sm:pl-6"
 			/>
 
 			<button
 				type="submit"
-				className="text-white border rounded-3xl py-4 px-3 hover:bg-green-600 bg-primaryBgClr w-96"
+				className="text-white border rounded-3xl py-4 px-3 hover:bg-green-600 bg-primaryBgClr w-96 sm:w-48 sm:py-2"
 			>
 				Submit
 			</button>
