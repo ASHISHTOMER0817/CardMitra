@@ -61,7 +61,7 @@ const UserProfile = () => {
 	}
 	return (
 		<>
-			<div className="w-[90%] mb-10 mx-auto mt-6 relative sm:ml-0">
+			<div className="w-[100%] mb-10 mx-auto mt-6 relative sm:ml-0">
 				<div
 					className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}
 				></div>
@@ -151,7 +151,7 @@ const UserProfile = () => {
 				<h6 className="text-gray-400 mb-4 text-sm font-semibold sm:text-[10px] sm:mb-1">
 					PERSONAL
 				</h6>
-				<section className=" flex justify-between items-center">
+				<section className=" flex justify-between items-center sm:text-[10px]">
 					<div>Name: {data?.name}</div>
 					<div>Email: {data?.email}</div>
 					<div>Contact: {data?.contact} </div>
