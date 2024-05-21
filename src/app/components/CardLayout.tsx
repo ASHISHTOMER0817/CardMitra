@@ -47,9 +47,9 @@ const CardLayout = ({
 }) => {
 	return (
 		<div
-			className={`p-7 border rounded-2xl md:p-2 border-gray-400 ${classList}`}
+			className={`p-7 border rounded-2xl sm:p-0.5 border-gray-400 ${classList}`}
 		>
-			<div className="flex items-center mb-4 gap-4">
+			<div className="flex items-center mb-4 gap-4 sm:ml-4">
 				<div className="mr-auto px-[10px] py-[5px] text-sm rounded-3xl border text-center bg-gray-200 sm:text-[10px] sm:px-1 sm:py-0">
 					Quantity: {quantity}
 				</div>
@@ -102,7 +102,7 @@ const CardLayout = ({
 						// `/cards/HDFC credit card.svg`
 						site.label
 							? `/static/${site.label}.svg`
-							: "/static/samsung.png"
+							: ""
 					}
 					width={40}
 					height={40}

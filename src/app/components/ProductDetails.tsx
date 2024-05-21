@@ -31,7 +31,7 @@ export default function ProductDetails({
 	data: productList;
 	arr: Array<MyArrayItem>;
 }) {
-	const [siteImage, setSiteImage] = useState();
+	// const [siteImage, setSiteImage] = useState();
 	console.log(data?.site.label);
 
 	// useEffect(() => {
@@ -68,7 +68,7 @@ export default function ProductDetails({
 					/>
 					<div className="flex flex-col gap-12 justify-center sm:gap-2 sm:mt-2 sm:text-lg">
 						{/* <div className=""> */}
-						<h4 className="font-semibold mb-2 sm:font-bold text-left">
+						<h4 className="font-semibold mb-2 sm:font-bold text-left sm:text-wrap">
 							{data?.name}
 						</h4>
 						{/* </div> */}
