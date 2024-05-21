@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode } from "react";
 import Image from "next/image";
 import phoneImage from "@/../public/phoneImage.jpg";
 // import amazon from "@/../public/static/amazon.svg";
@@ -45,25 +45,6 @@ const CardLayout = ({
 	deviceImage: string;
 	cards: { value: string; label: string }[];
 }) => {
-	const [siteImage, setSiteImage] = useState();
-	useEffect(() => {
-		// setsiteImage(forLoop(site.label))
-
-		function forLoop() {
-			// for (let i = 0; i < siteArr.length; i++) {
-			// 	if (siteArr[i].name === site.label) {
-			// 		setSiteImage(siteArr[i].image);
-			// 		console.log(true);
-			// 		return;
-			// 	}
-			// 	// console.log(false);
-			// }
-			// for (let i = 0; i < 7; i++) {}
-		}
-		forLoop();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
 	return (
 		<div
 			className={`p-7 border rounded-2xl md:p-2 border-gray-400 ${classList}`}
@@ -74,9 +55,9 @@ const CardLayout = ({
 				</div>
 				{image}
 			</div>
-			<div className="flex justify-center text-sm items-start md:gap-1">
+			<div className="flex justify-center text-sm items-start md:gap-0">
 				<Image
-					className="w-40 h-[150px] md:w-[85px] sm:h-[60px]"
+					className="w-40 h-[150px] md:w-[85px] sm:h-[100px] sm:w-[100px]"
 					src={
 						deviceImage
 							? `/uploads/${deviceImage}`
@@ -115,7 +96,7 @@ const CardLayout = ({
 				</section>
 			</div>
 			<hr className="my-4" />
-			<div className="flex justify-between items-center sm:w-4 min-h-10">
+			<div className="flex justify-between items-center sm:w-full min-h-10">
 				<Image
 					src={
 						// `/cards/HDFC credit card.svg`
@@ -126,6 +107,7 @@ const CardLayout = ({
 					width={40}
 					height={40}
 					alt={""}
+					className="sm:h-7"
 				/>
 
 				<div className="flex flex-col justify-start items-start text-sm font-semibold text-gray-600">

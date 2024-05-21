@@ -78,12 +78,12 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 
 	console.log(data?.totalAmt);
 	return (
-		<div className="w-[90%] mx-10 mt-6 relative">
+		<div className="w-[90%] mx-10 mt-6 relative sm:ml-0">
 			<div
 				className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}
 			></div>
 			<div
-				className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4`}
+				className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 sm:gap-2`}
 			>
 				<RxCross1
 					width={20}
@@ -91,12 +91,14 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 					className=" cursor-pointer ml-auto hover:bg-gray-100 active:bg-gray-100 rounded-full"
 					onClick={() => setOverlay("hidden")}
 				/>
-				<h4>Write the amount you paid</h4>
+				<h4 className="sm:text-nowrap">
+					Write, the amount you paid
+				</h4>
 				<input
 					type="number"
 					required
 					placeholder="Amount"
-					className="outline-none border-b pb-2 border-black"
+					className="outline-none border-b pb-2 border-black sm:text-sm"
 					value={amount}
 					onChange={(e) => setAmount(+e.target.value)}
 				/>{" "}
@@ -105,7 +107,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 						setListType("reduce");
 						setOverlay("hidden");
 					}}
-					className="px-3 py-1 hover:bg-gray-200"
+					className="px-3 py-1 hover:bg-gray-200 active:bg-gray-200"
 				>
 					Submit
 				</button>
@@ -117,26 +119,36 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 					data?.totalAmt! > 0 && (
 						<div
 							onClick={() => setOverlay("")}
-							className="rounded-3xl text-nowrap cursor-pointer bg-primaryBgClr flex py-2 px-4 border justify-center items-center  text-white"
+							className="rounded-3xl text-nowrap cursor-pointer bg-primaryBgClr flex py-2 px-4 border justify-center items-center text-white sm:py-1 sm:text-[10px]"
 						>
 							pay Rs.{data?.totalAmt}
 						</div>
 					)}
 			</div>
-			<h6 className="text-gray-400 mb-4 text-sm">PERSONAL</h6>
-			<section className=" flex justify-between items-center">
+			<h6 className="text-gray-400 mb-4 text-sm sm:text-[10px] sm:mb-1">
+				PERSONAL
+			</h6>
+			<section className=" flex justify-between items-center sm:text-[10px] ">
 				<div>Name: {data?.user?.name}</div>
 				<div>Email: {data?.user?.email}</div>
 				<div>Contact: {data?.user?.contact} </div>
 			</section>
 
-			<hr className="border w-full my-7" />
-			<h6 className="text-gray-400 mb-4 text-sm">BANK DETAILS</h6>
+			<hr className="border w-full my-7 sm:my-3" />
+			<h6 className="text-gray-400 mb-4 text-sm  sm:text-[10px] sm:mb-1">
+				BANK DETAILS
+			</h6>
 
-			<section className="flex justify-between items-center">
-				<div>Bank Account Number: {data?.user?.accountNo}</div>
-				<div>IFSC Code: {data?.user?.ifsc} </div>
-				<div className="mr-20">UPI ID: {data?.user?.upi}</div>
+			<section className="flex justify-between items-center sm:text-[10px]">
+				<div>
+					Account Number: <div>{data?.user?.accountNo}</div>
+				</div>
+				<div>
+					IFSC Code: <div>{data?.user?.ifsc} </div>
+				</div>
+				<div className="mr-20">
+					UPI ID: <div>{data?.user?.upi}</div>
+				</div>
 			</section>
 
 			<div className="flex justify-start gap-4 mt-8 mb-4 items-center ">
@@ -145,7 +157,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 						setListType("delivered");
 						setTransactions(false);
 					}}
-					className={` text-sm p-[10px] rounded-full cursor-pointer ${
+					className={` text-sm p-[10px] rounded-full cursor-pointer sm:text-[10px] sm:text-nowrap ${
 						(listType === "delivered" ||
 							listType === "reduce") &&
 						!transactions &&
@@ -159,7 +171,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 						setListType("nonDelivered");
 						setTransactions(false);
 					}}
-					className={` text-sm p-[10px] rounded-full cursor-pointer ${
+					className={` text-sm p-[10px] rounded-full cursor-pointer sm:text-[10px] sm:text-nowrap ${
 						listType === "nonDelivered" &&
 						!transactions &&
 						"underline underline-offset-4 text-primaryBgClr"
@@ -169,7 +181,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 				</h6>
 				<h6
 					onClick={() => setTransactions(true)}
-					className={` text-sm p-[10px] rounded-full cursor-pointer ${
+					className={` text-sm p-[10px] rounded-full cursor-pointer sm:text-[10px] sm:text-nowrap ${
 						transactions &&
 						"underline underline-offset-4 text-primaryBgClr"
 					}`}
@@ -186,7 +198,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 				data?.orderList?.length > 0 ? (
 					<UserOrders data={data?.orderList!} />
 				) : (
-					<div className="mt-28 mx-auto w-fit text-sm text-red-500 font-serif">
+					<div className="mt-28 mx-auto w-fit text-sm text-red-500 font-serif sm:text-[8px]">
 						User was In-active !!
 					</div>
 				)

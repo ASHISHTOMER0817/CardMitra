@@ -18,72 +18,68 @@ const UserOrders = ({ data }: { data: order[] }) => {
 	//       }
 	// })
 	return (
-			<table className="w-full rounded-2xl overflow-hidden">
-				<thead>
-					<tr className="bg-gray-200">
-						<th className="py-6 px-12 text-left">
-							Order ID
-						</th>
-						<th className="py-6 px-12 text-left">
-							Delivery Date
-						</th>
-						<th className="py-6 px-12 text-left">
-							Order Date
-						</th>
-						<th className="py-6 px-12 text-left">
-							Product Name
-						</th>
-						<th className="py-6 px-12 text-left">
-							Price
-						</th>
+		<table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all sm:text-wrap">
+			<thead>
+				<tr className="bg-green-100 text-[#2f4f4f] sm:text-[8px]">
+					<th className="py-6 px-12 text-left sm:pr-0.5 sm:pl-2 sm:py-1">
+						Order ID
+					</th>
+					<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
+						Delivery Date
+					</th>
+					<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
+						Order Date
+					</th>
+					<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
+						Product Name
+					</th>
+					<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
+						Price
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{data.map(
+					(
+						{
+							deliveryDate,
+							product,
+							orderedAt,
+							orderId,
+						},
+						index
+					) => {
+						// const date = new Date(deliveryDate);
+						// let delivery = dateFormat(date);
+						// const orderDate = new Date(orderedAt);
+						// let order_at = dateFormat(orderDate);
 
-						
-					</tr>
-				</thead>
-				<tbody>
-					{data.map(
-						(
-							{
-								deliveryDate,
-								product,
-								orderedAt,
-								orderId,
-							},
-							index
-						) => {
-							// const date = new Date(deliveryDate);
-							// let delivery = dateFormat(date);
-							// const orderDate = new Date(orderedAt);
-							// let order_at = dateFormat(orderDate);
-
-							return (
-								<tr
-									key={index}
-									className="even:bg-gray-100"
-								>
-									<td className="py-4 px-12">
-										{orderId}
-									</td>
-									<td className="py-4 px-12">
-										{deliveryDate}
-									</td>
-									<td className="py-4 px-12">
-										{orderedAt}
-									</td>
-									<td className="py-4 px-12">
-										{product.name}
-									</td>
-									<td className="py-4 px-12">
-										{product.price}
-									</td>
-
-									
-								</tr>
-							);
-						}
-					)}
-				</tbody>
-			</table>
+						return (
+							<tr
+								key={index}
+								className="even:bg-gray-100 sm:text-[8px]"
+							>
+								<td className="py-4 px-12 sm:px-0.5 sm:py-1 text-gray-500">
+									{orderId}
+								</td>
+								<td className="py-4 px-12 sm:px-0.5 sm:py-1">
+									{deliveryDate}
+								</td>
+								<td className="py-4 px-12 sm:px-0.5 sm:py-1">
+									{orderedAt}
+								</td>
+								<td className="py-4 px-12 sm:px-0.5 sm:py-1 text-primaryBgClr">
+									{product.name}
+								</td>
+								<td className="py-4 px-12 sm:px-0.5 sm:py-1 font-semibold">
+									{product.price}
+								</td>
+							</tr>
+						);
+					}
+				)}
+			</tbody>
+		</table>
 	);
 };
 

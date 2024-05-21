@@ -23,8 +23,10 @@ const AdminTransactions = () => {
 	// }, []);
 
 	return (
-		<div className="w-[85%] mx-auto mt-6 ">
-			<h3 className="font-semibold my-12">Transactions</h3>
+		<div className="w-[85%] mx-auto mt-6 sm:mt-0">
+			<h3 className="font-semibold my-12 sm:my-0 sm:text-sm">
+				Transactions
+			</h3>
 			<Transactions userPage={false} />
 		</div>
 	);

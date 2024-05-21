@@ -241,7 +241,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	};
 
 	return (
-		<form onSubmit={postData} className="w-[90%] p-8 relative">
+		<form onSubmit={postData} className="w-[90%] p-8 relative sm:w-fit">
 			{loader ? (
 				<Loader />
 			) : (
@@ -255,7 +255,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 						<RxCross1
 							width={30}
 							height={30}
-							className=" cursor-pointer ml-auto p-1 hover:bg-gray-100 active:bg-gray-100 rounded-full"
+							className=" cursor-pointer ml-auto p-1 hover:bg-gray-100 active:bg-gray-100 rounded-full sm:w-7 sm:h-7"
 							onClick={() => setOverlay("hidden")}
 						/>
 						<h4>
@@ -556,7 +556,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 											"card"
 										);
 									}}
-									className="border border-gray-500 rounded-full p-2 hover:bg-gray-100 w-10 h-10"
+									className="border border-gray-500 rounded-full p-2 hover:bg-gray-100 w-[37px] h-[37px]"
 								/>
 							</div>
 							{/* <Image src={} alt={""}/> */}

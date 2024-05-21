@@ -37,23 +37,23 @@ const Transactions = ({
 			{!data ? (
 				<Loader />
 			) : data.length > 0 ? (
-				<table className="w-full rounded-2xl overflow-hidden">
+				<table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all sm:text-wrap">
 					<thead>
-						<tr className="bg-green-100 text-[#2f4f4f]">
-							<th className="py-6 px-12 text-left">
+						<tr className="bg-green-100 text-[#2f4f4f] sm:text-[8px]">
+							<th className="py-6 px-12 text-left sm:pr-0.5 sm:pl-2 sm:py-1">
 								Transaction ID
 							</th>
 							{userPage.toString() === "false" && (
-								<th className="py-6 px-12 text-left">
+								<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
 									User name
 								</th>
 							)}
 							{/* {heading} */}
-							<th className="py-6 px-12 text-left">
+							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
 								Date
 							</th>
 
-							<th className="py-6 px-12 text-left">
+							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
 								Amount Paid
 							</th>
 						</tr>
@@ -77,20 +77,20 @@ const Transactions = ({
 								return (
 									<tr
 										key={index}
-										className="even:bg-gray-100"
+										className="even:bg-gray-100 sm:text-[8px]"
 									>
-										<td className="py-4 px-12 text-sm">
+										<td className="py-4 px-12 text-sm sm:text-[8px] sm:px-0.5 sm:py-1">
 											{_id}
 										</td>
 										{userPage.toString() ===
 											"false" && (
-											<td className="py-4 px-12 font-semibold">
+											<td className="py-4 px-12 font-semibold sm:px-0.5 sm:py-1">
 												{
 													user.name
 												}
 											</td>
 										)}
-										<td className="py-4 px-12 text-gray-500">
+										<td className="py-4 px-12 text-gray-500 sm:px-0.5 sm:py-1">
 											{dateFormat(
 												new Date(
 													dateOfPayment
@@ -98,7 +98,7 @@ const Transactions = ({
 											)}
 										</td>
 
-										<td className="py-4 px-12 text-primaryBgClr">
+										<td className="py-4 px-12 text-primaryBgClr sm:px-0.5 sm:py-1">
 											{amount}
 										</td>
 									</tr>

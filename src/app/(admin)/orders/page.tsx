@@ -35,14 +35,15 @@ const AdminOrderHistory = () => {
 	}, []);
 
 	return (
-		<div className="flex flex-col mx-auto w-[85%]">
+		<div className="flex flex-col mx-auto w-[85%] sm:w-full sm:mx-0">
 			<Header
+				className="sm:mb-4"
 				heading={"Order History"}
 				Children={
 					<div className="flex gap-[10px]">
 						<div
 							onClick={() => setView("list")}
-							className={`px-3 py-1 gap-1 cursor-pointer flex justify-center items-center text-sm border border-black hover:bg-gray-200 ${
+							className={`px-3 py-1 gap-1 cursor-pointer flex justify-center items-center text-sm border border-black hover:bg-gray-200 sm:px-3 sm:py-0 sm:text-xs sm:text-nowrap ${
 								view === "list" && "bg-gray-200"
 							}`}
 						>
@@ -51,7 +52,7 @@ const AdminOrderHistory = () => {
 						</div>
 						<div
 							onClick={() => setView("grid")}
-							className={`px-3 py-1 gap-1 cursor-pointer flex justify-center items-center text-sm border border-black hover:bg-gray-200 ${
+							className={`px-3 py-1 gap-1 cursor-pointer flex justify-center items-center text-sm border border-black hover:bg-gray-200 sm:px-3 sm:py-0 sm:text-xs sm:text-nowrap ${
 								view === "grid" && "bg-gray-200"
 							}`}
 						>
@@ -76,7 +77,7 @@ const AdminOrderHistory = () => {
 						Currently there are no orders
 					</div>
 				) : (
-					<div className="grid grid-flow-row gap-7 grid-cols-3 md:gap-3 transition-all">
+					<div className="grid grid-flow-row gap-7 grid-cols-3 md:gap-3 transition-all sm:grid-cols-2">
 						<CardLayoutAdminDashboard
 							data={data.orderHistory}
 						/>
@@ -88,25 +89,25 @@ const AdminOrderHistory = () => {
 				</div>
 			) : (
 				<>
-					<table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all">
+					<table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all sm:text-wrap">
 						<thead>
-							<tr className="bg-green-100 text-[#2f4f4f]">
-								<th className="py-4 px-12 text-left">
+							<tr className="bg-green-100 text-[#2f4f4f] sm:text-[8px]">
+								<th className="py-4 px-12 text-left sm:pr-0.5 sm:pl-2 sm:py-1">
 									Affiliate
 								</th>
-								<th className="py-4 px-12 text-left">
+								<th className="py-4 px-12 text-left sm:px-0.5 sm:py-1">
 									Device
 								</th>
-								<th className="py-4 px-12 text-left">
+								<th className="py-4 px-12 text-left sm:px-0.5 sm:py-1">
 									Order ID
 								</th>
-								<th className="py-4 px-12 text-left">
+								<th className="py-4 px-12 text-left sm:px-0.5 sm:py-1">
 									Order on
 								</th>
-								<th className="py-4 px-12 text-left">
+								<th className="py-4 px-12 text-left sm:px-0.5 sm:py-1">
 									Delivery on
 								</th>
-								<th className="py-4 px-12 text-left">
+								<th className="py-4 px-12 text-left sm:px-0.5 sm:py-1">
 									Order Status
 								</th>
 							</tr>
@@ -126,25 +127,52 @@ const AdminOrderHistory = () => {
 								) => (
 									<tr
 										key={index}
-										className="even:bg-gray-100"
+										className="even:bg-gray-100 sm:text-[8px]"
 									>
-										<td className="py-4 px-12 font-semibold">
+										<td className="py-4 px-12 font-semibold sm:px-0.5 sm:py-1">
 											{user.name}
 										</td>
-										<td className="py-4 px-12">
+										<td className="py-4 px-12 sm:px-0.5 sm:py-1">
 											{product.name}
 										</td>
-										<td className="py-4 px-12 text-sm">
-											{_id}
+										<td className="py-4 px-12 text-sm sm:px-0.5 sm:py-1 sm:text-[8px]">
+											{(() => {
+												const midIndex =
+													Math.floor(
+														_id.length /
+															2
+													);
+												const firstHalf =
+													_id.slice(
+														0,
+														midIndex
+													);
+												const secondHalf =
+													_id.slice(
+														midIndex
+													);
+
+												return (
+													<>
+														{
+															firstHalf
+														}
+														<br />
+														{
+															secondHalf
+														}
+													</>
+												);
+											})()}
 										</td>
-										<td className="py-4 px-12 text-gray-500">
+										<td className="py-4 px-12 text-gray-500 sm:px-0.5 sm:py-1">
 											{orderedAt}
 										</td>
-										<td className="py-4 px-12 text-gray-500">
+										<td className="py-4 px-12 text-gray-500 sm:px-0.5 sm:py-1">
 											{deliveryDate}
 										</td>
-										<td className="py-4 px-12">
-											{delivered}
+										<td className="py-4 px-12 sm:px-0.5 sm:py-0">
+											{/* {delivered} */}
 											<StatusBadge
 												status={
 													delivered

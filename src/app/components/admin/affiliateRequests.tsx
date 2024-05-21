@@ -60,7 +60,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 	return (
 		<div
 			className={`${
-				heading === "approved" && "w-[85%]"
+				heading === "approved" && "w-[90%]"
 			} mx-auto my-8 md:text-[10px]`}
 		>
 			{heading === "approved" && (
@@ -70,19 +70,19 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 			{!users ? (
 				<Loader />
 			) : users.length > 0 ? (
-				<table className="w-full rounded-2xl overflow-hidden">
+				<table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all sm:text-wrap">
 					<thead>
-						<tr className="bg-green-100 text-[#2f4f4f]">
-							<th className="py-6 px-12 text-left">
+						<tr className="bg-green-100 text-[#2f4f4f] sm:text-[8px]">
+							<th className="py-6 px-12 text-left sm:pr-0.5 sm:pl-2 sm:py-1">
 								Name
 							</th>
-							<th className="py-6 px-12 text-left">
+							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
 								Email
 							</th>
-							<th className="py-6 px-12 text-left">
+							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
 								Contact No
 							</th>
-							<th className="py-6 px-12 text-left">
+							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
 								Action
 							</th>
 						</tr>
@@ -101,18 +101,18 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 							) => (
 								<tr
 									key={index}
-									className="even:bg-gray-100"
+									className="even:bg-gray-100 sm:text-[8px]"
 								>
-									<td className="py-4 px-12 font-semibold text-primaryBgClr">
+									<td className="py-4 px-12 font-semibold text-primaryBgClr sm:px-0.5 sm:py-1">
 										{name}
 									</td>
-									<td className="py-4 px-12 text-gray-500">
+									<td className="py-4 px-12 text-gray-500 sm:px-0.5 sm:py-1">
 										{email}
 									</td>
-									<td className="py-4 px-12 text-gray-500 text-sm">
+									<td className="py-4 px-12 text-gray-500 text-sm text-[8px] sm:px-0.5 sm:py-1 sm:text-[8px]">
 										{contact}
 									</td>
-									<td className="py-4 px-12 text-gray-500 flex justify-start gap-2">
+									<td className="py-4 px-12 text-gray-500 flex justify-start gap-2 sm:px-0.5 sm:py-1">
 										{!isApprove ? (
 											<>
 												<div
@@ -122,7 +122,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 															_id
 														)
 													}
-													className="text-sm hover:bg-green-600 py-2 px-5 cursor-pointer  rounded-full border bg-primaryBgClr"
+													className="text-sm hover:bg-green-600 py-2 px-5 cursor-pointer  rounded-full border bg-primaryBgClr sm:py-0 sm:text-[8px] sm:my-auto sm:h-fit sm:px-1"
 												>
 													Accept
 												</div>
@@ -133,7 +133,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 															_id
 														)
 													}
-													className="text-sm py-2 px-5 cursor-pointer hover:bg-slate-100 rounded-full border text-red-500"
+													className="text-sm py-2 px-5 cursor-pointer hover:bg-slate-100 rounded-full border text-red-500 sm:py-0 sm:text-[8px] sm:my-auto sm:h-fit sm:px-1"
 												>
 													Reject
 												</div>
@@ -150,7 +150,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 													width={
 														30
 													}
-													className={`cursor-pointer h-auto ${
+													className={`cursor-pointer h-auto sm:h-[17px] sm:w-[17px] sm:mt-[1px] ${
 														!(
 															index %
 															2

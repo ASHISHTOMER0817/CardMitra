@@ -34,7 +34,7 @@ const AdminDashboard = () => {
 		datasets: [
 			{
 				label: "Order placed monthly",
-				data: [65, 59, 80, 81, 56, 500],
+				data: [65, 59, 80, 81, 56, 50],
 				fill: false,
 				borderColor: "rgb(75, 192, 192)",
 				tension: 0.1,
@@ -122,7 +122,7 @@ const AdminDashboard = () => {
 						VIEW ALL
 					</Link>
 				</div>
-				<div className="grid grid-flow-row gap-3 grid-cols-3">
+				<div className="grid grid-flow-row gap-3 grid-cols-3 sm:grid-cols-2">
 					{!data ? (
 						<Loader />
 					) : (
