@@ -61,19 +61,21 @@ const UserProfile = () => {
 	}
 	return (
 		<>
-			<div className="w-[85%] mb-10 mx-auto mt-6 relative">
+			<div className="w-[90%] mb-10 mx-auto mt-6 relative sm:ml-0">
 				<div
 					className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}
 				></div>
 				<form
 					onSubmit={sendData}
-					className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4`}
+					className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 sm:gap-2`}
 				>
 					<RxCross1
 						className=" cursor-pointer ml-auto w-[30px] h-[30px] p-1 rounded-full hover:bg-green-100 "
 						onClick={overlayFeature}
 					/>
-					<h4>Fill all the Bank details</h4>
+					<h4 className="sm:text-nowrap">
+						Fill all the Bank details
+					</h4>
 					<input
 						type="text"
 						required
@@ -112,7 +114,7 @@ const UserProfile = () => {
 					<h3 className="font-semibold text-primaryBgClr">
 						{data?.name}
 					</h3>
-					<div className="p-4 flex flex-col justify-center items-center bg-gray-200 rounded-[20px]">
+					<div className="p-4 flex flex-col justify-center items-center bg-gray-200 rounded-[20px] sm:py-1 sm:text-[10px]">
 						<div className="flex justify-center items-center text-lg">
 							Earnings:{" "}
 							<LiaRupeeSignSolid
@@ -140,13 +142,13 @@ const UserProfile = () => {
 									onClick={() =>
 										setOverlay("")
 									}
-									className="rounded-3xl text-nowrap cursor-pointer bg-primaryBgClr flex py-2 px-4 border justify-center items-center  text-white"
+									className="rounded-3xl text-nowrap cursor-pointer bg-primaryBgClr flex py-2 px-4 border justify-center items-center text-white sm:py-1 sm:text-[10px]"
 								>
 									fill Bank Details
 								</div>
 						  )}
 				</div>
-				<h6 className="text-gray-400 mb-4 text-sm font-semibold">
+				<h6 className="text-gray-400 mb-4 text-sm font-semibold sm:text-[10px] sm:mb-1">
 					PERSONAL
 				</h6>
 				<section className=" flex justify-between items-center">
@@ -156,11 +158,11 @@ const UserProfile = () => {
 				</section>
 
 				<hr className="border w-full my-7" />
-				<h6 className="text-gray-400 mb-4 text-sm font-semibold">
+				<h6 className="text-gray-400 mb-4 text-sm font-semibold sm:text-[10px] sm:mb-1">
 					BANK DETAILS
 				</h6>
 
-				<section className="flex justify-between items-center">
+				<section className="flex justify-between items-center sm:text-[10px]">
 					<div>Bank Account Number: {data?.accountNo}</div>
 					<div>IFSC Code: {data?.ifsc} </div>
 					<div className="mr-20">UPI ID: {data?.upi}</div>

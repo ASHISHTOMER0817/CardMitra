@@ -84,7 +84,7 @@ const Dashboard = () => {
 
 	return (
 		<>
-			<div className=" w-[85%] mx-auto mb-16">
+			<div className="w-full mx-auto mb-16">
 				<div
 					className={`fixed top-2 right-2 w-[26%] text-sm bg-[#D0D6E0] rounded-2xl p-2 flex flex-col gap-4 bg-transparent `}
 				>
@@ -124,16 +124,16 @@ const Dashboard = () => {
 				</div>
 				<h3 className="my-7 font-semibold">Dashboard</h3>
 				<div className="flex justify-start gap-3 sm:gap-1">
-					<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-0 sm:px-0">
-						<h5 className="text-[#1844E1] sm:text-xs">
+					<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-0 sm:px-0.5">
+						<h5 className="text-[#1844E1] sm:text-[10px]">
 							{profit}{" "}
 						</h5>{" "}
 						<div className="sm:text-[10px]">
 							Today&apos;s Profit
 						</div>
 					</div>
-					<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-0 sm:px-0">
-						<h5 className="text-primaryBgClr sm:text-xs">
+					<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-1  sm:px-0.5">
+						<h5 className="text-primaryBgClr sm:text-[10px]">
 							{ordersTillDate}
 						</h5>
 						<div className="sm:text-[10px]">
@@ -141,8 +141,8 @@ const Dashboard = () => {
 							till date
 						</div>
 					</div>
-					<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-0 sm:px-0">
-						<h5 className="text-primaryBgClr sm:text-xs">
+					<div className="px-20 py-8 rounded-3xl  bg-[#F3F3F3] md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-1  sm:px-0.5">
+						<h5 className="text-primaryBgClr sm:text-[10px]">
 							Rs. {commission}
 						</h5>
 						<div className="sm:text-[10px]">

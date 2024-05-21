@@ -57,7 +57,7 @@ const CardLayout = ({
 			</div>
 			<div className="flex justify-center text-sm items-start md:gap-0">
 				<Image
-					className="w-40 h-[150px] md:w-[85px] sm:h-[100px] sm:w-[100px]"
+					className="w-40 h-[150px] sm:h-[70px] sm:w-[70px]"
 					src={
 						deviceImage
 							? `/uploads/${deviceImage}`
