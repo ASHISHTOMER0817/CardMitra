@@ -49,7 +49,7 @@ const CardLayoutAdminDashboard = ({ data }: { data: productList[] }) => {
 								commission={commission}
 								placeOrder={
 									<>
-										<button className="bg-primaryBgClr p-[14px] font-semibold text-base rounded-full border text-center w-auto text-white md:w-[120px] md:p-[5px] md:mt-4 md:-ml-[81px] ">
+										<button className="bg-primaryBgClr p-[14px] font-semibold text-base rounded-full border text-center w-auto text-white md:w-[100px] md:mt-4 sm:mx-auto sm:text-sm sm:p-0 ">
 											{deals
 												? "Active"
 												: "In-Active"}

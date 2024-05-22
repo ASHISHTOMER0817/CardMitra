@@ -49,15 +49,15 @@ const CardLayout = ({
 		<div
 			className={`p-7 border rounded-2xl sm:p-0.5 border-gray-400 ${classList}`}
 		>
-			<div className="flex items-center mb-4 gap-4 sm:ml-4">
+			<div className="flex items-center mb-4 gap-4 sm:ml-4 sm:mb-2">
 				<div className="mr-auto px-[10px] py-[5px] text-sm rounded-3xl border text-center bg-gray-200 sm:text-[10px] sm:px-1 sm:py-0">
 					Quantity: {quantity}
 				</div>
 				{image}
 			</div>
-			<div className="flex justify-center text-sm items-start md:gap-0">
+			<div className="flex justify-center text-sm items-start md:gap-0 sm:flex-col sm:items-center">
 				<Image
-					className="w-40 h-[150px] sm:h-[70px] sm:w-[70px]"
+					className="w-40 h-[150px] sm:h-[100px] sm:w-[100px]"
 					src={
 						deviceImage
 							? `/uploads/${deviceImage}`
@@ -67,13 +67,13 @@ const CardLayout = ({
 					width={100}
 					height={150}
 				/>
-				<section className="flex flex-col gap-4 justify-around md:gap-0">
-					<div className=" text-wrap font-semibold  text-base md:h-10 md:leading-[14px] sm:text-[11px]">
+				<section className="flex flex-col gap-4 justify-around md:gap-0 sm:mt-1">
+					<div className=" text-wrap font-semibold  text-base md:h-[30px] sm:text-[14px] leading-4">
 						{" "}
 						{name}
 					</div>
 
-					<div className=" flex md:flex-col">
+					<div className=" flex">
 						<div>
 							<div className="text-nowrap font-bold text-black sm:leading-4 sm:text-[10px]">
 								Rs. {price}
@@ -82,7 +82,7 @@ const CardLayout = ({
 								Price/Unit
 							</div>
 						</div>
-						<hr className="rotate-90 my-5 mx-4 w-[20px] h-3px md:mx-0 md:my-[2px] md:rotate-0 md:w-[70px] sm:w-[50px]" />
+						<hr className="rotate-90 my-5 mx-4 w-[20px] h-3px md:mx-0 md:my-[2px] md:w-[70px] sm:w-[26px] sm:mt-4 sm:mb-0.5" />
 						<div>
 							<div className="font-bold  text-primaryBgClr sm:leading-4 sm:text-[10px]">
 								Rs. {commission}
@@ -95,7 +95,7 @@ const CardLayout = ({
 					{placeOrder}
 				</section>
 			</div>
-			<hr className="my-4" />
+			<hr className="my-4 sm:my-2" />
 			<div className="flex justify-between items-center sm:w-full min-h-10">
 				<Image
 					src={

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Image from "next/image";
 import phoneImg from "@/../public/phoneImg.svg";
 import { GoBell } from "react-icons/go";
@@ -13,13 +13,12 @@ import { useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 
-
 export default function Home() {
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [number, setNumber] = useState("");
 	const [error, setError] = useState("");
-	const [mail, setMail] =  useState("")
+	const [mail, setMail] = useState("");
 
 	const user = { name, email, number };
 
@@ -38,25 +37,22 @@ export default function Home() {
 			// 	);
 			// 	return;
 			// }
-			
+
 			const response = await axios.post("/api/users/signup", {
 				user,
 			});
-			const success = await response.data.success
-			if(!success){
-				setError(await response.data.message)
-				console.log(error)
+			const success = await response.data.success;
+			if (!success) {
+				setError(await response.data.message);
+				console.log(error);
 				return;
-			}else{
-				
+			} else {
 			}
 		} catch (error) {
-			setError("Something went wrong,Please try again later")
+			setError("Something went wrong,Please try again later");
 			console.log("Something went wrong ", error);
 		}
 	}
-	
-	
 
 	const image = <Image src={VeriticalRuler} alt={""}></Image>;
 	return (
@@ -77,7 +73,12 @@ export default function Home() {
 						solution
 					</h3>
 					<button className="px-7 py-4 mb-10 mt-6 rounded-[36px] bg-primaryBgClr hover:bg-green-600 font-bold text-white">
-						<Link href={"/Auth/signup"} className="text-xl">Become a Afilliate</Link>
+						<Link
+							href={"/Auth/signup"}
+							className="text-xl"
+						>
+							Become a Afilliate
+						</Link>
 					</button>
 				</section>
 				<section className="bg-black text-white text-left px-10 py-10 flex justify-center gap-24 items-center">
@@ -156,10 +157,10 @@ export default function Home() {
 								Customizable <br /> Management
 							</div>
 							<div className="text-[#FFFFFFB2]">
-								Get promotions  <br />{" "}
-								effortlessly. Set 
-								discounts, <br />{" "} deals, 
-								quantities & <br />{" "} validity
+								Get promotions <br />{" "}
+								effortlessly. Set discounts,{" "}
+								<br /> deals, quantities &{" "}
+								<br /> validity
 							</div>
 						</div>
 						<div className="flex flex-col p-9 rounded-2xl bg-[#FFFFFF1A] justify-start gap-y-3">
@@ -175,6 +176,16 @@ export default function Home() {
 							</div>
 						</div>
 					</div>
+				</section>
+
+				<section className="pt-24 pb-24 px-10">
+					<h5 className="font-medium text-primaryBgClr mb-8">
+						CUSTOMER TESTIMONIALS
+					</h5>
+					<h1 className="font-extrabold ">
+						Hear What Our Clients <br />
+						Have to Say!
+					</h1>
 				</section>
 				<section className="pt-24 pb-24 px-10">
 					<h5 className="font-medium text-primaryBgClr mb-8">
@@ -195,7 +206,10 @@ export default function Home() {
 								form
 							</h5>
 						</div>
-						<form onSubmit={sendData} className="text-sm flex flex-col gap-y-5 items-center justify-center">
+						<form
+							onSubmit={sendData}
+							className="text-sm flex flex-col gap-y-5 items-center justify-center"
+						>
 							<InputSpace
 								type="text"
 								value={name}
@@ -220,7 +234,10 @@ export default function Home() {
 									setNumber(value)
 								}
 							/>
-							<button type="submit" className="py-4 w-96 font-extrabold hover:bg-green-600 bg-primaryBgClr text-white rounded-3xl">
+							<button
+								type="submit"
+								className="py-4 w-96 font-extrabold hover:bg-green-600 bg-primaryBgClr text-white rounded-3xl"
+							>
 								Send Request
 							</button>
 						</form>

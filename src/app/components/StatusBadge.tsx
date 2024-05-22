@@ -31,7 +31,7 @@ const StatusBadge = ({ status }: { status: string }) => {
 
 	return (
 		<div
-			className={`mx-auto rounded-full px-2 py-0.5 sm:text-[10px] sm:mr-2 ${bgColor} ${textColor}`}
+			className={`mx-auto rounded-full px-2 py-0.5 sm:text-[8px] sm:mr-2 ${bgColor} ${textColor}`}
 		>
 			{status}
 		</div>

@@ -35,7 +35,7 @@ const AdminOrderHistory = () => {
 	}, []);
 
 	return (
-		<div className="flex flex-col mx-auto w-[85%] sm:w-full sm:mx-0">
+		<div className="flex flex-col mx-auto w-[85%] sm:mx-0 sm:w-[90%]">
 			<Header
 				className="sm:mb-4"
 				heading={"Order History"}
@@ -61,7 +61,7 @@ const AdminOrderHistory = () => {
 						</div>
 						<Link
 							href="/adminAddProduct/newProduct"
-							className="w-36 text-center md:p-1 md:text-xs py-3 px-4 text-white bg-primaryBgClr hover:bg-green-600 rounded-full"
+							className="w-36 text-center md:p-1 md:text-xs py-3 px-4 text-white bg-primaryBgClr hover:bg-green-600 rounded-full sm:w-[8rem]"
 						>
 							Add Product
 						</Link>

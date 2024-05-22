@@ -1,24 +1,49 @@
-import { Bar, Line } from "react-chartjs-2";
-import React from 'react'
-import {Chart as ChartJS} from "chart.js/auto"
-const BarChart = ({ChartData, options}) => {
-  return (
-      <Line className="" width={800} height={300} data={ChartData} options={options}/>
-  )
-}
+import { Line } from "react-chartjs-2";
+import React from "react";
+import { Chart as ChartJS } from "chart.js/auto";
 
-export default BarChart;
+ChartJS.defaults.font.size = 12; // Set the default font size
 
+const LineChart = ({ ChartData }) => {
+	const options = {
+		maintainAspectRatio: false,
+		legend: {
+			labels: {
+				font: {
+					size: 12, // Set the font size for legend labels
+				},
+			},
+		},
+		scales: {
+			x: {
+				ticks: {
+					font: {
+						size: 12, // Set the font size for x-axis labels
+					},
+				},
+			},
+			y: {
+				ticks: {
+					font: {
+						size: 12, // Set the font size for y-axis labels
+					},
+				},
+			},
+		},
+	};
 
+	const chartStyle = {
+		"@media (max-width: 639px)": {
+			canvas: {
+				fontSize: "10px !important",
+			},
+		},
+	};
 
+	return <Line data={ChartData} options={options} style={chartStyle} />;
+};
 
-
-
-
-
-
-
-
+export default LineChart;
 
 // import React from "react";
 // import { Line } from "react-chartjs-2";

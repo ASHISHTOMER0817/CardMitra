@@ -1,4 +1,4 @@
-'use client'
+"use client";
 // import ProductDetails from "@/app/components/ProductDetails";
 import ProductOrderList from "@/app/components/ProductOrderList";
 import productList from "@/interface/productList";
@@ -18,7 +18,7 @@ const OrderList = ({ params }: { params: { odrList: string } }) => {
 	const [data, setData] = useState<productList>();
 	const [arr, setArr] = useState<Array<MyArrayItem>>([]);
 	const [_id, setId] = useState("");
-	const [refresh, setRefresh] = useState(false)
+	const [refresh, setRefresh] = useState(false);
 	const router = useRouter();
 	// Fetching product details
 	useEffect(() => {
@@ -27,15 +27,14 @@ const OrderList = ({ params }: { params: { odrList: string } }) => {
 				const response = await axios.get(
 					`/api/users/productData?query=${params.odrList}`
 				);
-				
 
-				const {info, _id} = await response.data.data
-				console.log('here')
-				console.log( info)
-				setArr(Object.entries(info))
-				
+				const { info, _id } = await response.data.data;
+				console.log("here");
+				console.log(info);
+				setArr(Object.entries(info));
+
 				setData(await response.data.data);
-				setId( _id);
+				setId(_id);
 				console.log(arr);
 			} catch {
 				console.log(
@@ -46,7 +45,7 @@ const OrderList = ({ params }: { params: { odrList: string } }) => {
 			}
 		}
 		getData();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [params.odrList, refresh]);
 
 	async function dealOperation(_id: string, operation: string) {
@@ -61,11 +60,9 @@ const OrderList = ({ params }: { params: { odrList: string } }) => {
 				console.log(response.data.operation);
 				if (response.data.operation === "delete") {
 					router.back();
-
-				}else{
+				} else {
 					// router.refresh()
-					setRefresh(!refresh)
-
+					setRefresh(!refresh);
 				}
 			} else {
 				Popup("error", response.data.message);
@@ -76,63 +73,73 @@ const OrderList = ({ params }: { params: { odrList: string } }) => {
 	}
 
 	return (
-		<div className="m-10 flex flex-col mx-auto w-4/5 gap-9">
+		<div className="m-10 flex flex-col mx-auto w-4/5 gap-9 sm:ml-0 sm:mr-0 sm:w-full">
 			<BackwardButton />
-			{!data? <Loader/> :<div className="flex justify-between items-start">
-				<div>
-					<ProductDetails data={data} arr={arr} />
-				</div>
-				<div
-					className={`flex ${
-						data?.deals
-							? "items-start"
-							: "items-center"
-					} justify-center gap-5`}
-				>
-					<Link
-						href={`/adminAddProduct/${data?._id}`}
-						className="rounded-full flex text-center items-center justify-center w-36 py-1 hover:text-gray-500 cursor-pointer border border-gray-800 text-gray-800"
+			{!data ? (
+				<Loader />
+			) : (
+				<div className="flex justify-between items-start sm:flex-col">
+					<div>
+						<ProductDetails data={data} arr={arr} />
+					</div>
+					<div
+						className={`flex ${
+							data?.deals
+								? "items-start"
+								: "items-center"
+						} justify-center gap-5`}
 					>
-						Edit
-					</Link>
-					{data?.deals ? (
-						<div
-							onClick={() =>
-								dealOperation(_id, "remove")
-							}
-							className="hover:underline-offset-4 text-red-500 text-sm cursor-pointer hover:underline"
+						<Link
+							href={`/adminAddProduct/${data?._id}`}
+							className="rounded-full flex text-center items-center justify-center w-36 py-1 hover:text-gray-500 cursor-pointer border border-gray-800 text-gray-800"
 						>
-							Remove from Deals
-						</div>
-					) : (
-						<div className="flex flex-col items-center justify-center gap-3">
-							{" "}
-							<div
-								onClick={() =>
-									dealOperation(_id, "add")
-								}
-								className="rounded-full flex text-center items-center justify-center w-36 py-1 hover:text-green-800 cursor-pointer border border-primaryBgClr text-primaryBgClr"
-							>
-								Add back
-							</div>
-							<div className="text-gray-600 text-sm">
-								OR
-							</div>
+							Edit
+						</Link>
+						{data?.deals ? (
 							<div
 								onClick={() =>
 									dealOperation(
 										_id,
-										"delete"
+										"remove"
 									)
 								}
-								className="hover:underline-offset-4  text-red-500 cursor-pointer hover:underline"
+								className="hover:underline-offset-4 text-red-500 text-sm cursor-pointer hover:underline"
 							>
-								Delete
+								Remove from Deals
 							</div>
-						</div>
-					)}
+						) : (
+							<div className="flex flex-col items-center justify-center gap-3">
+								{" "}
+								<div
+									onClick={() =>
+										dealOperation(
+											_id,
+											"add"
+										)
+									}
+									className="rounded-full flex text-center items-center justify-center w-36 py-1 hover:text-green-800 cursor-pointer border border-primaryBgClr text-primaryBgClr"
+								>
+									Add back
+								</div>
+								<div className="text-gray-600 text-sm">
+									OR
+								</div>
+								<div
+									onClick={() =>
+										dealOperation(
+											_id,
+											"delete"
+										)
+									}
+									className="hover:underline-offset-4  text-red-500 cursor-pointer hover:underline"
+								>
+									Delete
+								</div>
+							</div>
+						)}
+					</div>
 				</div>
-			</div>}
+			)}
 			<h5 className="text-left font-semibold">Order Details</h5>
 			<ProductOrderList _id={_id} />
 		</div>

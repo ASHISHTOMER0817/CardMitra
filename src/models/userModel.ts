@@ -258,6 +258,13 @@ const dropDownOptionsSchema = new mongoose.Schema({
 	}],
 })
 
+const reviewSchema = new mongoose.Schema({
+	user: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
+	review: {
+		type: String
+	}
+})
+
 const Product = mongoose.models.products || mongoose.model("products", productSchema)
 const Otp = mongoose.models.otps || mongoose.model("otps", otpSchema)
 const Order = mongoose.models.orders || mongoose.model("orders", orderSchema)
@@ -265,4 +272,5 @@ const User = mongoose.models.users || mongoose.model("users", userSchema);
 const Password = mongoose.models.passwords || mongoose.model("passwords", passwordSchema)
 const Transactions = mongoose.models.transactions || mongoose.model("transactions", transactionSchema)
 const Options = mongoose.models.options || mongoose.model('options', dropDownOptionsSchema)
-export { User, Password, Product, Otp, Order, Transactions, Options }
+const Review = mongoose.models.reviews || mongoose.model('reviews', reviewSchema)
+export { User, Password, Product, Otp, Order, Transactions, Options, Review }

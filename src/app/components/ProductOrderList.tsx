@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Popup from "./Popup";
 import { order } from "@/interface/productList";
 import Loader from "./loader";
+import StatusBadge from "./StatusBadge";
 
 const ProductOrderList = ({ _id }: { _id: string }) => {
 	const [orders, setOrders] = useState<order[]>();
@@ -28,23 +29,23 @@ const ProductOrderList = ({ _id }: { _id: string }) => {
 			{!orders ? (
 				<Loader />
 			) : orders.length > 0 ? (
-				<table className="w-full rounded-2xl overflow-hidden">
+				<table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all sm:text-wrap">
 					<thead>
-						<tr className="bg-gray-200">
-							<th className="py-6 px-12 text-left">
-								Affiliate Name
+						<tr className="bg-green-100 text-[#2f4f4f] sm:text-[8px]">
+							<th className="py-6 px-12 text-left sm:pr-0.5 sm:pl-2 sm:py-1">
+								User
 							</th>
-							<th className="py-6 px-12 text-left">
+							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
 								Order ID
 							</th>
-							<th className="py-6 px-12 text-left">
-								Order on
+							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
+								Order
 							</th>
-							<th className="py-6 px-12 text-left">
-								Delivery on
+							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
+								Delivery
 							</th>
-							<th className="py-6 px-12 text-left">
-								Order Status
+							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
+								Status
 							</th>
 						</tr>
 					</thead>
@@ -52,22 +53,27 @@ const ProductOrderList = ({ _id }: { _id: string }) => {
 						{orders.map((order, index) => (
 							<tr
 								key={index}
-								className="even:bg-gray-100"
+								className="even:bg-gray-100 sm:text-[8px]"
 							>
-								<td className="py-4 px-12">
+								<td className="py-4 px-12 text-primaryBgClr sm:px-0.5 sm:py-1">
 									{order.user.name}
 								</td>
-								<td className="py-4 px-12">
+								<td className="py-4 px-12 text-gray-500 sm:px-0.5 sm:py-1">
 									{order._id}
 								</td>
-								<td className="py-4 px-12">
+								<td className="py-4 px-12 sm:px-0.5 sm:py-1">
 									{order.orderedAt}
 								</td>
-								<td className="py-4 px-12">
+								<td className="py-4 px-12 sm:px-0.5 sm:py-1">
 									{order.deliveryDate}
 								</td>
-								<td className="py-4 px-12">
-									{order.delivered}
+								<td className="py-4 px-12 font-semibold sm:px-0.5 sm:py-1">
+									<StatusBadge
+										status={
+											order.delivered
+										}
+									/>
+									{/* {order.delivered} */}
 								</td>
 							</tr>
 						))}

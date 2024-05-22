@@ -7,6 +7,7 @@ import productList from "@/interface/productList";
 import AffiliateRequest from "@/app/components/admin/affiliateRequests";
 import Link from "next/link";
 import Loader from "@/app/components/loader";
+import { Legend, plugins } from "chart.js";
 
 interface dashboardData {
 	orderHistory: productList[];
@@ -57,37 +58,36 @@ const AdminDashboard = () => {
 	}, []);
 
 	return (
-		<div className="mx-6 w-[90%] mt-6 md:text-xs">
+		<div className="mx-6 w-full mt-6 md:text-xs sm:mx-0 sm:w-full">
 			<section className="mt-9 ">
 				<h3 className=" font-semibold mb-3">Dashboard</h3>
 				<div className="flex justify-start gap-2 sm:gap-1">
 					<Link
-						className=" text-center px-20 py-8 rounded-3xl bg-[#F3F3F3] cursor-pointer md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-0 sm:px-0"
+						className=" text-center px-20 py-8 rounded-3xl bg-[#F3F3F3] cursor-pointer md:min-w-[20%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:pt-0 sm:pb-1 sm:px-1 sm:leading-none"
 						href={"/otpList"}
 					>
-						<h5 className="text-[#1844E1] sm:text-xs">
+						<h5 className="text-[#1844E1] sm:text-[10px] sm:leading-none">
 							{data?.deliveries}{" "}
 						</h5>{" "}
-						<div className="sm:text-[10px]">
+						<div className="sm:text-[8px] ">
 							{" "}
 							Recent deliveries
 						</div>
 					</Link>
-					<div className=" text-center px-20 py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-0 sm:px-0">
-						<h5 className="text-primaryBgClr sm:text-xs">
+					<div className=" text-center px-20 py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer md:min-w-[20%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:pt-0 sm:pb-1 sm:px-1 sm:leading-none">
+						<h5 className="text-primaryBgClr sm:text-[10px] sm:leading-none">
 							{data?.order}
 						</h5>
-						<div className="sm:text-[10px]">
+						<div className="sm:text-[8px] ">
 							{" "}
-							Orders placed <br />
-							today
+							Today&apos;s Orders
 						</div>
 					</div>
-					<div className=" text-center px-20 py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer md:min-w-[31%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:py-0 sm:px-0">
-						<h5 className="text-primaryBgClr sm:text-xs">
+					<div className=" text-center px-20 py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer md:min-w-[20%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:pt-0 sm:pb-1 sm:px-1 sm:leading-none">
+						<h5 className="text-primaryBgClr sm:text-[10px] sm:leading-none">
 							{data?.noOfAffiliate}
 						</h5>
-						<div className="sm:text-[10px]">
+						<div className="sm:text-[8px] ">
 							{" "}
 							Affiliates Joined
 						</div>
@@ -99,7 +99,7 @@ const AdminDashboard = () => {
 					<h4 className="font-semibold">Overview</h4>
 					<Link
 						href={"/orders"}
-						className="text-primaryBgClr text-base"
+						className="text-primaryBgClr text-base sm:text-xs"
 					>
 						DETAILS
 					</Link>
@@ -107,7 +107,16 @@ const AdminDashboard = () => {
 				<div>
 					<BarChart
 						ChartData={userData}
-						options={{ maintainAspectRatio: false }}
+						// options={{
+						// 	maintainAspectRatio: false,
+						// 	plugins: {
+						// 		Legend: {
+						// 			labels: {
+						// 				font: { size: 30 },
+						// 			},
+						// 		},
+						// 	},
+						// }}
 					/>
 				</div>
 			</section>

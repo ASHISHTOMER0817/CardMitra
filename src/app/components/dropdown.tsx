@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from "react";
 
-import Select, { StylesConfig } from "react-select";
+import Select, { GroupBase, StylesConfig } from "react-select";
 import { dropdown } from "../(admin)/adminAddProduct/[_id]/page";
 
 const Checkbox = ({ children, ...props }: JSX.IntrinsicElements["input"]) => (
@@ -10,7 +10,11 @@ const Checkbox = ({ children, ...props }: JSX.IntrinsicElements["input"]) => (
 	</label>
 );
 
-export const customStyles: StylesConfig = {
+export const defaultStyles: StylesConfig<
+	dropdown,
+	boolean,
+	GroupBase<dropdown>
+> = {
 	control: (provided) => ({
 		...provided,
 		borderRadius: "25px",
@@ -36,11 +40,13 @@ function Dropdown({
 	onChange,
 	value,
 	className,
+	customStyles,
 }: {
 	options: dropdown[];
 	onChange: any;
 	value: dropdown;
 	className?: string;
+	customStyles?: StylesConfig<dropdown, boolean, GroupBase<dropdown>>;
 }) {
 	const [isClearable, setIsClearable] = useState(true);
 	const [isSearchable, setIsSearchable] = useState(true);
@@ -68,9 +74,10 @@ function Dropdown({
 			isSearchable={isSearchable}
 			name="color"
 			options={options}
-			styles={customStyles}
+			styles={{ ...defaultStyles, ...customStyles }}
 			onChange={handleChange}
 			value={value}
+			// styles={style}
 		/>
 	);
 }

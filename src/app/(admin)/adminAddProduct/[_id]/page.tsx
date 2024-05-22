@@ -13,7 +13,7 @@ import Select from "react-select";
 // import amazonLogo from "@/../public/amazonLogo.webp"
 // import flipkartLogo from "@/../public/flipkartLogo.png"
 // import sbi from "@/../public/SBI.png"
-import Dropdown, { customStyles } from "@/app/components/dropdown";
+import Dropdown, { defaultStyles } from "@/app/components/dropdown";
 import Popup from "@/app/components/Popup";
 import productList from "@/interface/productList";
 import Loader from "@/app/components/loader";
@@ -241,7 +241,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	};
 
 	return (
-		<form onSubmit={postData} className="w-[90%] p-8 relative sm:w-fit">
+		<form onSubmit={postData} className="w-[90%] p-8 relative sm:pl-0">
 			{loader ? (
 				<Loader />
 			) : (
@@ -250,15 +250,13 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 						className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}
 					></div>
 					<div
-						className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4`}
+						className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 sm:w-4/5 sm:top-2/4 sm:-translate-y-2/4`}
 					>
 						<RxCross1
-							width={30}
-							height={30}
-							className=" cursor-pointer ml-auto p-1 hover:bg-gray-100 active:bg-gray-100 rounded-full sm:w-7 sm:h-7"
+							className=" w-6 h-6 cursor-pointer ml-auto p-1 hover:bg-gray-100 active:bg-gray-100 rounded-full sm:w-7 sm:h-7"
 							onClick={() => setOverlay("hidden")}
 						/>
-						<h4>
+						<h4 className="sm:text-xs">
 							Write, {addOption} name you want to
 							add
 						</h4>
@@ -270,7 +268,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 									? "Site Name"
 									: "Card name"
 							}`}
-							className="outline-none border-b pb-2 border-black"
+							className="outline-none border-b pb-2 border-black sm:text-xs"
 							value={optionName}
 							onChange={(e) =>
 								setOptionName(e.target.value)
@@ -280,7 +278,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 							type="file"
 							// required
 							placeholder="site image"
-							className={`outline-none border-b pb-2 border-black ${
+							className={`outline-none border-b pb-2 border-black sm:text-xs ${
 								addOption === "site"
 									? ""
 									: "hidden"
@@ -306,7 +304,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 							Add
 						</button>
 					</div>
-					<div className="flex gap-10 mb-8">
+					<div className="flex gap-10 mb-8 sm:flex-col">
 						<label
 							htmlFor="image"
 							className="cursor-pointer"
@@ -409,9 +407,9 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 									setName(e.target.value)
 								}
 								placeholder="Product name"
-								className=" outline-none border-b border-black text-2xl font-bold mb-6 mt-4"
+								className=" outline-none border-b border-black text-2xl font-bold mb-6 mt-4 sm:text-base"
 							/>
-							<div className="flex items-center gap-7 mb-4 font-normal">
+							<div className="flex items-center gap-7 mb-4 font-normal sm:text-[12px] sm:gap-3">
 								<div className=" flex flex-col items-start">
 									<input
 										required
@@ -524,11 +522,11 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 						</div>
 					</div>
 
-					<div className="grid grid-flow-row grid-cols-2 items-end gap-x-6 gap-y-3">
+					<div className="grid grid-flow-row grid-cols-2 items-end gap-x-6 gap-y-3 sm:flex sm:flex-col">
 						<div className="mb-4 flex flex-col w-full gap-6">
 							<label
 								htmlFor="bank"
-								className="font-bold"
+								className="font-bold sm:text-[13px]"
 							>
 								Offers available on bank cards
 							</label>
@@ -539,10 +537,10 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 									isMulti
 									name="colors"
 									options={cardOptions}
-									className="basic-multi-select flex-1"
+									className="basic-multi-select flex-1 sm:text-[10px]"
 									classNamePrefix="select"
 									onChange={handleChange}
-									styles={customStyles}
+									styles={defaultStyles}
 									value={
 										cards
 											? cards
@@ -564,7 +562,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 						<div className="mb-4 flex flex-col w-full gap-6">
 							<label
 								htmlFor="website"
-								className="font-bold"
+								className="font-bold sm:text-[13px]"
 							>
 								Websites
 							</label>
@@ -580,7 +578,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 											? site
 											: siteOptions[0]
 									}
-									className="flex-1"
+									className="flex-1 sm:text-[10px]"
 								/>
 								<IoAddSharp
 									onClick={() => {
@@ -596,7 +594,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 						<div className=" flex flex-col w-full gap-6">
 							<label
 								htmlFor="directLink"
-								className="font-bold"
+								className="font-bold sm:text-[13px]"
 							>
 								Direct Links:
 							</label>
@@ -610,14 +608,14 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 										e.target.value
 									)
 								}
-								className=" border border-gray-300 rounded-full p-2 w-full"
+								className=" border border-gray-300 rounded-full p-2 w-full sm:text-[10px]"
 								placeholder="Enter direct link"
 							/>
 						</div>
 						<div className=" flex flex-col w-full gap-6">
 							<label
 								htmlFor="requirement"
-								className="font-bold"
+								className="font-bold sm:text-[13px]"
 							>
 								Requirement:
 							</label>
@@ -631,14 +629,14 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 										+e.target.value
 									)
 								}
-								className=" border border-gray-300 rounded-full p-2 w-full"
+								className=" border border-gray-300 rounded-full p-2 w-full sm:text-[10px]"
 								placeholder="Requirement"
 							/>
 						</div>
 						<div className=" flex flex-col w-full gap-6">
 							<label
 								htmlFor="address"
-								className="font-bold"
+								className="font-bold sm:text-[13px]"
 							>
 								Address:
 							</label>
@@ -650,14 +648,14 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 								onChange={(e) =>
 									setAddress(e.target.value)
 								}
-								className=" border border-gray-300 rounded-full p-2 w-full"
+								className=" border border-gray-300 rounded-full p-2 w-full sm:text-[10px]"
 								placeholder="Enter Address"
 							/>
 						</div>
 						<div className=" flex flex-col w-full gap-6">
 							<label
 								htmlFor="address"
-								className="font-bold"
+								className="font-bold sm:text-[13px]"
 							>
 								Zip Code:
 							</label>
@@ -669,21 +667,21 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 								onChange={(e) =>
 									setZipCode(e.target.value)
 								}
-								className=" border border-gray-300 rounded-full p-2 w-full"
+								className=" border border-gray-300 rounded-full p-2 w-full sm:text-[10px]"
 								placeholder="Enter Zip Code"
 							/>
 						</div>
 					</div>
-					<div className="ml-auto w-fit flex gap-3 mt-8">
+					<div className="ml-auto w-fit flex gap-3 mt-8 sm:mr-auto">
 						<button
 							onClick={() => router.back()}
-							className="w-64 p-2 text-red-500 hover:bg-gray-100 border-red-500 border rounded-full"
+							className="w-64 p-2 text-red-500 hover:bg-gray-100 border-red-500 border rounded-full sm:w-[8rem] sm:py-0 sm-px-0.5"
 							type="reset"
 						>
 							Cancel
 						</button>
 						<button
-							className="w-64 p-2 text-white hover:bg-green-600 bg-primaryBgClr rounded-full"
+							className="w-64 p-2 text-white hover:bg-green-600 bg-primaryBgClr rounded-full sm:w-[8rem] sm:py-0 sm-px-0.5"
 							type="submit"
 						>
 							Add Product

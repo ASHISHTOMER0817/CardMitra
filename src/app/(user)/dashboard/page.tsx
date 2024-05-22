@@ -159,9 +159,9 @@ const Dashboard = () => {
 				<div className="hello">
 					<BarChart
 						ChartData={userData}
-						options={{
-							maintainAspectRatio: false,
-						}}
+						// options={{
+						// 	maintainAspectRatio: false,
+						// }}
 					/>
 				</div>
 				<div className="flex justify-between my-6 items-center">
