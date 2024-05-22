@@ -151,8 +151,10 @@ const Dashboard = () => {
 					</div>
 				</div>
 				<div className="flex justify-between items-center my-6">
-					<h4 className="font-semibold">Overview</h4>
-					<h5 className="text-primaryBgClr text-base">
+					<h4 className="font-semibold sm:text-sm">
+						Overview
+					</h4>
+					<h5 className="text-primaryBgClr text-base sm:text-xs">
 						DETAILS
 					</h5>
 				</div>
@@ -165,7 +167,9 @@ const Dashboard = () => {
 					/>
 				</div>
 				<div className="flex justify-between my-6 items-center">
-					<h4 className="font-semibold">Order History</h4>
+					<h4 className="font-semibold sm:text-sm">
+						Order History
+					</h4>
 
 					<Link
 						className="text-primaryBgClr text-base sm:text-xs"

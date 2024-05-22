@@ -104,10 +104,10 @@ const CardLayout = ({
 							? `/static/${site.label}.svg`
 							: ""
 					}
-					width={40}
-					height={40}
+					width={30}
+					height={30}
 					alt={""}
-					className="sm:h-7"
+					className="sm:h-[30px] sm:w-[30px] h-7 w-7"
 				/>
 
 				<div className="flex flex-col justify-start items-start text-sm font-semibold text-gray-600">

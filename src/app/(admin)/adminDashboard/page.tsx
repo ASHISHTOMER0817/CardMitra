@@ -123,10 +123,12 @@ const AdminDashboard = () => {
 
 			<section className="mt-9 ">
 				<div className="flex justify-between mb-3 items-center">
-					<h4 className="font-semibold">Order History</h4>
+					<h4 className="font-semibold sm:text-sm">
+						Order History
+					</h4>
 					<Link
 						href={"/orders"}
-						className="text-primaryBgClr hover:text-green-300 text-base"
+						className="text-primaryBgClr hover:text-green-300 text-base sm:text-xs"
 					>
 						VIEW ALL
 					</Link>
@@ -144,7 +146,7 @@ const AdminDashboard = () => {
 
 			<section className="mt-9 ">
 				<div className="flex justify-between mb-3 items-center">
-					<h4 className="font-semibold">
+					<h4 className="font-semibold sm:text-sm">
 						Affiliate Requests
 					</h4>
 					<Link

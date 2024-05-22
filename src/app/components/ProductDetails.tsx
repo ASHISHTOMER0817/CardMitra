@@ -68,7 +68,15 @@ export default function ProductDetails({
 					/>
 					<div className="flex flex-col gap-12 justify-center sm:gap-2 sm:mt-2 sm:text-lg">
 						{/* <div className=""> */}
-						<h4 className="font-semibold mb-2 sm:font-bold text-left sm:text-wrap">
+						<h4
+							className="font-semibold mb-2 sm:font-bold text-left sm:text-wrap sm:text-lg"
+							// style={{
+							// 	fontSize:'18px',
+							// 	'@media (max-width: 639px)': {
+							// 		fontSize: '18px !important',
+							// 	    },
+							// }}
+						>
 							{data?.name}
 						</h4>
 						{/* </div> */}
@@ -98,7 +106,7 @@ export default function ProductDetails({
 						{/* </div> */}
 						{arr.length > 0 && (
 							<div className="flex flex-col gap-4 items-start">
-								<div className="font-semibold">
+								<div className="font-semibold sm:text-[15px]">
 									Keep in mind while
 									ordering :-
 								</div>

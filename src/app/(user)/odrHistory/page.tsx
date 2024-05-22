@@ -94,7 +94,7 @@ const OdrHistory = () => {
 					You don&apos;t have any order history...
 				</div>
 			) : (
-				<div className="grid grid-flow-row gap-7 grid-cols-3 md:gap-3 sm:gap-1 sm:grid-cols-2 sm:-ml-5 sm:-mr-[50px]">
+				<div className="grid grid-flow-row gap-7 grid-cols-3 md:gap-3 sm:gap-1 sm:grid-cols-2">
 					{data.map(
 						(
 							{ product, _id, otp, delivered },

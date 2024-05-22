@@ -94,7 +94,7 @@ h3 {
 		font-size: 18px !important;
 	}
 }
-h4 {
+/* h4 {
 	@media (max-width: 768px) {
 		font-size: 14px !important;
 	}
@@ -104,9 +104,9 @@ h5 {
 	@media (max-width: 768px) {
 		font-size: 12px !important;
 	}
-}
+} */
 
-tbody {
+/* tbody {
 	@media (max-width: 768px) {
 		font-size: 12px !important;
 	}
@@ -115,7 +115,7 @@ thead {
 	@media (max-width: 768px) {
 		font-size: 14px !important;
 	}
-}
+} */
 
 .select__menu {
 	z-index: 999;
