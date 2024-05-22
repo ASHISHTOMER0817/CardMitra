@@ -84,3 +84,8 @@ export interface Data {
 	products: productList[];
 	user: user;
 }
+
+export interface ReviewInterface {
+	user: user
+	review: string
+}

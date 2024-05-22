@@ -9,9 +9,10 @@ import IntroFooter from "../components/IntroFooter";
 import IntroHeader from "../components/IntroHeader";
 import VeriticalRuler from "@/../public/VerticalRuler.svg";
 import InputSpace from "../components/InputSpace";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { ReviewInterface } from "@/interface/productList";
 
 export default function Home() {
 	const [name, setName] = useState("");
@@ -19,6 +20,7 @@ export default function Home() {
 	const [number, setNumber] = useState("");
 	const [error, setError] = useState("");
 	const [mail, setMail] = useState("");
+	const [data, setData] = useState<ReviewInterface[]>([]);
 
 	const user = { name, email, number };
 
@@ -54,6 +56,25 @@ export default function Home() {
 		}
 	}
 
+	useEffect(() => {
+		async function getData() {
+			try {
+				const response = await axios.get(
+					"/api/reviews?review=show"
+				);
+				if (response.data.success) {
+					setData(response.data.data);
+				} else {
+					console.log("something went wrong from server");
+				}
+			} catch {
+				console.log(
+					"something went wrong while sending request"
+				);
+			}
+		}
+		getData();
+	});
 	const image = <Image src={VeriticalRuler} alt={""}></Image>;
 	return (
 		<>
@@ -141,7 +162,7 @@ export default function Home() {
 						<div className="flex flex-col p-9 rounded-2xl bg-[#FFFFFF1A] justify-start gap-y-3">
 							<GoBell className="w-12 h-12 rounded-3xl p-2 text-white bg-primaryBgClr" />
 
-							<div className="text-lg">
+							<div className="text-lg font-semibold">
 								Real-Time Order <br /> Alerts
 							</div>
 							<div className="text-[#FFFFFFB2]">
@@ -153,7 +174,7 @@ export default function Home() {
 						<div className="flex flex-col p-9 rounded-2xl bg-[#FFFFFF1A] justify-start gap-y-3">
 							<CiRoute className="w-12 h-12 rounded-3xl p-2 text-white bg-primaryBgClr" />
 
-							<div className="text-lg">
+							<div className="text-lg font-semibold">
 								Customizable <br /> Management
 							</div>
 							<div className="text-[#FFFFFFB2]">
@@ -165,7 +186,7 @@ export default function Home() {
 						</div>
 						<div className="flex flex-col p-9 rounded-2xl bg-[#FFFFFF1A] justify-start gap-y-3">
 							<IoCubeOutline className="w-12 h-12 rounded-3xl p-2 text-white bg-primaryBgClr" />
-							<div className="text-lg">
+							<div className="text-lg font-semibold">
 								Advanced Order <br /> Tracking
 							</div>
 							<div className="text-[#FFFFFFB2]">
@@ -177,16 +198,39 @@ export default function Home() {
 						</div>
 					</div>
 				</section>
+				{data && data.length > 1 && (
+					<section className="pt-24 pb-24 px-10">
+						<h5 className="font-medium text-primaryBgClr mb-8">
+							CUSTOMER TESTIMONIALS
+						</h5>
+						<h1 className="font-extrabold ">
+							Hear What Our Clients <br />
+							Have to Say!
+						</h1>
+						<div className="gap-5">
+							{data.map(
+								({ user, review }, index) => {
+									return (
+										<div
+											key={index}
+											className="p-6 flex flex-col justify-center items-center gap-4 rounded-2xl"
+										>
+											<div className="text-lg font-semibold">
+												{
+													user.name
+												}
+											</div>
+											<div className=" text-gray-700">
+												{review}
+											</div>
+										</div>
+									);
+								}
+							)}
+						</div>
+					</section>
+				)}
 
-				<section className="pt-24 pb-24 px-10">
-					<h5 className="font-medium text-primaryBgClr mb-8">
-						CUSTOMER TESTIMONIALS
-					</h5>
-					<h1 className="font-extrabold ">
-						Hear What Our Clients <br />
-						Have to Say!
-					</h1>
-				</section>
 				<section className="pt-24 pb-24 px-10">
 					<h5 className="font-medium text-primaryBgClr mb-8">
 						BECOME AN AFFILIATE
