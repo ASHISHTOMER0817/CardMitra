@@ -58,7 +58,7 @@ const AdminDashboard = () => {
 	}, []);
 
 	return (
-		<div className="mx-6 w-full mt-6 md:text-xs sm:mx-0 sm:w-full">
+		<div className="mx-6 w-[95%] mt-6 md:text-xs sm:mx-0 sm:w-full">
 			<section className="mt-9 ">
 				<h3 className=" font-semibold mb-3">Dashboard</h3>
 				<div className="flex justify-start gap-2 sm:gap-1">
