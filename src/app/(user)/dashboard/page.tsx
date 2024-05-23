@@ -84,9 +84,9 @@ const Dashboard = () => {
 
 	return (
 		<>
-			<div className="w-[95%] mx-auto mb-16">
+			<div className="w-[95%] mx-auto mb-16 sm:w-[100%]">
 				<div
-					className={`fixed top-2 right-2 w-[26%] text-sm bg-[#D0D6E0] rounded-2xl p-2 flex flex-col gap-4 bg-transparent `}
+					className={`fixed top-2 right-2 w-[26%] text-sm bg-[#D0D6E0] rounded-2xl p-2 flex flex-col gap-4 bg-transparent sm:w-2/5 `}
 				>
 					{!data
 						? ""
@@ -186,7 +186,7 @@ const Dashboard = () => {
 						You have not placed any product yet...
 					</div>
 				) : (
-					<div className="grid grid-flow-row gap-3 grid-cols-3 sm:gap-1 sm:grid-cols-2 sm:-ml-7 sm:-mr-7">
+					<div className="grid grid-flow-row gap-3 grid-cols-3 sm:gap-1 sm:grid-cols-2">
 						{data.order
 							.slice(0, 3)
 							.map(

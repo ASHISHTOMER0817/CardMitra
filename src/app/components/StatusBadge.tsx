@@ -1,6 +1,6 @@
 import React from "react";
 
-const StatusBadge = ({ status }: { status: string }) => {
+const StatusBadge = ({ status, paid }: { status: string; paid?: boolean }) => {
 	let bgColor, textColor;
 
 	switch (status) {
@@ -33,7 +33,7 @@ const StatusBadge = ({ status }: { status: string }) => {
 		<div
 			className={`mx-auto rounded-full px-2 py-0.5 sm:text-[8px] sm:mt-2 sm:py-0 ${bgColor} ${textColor}`}
 		>
-			{status}
+			{paid ? "Paid" : status}
 		</div>
 	);
 };

@@ -115,7 +115,7 @@ const OtpList = () => {
 			{!otpList ? (
 				<Loader />
 			) : otpList.length > 0 ? (
-				<table className="w-full rounded-2xl transition-all sm:text-wrap ">
+				<table className="w-full rounded-2xl transition-all sm:text-wrap overflow-hidden ">
 					<thead>
 						<tr className="bg-green-100 text-[#2f4f4f] sm:text-[8px]">
 							<th className="py-6 px-12 text-left sm:pr-0.5 sm:pl-2 sm:py-1">

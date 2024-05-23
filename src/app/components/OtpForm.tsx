@@ -75,7 +75,7 @@ const OtpForm = ({ _id }: { _id: string }) => {
 			<input
 				type="text"
 				id="contact"
-				placeholder="Enter Contact Number"
+				placeholder="Contact"
 				value={contact}
 				onChange={handleContactChange}
 				required
@@ -87,7 +87,7 @@ const OtpForm = ({ _id }: { _id: string }) => {
 			<input
 				type="text"
 				id="trackingId"
-				placeholder="Enter Contact Number"
+				placeholder="Tracking ID"
 				value={trackingId}
 				onChange={handleTrackingIdChange}
 				required

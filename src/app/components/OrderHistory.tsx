@@ -9,11 +9,13 @@ const OrderHistory = ({
 	_id,
 	otp,
 	delivered,
+	paid,
 }: {
 	product: productList;
 	_id: string;
 	otp: boolean;
 	delivered: string;
+	paid: boolean;
 }) => {
 	// console.log(data[0]?.product?.site)
 	return (
@@ -29,6 +31,11 @@ const OrderHistory = ({
 				placeOrder={
 					otp && delivered === "undelivered" ? (
 						<StatusBadge status={"OTP submitted"} />
+					) : paid && delivered === "delivered" ? (
+						<StatusBadge
+							paid={paid}
+							status={delivered}
+						/>
 					) : (
 						<StatusBadge status={delivered} />
 					)

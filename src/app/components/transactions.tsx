@@ -7,18 +7,18 @@ import dateFormat from "./dateFormat";
 import Loader from "./loader";
 
 const Transactions = ({
-	userPage,
+	// userPage,
 	_id,
 }: {
-	userPage: boolean;
-	_id?: string;
+	// userPage: boolean;
+	_id: string;
 }) => {
 	const [data, setData] = useState<transactions[]>();
 	useEffect(() => {
 		async function getData() {
 			try {
 				const response = await axios.get(
-					`/api/transactions?userPage=${userPage}&_id=${_id}`
+					`/api/transactions?_id=${_id}`
 				);
 				if (response.data.success) {
 					setData(response.data.data);
@@ -30,7 +30,7 @@ const Transactions = ({
 			}
 		}
 		getData();
-	}, [_id, userPage]);
+	}, [_id]);
 
 	return (
 		<>
@@ -43,7 +43,7 @@ const Transactions = ({
 							<th className="py-6 px-12 text-left sm:pr-0.5 sm:pl-2 sm:py-1">
 								Transaction ID
 							</th>
-							{userPage.toString() === "false" && (
+							{!_id && (
 								<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
 									User name
 								</th>
@@ -82,8 +82,7 @@ const Transactions = ({
 										<td className="py-4 px-12 text-sm sm:text-[8px] sm:px-0.5 sm:py-1">
 											{_id}
 										</td>
-										{userPage.toString() ===
-											"false" && (
+										{!_id && (
 											<td className="py-4 px-12 font-semibold sm:px-0.5 sm:py-1">
 												{
 													user.name

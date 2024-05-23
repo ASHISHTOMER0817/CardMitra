@@ -23,10 +23,11 @@ export async function GET(request: NextRequest) {
                   console.log('if condtion')
                   console.log(role, _id)
                   if (role === 'user') {
-                        const userInfo = await User.findOne({_id:_id})
+                        console.log('this is user')
+                        const userInfo = await User.findOne({ _id: _id })
                         console.log(userInfo)
                         return NextResponse.json({
-                              message: 'here is your details', data:userInfo, success:true
+                              message: 'here is your details', data: userInfo, success: true
                         })
                   }
             }

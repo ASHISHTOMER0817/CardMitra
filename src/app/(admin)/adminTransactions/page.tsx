@@ -27,7 +27,7 @@ const AdminTransactions = () => {
 			<h3 className="font-semibold my-12 sm:my-0 sm:text-xs sm:mb-2">
 				Transactions
 			</h3>
-			<Transactions userPage={false} />
+			<Transactions _id={""} />
 		</div>
 	);
 };

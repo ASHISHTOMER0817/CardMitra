@@ -6,7 +6,7 @@ import Header from "@/app/components/Header";
 import { order, otp } from "@/interface/productList";
 import Loader from "@/app/components/loader";
 const OdrHistory = () => {
-	const [data, setData] = useState<order[]>([]);
+	const [data, setData] = useState<order[]>();
 
 	const [listType, setListType] = useState("undelivered");
 
@@ -97,7 +97,13 @@ const OdrHistory = () => {
 				<div className="grid grid-flow-row gap-7 grid-cols-3 md:gap-3 sm:gap-1 sm:grid-cols-2">
 					{data.map(
 						(
-							{ product, _id, otp, delivered },
+							{
+								product,
+								_id,
+								otp,
+								delivered,
+								paid,
+							},
 							index
 						) => {
 							const show =
@@ -113,6 +119,7 @@ const OdrHistory = () => {
 										delivered={
 											delivered
 										}
+										paid={paid}
 									/>
 								)
 							);

@@ -114,8 +114,8 @@ const UserProfile = () => {
 					<h3 className="font-semibold text-primaryBgClr">
 						{data?.name}
 					</h3>
-					<div className="p-4 flex flex-col justify-center items-center bg-gray-200 rounded-[20px] sm:py-1 sm:text-[10px]">
-						<div className="flex justify-center items-center text-lg sm:text-sm">
+					<div className="p-4 flex flex-col justify-center items-center bg-gray-200 rounded-[20px] sm:py-1 sm:text-[10px] sm:gap-0.5">
+						<div className="flex justify-center items-center text-lg sm:text-[11px] sm:leading-none">
 							Earnings:{" "}
 							<LiaRupeeSignSolid
 								width={20}
@@ -126,11 +126,12 @@ const UserProfile = () => {
 								{data?.paid}
 							</div>
 						</div>
-						<div className="text-gray-600 flex justify-center items-center text-[11px] ">
+						<div className="text-gray-600 flex justify-center items-center sm:text-[7px] border-b border-b-black sm:leading-none">
 							pending amount:{" "}
 							<LiaRupeeSignSolid
 								width={10}
 								height={10}
+								className="under"
 							/>
 							<div>{data?.unpaid}</div>
 						</div>
@@ -171,7 +172,14 @@ const UserProfile = () => {
 				<h6 className="text-gray-400 text-sm mt-10 mb-4 rounded-full font-semibold">
 					TRANSACTIONS
 				</h6>
-				<Transactions userPage={true} _id={data?._id} />
+
+				{!data ? (
+					<Loader />
+				) : data?._id ? (
+					<Transactions _id={data?._id} />
+				) : (
+					""
+				)}
 			</div>
 		</>
 	);
