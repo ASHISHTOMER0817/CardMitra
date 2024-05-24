@@ -192,7 +192,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 
 			{transactions ? (
 				<Suspense fallback={<Loader classList="mt-20" />}>
-					<Transactions userPage={true} _id={params._id} />
+					<Transactions _id={params._id} />
 				</Suspense>
 			) : data ? (
 				data?.orderList?.length > 0 ? (

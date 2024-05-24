@@ -68,8 +68,9 @@ const Dashboard = () => {
 	function loops(todaysOrders: order[]) {
 		let total = 0;
 		let commission = 0;
+
 		for (let i = 0; i < todaysOrders.length; i++) {
-			if (todaysOrders[i].orderedAt === dateFormat(new Date())) {
+			if (new Date(todaysOrders[i].orderedAt) === new Date()) {
 				total += todaysOrders[i].product.price;
 			}
 		}
@@ -196,6 +197,7 @@ const Dashboard = () => {
 										otp,
 										_id,
 										delivered,
+										paid,
 									},
 									index
 								) => {
@@ -210,6 +212,7 @@ const Dashboard = () => {
 												delivered
 											}
 											key={index}
+											paid={paid}
 										/>
 									);
 								}

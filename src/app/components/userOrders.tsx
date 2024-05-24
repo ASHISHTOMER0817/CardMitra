@@ -66,7 +66,9 @@ const UserOrders = ({ data }: { data: order[] }) => {
 									{deliveryDate}
 								</td>
 								<td className="py-4 px-12 sm:px-0.5 sm:py-1">
-									{orderedAt}
+									{new Date(
+										orderedAt
+									).toDateString()}
 								</td>
 								<td className="py-4 px-12 sm:px-0.5 sm:py-1 text-primaryBgClr">
 									{product.name}

@@ -35,7 +35,7 @@ const AdminOrderHistory = () => {
 	}, []);
 
 	return (
-		<div className="flex flex-col mx-auto w-[85%] sm:mx-0 sm:w-[90%]">
+		<div className="flex flex-col mx-auto w-[90%] sm:mx-0 sm:w-[90%]">
 			<Header
 				className="sm:mb-4"
 				heading={"Order History"}
@@ -166,7 +166,9 @@ const AdminOrderHistory = () => {
 											})()}
 										</td>
 										<td className="py-4 px-12 text-gray-500 sm:px-0.5 sm:py-1">
-											{orderedAt}
+											{new Date(
+												orderedAt
+											).toDateString()}
 										</td>
 										<td className="py-4 px-12 text-gray-500 sm:px-0.5 sm:py-1">
 											{deliveryDate}

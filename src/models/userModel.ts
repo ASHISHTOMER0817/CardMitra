@@ -35,8 +35,8 @@ const orderSchema = new mongoose.Schema({
 
 	},
 	orderedAt: {
-		type: String,
-		// format:Date
+		type: Date,
+		format: Date
 	},
 	paid: {
 		type: Boolean

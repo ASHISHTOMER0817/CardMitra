@@ -3,7 +3,7 @@ import Database from "@/database/database";
 import { Order, Otp, Product, User } from "@/models/userModel";
 // import Dashboard from "@/app/(user)/dashboard/page";
 // import dateFormat from "@/app/components/dateFormat";
-import ordersToday, { todaysDate } from "@/app/components/lib";
+import { todaysDate } from "@/app/components/lib";
 import dayjs, { Dayjs } from "dayjs";
 import utc from "dayjs/plugin/utc"
 dayjs.extend(utc)
@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
 
                   //Orders placed today
                   let order;
-                  const Orders = await Order.find({ orderedAt: todaysDate })
+                  const Orders = await Order.find({ orderedAt: new Date() })
                   if (Orders.length <= 0) {
                         order = 0
 

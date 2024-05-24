@@ -10,7 +10,7 @@ dayjs.extend(utc);
 export const todaysDate = dateFormat(new Date());
 
 export default async function ordersToday() {
-	const noOfDelivery = await Order.find({ deliveryDate: todaysDate })
+	const noOfDelivery = await Order.find({ deliveryDate: new Date() })
 		.populate("user")
 		.sort({ otp: 1 });
 	console.log(todaysDate, noOfDelivery);

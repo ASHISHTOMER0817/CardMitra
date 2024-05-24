@@ -31,6 +31,7 @@ const Transactions = ({
 		}
 		getData();
 	}, [_id]);
+	const userId = _id;
 
 	return (
 		<>
@@ -43,7 +44,7 @@ const Transactions = ({
 							<th className="py-6 px-12 text-left sm:pr-0.5 sm:pl-2 sm:py-1">
 								Transaction ID
 							</th>
-							{!_id && (
+							{!userId && (
 								<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
 									User name
 								</th>
@@ -82,7 +83,7 @@ const Transactions = ({
 										<td className="py-4 px-12 text-sm sm:text-[8px] sm:px-0.5 sm:py-1">
 											{_id}
 										</td>
-										{!_id && (
+										{!userId && (
 											<td className="py-4 px-12 font-semibold sm:px-0.5 sm:py-1">
 												{
 													user.name
@@ -90,11 +91,9 @@ const Transactions = ({
 											</td>
 										)}
 										<td className="py-4 px-12 text-gray-500 sm:px-0.5 sm:py-1">
-											{dateFormat(
-												new Date(
-													dateOfPayment
-												)
-											)}
+											{new Date(
+												dateOfPayment
+											).toDateString()}
 										</td>
 
 										<td className="py-4 px-12 text-primaryBgClr sm:px-0.5 sm:py-1">

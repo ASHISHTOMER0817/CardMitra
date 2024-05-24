@@ -16,7 +16,7 @@ export const POST = async (request: NextRequest) => {
                   objectId,
                   deliveryDate
             } = reqBody.formData
-            const {_id} =await GetToken()
+            const { _id } = await GetToken()
             if (_id) {
 
                   // Object Id 
@@ -25,7 +25,7 @@ export const POST = async (request: NextRequest) => {
                   // console.log(productId)
 
                   //check the requirement
-                  const product = await Product.findOne({ _id:objectId })
+                  const product = await Product.findOne({ _id: objectId })
                   console.log(product)
                   const requirement = product.requirement
                   console.log(requirement)
@@ -33,12 +33,12 @@ export const POST = async (request: NextRequest) => {
 
                   //Change Format
                   const delivery_date = dateFormat(deliveryDate)
-                  console.log( 'delivery date',delivery_date, typeof delivery_date)
+                  console.log('delivery date', delivery_date, typeof delivery_date)
 
                   //check if requirement fulfilled
                   if (requirement === 0) {
                         return NextResponse.json({
-                              message: "Quantity got fulfilled, better luck next time", success: true, status:400
+                              message: "Quantity got fulfilled, better luck next time", success: true, status: 400
                         })
                   }
                   console.log("still workin...")
@@ -49,9 +49,9 @@ export const POST = async (request: NextRequest) => {
                         product: productId,
                         user: userObjectId,
                         orderId: orderNumber,
-                        deliveryDate:  delivery_date,
-                        orderedAt: dateFormat(new Date()),
-                        delivered:'undelivered',
+                        deliveryDate: delivery_date,
+                        orderedAt: new Date(),
+                        delivered: 'undelivered',
                         otp: false,
                   })
 

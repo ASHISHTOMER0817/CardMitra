@@ -75,6 +75,9 @@ export default function Home() {
 		}
 		getData();
 	});
+
+	const arr = [{ user: "Vansh Kumar", review: "" }];
+
 	const image = <Image src={VeriticalRuler} alt={""}></Image>;
 	return (
 		<>
