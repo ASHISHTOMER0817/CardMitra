@@ -63,7 +63,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 	return (
 		<div
 			className={`${
-				heading === "approved" && "w-[90%]"
+				heading === "approved" && "w-[90%] sm:w-full"
 			} mx-auto my-8 md:text-[10px]`}
 		>
 			{heading === "approved" && (

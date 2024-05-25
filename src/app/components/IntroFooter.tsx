@@ -14,7 +14,7 @@ export default function Footer() {
 				<Image className=" w-8 h-8" src={insta} alt={""} />
 				<div className="bg-white rounded-full">
 					<Image
-						className="w-8 h-8 p-[9px]"
+						className="w-8 h-8 p-[9px] "
 						src={fb}
 						alt={""}
 					/>

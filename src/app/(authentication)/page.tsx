@@ -262,7 +262,7 @@ export default function Home() {
 					</h1>
 					<div className="py-12 bg-gray-200 flex justify-center gap-x-[20rem] items-start sm:items-center sm:gap-6">
 						<div className="text-left">
-							<div className=" font-medium sm:font-semibold sm:text-lg">
+							<div className=" font-medium text-2xl sm:font-semibold sm:text-lg">
 								Fill the form
 							</div>
 							<h5 className="text-gray-400 mt-3 leading-tight sm:text-xs">
@@ -316,16 +316,16 @@ export default function Home() {
 						<Image
 							src={whtsap}
 							alt=""
-							className="w-6 h-auto"
+							className="sm:w-6 w-8 h-8"
 						/>
 						<Image
-							className=" w-6 h-auto"
+							className=" sm:w-6 w-8 h-8"
 							src={insta}
 							alt={""}
 						/>
 						<div className="bg-white rounded-full">
 							<Image
-								className="w-6 h-6 p-[6px]"
+								className="sm:w-6 sm:h-6 sm:p-[6px] w-8 h-8 p-[9px] "
 								src={fb}
 								alt={""}
 							/>
