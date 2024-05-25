@@ -7,7 +7,7 @@ import Popup from "./Popup";
 const OrderForm = ({ objectId }: { objectId: string }) => {
 	const [orderNumber, setOrderNumber] = useState("");
 	const [deliveryDate, setDeliveryDate] = useState(Date);
-	const [address, setAddress] = useState("");
+	// const [address, setAddress] = useState("");
 	const router = useRouter();
 
 	const handleOrderNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -18,9 +18,9 @@ const OrderForm = ({ objectId }: { objectId: string }) => {
 		setDeliveryDate(e.target.value);
 	};
 
-	const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setAddress(e.target.value);
-	};
+	// const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
+	// 	setAddress(e.target.value);
+	// };
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -59,7 +59,7 @@ const OrderForm = ({ objectId }: { objectId: string }) => {
 		// Reset the form fields after submission (optional)
 		setOrderNumber("");
 		setDeliveryDate("");
-		setAddress("");
+		// setAddress("");
 	};
 
 	return (
@@ -88,14 +88,14 @@ const OrderForm = ({ objectId }: { objectId: string }) => {
 			/>
 
 			<label htmlFor="address">Address</label>
-			<input
+			{/* <input
 				type="text"
 				placeholder="Address"
 				value={address}
 				onChange={handleAddressChange}
 				required
 				className="sm:w-48 sm:py-2 sm:pl-6"
-			/>
+			/> */}
 
 			<button
 				type="submit"

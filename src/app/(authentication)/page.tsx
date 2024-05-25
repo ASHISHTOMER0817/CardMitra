@@ -13,6 +13,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { ReviewInterface } from "@/interface/productList";
+// import Slider from "react-slick";
+import SimpleSlider from "../components/SimpleSlider";
+// import HDFC from "@/../public/cards/HDFC.svg";
 
 export default function Home() {
 	const [name, setName] = useState("");
@@ -76,11 +79,37 @@ export default function Home() {
 		getData();
 	});
 
-	const arr = [{ user: "Vansh Kumar", review: "" }];
+	const arr = [
+		{
+			user: "Vansh Kumar",
+			review: "Incredible service, outstanding results!Deal dynamo transformed our website beyond our expectations.",
+		},
+		{
+			user: "Vansh Kumar",
+			review: "Incredible service, outstanding results!Deal dynamo transformed our website beyond our expectations.",
+		},
+		{
+			user: "Vansh Kumar",
+			review: "Incredible service, outstanding results!Deal dynamo transformed our website beyond our expectations.",
+		},
+		{
+			user: "Vansh Kumar",
+			review: "Incredible service, outstanding results!Deal dynamo transformed our website beyond our expectations.",
+		},
+		{
+			user: "Vansh Kumar",
+			review: "Incredible service, outstanding results!Deal dynamo transformed our website beyond our expectations.",
+		},
+		{
+			user: "Vansh Kumar",
+			review: "Incredible service, outstanding results!Deal dynamo transformed our website beyond our expectations.",
+		},
+	];
 
 	const image = <Image src={VeriticalRuler} alt={""}></Image>;
 	return (
-		<>
+		<div className="">
+			{/* <Image src={HDFC} alt={""} className="w-7 h-auto" /> */}
 			<IntroHeader />
 			<main className=" min-h-screen text-center">
 				<section className="text-center px-10 py-24">
@@ -201,22 +230,22 @@ export default function Home() {
 						</div>
 					</div>
 				</section>
-				{data && data.length > 1 && (
-					<section className="pt-24 pb-24 px-10">
-						<h5 className="font-medium text-primaryBgClr mb-8">
-							CUSTOMER TESTIMONIALS
-						</h5>
-						<h1 className="font-extrabold ">
-							Hear What Our Clients <br />
-							Have to Say!
-						</h1>
-						<div className="gap-5">
+				{/* {data && data.length > 1 && ( */}
+				<section className="pt-16 pb-24 px-10 bg-primaryBgClr">
+					<h5 className="font-medium text-white mb-8">
+						CUSTOMER TESTIMONIALS
+					</h5>
+					<h1 className="font-extrabold text-white mb-16">
+						Hear What Our Clients <br />
+						Have to Say!
+					</h1>
+					{/* <div className="gap-5">
 							{data.map(
 								({ user, review }, index) => {
 									return (
 										<div
 											key={index}
-											className="p-6 flex flex-col justify-center items-center gap-4 rounded-2xl"
+											className="p-6 flex flex-col justify-center items-center gap-4 rounded-2xl bg-white"
 										>
 											<div className="text-lg font-semibold">
 												{
@@ -230,9 +259,10 @@ export default function Home() {
 									);
 								}
 							)}
-						</div>
-					</section>
-				)}
+						</div> */}
+					<SimpleSlider reviewArr={arr} />
+				</section>
+				{/* // )} */}
 
 				<section className="pt-24 pb-24 px-10">
 					<h5 className="font-medium text-primaryBgClr mb-8">
@@ -292,6 +322,6 @@ export default function Home() {
 				</section>
 			</main>
 			<IntroFooter />
-		</>
+		</div>
 	);
 }

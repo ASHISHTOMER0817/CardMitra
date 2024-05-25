@@ -21,17 +21,19 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 	const [amount, setAmount] = useState<number>();
 	const [overlay, setOverlay] = useState("hidden");
 	const [transactions, setTransactions] = useState(false);
-	const [refresh, setRefresh] = useState(false);
-	const router = useRouter();
+	// const [refresh, setRefresh] = useState(false);
+	// const router = useRouter();
 
 	useEffect(() => {
 		async function getData() {
 			try {
 				console.log("useEffect running");
+				console.log(params._id);
 				const response = await axios.get(
-					`/api/users/details?query=${params._id}&listType=${listType}&paid=${amount}`
+					`/api/users/details?query=${params._id}`
 				);
-				setData(response.data.data);
+				setData(await response.data.data);
+				console.log(await response.data);
 				if (response.data.status === 250) {
 					Popup("success", response.data.message);
 					console.log("really----");
@@ -44,7 +46,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 		getData();
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [listType, params._id]);
+	}, [params._id]);
 	// if(refresh){
 	// 	setRefresh(false)
 	// 	router.refresh()
@@ -76,13 +78,30 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 	// 	console.log(overlay);
 	// }
 
+	async function payment() {
+		try {
+			const response = await axios.get(
+				`/api/users/details?paid=${amount}`
+			);
+			setData(response.data.data);
+			if (response.data.status === 250) {
+				Popup("success", response.data.message);
+				console.log("really----");
+				// setRefresh(true)
+			}
+		} catch {
+			Popup("error", "something went wrong!!");
+		}
+	}
+
 	console.log(data?.totalAmt);
 	return (
 		<div className="w-[90%] mx-10 mt-6 relative sm:ml-0">
 			<div
 				className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}
 			></div>
-			<div
+			<form
+				onSubmit={payment}
 				className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 sm:gap-2`}
 			>
 				<RxCross1
@@ -104,14 +123,16 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 				/>{" "}
 				<button
 					onClick={() => {
-						setListType("reduce");
+						setListType("undelivered");
+						// payment();
 						setOverlay("hidden");
 					}}
+					type="submit"
 					className="px-3 py-1 hover:bg-gray-200 active:bg-gray-200"
 				>
 					Submit
 				</button>
-			</div>
+			</form>
 			<BackwardButton />
 			<div className="flex justify-between mb-10 items-center">
 				<h3 className="font-semibold">{data?.user?.name}</h3>
@@ -141,13 +162,22 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 
 			<section className="flex justify-between items-center sm:text-[10px]">
 				<div>
-					Account Number: <div>{data?.user?.accountNo}</div>
+					Account Number:{" "}
+					<div className="float-right">
+						{data?.user?.accountNo}
+					</div>
 				</div>
 				<div>
-					IFSC Code: <div>{data?.user?.ifsc} </div>
+					IFSC Code:{" "}
+					<div className="float-right">
+						{data?.user?.ifsc}{" "}
+					</div>
 				</div>
 				<div className="mr-20">
-					UPI ID: <div>{data?.user?.upi}</div>
+					UPI ID:{" "}
+					<div className="float-right">
+						{data?.user?.upi}
+					</div>
 				</div>
 			</section>
 
@@ -168,11 +198,11 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 				</h6>
 				<h6
 					onClick={() => {
-						setListType("nonDelivered");
-						setTransactions(false);
+						setListType("undelivered");
+						// setTransactions(false);
 					}}
 					className={` text-sm p-[10px] rounded-full cursor-pointer sm:text-[10px] sm:text-nowrap ${
-						listType === "nonDelivered" &&
+						listType === "undelivered" &&
 						!transactions &&
 						"underline underline-offset-4 text-primaryBgClr"
 					}`}
@@ -180,9 +210,34 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 					non-delivered List
 				</h6>
 				<h6
-					onClick={() => setTransactions(true)}
+					onClick={() => {
+						setListType("cancelled");
+						// setTransactions(false);
+					}}
 					className={` text-sm p-[10px] rounded-full cursor-pointer sm:text-[10px] sm:text-nowrap ${
-						transactions &&
+						listType === "cancelled" &&
+						// !transactions &&
+						"underline underline-offset-4 text-primaryBgClr"
+					}`}
+				>
+					Cancelled List
+				</h6>
+				<h6
+					onClick={() => {
+						setListType("Wrong OTP");
+						// setTransactions(false);
+					}}
+					className={` text-sm p-[10px] rounded-full cursor-pointer sm:text-[10px] sm:text-nowrap ${
+						listType === "Wrong OTP" &&
+						"underline underline-offset-4 text-primaryBgClr"
+					}`}
+				>
+					Wrong OTP List
+				</h6>
+				<h6
+					onClick={() => setListType("transactions")}
+					className={` text-sm p-[10px] rounded-full cursor-pointer sm:text-[10px] sm:text-nowrap ${
+						listType === "transactions" &&
 						"underline underline-offset-4 text-primaryBgClr"
 					}`}
 				>
@@ -190,20 +245,17 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 				</h6>
 			</div>
 
-			{transactions ? (
-				<Suspense fallback={<Loader classList="mt-20" />}>
-					<Transactions _id={params._id} />
-				</Suspense>
+			{listType === "transactions" ? (
+				<Transactions _id={params._id} />
 			) : data ? (
-				data?.orderList?.length > 0 ? (
-					<UserOrders data={data?.orderList!} />
-				) : (
-					<div className="mt-28 mx-auto w-fit text-sm text-red-500 font-serif sm:text-[8px]">
-						User was In-active !!
-					</div>
-				)
+				<UserOrders
+					data={data?.orderList!}
+					listType={listType}
+				/>
 			) : (
-				<Loader classList="mt-20" />
+				<div className="mt-28 mx-auto w-fit text-sm text-red-500 font-serif sm:text-[8px]">
+					User was In-active !!
+				</div>
 			)}
 		</div>
 	);

@@ -62,7 +62,9 @@ const ProductOrderList = ({ _id }: { _id: string }) => {
 									{order._id}
 								</td>
 								<td className="py-4 px-12 sm:px-0.5 sm:py-1">
-									{order.orderedAt.toString()}
+									{new Date(
+										order.orderedAt
+									).toDateString()}
 								</td>
 								<td className="py-4 px-12 sm:px-0.5 sm:py-1">
 									{order.deliveryDate}

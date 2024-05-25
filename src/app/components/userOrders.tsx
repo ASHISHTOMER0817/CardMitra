@@ -3,7 +3,15 @@ import React, { useState } from "react";
 // import Popup from "./Popup";
 import { order } from "@/interface/productList";
 // import dateFormat from "./dateFormat";
-const UserOrders = ({ data }: { data: order[] }) => {
+import userOrdersListRow from "./userOrdersListRow";
+import UserOrdersListRow from "./userOrdersListRow";
+const UserOrders = ({
+	data,
+	listType,
+}: {
+	data: order[];
+	listType: string;
+}) => {
 	// const [datas, setDatas] = useState<order[]>(data)
 
 	// useEffect(()=>{
@@ -40,45 +48,42 @@ const UserOrders = ({ data }: { data: order[] }) => {
 			</thead>
 			<tbody>
 				{data.map(
-					(
+					({
+						deliveryDate,
+						product,
+						orderedAt,
+						orderId,
+						delivered,
+					}) =>
+						// index
 						{
-							deliveryDate,
-							product,
-							orderedAt,
-							orderId,
-						},
-						index
-					) => {
-						// const date = new Date(deliveryDate);
-						// let delivery = dateFormat(date);
-						// const orderDate = new Date(orderedAt);
-						// let order_at = dateFormat(orderDate);
+							// const date = new Date(deliveryDate);
+							// let delivery = dateFormat(date);
+							// const orderDate = new Date(orderedAt);
+							// let order_at = dateFormat(orderDate);
 
-						return (
-							<tr
-								key={index}
-								className="even:bg-gray-100 sm:text-[8px]"
-							>
-								<td className="py-4 px-12 sm:px-0.5 sm:py-1 text-gray-500">
-									{orderId}
-								</td>
-								<td className="py-4 px-12 sm:px-0.5 sm:py-1">
-									{deliveryDate}
-								</td>
-								<td className="py-4 px-12 sm:px-0.5 sm:py-1">
-									{new Date(
-										orderedAt
-									).toDateString()}
-								</td>
-								<td className="py-4 px-12 sm:px-0.5 sm:py-1 text-primaryBgClr">
-									{product.name}
-								</td>
-								<td className="py-4 px-12 sm:px-0.5 sm:py-1 font-semibold">
-									{product.price}
-								</td>
-							</tr>
-						);
-					}
+							return (
+								<>
+									{listType ===
+										delivered && (
+										<UserOrdersListRow
+											orderId={
+												orderId
+											}
+											deliveryDate={
+												deliveryDate
+											}
+											orderedAt={
+												orderedAt
+											}
+											product={
+												product
+											}
+										/>
+									)}{" "}
+								</>
+							);
+						}
 				)}
 			</tbody>
 		</table>

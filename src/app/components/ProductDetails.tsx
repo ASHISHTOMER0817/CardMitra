@@ -137,10 +137,22 @@ export default function ProductDetails({
 						? data?.cards.map(({ label }, index) => {
 								return (
 									<div
+										className="flex justify-center items-center gap-1"
 										key={index}
-										className="text-gray-500 font-semibold sm:text-[12px]"
 									>
-										{label}
+										<Image
+											src={`/cards/${label}.svg`}
+											width={80}
+											height={40}
+											alt={""}
+											className="w-8 h-auto"
+										/>
+										<div
+											// key={index}
+											className="text-gray-500 font-semibold sm:text-[12px]"
+										>
+											{label}
+										</div>
 									</div>
 								);
 						  })

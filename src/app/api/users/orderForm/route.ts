@@ -53,6 +53,7 @@ export const POST = async (request: NextRequest) => {
                         orderedAt: new Date(),
                         delivered: 'undelivered',
                         otp: false,
+                        paid: false
                   })
 
                   // Decrease requirement by 1

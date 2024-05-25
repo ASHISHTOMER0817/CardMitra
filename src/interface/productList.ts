@@ -70,7 +70,8 @@ export interface user {
 export interface UserDetails {
 	user: user
 	orderList: order[]
-	totalAmt: number
+	totalAmt: number,
+	unpaid: number
 }
 
 export interface transactions {

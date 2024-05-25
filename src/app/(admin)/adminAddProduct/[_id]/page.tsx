@@ -169,9 +169,9 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 			const formData = new FormData();
 			formData.append("optionName", optionObject);
 
-			if (addOption === "site") {
-				formData.append("file", optionFile!);
-			}
+			// if (addOption === "site") {
+			formData.append("file", optionFile!);
+			// }
 			formData.append("addOption", addOption);
 			const response = await axios.post(
 				"/api/admin/addProduct?query=option",
@@ -277,12 +277,12 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 						<input
 							type="file"
 							// required
-							placeholder="site image"
-							className={`outline-none border-b pb-2 border-black sm:text-xs ${
+							placeholder={`${
 								addOption === "site"
-									? ""
-									: "hidden"
+									? "Site Image"
+									: "Card Image"
 							}`}
+							className={`outline-none border-b pb-2 border-black sm:text-xs `}
 							// value={optionName}
 							onChange={({ target }) => {
 								if (target.files) {

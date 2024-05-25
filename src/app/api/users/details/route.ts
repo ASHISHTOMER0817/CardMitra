@@ -14,8 +14,8 @@ export async function GET(request: NextRequest) {
             // Searchparams
             let userId = searchparams.get('query')
 
-            const listType = searchparams.get('listType')
-            const amount = searchparams.get('paid')
+            // const listType = searchparams.get('listType')
+            let amount = searchparams.get('paid')
             let orderList;
 
             if (!userId) {
@@ -33,48 +33,50 @@ export async function GET(request: NextRequest) {
             }
             const user = await User.findOne({ _id: userId })
             // console.log(listType, userId, amount)
-            console.log(user)
+            console.log('this is user', user)
 
             // console.log('skip if condition')
             // console.log(userId)
-            orderList = await Order.find({ user: userId, delivered: 'delivered', paid: false }).populate("product")
+            orderList = await Order.find({ user: userId }).populate("product")
             console.log('this is orderlist', orderList)
 
             // Current amount to pay
             let total = 0;
             if (orderList.length > 0) {
                   for (let i = 0; i < orderList.length; i++) {
-                        total += orderList[i].product.price;
+                        if (orderList[i].delivered === 'delivered' && orderList[i].paid === false) {
+                              total += orderList[i].product.price;
+                        }
                   }
             }
             const totalAmt = user.unpaid + total
             const unpaid = user.unpaid
-            // console.log('lrkjghlkhf')
-            // console.log(totalAmt, unpaid)
+            console.log(totalAmt, unpaid, 'these are some')
 
             let deliveredData = { user, orderList, totalAmt, unpaid }
-
+            console.log('complete data', deliveredData)
             // Delivered but not paid List
-            if (listType === "delivered") {
-                  console.log('condition reached delivered', totalAmt, userId, listType)
+            // if (listType === "delivered") {
+            //       console.log('condition reached delivered', totalAmt, userId, listType)
 
-                  console.log(deliveredData)
-                  return NextResponse.json({
-                        message: "delivered is being shown", data: deliveredData, success: true
-                  })
+            //       console.log(deliveredData)
+            //       return NextResponse.json({
+            //             message: "delivered is being shown", data: deliveredData, success: true
+            //       })
 
-                  // Non delivered Products list
-            } else if (listType === "nonDelivered") {
-                  orderList = await Order.find({ user: userId, delivered: 'undelivered' }).populate("product")
-                  const data = { user, orderList }
-                  return NextResponse.json({
-                        message: "nonDelivered is being shown", data: data, success: true
-                  })
+            //       // Non delivered Products list
+            // } else if (listType === "nonDelivered") {
+            //       orderList = await Order.find({ user: userId, delivered: 'undelivered' }).populate("product")
+            //       const data = { user, orderList }
+            //       return NextResponse.json({
+            //             message: "nonDelivered is being shown", data: data, success: true
+            //       })
 
-                  // Paid to user
-            } else if (listType === "reduce") {
+            //       // Paid to user
+            // }
+            if (amount && +amount > 0) {
                   orderList = await Order.updateMany(
-                        { user: userId, delivered: true, paid: false },
+                        { user: userId, delivered: 'undelivered', paid: false },
                         { $set: { paid: true } }
                   );
                   console.log(orderList)
@@ -96,9 +98,10 @@ export async function GET(request: NextRequest) {
                         message: `${amount} paid to ${user.name}`, success: true, status: 250, data: deliveredData
                   })
             }
-            else if (listType === 'transactions') {
+            else {
+                  console.log('else condition')
                   return NextResponse.json({
-                        message: "List of Transactions ", success: true, return: user
+                        message: "List of Transactions ", success: true, data: deliveredData
                   })
             }
 

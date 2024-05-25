@@ -19,13 +19,6 @@ export async function POST(request: NextRequest) {
                   const optionName: any = formData.get('optionName')
                   const addOption = formData.get('addOption')
                   const optionObject: dropdown = JSON.parse(optionName)
-                  if (addOption === 'card') {
-                        const options = await Options.findOneAndUpdate({ id: 'options' }, { $push: { cards: optionObject } })
-                        console.log(options, 'this is the options document')
-                        return NextResponse.json({
-                              message: 'card has been added', success: true
-                        })
-                  }
                   const file = formData.get('file') as File
 
                   if (!file) {
@@ -33,6 +26,22 @@ export async function POST(request: NextRequest) {
                               message: 'upload an image', status: 400, success: false
                         })
                   }
+                  if (addOption === 'card') {
+                        const options = await Options.findOneAndUpdate({ id: 'options' }, { $push: { cards: optionObject } })
+                        console.log(options, 'this is the options document')
+
+
+                        const uploadDir = path.join(process.cwd(), 'public', 'cards');
+                        const newFileName = optionObject.value + '.svg'
+                        const filePath = path.join(uploadDir, newFileName);
+                        const bytes = await file.arrayBuffer();
+                        await fs.writeFile(filePath, Buffer.from(bytes));
+                        console.log('still working ')
+                        return NextResponse.json({
+                              message: 'card has been added', success: true
+                        })
+                  }
+
                   const uploadDir = path.join(process.cwd(), 'public', 'static');
                   const newFileName = optionObject.value + '.svg'
                   const filePath = path.join(uploadDir, newFileName);

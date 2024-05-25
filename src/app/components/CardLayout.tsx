@@ -111,13 +111,25 @@ const CardLayout = ({
 				/>
 
 				<div className="flex flex-col justify-start items-start text-sm font-semibold text-gray-600">
-					{cards?.map(({ label }) => {
+					{cards?.map(({ label }, index) => {
+						console.log("thisiscard", label);
 						return (
-							<>
+							<div
+								key={index}
+								className="flex justify-center items-center gap-1"
+							>
+								{" "}
+								<Image
+									src={`/cards/${label}.svg`}
+									width={80}
+									height={40}
+									alt={""}
+									className="w-8 h-auto"
+								/>
 								<div className="sm:font-light sm:text-[10px] sm:leading-3">
 									{label}
 								</div>
-							</>
+							</div>
 						);
 					})}
 				</div>
