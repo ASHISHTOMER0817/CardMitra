@@ -6,6 +6,7 @@ interface InputProps {
 	placeholder?: string;
 	value: string;
 	onChange: (value: string) => void;
+	classList?: string;
 }
 
 // Define the Input component
@@ -14,6 +15,7 @@ const InputSpace: React.FC<InputProps> = ({
 	placeholder,
 	value,
 	onChange,
+	classList,
 }) => {
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		onChange(event.target.value);
@@ -21,7 +23,7 @@ const InputSpace: React.FC<InputProps> = ({
 
 	return (
 		<input
-			className="py-4 px-3 w-96 outline-none border border-gray-400 rounded-full sm:w-48 sm:py-2 sm:pl-6"
+			className={`py-4 px-3 w-96 outline-none border border-gray-400 rounded-full sm:w-48 sm:py-2 sm:pl-6 ${classList}`}
 			type={type}
 			placeholder={placeholder}
 			value={value}

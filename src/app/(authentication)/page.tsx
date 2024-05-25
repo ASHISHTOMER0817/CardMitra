@@ -15,7 +15,15 @@ import Link from "next/link";
 import { ReviewInterface } from "@/interface/productList";
 // import Slider from "react-slick";
 import SimpleSlider from "../components/SimpleSlider";
+
 // import HDFC from "@/../public/cards/HDFC.svg";
+
+import fb from "@/../public/fb.svg";
+import insta from "@/../public/Insta.svg";
+// import whtsap from "@/../public/whatsapp.svg"
+import { FaWhatsapp } from "react-icons/fa";
+import whtsap from "@/../public/whtsap.svg";
+import footerDanda from "@/../public/FooterDanda.svg";
 
 export default function Home() {
 	const [name, setName] = useState("");
@@ -107,12 +115,15 @@ export default function Home() {
 	];
 
 	const image = <Image src={VeriticalRuler} alt={""}></Image>;
+
+	const danda = <Image src={footerDanda} alt={""} />;
+
 	return (
 		<div className="">
 			{/* <Image src={HDFC} alt={""} className="w-7 h-auto" /> */}
 			<IntroHeader />
 			<main className=" min-h-screen text-center">
-				<section className="text-center px-10 py-24">
+				<section className="text-center px-10 py-24 sm:py-0">
 					<h5 className="my-4 font-medium text-primaryBgClr">
 						TOP RANKED SOLUTIONS
 					</h5>
@@ -120,12 +131,12 @@ export default function Home() {
 						Your One-Stop Solutions for <br /> Managing
 						Phone Orders
 					</h1>
-					<h3 className="my-6 text-gray-400">
+					<h3 className="my-6 text-gray-400 sm:leading-7">
 						Streamline your phone order management
 						effortlessly <br /> with our comprehensive
 						solution
 					</h3>
-					<button className="px-7 py-4 mb-10 mt-6 rounded-[36px] bg-primaryBgClr hover:bg-green-600 font-bold text-white">
+					<button className="px-7 py-4 mb-10 mt-6 rounded-[36px] bg-primaryBgClr hover:bg-green-600 font-bold text-white sm:py-2 sm:px-3">
 						<Link
 							href={"/Auth/signup"}
 							className="text-xl"
@@ -134,7 +145,7 @@ export default function Home() {
 						</Link>
 					</button>
 				</section>
-				<section className="bg-black text-white text-left px-10 py-10 flex justify-center gap-24 items-center">
+				<section className="bg-black text-white text-left px-10 py-10 flex justify-center gap-24 items-center sm:gap-8 sm:py-8">
 					{" "}
 					<div className="font-extrabold text-white flex flex-col gap-y-4">
 						{" "}
@@ -158,7 +169,7 @@ export default function Home() {
 						</h3>
 					</div>
 				</section>
-				<section className="py-[3.75rem] text-center px-10">
+				<section className="py-[3.75rem] text-center px-10 sm:py-12">
 					<h5 className="font-medium text-primaryBgClr mb-8">
 						ABOUT US
 					</h5>
@@ -190,8 +201,8 @@ export default function Home() {
 						Unlock the power of seamless <br />
 						phone Order Management
 					</h1>
-					<div className="flex justify-center gap-x-32 mt-12 items-center text-left mt-">
-						<div className="flex flex-col p-9 rounded-2xl bg-[#FFFFFF1A] justify-start gap-y-3">
+					<div className="flex justify-center gap-x-32 mt-12 items-center text-left sm:gap-2 sm:flex-col">
+						<div className="flex flex-col p-9 rounded-2xl bg-[#FFFFFF1A] justify-start gap-y-3 sm:w-4/5 sm:py-3 sm:pl-4 sm:pr-0">
 							<GoBell className="w-12 h-12 rounded-3xl p-2 text-white bg-primaryBgClr" />
 
 							<div className="text-lg font-semibold">
@@ -203,7 +214,7 @@ export default function Home() {
 								seamless order <br /> management
 							</div>
 						</div>
-						<div className="flex flex-col p-9 rounded-2xl bg-[#FFFFFF1A] justify-start gap-y-3">
+						<div className="flex flex-col p-9 rounded-2xl bg-[#FFFFFF1A] justify-start gap-y-3 sm:w-4/5 sm:py-3 sm:pl-4 sm:pr-0">
 							<CiRoute className="w-12 h-12 rounded-3xl p-2 text-white bg-primaryBgClr" />
 
 							<div className="text-lg font-semibold">
@@ -216,7 +227,7 @@ export default function Home() {
 								<br /> validity
 							</div>
 						</div>
-						<div className="flex flex-col p-9 rounded-2xl bg-[#FFFFFF1A] justify-start gap-y-3">
+						<div className="flex flex-col p-9 rounded-2xl bg-[#FFFFFF1A] justify-start gap-y-3 sm:w-4/5 sm:py-3 sm:pl-4 sm:pr-0">
 							<IoCubeOutline className="w-12 h-12 rounded-3xl p-2 text-white bg-primaryBgClr" />
 							<div className="text-lg font-semibold">
 								Advanced Order <br /> Tracking
@@ -230,7 +241,6 @@ export default function Home() {
 						</div>
 					</div>
 				</section>
-				{/* {data && data.length > 1 && ( */}
 				<section className="pt-16 pb-24 px-10 bg-primaryBgClr">
 					<h5 className="font-medium text-white mb-8">
 						CUSTOMER TESTIMONIALS
@@ -239,45 +249,23 @@ export default function Home() {
 						Hear What Our Clients <br />
 						Have to Say!
 					</h1>
-					{/* <div className="gap-5">
-							{data.map(
-								({ user, review }, index) => {
-									return (
-										<div
-											key={index}
-											className="p-6 flex flex-col justify-center items-center gap-4 rounded-2xl bg-white"
-										>
-											<div className="text-lg font-semibold">
-												{
-													user.name
-												}
-											</div>
-											<div className=" text-gray-700">
-												{review}
-											</div>
-										</div>
-									);
-								}
-							)}
-						</div> */}
 					<SimpleSlider reviewArr={arr} />
 				</section>
-				{/* // )} */}
 
-				<section className="pt-24 pb-24 px-10">
+				<section className="pt-24 pb-24 px-10 sm:pt-8 sm:pb-8">
 					<h5 className="font-medium text-primaryBgClr mb-8">
 						BECOME AN AFFILIATE
 					</h5>
-					<h1 className="my-12 font-extrabold">
+					<h1 className="my-12 font-extrabold sm:my-8">
 						Join Our Affiliate Program <br /> & Start
 						Earning Today
 					</h1>
-					<div className="py-12 bg-gray-200 flex justify-center gap-x-[20rem] items-start">
+					<div className="py-12 bg-gray-200 flex justify-center gap-x-[20rem] items-start sm:items-center sm:gap-6">
 						<div className="text-left">
-							<h2 className=" font-medium">
+							<div className=" font-medium sm:font-semibold sm:text-lg">
 								Fill the form
-							</h2>
-							<h5 className="text-gray-400 mt-3 leading-tight">
+							</div>
+							<h5 className="text-gray-400 mt-3 leading-tight sm:text-xs">
 								Begin your journey to affiliate{" "}
 								<br /> success by completing the
 								form
@@ -285,7 +273,7 @@ export default function Home() {
 						</div>
 						<form
 							onSubmit={sendData}
-							className="text-sm flex flex-col gap-y-5 items-center justify-center"
+							className="text-sm flex flex-col gap-y-5 items-center justify-center sm:w-full"
 						>
 							<InputSpace
 								type="text"
@@ -294,6 +282,7 @@ export default function Home() {
 								onChange={(value) =>
 									setName(value)
 								}
+								classList={"sm:w-4/5"}
 							/>
 							<InputSpace
 								type="text"
@@ -302,6 +291,7 @@ export default function Home() {
 								onChange={(value) =>
 									setEmail(value)
 								}
+								classList={"sm:w-4/5"}
 							/>
 							<InputSpace
 								type="text"
@@ -310,18 +300,48 @@ export default function Home() {
 								onChange={(value) =>
 									setNumber(value)
 								}
+								classList={"sm:w-4/5"}
 							/>
 							<button
 								type="submit"
-								className="py-4 w-96 font-extrabold hover:bg-green-600 bg-primaryBgClr text-white rounded-3xl"
+								className="py-4 w-96 font-extrabold hover:bg-green-600 bg-primaryBgClr text-white rounded-3xl sm:py-2 sm:w-4/5"
 							>
 								Send Request
 							</button>
 						</form>
 					</div>
 				</section>
+				<section className="bg-primaryBgClr flex justify-around py-4 text-sm text-white px-10 sm:px-0 sm:py-2 sm:justify-center sm:gap-5">
+					<div className="flex gap-x-7 sm:gap-1">
+						<Image
+							src={whtsap}
+							alt=""
+							className="w-6 h-auto"
+						/>
+						<Image
+							className=" w-6 h-auto"
+							src={insta}
+							alt={""}
+						/>
+						<div className="bg-white rounded-full">
+							<Image
+								className="w-6 h-6 p-[6px]"
+								src={fb}
+								alt={""}
+							/>
+						</div>
+					</div>
+					<div className="responsiveLink flex font-medium items-center justify-center gap-x-5 sm:gap-1 sm:text-nowrap sm:text-[10px]">
+						<div>Refund Policy</div>
+						{danda}
+						<div>Privacy Policy</div>
+						{danda}
+						<div>Terms and Conditions</div>
+					</div>
+				</section>
 			</main>
-			<IntroFooter />
+
+			{/* <IntroFooter /> */}
 		</div>
 	);
 }
