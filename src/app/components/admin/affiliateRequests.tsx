@@ -8,11 +8,14 @@ import view from "@/../public/view.svg";
 import Link from "next/link";
 import acceptAffiliate from "../acceptAffiliate";
 import Popup from "../Popup";
-import { user } from "@/interface/productList";
+import { order, user } from "@/interface/productList";
 import Loader from "../loader";
 
 const AffiliateRequest = ({ heading }: { heading: string }) => {
-	const [users, setUsers] = useState<user[]>();
+	const [users, setUsers] = useState<{
+		allRequest: user[];
+		order: order[];
+	}>();
 	const [refreshData, setRefreshData] = useState(false);
 
 	useEffect(() => {
@@ -69,7 +72,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 			{/* <div className={`rounded-lg overflow-hidden ${heading ? 'border border-gray-300': '' } `}> */}
 			{!users ? (
 				<Loader />
-			) : users.length > 0 ? (
+			) : users.allRequest.length > 0 ? (
 				<table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all sm:text-wrap">
 					<thead>
 						<tr className="bg-green-100 text-[#2f4f4f] sm:text-[8px]">
@@ -82,13 +85,19 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
 								Contact No
 							</th>
+
+							{heading && (
+								<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
+									Amount Payable
+								</th>
+							)}
 							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
 								Action
 							</th>
 						</tr>
 					</thead>
 					<tbody>
-						{users.map(
+						{users.allRequest.map(
 							(
 								{
 									name,
@@ -98,72 +107,99 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 									_id,
 								},
 								index
-							) => (
-								<tr
-									key={index}
-									className="even:bg-gray-100 sm:text-[8px]"
-								>
-									<td className="py-4 px-12 font-semibold text-primaryBgClr sm:px-0.5 sm:py-1">
-										{name}
-									</td>
-									<td className="py-4 px-12 text-gray-500 sm:px-0.5 sm:py-1">
-										{email}
-									</td>
-									<td className="py-4 px-12 text-gray-500 text-sm text-[8px] sm:px-0.5 sm:py-1 sm:text-[8px]">
-										{contact}
-									</td>
-									<td className="py-4 px-12 text-gray-500 flex justify-start gap-2 sm:px-0.5 sm:py-1">
-										{!isApprove ? (
-											<>
-												<div
-													onClick={() =>
-														isAccept(
-															true,
-															_id
-														)
-													}
-													className="text-sm hover:bg-green-600 py-2 px-5 cursor-pointer  rounded-full border bg-primaryBgClr sm:py-0 sm:text-[8px] sm:my-auto sm:h-fit sm:px-1"
-												>
-													Accept
-												</div>
-												<div
-													onClick={() =>
-														isAccept(
-															false,
-															_id
-														)
-													}
-													className="text-sm py-2 px-5 cursor-pointer hover:bg-slate-100 rounded-full border text-red-500 sm:py-0 sm:text-[8px] sm:my-auto sm:h-fit sm:px-1"
-												>
-													Reject
-												</div>
-											</>
-										) : (
-											<Link
-												href={`/adminBookers/${_id}`}
-											>
-												<Image
-													src={
-														view
-													}
-													alt="View"
-													width={
-														30
-													}
-													className={`cursor-pointer h-auto sm:h-[17px] sm:w-[17px] sm:mt-[1px] ${
-														!(
-															index %
-															2
-														)
-															? "hover:bg-gray-200"
-															: "hover:bg-[#d3d1d1]"
-													} rounded-full`}
-												/>
-											</Link>
+							) => {
+								let payable = 0;
+								for (
+									let i = 0;
+									i < users.order.length;
+									i++
+								) {
+									// const element = users.order[i];
+									if (
+										_id ===
+										users.order[i].user
+											._id
+									) {
+										payable +=
+											users.order[i]
+												.product
+												.price;
+									}
+								}
+								return (
+									<tr
+										key={index}
+										className="even:bg-gray-100 sm:text-[8px]"
+									>
+										<td className="py-4 px-12 font-semibold text-primaryBgClr sm:px-0.5 sm:py-1">
+											{name}
+										</td>
+										<td className="py-4 px-12 text-gray-500 sm:px-0.5 sm:py-1">
+											{email}
+										</td>
+										<td className="py-4 px-12 text-gray-500 text-sm text-[8px] sm:px-0.5 sm:py-1 sm:text-[8px]">
+											{contact}
+										</td>
+
+										{heading && (
+											<td className="py-4 px-12 text-gray-500 text-sm text-[8px] sm:px-0.5 sm:py-1 sm:text-[8px]">
+												{isApprove &&
+													payable}
+											</td>
 										)}
-									</td>
-								</tr>
-							)
+										<td className="py-4 px-12 text-gray-500 flex justify-start gap-2 sm:px-0.5 sm:py-1">
+											{!isApprove ? (
+												<>
+													<div
+														onClick={() =>
+															isAccept(
+																true,
+																_id
+															)
+														}
+														className="text-sm hover:bg-green-600 py-2 px-5 cursor-pointer  rounded-full border bg-primaryBgClr sm:py-0 sm:text-[8px] sm:my-auto sm:h-fit sm:px-1"
+													>
+														Accept
+													</div>
+													<div
+														onClick={() =>
+															isAccept(
+																false,
+																_id
+															)
+														}
+														className="text-sm py-2 px-5 cursor-pointer hover:bg-slate-100 rounded-full border text-red-500 sm:py-0 sm:text-[8px] sm:my-auto sm:h-fit sm:px-1"
+													>
+														Reject
+													</div>
+												</>
+											) : (
+												<Link
+													href={`/adminBookers/${_id}`}
+												>
+													<Image
+														src={
+															view
+														}
+														alt="View"
+														width={
+															30
+														}
+														className={`cursor-pointer h-auto sm:h-[17px] sm:w-[17px] sm:mt-[1px] ${
+															!(
+																index %
+																2
+															)
+																? "hover:bg-gray-200"
+																: "hover:bg-[#d3d1d1]"
+														} rounded-full`}
+													/>
+												</Link>
+											)}
+										</td>
+									</tr>
+								);
+							}
 						)}
 					</tbody>
 				</table>

@@ -1,24 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 import Database from "@/database/database";
-import { User } from "@/models/userModel";
+import { Order, User } from "@/models/userModel";
 
 Database()
-export async function GET(request:NextRequest) {
+export async function GET(request: NextRequest) {
       const isApproved = request.nextUrl.searchParams.get('isApproved')
       try {
-            if(isApproved === 'approved'){
+            if (isApproved === 'approved') {
 
                   const allRequest = await User.find().sort({ isApprove: 1 })
+                  const order = await Order.find({}).populate('product').populate('user')
                   return NextResponse.json({
-                        data: allRequest, success: true, message: "All is well"
+                        data: { allRequest, order }, success: true, message: "All is well"
                   })
 
-                  
-            }else{
-                 
-                  const allRequest = await User.find({isApprove:false})
+
+            } else if (!isApproved) {
+
+                  const allRequest = await User.find({ isApprove: false })
+                  const order = await Order.find({}).populate('product').populate('user')
+
                   return NextResponse.json({
-                        data: allRequest, success: true, message: "All is well"
+                        data: { allRequest, order }, success: true, message: "All is well"
                   })
             }
       } catch {

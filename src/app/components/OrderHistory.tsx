@@ -40,7 +40,7 @@ const OrderHistory = ({
 						<StatusBadge status={delivered} />
 					)
 				}
-				quantity={product?.requirement}
+				quantity={1}
 				name={product?.name}
 				price={product?.price}
 				commission={product?.commission}

@@ -11,8 +11,10 @@ export async function middleware(request: NextRequest) {
       const path = request.nextUrl.pathname
       const authPath = path === '/Auth/login' || path === '/Auth/signup' || path === '/'
 
+
       if (!value && !authPath) {
-             return NextResponse.redirect(new URL('/Auth/login', request.url)) }
+            return NextResponse.redirect(new URL('/Auth/login', request.url))
+      }
       else if (value) {
             // Jose token
             const secret = new TextEncoder().encode(
@@ -30,7 +32,15 @@ export async function middleware(request: NextRequest) {
             // Admin Dynamic paths
             const adminDynamicPath = path.startsWith('/adminAddProduct/') || path.startsWith('/adminBookers/') || path.startsWith('/orders/')
             const userDynamicPath = path.startsWith('/odrHistory/') || path.startsWith('/deals/')
-            if (payload.role === 'user' && (adminPath || adminDynamicPath)) {
+            if (path === '/') {
+                  if (payload.role === 'user') {
+                        return NextResponse.redirect(new URL('/dashboard', request.url))
+                  } else if (payload.role === 'admin') {
+                        return NextResponse.redirect(new URL('/adminDashboard', request.url))
+
+                  }
+            }
+            else if (payload.role === 'user' && (adminPath || adminDynamicPath)) {
                   return NextResponse.redirect(new URL('/error', request.url))
             }
             else if (payload.role === 'admin' && (userPath || userDynamicPath)) {

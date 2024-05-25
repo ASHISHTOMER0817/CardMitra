@@ -124,9 +124,9 @@ const CardLayout = ({
 									width={80}
 									height={40}
 									alt={""}
-									className="w-8 h-auto"
+									className="w-8 h-auto sm:w-5"
 								/>
-								<div className="sm:font-light sm:text-[10px] sm:leading-3">
+								<div className="sm:font-light sm:text-[7px] sm:leading-3">
 									{label}
 								</div>
 							</div>
