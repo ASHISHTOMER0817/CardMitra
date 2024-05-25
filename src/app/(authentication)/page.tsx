@@ -323,13 +323,11 @@ export default function Home() {
 							src={insta}
 							alt={""}
 						/>
-						<div className="bg-white rounded-full">
-							<Image
-								className="sm:w-6 sm:h-6 sm:p-[6px] w-8 h-8 p-[9px] "
-								src={fb}
-								alt={""}
-							/>
-						</div>
+						<Image
+							className="sm:w-6 w-8 h-8 "
+							src={fb}
+							alt={""}
+						/>
 					</div>
 					<div className="responsiveLink flex font-medium items-center justify-center gap-x-5 sm:gap-1 sm:text-nowrap sm:text-[10px]">
 						<div>Refund Policy</div>
