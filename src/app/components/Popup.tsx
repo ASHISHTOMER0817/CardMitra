@@ -1,6 +1,10 @@
 import { toast } from "react-toastify";
 
-const Popup = (condition: "success" | "error" | "warning" | "info", message: string) => {
+const Popup = (
+	condition: "success" | "error" | "warning" | "info",
+	message: string,
+	autoCloseInfo?: number
+) => {
 	switch (condition) {
 		case "success":
 			toast.success(message, {
@@ -41,7 +45,7 @@ const Popup = (condition: "success" | "error" | "warning" | "info", message: str
 		case "info":
 			toast.info(message, {
 				position: "top-right",
-				autoClose: 5000,
+				autoClose: autoCloseInfo ? autoCloseInfo : 5000,
 				hideProgressBar: false,
 				closeOnClick: true,
 				pauseOnHover: true,

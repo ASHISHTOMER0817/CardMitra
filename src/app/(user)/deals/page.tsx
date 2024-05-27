@@ -78,7 +78,7 @@ const Deals = () => {
 														false
 														? " hover:bg-green-600 bg-primaryBgClr"
 														: "bg-gray-400"
-												} rounded-full border text-center w-auto text-white sm:mt-2 sm:px-1 sm:py-0.5 sm:font-medium sm:text-[10px] sm:text-nowrap sm:leading-4`}
+												} rounded-full border text-center w-auto text-white sm:mt-2 sm:px-1 sm:py-2 sm:font-medium sm:text-[10px] sm:text-nowrap sm:leading-4`}
 											>
 												{requirement >
 													0 &&
