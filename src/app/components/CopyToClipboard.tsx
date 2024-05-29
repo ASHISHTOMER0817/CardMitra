@@ -9,7 +9,7 @@ const CopyDivToClipboard = ({
 	classList,
 }: {
 	orderId: string;
-	classList: string;
+	classList?: string;
 }) => {
 	const divRef = useRef<HTMLDivElement>(null);
 
