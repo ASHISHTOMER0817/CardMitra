@@ -7,10 +7,11 @@ import CopyDivToClipboard from "./CopyToClipboard";
 import Link from "next/link";
 
 const OtpForm = ({ _id }: { _id: string }) => {
+	const [deliveryStatus, setDeliveryStatus] = useState(false);
 	// const [otp, setOtp] = useState("");
 	// const [contact, setContact] = useState("");
 	// const [trackingId, setTrackingId] = useState("");
-	const router = useRouter();
+	// const router = useRouter();
 	// const handleOtpChange = (e: ChangeEvent<HTMLInputElement>) => {
 	// 	setOtp(e.target.value);
 	// };
@@ -58,8 +59,9 @@ const OtpForm = ({ _id }: { _id: string }) => {
 
 	const handleSubmit = async () => {
 		try {
+			console.log(_id, "this is mine id");
 			const response = await axios.get(
-				`/api/users/OTPsubmission?orderId=${_id}`
+				`/api/users/OTPandDeliveryActions?orderId=${_id}&deliveryStatus=${deliveryStatus}`
 				// { _id }
 			);
 			// console.log(response)
@@ -71,6 +73,7 @@ const OtpForm = ({ _id }: { _id: string }) => {
 				Popup("error", "Server side problem, try again");
 				return;
 			}
+			console.log("hello my brother");
 			const googleFormUrl =
 				"https://docs.google.com/forms/d/e/1FAIpQLSeHWBZSHdKOpVySmjtTKwRvBUt00SbySSSDWNThh6iLo0iOaQ/viewform?usp=pp_url"; // Replace with your actual Google Form URL
 			window.open(googleFormUrl, "_blank", "noopener,noreferrer");
@@ -79,9 +82,10 @@ const OtpForm = ({ _id }: { _id: string }) => {
 			Popup("error", "Something went wrong, please refresh");
 		}
 	};
-	const openGoogleForm = () => {};
+
+	// const openGoogleForm = () => {};
 	return (
-		<form
+		<div
 			className=" flex flex-col justify-start"
 			// onSubmit={handleSubmit}
 		>
@@ -134,7 +138,13 @@ const OtpForm = ({ _id }: { _id: string }) => {
 				Proceed to google form
 				{/* </Link> */}
 			</button>
-		</form>
+			<div
+				onClick={}
+				className="cursor-pointer mx-auto mt-1 text-xs border-b border-b-gray-500 hover:border-b-gray-800 hover:text-gray-800 text-gray-500"
+			>
+				Click to confirm if the product got delivered
+			</div>
+		</div>
 	);
 };
 

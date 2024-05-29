@@ -73,9 +73,9 @@ const UserOrders = ({
 											deliveryDate={
 												deliveryDate
 											}
-											orderedAt={
+											orderedAt={new Date(
 												orderedAt
-											}
+											).toDateString()}
 											product={
 												product
 											}

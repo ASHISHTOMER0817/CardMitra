@@ -25,9 +25,11 @@ import { MyArrayItem } from "../(user)/deals/[placeorder]/page";
 // 	{ name: "Samsung", image: samsung },
 // ];
 export default function ProductDetails({
+	observer,
 	data,
 	arr,
 }: {
+	observer?: string;
 	data: productList;
 	arr: Array<MyArrayItem>;
 }) {
@@ -56,7 +58,9 @@ export default function ProductDetails({
 		<>
 			<section className=" text-left mb-4">
 				<div className="bg-[#FC08081A] text-[#FC0808] text-center px-4 py-1 mb-3 rounded-full sm:w-fit sm:text-nowrap sm:ml-10">
-					Quantity left: {data?.requirement}{" "}
+					{observer !== "user" || !observer
+						? "Quantity left: " + data?.requirement
+						: "Ordered quantity: 1"}{" "}
 				</div>
 				<div className="flex gap-10 justify-start items-start sm:flex-col sm:gap-0">
 					<Image

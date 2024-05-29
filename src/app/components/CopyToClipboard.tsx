@@ -4,7 +4,13 @@ import { IoMdInformationCircleOutline } from "react-icons/io";
 import { MdCopyAll } from "react-icons/md";
 import Popup from "./Popup";
 
-const CopyDivToClipboard = ({ orderId }: { orderId: string }) => {
+const CopyDivToClipboard = ({
+	orderId,
+	classList,
+}: {
+	orderId: string;
+	classList: string;
+}) => {
 	const divRef = useRef<HTMLDivElement>(null);
 
 	const copyToClipboard = () => {
@@ -23,11 +29,11 @@ const CopyDivToClipboard = ({ orderId }: { orderId: string }) => {
 	};
 
 	return (
-		<div className="text-xs mb-2">
-			<p className="text-red-500 font-serif flex justify-center items-center gap-1 mb-1">
+		<div className={`text-xs mb-2 ${classList}`}>
+			<div className="text-red-500 font-serif flex justify-center items-center gap-1 mb-1">
 				<IoMdInformationCircleOutline className="float-left w-6 h-6" />
 				<div>Copy OrderID before proceeding</div>
-			</p>
+			</div>
 			<div
 				className="flex justify-center items-center gap-1 cursor-pointer"
 				onClick={copyToClipboard}

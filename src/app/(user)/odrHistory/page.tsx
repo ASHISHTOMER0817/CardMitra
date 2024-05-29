@@ -106,9 +106,16 @@ const OdrHistory = () => {
 							},
 							index
 						) => {
-							const show =
+							let show =
 								listType === "all" ||
 								listType === delivered;
+							if (
+								listType === "delivered" &&
+								delivered === "un-verified"
+							) {
+								show = true;
+							}
+							// if(listType === 'delivered')
 							return (
 								show && (
 									<OrderHistory

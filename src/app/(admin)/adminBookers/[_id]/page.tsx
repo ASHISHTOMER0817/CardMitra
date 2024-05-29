@@ -1,7 +1,7 @@
 "use client";
 import BackwardButton from "@/app/components/BackwardButton";
 import axios from "axios";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { ReactNode, Suspense, useEffect, useState } from "react";
 // import Image from "next/image";
 // import redCross from "@/../public/redCross.svg";
 // import accept from "@/../public/accept.svg";
@@ -14,15 +14,40 @@ import { RxCross1 } from "react-icons/rx";
 import { UserDetails } from "@/interface/productList";
 import Loader from "@/app/components/loader";
 import Transactions from "@/app/components/transactions";
+import { IoIosArrowDown } from "react-icons/io";
 
 const Bookers = ({ params }: { params: { _id: string } }) => {
 	const [data, setData] = useState<UserDetails>();
 	const [listType, setListType] = useState("delivered");
 	const [amount, setAmount] = useState<number>();
 	const [overlay, setOverlay] = useState("hidden");
+	const [overlayElement, setOverlayElement] = useState<{
+		action: string;
+		heading: string;
+		button: string;
+	}>();
+	const [deleteOperation, setDeleteOperation] = useState(false);
+	const [dis_approve, setDis_approve] = useState(false);
 	const [transactions, setTransactions] = useState(false);
+	const [dropDown, setdropDown] = useState(false);
 	// const [refresh, setRefresh] = useState(false);
 	// const router = useRouter();
+
+	const paymentElement = {
+		action: "payment",
+		heading: "Write, the amount you paid",
+		button: "Submit",
+	};
+	const deleteAccountElement = {
+		action: "delete",
+		heading: "You really want to delete this account",
+		button: "Delete",
+	};
+	const dis_approveAccountElement = {
+		action: "dis_approve",
+		heading: "Are you sure about dis-approving this user",
+		button: "Dis-Approve",
+	};
 
 	useEffect(() => {
 		async function getData() {
@@ -30,10 +55,10 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 				console.log("useEffect running");
 				console.log(params._id);
 				const response = await axios.get(
-					`/api/users/details?query=${params._id}`
+					`/api/users/details?query=${params._id}&delete=${deleteOperation}&dis_approve=${dis_approve}`
 				);
-				setData(await response.data.data);
-				console.log(await response.data);
+				setData(response.data.data);
+				console.log(response.data);
 				if (response.data.status === 250) {
 					Popup("success", response.data.message);
 					console.log("really----");
@@ -44,9 +69,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 			}
 		}
 		getData();
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [params._id]);
+	}, [params._id, deleteOperation, dis_approve]);
 	// if(refresh){
 	// 	setRefresh(false)
 	// 	router.refresh()
@@ -78,6 +101,53 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 	// 	console.log(overlay);
 	// }
 
+	// 	const crossElement = (<RxCross1
+	// 	width={20}
+	// 	height={20}
+	// 	className=" cursor-pointer ml-auto hover:bg-gray-100 active:bg-gray-100 rounded-full"
+	// 	onClick={() => setOverlay("hidden")}
+	// />)
+	// 	const paymentElement = (
+	// 		<form
+	// 			onSubmit={payment}
+	// 			className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 sm:gap-2`}
+	// 		>
+	// 			{crossElement}
+	// 			<h4 className="sm:text-nowrap">Write, the amount you paid</h4>
+	// 			<input
+	// 				type="number"
+	// 				required
+	// 				placeholder="Amount"
+	// 				className="outline-none border-b pb-2 border-black sm:text-sm"
+	// 				value={amount}
+	// 				onChange={(e) => setAmount(+e.target.value)}
+	// 			/>{" "}
+	// 			<button
+	// 				onClick={() => {
+	// 					setListType("undelivered");
+	// 					// payment();
+	// 					setOverlay("hidden");
+	// 				}}
+	// 				type="submit"
+	// 				className="px-3 py-1 hover:bg-gray-200 active:bg-gray-200"
+	// 			>
+	// 				Submit
+	// 			</button>
+	// 		</form>
+	// 	);
+
+	// 	const deleteAccountElement = (
+	// 		<div className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 sm:gap-2`}
+	// 		>
+	// 			<RxCross1
+	// 				width={20}
+	// 				height={20}
+	// 				className=" cursor-pointer ml-auto hover:bg-gray-100 active:bg-gray-100 rounded-full"
+	// 				onClick={() => setOverlay("hidden")}
+	// 			/>
+	// 		</div>
+	// 	)
+
 	async function payment() {
 		try {
 			const response = await axios.get(
@@ -95,8 +165,25 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 	}
 
 	console.log(data?.totalAmt);
+
+	const buttonOperation = () => {
+		if (overlayElement?.action === "payment") {
+			payment();
+		} else if (overlayElement?.action === "delete") {
+			setDeleteOperation(true);
+		} else if (overlayElement?.action === "payment") {
+			setDis_approve(true);
+		}
+		setListType("undelivered");
+		// payment();
+		setOverlay("hidden");
+	};
+
 	return (
-		<div className="w-[90%] mx-10 mt-6 relative sm:ml-0">
+		<div
+			className="w-[90%] mx-10 mt-6 relative sm:ml-0"
+			// onClick={() => setdropDown(false)}
+		>
 			<div
 				className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}
 			></div>
@@ -110,10 +197,16 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 					className=" cursor-pointer ml-auto hover:bg-gray-100 active:bg-gray-100 rounded-full"
 					onClick={() => setOverlay("hidden")}
 				/>
-				<h4 className="sm:text-nowrap">
-					Write, the amount you paid
+				<h4 className="sm:text-nowrap text-xl">
+					{/* Write, the amount you paid */}
+					{overlayElement?.heading}
 				</h4>
 				<input
+					hidden={
+						overlayElement?.action !== "payment"
+							? true
+							: false
+					}
 					type="number"
 					required
 					placeholder="Amount"
@@ -121,31 +214,88 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 					value={amount}
 					onChange={(e) => setAmount(+e.target.value)}
 				/>{" "}
-				<button
-					onClick={() => {
-						setListType("undelivered");
-						// payment();
-						setOverlay("hidden");
-					}}
-					type="submit"
-					className="px-3 py-1 hover:bg-gray-200 active:bg-gray-200"
-				>
-					Submit
-				</button>
+				<div className="flex justify-center gap-3 items-center">
+					<button
+						onClick={() => {
+							// setListType("undelivered");
+							// payment();
+							setOverlay("hidden");
+						}}
+						type="button"
+						className="px-3 py-1 hover:bg-gray-200 border-gray-200 border rounded-full active:bg-gray-200"
+					>
+						Cancel
+					</button>
+					<button
+						onClick={buttonOperation}
+						type="submit"
+						className="px-3 py-1 hover:bg-green-600 bg-primaryBgClr rounded-full text-white"
+					>
+						{/* Submit */} {overlayElement?.button}
+					</button>
+				</div>
 			</form>
+			{/* {overlayElement} */}
 			<BackwardButton />
 			<div className="flex justify-between mb-10 items-center">
 				<h3 className="font-semibold">{data?.user?.name}</h3>
 				{(listType === "delivered" || listType === "reduce") &&
 					data?.totalAmt! > 0 && (
 						<div
-							onClick={() => setOverlay("")}
-							className="rounded-3xl text-nowrap cursor-pointer bg-primaryBgClr flex py-2 px-4 border justify-center items-center text-white sm:py-1 sm:text-[10px]"
+							onClick={() => {
+								setOverlay("");
+								setOverlayElement(
+									paymentElement
+								);
+							}}
+							className="rounded-3xl text-nowrap ml-auto mr-4 cursor-pointer bg-primaryBgClr flex py-2 px-4 border justify-center items-center text-white sm:py-1 sm:text-[10px]"
 						>
 							pay Rs.{data?.totalAmt}
 						</div>
 					)}
+				<div
+					className={`h-10  text-sm ${
+						dropDown
+							? "overflow-visible"
+							: "overflow-hidden"
+					}`}
+				>
+					<div
+						className={`flex gap-2 border border-black px-2 justify-center transition-all items-center h-10 cursor-pointer`}
+						onClick={() => setdropDown(!dropDown)}
+					>
+						<div>Action</div>
+						<IoIosArrowDown
+							className={
+								!dropDown ? "" : "rotate-180"
+							}
+						/>
+					</div>
+					<div
+						onClick={() => {
+							setOverlay("");
+							setOverlayElement(
+								deleteAccountElement
+							);
+						}}
+						className="h-10 px-2 flex justify-center items-center cursor-pointer border-l border-l-black border-r border-r-black hover:bg-gray-200 acti"
+					>
+						Delete account
+					</div>
+					<div
+						onClick={() => {
+							setOverlay("");
+							setOverlayElement(
+								dis_approveAccountElement
+							);
+						}}
+						className="h-10 px-2 flex justify-center items-center border border-black cursor-pointer hover:bg-gray-200"
+					>
+						Dis-approve
+					</div>
+				</div>
 			</div>
+
 			<h6 className="text-gray-400 mb-4 text-sm sm:text-[10px] sm:mb-1">
 				PERSONAL
 			</h6>
@@ -224,11 +374,11 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 				</h6>
 				<h6
 					onClick={() => {
-						setListType("Wrong OTP");
+						setListType("wrong OTP");
 						// setTransactions(false);
 					}}
 					className={` text-sm p-[10px] rounded-full cursor-pointer sm:text-[10px] sm:text-nowrap ${
-						listType === "Wrong OTP" &&
+						listType === "wrong OTP" &&
 						"underline underline-offset-4 text-primaryBgClr"
 					}`}
 				>
@@ -248,10 +398,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 			{listType === "transactions" ? (
 				<Transactions _id={params._id} />
 			) : data ? (
-				<UserOrders
-					data={data?.orderList!}
-					listType={listType}
-				/>
+				<UserOrders data={data.orderList} listType={listType} />
 			) : (
 				<div className="mt-28 mx-auto w-fit text-sm text-red-500 font-serif sm:text-[8px]">
 					User was In-active !!

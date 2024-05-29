@@ -7,7 +7,7 @@ import dateFormat from "@/app/components/dateFormat";
 
 
 Database()
-export async function POST(request: NextRequest) {
+export async function GET(request: NextRequest) {
 
       try {
             // const { _id } = await GetToken();
@@ -50,9 +50,12 @@ export async function POST(request: NextRequest) {
             //       console.log('wow ', order)
             //       return NextResponse.json({ message: 'Order created successfully', success: true });
             // }
+            console.log('something different')
             const orderId = request.nextUrl.searchParams.get('orderId')
-            const order = Order.findOne({ _id: orderId }, { $set: { otp: true } }, { new: true })
+            console.log(orderId, 'this is orderId')
+            const order = await Order.findOneAndUpdate({ _id: orderId }, { $set: { otp: true } }, { new: true })
             console.log(order)
+            return NextResponse.json({ message: 'Order created successfully', success: true });
 
       } catch (error) {
             return NextResponse.json({ message: "Something went wrong, Server error", success: false });
