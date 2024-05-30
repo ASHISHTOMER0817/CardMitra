@@ -5,7 +5,7 @@ import Logo from "@/../public/logo.svg";
 const Header = () => {
 	const navbar = ["Home", "Features", "About Us", "Contact Us"];
 	return (
-		<div className="grid grid-rows-1 justify-between items-center grid-flow-col my-7 px-16 sm:gap-6 sm:justify-center ">
+		<div className="grid grid-rows-1 justify-between items-center grid-flow-col my-7 px-16 sm:gap-2 sm:justify-center ">
 			{" "}
 			<Link href={"/"} className="sm:w-8 sm:h-auto">
 				<Image src={Logo} alt={"Logo"} className=""></Image>

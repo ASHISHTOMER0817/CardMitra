@@ -8,6 +8,7 @@ import BackwardButton from "@/app/components/BackwardButton";
 import Loader from "@/app/components/loader";
 import { MyArrayItem } from "../../deals/[placeorder]/page";
 import CopyDivToClipboard from "@/app/components/CopyToClipboard";
+import Popup from "@/app/components/Popup";
 
 // interface productTypes {
 // 	product: productList;
@@ -47,6 +48,32 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 		getData();
 	}, [deliveryStatus, otpStatusUpdate, params._id]);
 
+	const handleSubmit = async () => {
+		try {
+			// console.log(_id, "this is mine id");
+			// const response = await axios.get(
+			// 	`/api/users/OTPandDeliveryActions?orderId=${_id}&deliveryStatus=${deliveryStatus}`
+			// 	// { _id }
+			// );
+			// console.log(response)
+			// console.log("Submitting OTP:", otp);
+			// console.log("Submitting Contact:", contact);
+			// console.log(response.data.success);
+			// // Clear form fields after submission
+			// if (response.data.success !== true) {
+			// 	Popup("error", "Server side problem, try again");
+			// 	return;
+			// }
+			// console.log("hello my brother");
+			const googleFormUrl =
+				"https://docs.google.com/forms/d/e/1FAIpQLSeHWBZSHdKOpVySmjtTKwRvBUt00SbySSSDWNThh6iLo0iOaQ/viewform?usp=pp_url"; // Replace with your actual Google Form URL
+			window.open(googleFormUrl, "_blank", "noopener,noreferrer");
+		} catch (error) {
+			console.log(error);
+			Popup("error", "Something went wrong, please refresh");
+		}
+	};
+
 	return (
 		<div>
 			{!data ? (
@@ -84,11 +111,12 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 											? "hidden"
 											: ""
 									} w-96 sm:w-48 sm:py-2`}
-									onClick={() =>
+									onClick={() => {
 										setOtpStatusUpdate(
 											true
-										)
-									}
+										);
+										handleSubmit();
+									}}
 								>
 									Proceed to google form
 								</button>

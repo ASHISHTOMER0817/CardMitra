@@ -7,7 +7,7 @@ import CopyDivToClipboard from "./CopyToClipboard";
 import Link from "next/link";
 
 const OtpForm = ({ _id }: { _id: string }) => {
-	const [deliveryStatus, setDeliveryStatus] = useState(false);
+	// const [deliveryStatus, setDeliveryStatus] = useState(false);
 	// const [otp, setOtp] = useState("");
 	// const [contact, setContact] = useState("");
 	// const [trackingId, setTrackingId] = useState("");
@@ -57,32 +57,6 @@ const OtpForm = ({ _id }: { _id: string }) => {
 	// 	}
 	// };
 
-	const handleSubmit = async () => {
-		try {
-			console.log(_id, "this is mine id");
-			const response = await axios.get(
-				`/api/users/OTPandDeliveryActions?orderId=${_id}&deliveryStatus=${deliveryStatus}`
-				// { _id }
-			);
-			// console.log(response)
-			// console.log("Submitting OTP:", otp);
-			// console.log("Submitting Contact:", contact);
-			console.log(response.data.success);
-			// Clear form fields after submission
-			if (response.data.success !== true) {
-				Popup("error", "Server side problem, try again");
-				return;
-			}
-			console.log("hello my brother");
-			const googleFormUrl =
-				"https://docs.google.com/forms/d/e/1FAIpQLSeHWBZSHdKOpVySmjtTKwRvBUt00SbySSSDWNThh6iLo0iOaQ/viewform?usp=pp_url"; // Replace with your actual Google Form URL
-			window.open(googleFormUrl, "_blank", "noopener,noreferrer");
-		} catch (error) {
-			console.log(error);
-			Popup("error", "Something went wrong, please refresh");
-		}
-	};
-
 	// const openGoogleForm = () => {};
 	return (
 		<div
@@ -128,7 +102,7 @@ const OtpForm = ({ _id }: { _id: string }) => {
 
 			<button
 				className="text-white border rounded-3xl px-4 py-3 hover:bg-green-600 bg-primaryBgClr w-96 sm:w-48 sm:py-2"
-				onClick={handleSubmit}
+				onClick={() => handleSubmit(false)}
 			>
 				{/* <Link
 				href={
@@ -139,7 +113,7 @@ const OtpForm = ({ _id }: { _id: string }) => {
 				{/* </Link> */}
 			</button>
 			<div
-				onClick={}
+				onClick={() => handleSubmit(true)}
 				className="cursor-pointer mx-auto mt-1 text-xs border-b border-b-gray-500 hover:border-b-gray-800 hover:text-gray-800 text-gray-500"
 			>
 				Click to confirm if the product got delivered
