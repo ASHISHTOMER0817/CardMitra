@@ -2,29 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-/* :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+
+:root{
+	--primary: rgb(57 172 115);
+	--secondary: white;
+	--tertiary: rgb(156 163 175);
+
+	--primary-active: rgb(22 163 74);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+html {
+    scroll-behavior: smooth;
 }
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-} */
 
 .loginBgImage {
 	background-image: url("/loginBgImage.jpg");
@@ -94,39 +83,10 @@ h3 {
 		font-size: 18px !important;
 	}
 }
-/* h4 {
-	@media (max-width: 768px) {
-		font-size: 14px !important;
-	}
-}
-
-h5 {
-	@media (max-width: 768px) {
-		font-size: 12px !important;
-	}
-} */
-
-/* tbody {
-	@media (max-width: 768px) {
-		font-size: 12px !important;
-	}
-}
-thead {
-	@media (max-width: 768px) {
-		font-size: 14px !important;
-	}
-} */
 
 .select__menu {
 	z-index: 999;
 }
-
-/* h4, h5, a{
-  @media (max-width:768px) {
-    font-size: 12px !important;
-    line-height: normal;
-  }
-} */
 
 .carousel-item {
 	padding: 30px 60px;
@@ -143,3 +103,60 @@ thead {
 .slick-list {
 	margin: 0 -60px;
 }
+
+.header-items{
+	display: none;
+}
+
+@media screen and (min-width: 1024px) {
+	.header-items{
+		display: flex !important;
+		gap: 3rem;
+	}
+	.login-button{
+		margin-left: 0 !important;;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.button{
+		padding: 6px 1rem !important;
+	}
+	.data-section{
+		justify-content: space-between !important;
+	}
+	.hide-on-smaller{
+		display: none;
+	}
+}
+
+.login-button{
+	margin-left: auto;
+}
+
+.button{
+	padding: 10px 1.5rem;
+	background: none;
+	color: var(--tertiary);
+	border-radius: 2rem;
+	border: 1px solid var(--tertiary);
+}
+
+.button-primary{
+	background: var(--primary);
+	color: var(--secondary);
+	border-color: var(--primary);
+}
+
+.button-primary:hover{
+	background-color: var(--primary-active);
+}
+
+.button-lg{
+	padding: 1rem 1.75rem;
+}
+
+.data-section{
+	justify-content: space-evenly;
+}
+
