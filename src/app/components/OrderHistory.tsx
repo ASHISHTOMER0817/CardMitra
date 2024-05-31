@@ -17,15 +17,23 @@ const OrderHistory = ({
 	delivered: string;
 	paid: boolean;
 }) => {
+	function deliveryStatus(returnValue: string) {
+		if (
+			delivered !== "cancelled" &&
+			delivered !== "delivered" &&
+			delivered !== "unverified"
+		) {
+			return returnValue;
+		} else {
+			return "";
+		}
+	}
+
 	// console.log(data[0]?.product?.site)
 	return (
 		<Link
 			className="cursor-pointer"
-			href={
-				delivered !== "cancelled" && delivered !== "delivered"
-					? `/odrHistory/${_id}`
-					: ""
-			}
+			href={deliveryStatus(`/odrHistory/${_id}`)}
 		>
 			<CardLayout
 				placeOrder={
@@ -44,7 +52,7 @@ const OrderHistory = ({
 				name={product?.name}
 				price={product?.price}
 				commission={product?.commission}
-				classList="hover:border-primaryBgClr"
+				classList={deliveryStatus("hover:border-primaryBgClr")}
 				site={product?.site}
 				deviceImage={product?.image}
 				cards={product?.cards}

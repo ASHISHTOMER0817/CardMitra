@@ -208,7 +208,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 			formData.append("file", file!);
 			formData.append("info", JSON.stringify(info));
 			formData.append("zipCode", zipCode);
-			// console.log(zipCode);
+			console.log(formData);
 			const response = await axios.post(
 				`/api/admin/addProduct?query=newProduct`,
 				formData
@@ -216,8 +216,10 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 
 			console.log(response);
 			if (response.data.success) {
-				Popup("success", "Product added successfully");
+				Popup("success", response.data.message);
 				router.back();
+			} else {
+				Popup("error", response.data.message);
 			}
 		} catch (error: any) {
 			Popup("error", "Something went wrong, try again later");
@@ -262,7 +264,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 						</h4>
 						<input
 							type="text"
-							required
+							// required
 							placeholder={`${
 								addOption === "site"
 									? "Site Name"
@@ -535,7 +537,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 								<Select
 									defaultValue={cardOptions}
 									isMulti
-									name="colors"
+									// name="colors"
 									options={cardOptions}
 									className="basic-multi-select flex-1 sm:text-[10px]"
 									classNamePrefix="select"

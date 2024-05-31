@@ -5,17 +5,13 @@ import axios from "axios";
 import OrderHistory from "@/app/components/OrderHistory";
 import { order, otp } from "@/interface/productList";
 import Popup from "@/app/components/Popup";
-import dateFormat from "@/app/components/dateFormat";
+// import dateFormat from "@/app/components/dateFormat";
 import Link from "next/link";
 import Loader from "@/app/components/loader";
 import DashboardOverlay from "@/app/components/user/DashboardOverlay";
 
-interface group {
-	order: order[];
-	otpAction: otp[];
-}
 const Dashboard = () => {
-	const [data, setData] = useState<group>();
+	const [data, setData] = useState<order[]>();
 	const [profit, setProfit] = useState(0);
 	const [commission, setCommission] = useState(0);
 	const [ordersTillDate, setOrdersTillDate] = useState(0);
@@ -52,7 +48,7 @@ const Dashboard = () => {
 					"/api/users/dashboard"
 				);
 				// console.log(response.data.data);
-				console.log(response.data.data.otpAction.length);
+				// console.log(response.data.data.otpAction.length);
 				setData(response.data.data);
 
 				loops(response.data.data);
@@ -91,25 +87,37 @@ const Dashboard = () => {
 				>
 					{!data
 						? ""
-						: data.otpAction.length > 0
-						? data.otpAction.map(
+						: data.length > 0
+						? data.map(
 								({
-									orderObjectId,
+									product,
 									delivered,
 									_id,
 								}) => {
+									let show;
+									if (
+										delivered ===
+											"cancelled" ||
+										delivered ===
+											"wrong OTP"
+									) {
+										show = true;
+									}
 									return (
 										<>
-											<DashboardOverlay
-												data={{
-													orderObjectId:
-														orderObjectId.product,
-													delivered:
-														delivered,
-													order_id: orderObjectId._id,
-													_id: _id,
-												}}
-											/>
+											{show && (
+												<DashboardOverlay
+													product={
+														product
+													}
+													orderObjectId={
+														_id
+													}
+													delivered={
+														delivered
+													} // data={{
+												/>
+											)}
 										</>
 									);
 								}
@@ -182,13 +190,13 @@ const Dashboard = () => {
 
 				{!data ? (
 					<Loader />
-				) : data.order.length < 1 ? (
+				) : data.length < 1 ? (
 					<div className="mt-10 mx-auto w-fit font-serif text-red-500 sm:text-[10px]">
 						You have not placed any product yet...
 					</div>
 				) : (
 					<div className="grid grid-flow-row gap-3 grid-cols-3 sm:gap-1 sm:grid-cols-2">
-						{data.order
+						{data
 							.slice(0, 3)
 							.map(
 								(

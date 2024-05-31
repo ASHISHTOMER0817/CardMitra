@@ -12,7 +12,7 @@ import InputSpace from "../components/InputSpace";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
-import { ReviewInterface } from "@/interface/productList";
+import productList, { ReviewInterface } from "@/interface/productList";
 // import Slider from "react-slick";
 import SimpleSlider from "../components/SimpleSlider";
 
@@ -24,6 +24,8 @@ import insta from "@/../public/Insta.svg";
 import { FaWhatsapp } from "react-icons/fa";
 import whtsap from "@/../public/whtsap.svg";
 import footerDanda from "@/../public/FooterDanda.svg";
+import CardLayout from "../components/CardLayout";
+import { FaArrowDownLong } from "react-icons/fa6";
 
 export default function Home() {
 	const [name, setName] = useState("");
@@ -31,61 +33,83 @@ export default function Home() {
 	const [number, setNumber] = useState("");
 	const [error, setError] = useState("");
 	const [mail, setMail] = useState("");
-	const [data, setData] = useState<ReviewInterface[]>([]);
+	const [reviews, setReviews] = useState<ReviewInterface[]>([]);
 
 	const user = { name, email, number };
-
-	async function sendData() {
-		try {
-			// Validate form inputs
-			// if (name.length < 5) {
-			// 	// Handle name validation error
-			// 	setError("Name must be at least 5 characters long");
-			// 	return;
-			// }
-			// if (number.length < 10) {
-			// 	// Handle phone number validation error
-			// 	setError(
-			// 		"Phone number must be at least 10 digits long"
-			// 	);
-			// 	return;
-			// }
-
-			const response = await axios.post("/api/users/signup", {
-				user,
-			});
-			const success = await response.data.success;
-			if (!success) {
-				setError(await response.data.message);
-				console.log(error);
-				return;
-			} else {
-			}
-		} catch (error) {
-			setError("Something went wrong,Please try again later");
-			console.log("Something went wrong ", error);
-		}
-	}
+	const [data, setData] = useState<productList[]>();
 
 	useEffect(() => {
 		async function getData() {
 			try {
+				console.log("sending calls where");
 				const response = await axios.get(
-					"/api/reviews?review=show"
+					"/api/orders/products?limit=homePage"
 				);
-				if (response.data.success) {
-					setData(response.data.data);
-				} else {
-					console.log("something went wrong from server");
-				}
+				const allProducts = response.data.data;
+				console.log(allProducts);
+				setData(allProducts);
 			} catch {
-				console.log(
-					"something went wrong while sending request"
-				);
+				// Popup(
+				// 	"error",
+				// 	"Something went wrong, REFRESH THE PAGE"
+				// );
+				console.log("Something went wrong, REFRESH THE PAGE");
 			}
 		}
 		getData();
-	});
+	}, []);
+
+	// async function sendData() {
+	// 	try {
+	// 		// Validate form inputs
+	// 		// if (name.length < 5) {
+	// 		// 	// Handle name validation error
+	// 		// 	setError("Name must be at least 5 characters long");
+	// 		// 	return;
+	// 		// }
+	// 		// if (number.length < 10) {
+	// 		// 	// Handle phone number validation error
+	// 		// 	setError(
+	// 		// 		"Phone number must be at least 10 digits long"
+	// 		// 	);
+	// 		// 	return;
+	// 		// }
+
+	// 		const response = await axios.post("/api/users/signup", {
+	// 			user,
+	// 		});
+	// 		const success = await response.data.success;
+	// 		if (!success) {
+	// 			setError(await response.data.message);
+	// 			console.log(error);
+	// 			return;
+	// 		} else {
+	// 		}
+	// 	} catch (error) {
+	// 		setError("Something went wrong,Please try again later");
+	// 		console.log("Something went wrong ", error);
+	// 	}
+	// }
+
+	// useEffect(() => {
+	// 	async function getData() {
+	// 		try {
+	// 			const response = await axios.get(
+	// 				"/api/reviews?review=show"
+	// 			);
+	// 			if (response.data.success) {
+	// 				setReviews(response.data.data);
+	// 			} else {
+	// 				console.log("something went wrong from server");
+	// 			}
+	// 		} catch {
+	// 			console.log(
+	// 				"something went wrong while sending request"
+	// 			);
+	// 		}
+	// 	}
+	// 	getData();
+	// });
 
 	const arr = [
 		{
@@ -123,7 +147,108 @@ export default function Home() {
 			{/* <Image src={HDFC} alt={""} className="w-7 h-auto" /> */}
 			<IntroHeader />
 			<main className=" min-h-screen text-center">
-				<section className="text-center px-10 py-24 sm:py-0">
+				<section className="text-center px-10 bg-black py-16 sm:py-0 ">
+					<h5 className="my-4 font-medium text-primaryBgClr">
+						DEALS
+					</h5>
+					{/* <h1 className="font-extrabold ">
+					</h1> */}
+					<h1 className="my-6 font-extrabold text-gray-400 sm:leading-7">
+						amazing deals <br />
+						just, sign up and start earning
+						{/* Some of the amazing deals currently
+						available, <br /> you just have to sign up
+						and start your amazing journey */}
+					</h1>
+					<div className=" mb-10 mt-14 ml-8 grid grid-flow-row grid-cols-3 gap-3 sm:ml-2 sm:gap-1 sm:grid-cols-2">
+						{/* <CardLayoutForDeals data={data!} /> */}
+
+						{!data ? (
+							"" // <Loader />
+						) : data.length > 0 ? (
+							data.map(
+								(
+									{
+										_id,
+										requirement,
+										name,
+										price,
+										commission,
+										site,
+										image,
+										cards,
+									},
+									index
+								) => {
+									return (
+										<>
+											<CardLayout
+												classList="bg-white"
+												key={
+													index
+												}
+												placeOrder={
+													<Link
+														className="p-[14px] font-semibold text-base hover:bg-green-600 bg-primaryBgClr rounded-full border text-center w-auto text-white sm:mt-2 sm:px-1 sm:py-2 sm:font-medium sm:text-[10px] sm:text-nowrap sm:leading-4"
+														// href={`/deals/${_id.toString()}`}
+														href={
+															"/Auth/signup"
+														}
+													>
+														Fulfill
+														Order
+													</Link>
+
+													// </button>
+												}
+												quantity={
+													requirement
+												}
+												name={
+													name
+												}
+												price={
+													price
+												}
+												commission={
+													commission
+												}
+												site={
+													site
+												}
+												deviceImage={
+													image
+												}
+												cards={
+													cards
+												}
+											/>
+										</>
+									);
+								}
+							)
+						) : (
+							<div className="text-red-500 font-serif mx-auto w-fit ">
+								No other products to order
+							</div>
+						)}
+					</div>
+					<Link
+						href={"/Auth/signup"}
+						className="text-black flex justify-center items-center gap-2 w-fit mx-auto bg-white  px-2 py-0.5 "
+					>
+						<div className="font-serif font-semibold text-lg">
+							{" "}
+							See More
+						</div>{" "}
+						<FaArrowDownLong
+							// height={auto}
+							width={14}
+							className="w-[14px] h-auto"
+						/>
+					</Link>
+				</section>
+				<section className="text-center px-10 py-16 sm:py-0">
 					<h5 className="my-4 font-medium text-primaryBgClr">
 						TOP RANKED SOLUTIONS
 					</h5>
@@ -141,7 +266,7 @@ export default function Home() {
 							href={"/Auth/signup"}
 							className="text-xl"
 						>
-							Become a Afilliate
+							Become an Afilliate
 						</Link>
 					</button>
 				</section>
@@ -193,7 +318,7 @@ export default function Home() {
 						today
 					</h3>
 				</section>
-				<section className="text-center py-24 px-10 bg-[#242424] text-white">
+				<section className="text-center py-16 px-10 bg-[#242424] text-white">
 					<h5 className="font-medium text-primaryBgClr mb-8">
 						OUR FEATURES
 					</h5>
@@ -271,7 +396,7 @@ export default function Home() {
 								form
 							</h5>
 						</div>
-						<form
+						{/* <form
 							onSubmit={sendData}
 							className="text-sm flex flex-col gap-y-5 items-center justify-center sm:w-full"
 						>
@@ -308,7 +433,7 @@ export default function Home() {
 							>
 								Send Request
 							</button>
-						</form>
+						</form> */}
 					</div>
 				</section>
 				<section className="bg-primaryBgClr flex justify-around py-4 text-sm text-white px-10 sm:px-0 sm:py-2 sm:justify-center sm:gap-5">

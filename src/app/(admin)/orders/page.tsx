@@ -78,9 +78,22 @@ const AdminOrderHistory = () => {
 					</div>
 				) : (
 					<div className="grid grid-flow-row gap-7 grid-cols-3 md:gap-3 transition-all sm:grid-cols-2">
-						<CardLayoutAdminDashboard
+						{data.orderHistory.map(
+							(
+								data: productList,
+								index: number
+							) => {
+								return (
+									<CardLayoutAdminDashboard
+										key={index}
+										data={data}
+									/>
+								);
+							}
+						)}
+						{/* <CardLayoutAdminDashboard
 							data={data.orderHistory}
-						/>
+						/> */}
 					</div>
 				)
 			) : data.orderHistory.length < 1 ? (

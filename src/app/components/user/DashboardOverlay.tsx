@@ -16,18 +16,19 @@ import Popup from "../Popup";
 import StatusBadge from "../StatusBadge";
 
 const DashboardOverlay = ({
-	data,
+	product,
+	delivered,
+	orderObjectId,
 }: {
-	data: {
-		orderObjectId: productList;
-		delivered: string;
-		order_id: string;
-		_id: string;
-	};
+	product: productList;
+	orderObjectId: string;
+	delivered: string;
+	// order_id: string;
+	// _id: string;
 }) => {
 	const [siteImage, setSiteImage] = useState("");
-	const { name, image, cards, site, _id } = data.orderObjectId;
-	const otpObjectId = data._id;
+	const { name, image, cards, site, _id } = product;
+	// const otpObjectId = data._id;
 	const [acknowledge, setAcknowledge] = useState(false);
 	// const siteArr = [
 	// 	{ name: "Amazon", image: amazon },
@@ -109,23 +110,23 @@ const DashboardOverlay = ({
 				</div>
 				<div
 					className={`sm:leading-none sm:sm:text-[6px] sm:mt-0 sm:p-[2px] rounded-full ${
-						data.delivered === "wrong OTP"
+						delivered === "wrong OTP"
 							? "bg-[#F5EFC4] text-yellow-800"
 							: "bg-red-200 text-red-800"
 					}`}
 				>
 					{/* <StatusBadge status={data.delivered} /> */}
-					{data.delivered}
+					{delivered}
 				</div>
 			</div>
 
 			{/* Right column */}
 			<div className="flex flex-col justify-between items-center">
-				{data.delivered === "wrong OTP" ? (
+				{delivered === "wrong OTP" ? (
 					<>
 						<button
 							onClick={() => {
-								acknowledged(otpObjectId);
+								acknowledged(orderObjectId);
 								setAcknowledge(true);
 							}}
 							className="px-2 py-1 w-full hover:bg-gray-100 text-gray-500 border-gray-500 border rounded-full mb-2"
@@ -134,16 +135,16 @@ const DashboardOverlay = ({
 						</button>
 						<button className="px-2 py-1 hover:bg-gray-100 text-gray-500 border-gray-500 border rounded-full">
 							<Link
-								href={`/odrHistory/${data.order_id}`}
+								href={`/odrHistory/${orderObjectId}`}
 							>
 								SUBMIT OTP
 							</Link>
 						</button>
 					</>
-				) : data.delivered === "cancelled" ? (
+				) : delivered === "cancelled" ? (
 					<button
 						onClick={() => {
-							acknowledged(otpObjectId);
+							acknowledged(orderObjectId);
 							setAcknowledge(true);
 						}}
 						className="px-2 py-1 mt-auto min-w-[100px] hover:bg-gray-100 text-gray-500 border-gray-500 border rounded-full sm:text-[8px] sm:py-[1px] sm:px-1 sm:leading-none sm:min-w-min"

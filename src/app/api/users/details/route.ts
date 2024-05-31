@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
                         if (orderList[i].delivered === 'delivered' && orderList[i].paid === false) {
                               total += orderList[i].product.price;
                         }
-                        if (orderList[i].delivered === 'un-verified' && orderList[i].paid === false) {
+                        if (orderList[i].delivered === 'unverified' && orderList[i].paid === false) {
                               totalUnVerifiedAmt += orderList[i].product.price;
                         }
                   }

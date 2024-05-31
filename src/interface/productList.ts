@@ -24,6 +24,7 @@ interface productList {
 	}
 	image: string,
 	zipCode: string
+	showOnHomePage: boolean
 }
 export default productList
 
@@ -37,6 +38,7 @@ export interface order {
 	orderedAt: string
 	_id: string
 	paid: boolean
+	acknowledgment: boolean
 }
 
 export interface otp {
