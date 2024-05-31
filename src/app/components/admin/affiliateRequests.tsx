@@ -157,7 +157,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 																_id
 															)
 														}
-														className="text-sm hover:bg-green-600 py-2 px-5 cursor-pointer  rounded-full border bg-primaryBgClr sm:py-0 sm:text-[8px] sm:my-auto sm:h-fit sm:px-1"
+														className="text-sm text-white hover:bg-green-600 py-2 px-5 cursor-pointer  rounded-full border bg-primaryBgClr sm:py-0 sm:text-[8px] sm:my-auto sm:h-fit sm:px-1"
 													>
 														Accept
 													</div>

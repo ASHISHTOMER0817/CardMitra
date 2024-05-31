@@ -144,7 +144,6 @@ export default function Home() {
 
 	return (
 		<div className="">
-			{/* <Image src={HDFC} alt={""} className="w-7 h-auto" /> */}
 			<IntroHeader />
 			<main className=" min-h-screen text-center">
 				<section className="text-center px-10 bg-black py-16 sm:py-0 ">
@@ -252,16 +251,16 @@ export default function Home() {
 					<h5 className="my-4 font-medium text-primaryBgClr">
 						TOP RANKED SOLUTIONS
 					</h5>
-					<h1 className="font-extrabold ">
+					<h1 className="font-extrabold sm:leading-7">
 						Your One-Stop Solutions for <br /> Managing
 						Phone Orders
 					</h1>
-					<h3 className="my-6 text-gray-400 sm:leading-7">
+					<h3 className="my-6 text-gray-400 sm:leading-7 hide-on-smaller">
 						Streamline your phone order management
 						effortlessly <br /> with our comprehensive
 						solution
 					</h3>
-					<button className="px-7 py-4 mb-10 mt-6 rounded-[36px] bg-primaryBgClr hover:bg-green-600 font-bold text-white sm:py-2 sm:px-3">
+					<button className="button button-primary button-lg mt-4">
 						<Link
 							href={"/Auth/signup"}
 							className="text-xl"
@@ -270,7 +269,8 @@ export default function Home() {
 						</Link>
 					</button>
 				</section>
-				<section className="bg-black text-white text-left px-10 py-10 flex justify-center gap-24 items-center sm:gap-8 sm:py-8">
+
+				<section className="bg-black text-white text-left px-10 py-10 flex items-center data-section">
 					{" "}
 					<div className="font-extrabold text-white flex flex-col gap-y-4">
 						{" "}
@@ -294,7 +294,10 @@ export default function Home() {
 						</h3>
 					</div>
 				</section>
-				<section className="py-[3.75rem] text-center px-10 sm:py-12">
+				<section
+					className="py-[3.75rem] text-center px-10 sm:py-12"
+					id="aboutUs"
+				>
 					<h5 className="font-medium text-primaryBgClr mb-8">
 						ABOUT US
 					</h5>
@@ -318,7 +321,10 @@ export default function Home() {
 						today
 					</h3>
 				</section>
-				<section className="text-center py-16 px-10 bg-[#242424] text-white">
+				<section
+					className="text-center py-16 px-10 bg-[#242424] text-white "
+					id="ourFeatures"
+				>
 					<h5 className="font-medium text-primaryBgClr mb-8">
 						OUR FEATURES
 					</h5>
@@ -366,7 +372,10 @@ export default function Home() {
 						</div>
 					</div>
 				</section>
-				<section className="pt-16 pb-24 px-10 bg-primaryBgClr">
+				<section
+					className="pt-16 pb-24 px-10 bg-primaryBgClr"
+					id="testimonials"
+				>
 					<h5 className="font-medium text-white mb-8">
 						CUSTOMER TESTIMONIALS
 					</h5>
@@ -385,7 +394,10 @@ export default function Home() {
 						Join Our Affiliate Program <br /> & Start
 						Earning Today
 					</h1>
-					<div className="py-12 bg-gray-200 flex justify-center gap-x-[20rem] items-start sm:items-center sm:gap-6">
+					<div
+						className="py-12 bg-gray-200 flex justify-center gap-x-[20rem] items-start sm:items-center sm:gap-6"
+						id="contactUs"
+					>
 						<div className="text-left">
 							<div className=" font-medium text-2xl sm:font-semibold sm:text-lg">
 								Fill the form
@@ -454,7 +466,7 @@ export default function Home() {
 							alt={""}
 						/>
 					</div>
-					<div className="responsiveLink flex font-medium items-center justify-center gap-x-5 sm:gap-1 sm:text-nowrap sm:text-[10px]">
+					<div className="responsiveLink flex flex-wrap font-medium items-center justify-center gap-x-5 sm:gap-1 sm:text-nowrap sm:text-[10px]">
 						<div>Refund Policy</div>
 						{danda}
 						<div>Privacy Policy</div>
