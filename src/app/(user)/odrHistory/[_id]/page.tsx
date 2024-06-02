@@ -3,7 +3,6 @@ import ProductDetails from "@/app/components/ProductDetails";
 import productList, { order } from "@/interface/productList";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import OtpForm from "@/app/components/OtpForm";
 import BackwardButton from "@/app/components/BackwardButton";
 import Loader from "@/app/components/loader";
 import { MyArrayItem } from "../../deals/[placeorder]/page";
@@ -26,6 +25,7 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 	const [otpStatus, setOtpStatus] = useState<boolean | null>(null);
 	const [overlay, setOverlay] = useState("hidden");
 	const router = useRouter();
+	const [copiedYet, setCopiedYet] = useState(false);
 	// const [reWriteOtp, setReWriteOtp] = useState(false)
 
 	useEffect(() => {
@@ -160,6 +160,9 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 											? "hidden"
 											: ""
 									}
+									stateChange={function () {
+										setCopiedYet(true);
+									}}
 								/>
 
 								<button
@@ -169,9 +172,10 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 											: ""
 									} w-96 sm:w-48 sm:py-2`}
 									onClick={() => {
-										setOtpStatusUpdate(
-											"true"
-										);
+										copiedYet &&
+											setOtpStatusUpdate(
+												"true"
+											);
 										// handleSubmit();
 									}}
 								>

@@ -7,9 +7,11 @@ import Popup from "./Popup";
 const CopyDivToClipboard = ({
 	orderId,
 	classList,
+	stateChange,
 }: {
 	orderId: string;
 	classList?: string;
+	stateChange: () => void;
 }) => {
 	const divRef = useRef<HTMLDivElement>(null);
 
@@ -21,6 +23,7 @@ const CopyDivToClipboard = ({
 				.then(() => {
 					// alert(`Copied the text: ${text}`);
 					Popup("info", `Copied successfully`, 700);
+					stateChange();
 				})
 				.catch((err) => {
 					console.error("Failed to copy: ", err);
