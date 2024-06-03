@@ -149,9 +149,22 @@ const AdminDashboard = () => {
 					{!data ? (
 						<Loader />
 					) : (
-						<CardLayoutAdminDashboard
-							data={data?.orderHistory}
-						/>
+						data.orderHistory.map(
+							(
+								data: productList,
+								index: number
+							) => {
+								return (
+									<CardLayoutAdminDashboard
+										key={index}
+										data={data}
+									/>
+								);
+							}
+						)
+						// <CardLayoutAdminDashboard
+						// 	data={data?.orderHistory}
+						// />
 					)}
 				</div>
 			</section>

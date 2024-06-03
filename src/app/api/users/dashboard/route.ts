@@ -13,27 +13,28 @@ export async function GET(request: NextRequest) {
 
       try {
             const { _id } = await getToken()
-            const otpObjectId = request.nextUrl.searchParams.get('query')
-            if (otpObjectId) {
-                  console.log(otpObjectId, 'what is this???')
-                  const otpAction = await Otp.findOneAndUpdate({ _id: otpObjectId }, { $set: { acknowledgment: true } })
+            const orderObjectId = request.nextUrl.searchParams.get('query')
+            if (orderObjectId) {
+                  console.log(orderObjectId, 'what is this???')
+                  const otpAction = await Otp.findOneAndUpdate({ _id: orderObjectId }, { $set: { acknowledgment: true } })
                   console.log(otpAction)
             }
+
             // Convert the userId string to a mongoose.Schema.Types.ObjectId object
             const userObjectId = new mongoose.Types.ObjectId(_id);
             console.log(userObjectId)
-            const otpAction = await Otp.find({
-                  userObjectId: _id, $or: [
-                        { delivered: 'wrong OTP' },
-                        { delivered: 'cancelled' }
-                  ], acknowledgment: false
-            }).populate({ path: 'orderObjectId', populate: { path: 'product' } })
-            console.log(otpAction, 'otpaction is this')
+            // const immediateActionOrders = await Order.find({
+            //       _id: userObjectId, $or: [
+            //             { delivered: 'wrong OTP' },
+            //             { delivered: 'cancelled' }
+            //       ], acknowledgment: false
+            // }).populate('product')
+            // console.log(immediateActionOrders, 'otpaction is this')
             const order = await Order.find({ user: userObjectId }).populate('product');
-            const group = { order, otpAction }
+
             // const todaysOrders = await Order.find({ createdAt: dateFormat(new Date()) }).populate('product')
             return NextResponse.json({
-                  data: group, message: 'User data successfully retrieved', success: true
+                  data: order, message: 'User data successfully retrieved', success: true
             })
 
       } catch (error) {

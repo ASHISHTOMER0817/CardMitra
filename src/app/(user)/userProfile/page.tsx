@@ -146,7 +146,7 @@ const UserProfile = () => {
 								{data?.verifiedAmt}
 							</div>
 							<div className="flex items-center">
-								Un-Verified:{" "}
+								Unverified:{" "}
 								<LiaRupeeSignSolid
 									width={10}
 									height={10}

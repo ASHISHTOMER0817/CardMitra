@@ -13,6 +13,7 @@ Database();
 
 export async function POST(request: NextRequest) {
       try {
+            console.log('add product route working')
             const query = request.nextUrl.searchParams.get('query')
             if (query === 'option') {
                   const formData = await request.formData()
@@ -55,6 +56,7 @@ export async function POST(request: NextRequest) {
                   })
 
             }
+            console.log('running else condition in add product')
             const formData = await request.formData()
             console.log(formData)
             const name = formData.get('name')
@@ -99,19 +101,20 @@ export async function POST(request: NextRequest) {
                   cards,
                   image: newFileName,
                   info,
-                  zipCode
+                  zipCode,
+                  showOnHomePage: false
 
             })
             console.log(newProduct)
 
             return NextResponse.json({
-                  message: 'image uploaded successfully', success: true,
+                  message: 'Product added', success: true,
             })
 
 
       } catch {
             return NextResponse.json({
-                  message: 'image upload failed', success: false,
+                  message: 'failed to add', success: false,
             })
       }
 }

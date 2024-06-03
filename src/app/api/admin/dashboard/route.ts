@@ -70,7 +70,7 @@ export async function GET(request: NextRequest) {
                         let otpList;
 
                         try {
-                              const response = await axios.get('https://script.google.com/macros/s/AKfycbwfEAeB1tu_79yL9rnsHsR0oVu-fnoa3QdngygrQtnRR5lNGphRI47-YkZeLs6Y4XdzLw/exec');
+                              const response = await axios.get('https://script.google.com/macros/s/AKfycbyuK5OcltMUfXOUKjbqzqQ9Rd8t23GB8UYMcEVvwBn1yzB2vryD5FhyGfsFVrX1RkW0og/exec');
                               otpList = response.data.data;
                               console.log('try part')
                         } catch (error) {

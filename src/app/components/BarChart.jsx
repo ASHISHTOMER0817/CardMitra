@@ -33,7 +33,7 @@ const LineChart = ({ ChartData }) => {
 	};
 
 	const chartStyle = {
-		"@media (max-width: 639px)": {
+		"@media (maxWidth: 639px)": {
 			canvas: {
 				fontSize: "10px !important",
 			},

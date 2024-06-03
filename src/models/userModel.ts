@@ -40,6 +40,10 @@ const orderSchema = new mongoose.Schema({
 	},
 	paid: {
 		type: Boolean
+	},
+	acknowledgment: {
+		type: Boolean,
+		default: false
 	}
 })
 
@@ -216,7 +220,9 @@ const productSchema = new mongoose.Schema({
 	},
 	zipCode: {
 		type: String
-	}
+	},
+	showOnHomePage: { type: Boolean }
+
 
 
 });

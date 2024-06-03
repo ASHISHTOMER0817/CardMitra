@@ -51,9 +51,20 @@ export async function GET(request: NextRequest) {
             //       return NextResponse.json({ message: 'Order created successfully', success: true });
             // }
             console.log('something different')
-            const orderId = request.nextUrl.searchParams.get('orderId')
-            console.log(orderId, 'this is orderId')
-            const order = await Order.findOneAndUpdate({ _id: orderId }, { $set: { otp: true } }, { new: true })
+            const searchparams = request.nextUrl.searchParams
+            const odrId = searchparams.get('odrId')
+            const otpStatus = searchparams.get('otpStatus')
+            const deliveryStatus = searchparams.get('deliveryStatus')
+            console.log(odrId, 'this is orderId')
+            if (otpStatus === 'true') {
+                  const order = await Order.findOneAndUpdate({ _id: odrId }, { $set: { otp: true } }, { new: true })
+                  console.log(order)
+            }
+            else if (deliveryStatus === 'true') {
+                  const order = await Order.findOneAndUpdate({ _id: odrId, otp: true }, { $set: { delivered: 'unverified' } }, { new: true })
+                  console.log(order)
+            }
+            const order = await Order.findOne({ _id: odrId })
             console.log(order)
             return NextResponse.json({ message: 'Order created successfully', success: true });
 

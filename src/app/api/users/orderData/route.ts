@@ -16,11 +16,11 @@ export async function GET(request: NextRequest) {
             console.log('2nd', productId)
             if (odrId) {
                   const order = await Order.findOne({ _id: odrId }).populate('product')
-                  if (otpstatus) {
+                  if (otpstatus === 'true') {
                         order.otp = true;
                   }
-                  if (deliveryStatus && order.otp) {
-                        order.delivery = 'unverified'
+                  if (deliveryStatus === 'true' && order.otp) {
+                        order.delivered = 'unverified'
                   }
                   const updatedOrder = await order.save()
                   console.log('2nd console', updatedOrder)

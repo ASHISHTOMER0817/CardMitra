@@ -111,7 +111,7 @@ const OdrHistory = () => {
 								listType === delivered;
 							if (
 								listType === "delivered" &&
-								delivered === "un-verified"
+								delivered === "unverified"
 							) {
 								show = true;
 							}
