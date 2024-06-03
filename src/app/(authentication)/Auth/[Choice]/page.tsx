@@ -61,7 +61,7 @@ const Login = ({ params }: { params: { Choice: string } }) => {
 						}
 					</h5>
 				</div>
-				<div className="flex flex-col justify-center" style={{height: '-webkit-fill-available'}}>
+				<div className="flex flex-col justify-center" style={{height: '85%'}}>
 					<h1 className="font-semibold my-8 text-center">
 						{
 							params.Choice === "login"
