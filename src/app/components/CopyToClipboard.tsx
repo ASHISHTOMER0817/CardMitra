@@ -32,7 +32,7 @@ const CopyDivToClipboard = ({
 	};
 
 	return (
-		<div className={`text-xs mb-2 ${classList}`}>
+		<div className={`text-xs ${classList}`}>
 			<div className="text-red-500 font-serif flex justify-center items-center gap-1 mb-1">
 				<IoMdInformationCircleOutline className="float-left w-6 h-6" />
 				<div>Copy OrderID before proceeding</div>

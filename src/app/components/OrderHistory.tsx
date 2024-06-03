@@ -32,7 +32,8 @@ const OrderHistory = ({
 	// console.log(data[0]?.product?.site)
 	return (
 		<Link
-			className="cursor-pointer"
+			className="cursor-pointer "
+			// style={{ boxShadow:  }}
 			href={deliveryStatus(`/odrHistory/${_id}`)}
 		>
 			<CardLayout
@@ -52,7 +53,9 @@ const OrderHistory = ({
 				name={product?.name}
 				price={product?.price}
 				commission={product?.commission}
-				classList={deliveryStatus("hover:border-primaryBgClr")}
+				classList={deliveryStatus(
+					"hover:border-primaryBgClr custom_shadow"
+				)}
 				site={product?.site}
 				deviceImage={product?.image}
 				cards={product?.cards}

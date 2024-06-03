@@ -42,15 +42,27 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 				setOtpStatus(response.data.data.otp);
 				setData(response.data.data);
 
-				if (otpStatusUpdate && response.data.success) {
-					const googleFormUrl =
-						"https://docs.google.com/forms/d/e/1FAIpQLSeHWBZSHdKOpVySmjtTKwRvBUt00SbySSSDWNThh6iLo0iOaQ/viewform?usp=pp_url"; // Replace with your actual Google Form URL
-					window.open(
-						googleFormUrl,
-						"_blank",
-						"noopener,noreferrer"
-					);
-				}
+				// if (otpStatusUpdate && response.data.success) {
+				// 	const googleFormUrl =
+				// 		"https://docs.google.com/forms/d/e/1FAIpQLSeHWBZSHdKOpVySmjtTKwRvBUt00SbySSSDWNThh6iLo0iOaQ/viewform?usp=pp_url"; // Replace with your actual Google Form URL
+				// 	const newWindow = window.open(
+				// 		googleFormUrl,
+				// 		"_blank",
+				// 		"noopener,noreferrer"
+				// 	);
+
+				// 	// Check if the new window was successfully opened
+				// 	if (newWindow) {
+				// 		console.log(
+				// 			" The new window was opened successfully"
+				// 		);
+				// 	} else {
+				// 		console.log(
+				// 			"The new window was blocked or couldn't be opened"
+				// 		);
+				// 		// You can handle this case as needed, e.g., show an error message or fallback to another option
+				// 	}
+				// }
 				if (deliveryStatus && response.data.success) {
 					router.back();
 				}
@@ -67,31 +79,25 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [deliveryStatus, otpStatusUpdate, params._id]);
 
-	// const handleSubmit = async () => {
-	// 	try {
-	// 		// console.log(_id, "this is mine id");
-	// 		// const response = await axios.get(
-	// 		// 	`/api/users/OTPandDeliveryActions?orderId=${_id}&deliveryStatus=${deliveryStatus}`
-	// 		// 	// { _id }
-	// 		// );
-	// 		// console.log(response)
-	// 		// console.log("Submitting OTP:", otp);
-	// 		// console.log("Submitting Contact:", contact);
-	// 		// console.log(response.data.success);
-	// 		// // Clear form fields after submission
-	// 		// if (response.data.success !== true) {
-	// 		// 	Popup("error", "Server side problem, try again");
-	// 		// 	return;
-	// 		// }
-	// 		// console.log("hello my brother");
-	// 		const googleFormUrl =
-	// 			"https://docs.google.com/forms/d/e/1FAIpQLSeHWBZSHdKOpVySmjtTKwRvBUt00SbySSSDWNThh6iLo0iOaQ/viewform?usp=pp_url"; // Replace with your actual Google Form URL
-	// 		window.open(googleFormUrl, "_blank", "noopener,noreferrer");
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 		Popup("error", "Something went wrong, please refresh");
-	// 	}
-	// };
+	const GoogleForm = async () => {
+		const googleFormUrl =
+			"https://docs.google.com/forms/d/e/1FAIpQLSeHWBZSHdKOpVySmjtTKwRvBUt00SbySSSDWNThh6iLo0iOaQ/viewform?usp=pp_url"; // Replace with your actual Google Form URL
+		const newWindow = window.open(
+			googleFormUrl,
+			"_blank",
+			"noopener,noreferrer"
+		);
+
+		// Check if the new window was successfully opened
+		if (newWindow) {
+			console.log(" The new window was opened successfully");
+		} else {
+			console.log(
+				"The new window was blocked or couldn't be opened"
+			);
+			// You can handle this case as needed, e.g., show an error message or fallback to another option
+		}
+	};
 
 	return (
 		<div>
@@ -152,7 +158,7 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 							</div>
 							<hr className="my-5" />
 							{/* <OtpForm _id={params._id} /> */}
-							<div className=" flex flex-col justify-start">
+							<div className=" flex flex-col justify-start gap-3">
 								<CopyDivToClipboard
 									orderId={params._id}
 									classList={
@@ -165,6 +171,19 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 									}}
 								/>
 
+								<button
+									className={`text-gray-700 border-orange-200 border rounded-3xl px-4 py-3 hover:bg-orange-50 bg-white ${
+										otpStatus
+											? "hidden"
+											: ""
+									} w-96 sm:w-48 sm:py-2`}
+									onClick={() => {
+										copiedYet &&
+											GoogleForm();
+									}}
+								>
+									Fill google form
+								</button>
 								<button
 									className={`text-white border rounded-3xl px-4 py-3 hover:bg-green-600 bg-primaryBgClr ${
 										otpStatus
@@ -179,7 +198,7 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 										// handleSubmit();
 									}}
 								>
-									Proceed to google form
+									Confirm
 								</button>
 								<div
 									onClick={() =>

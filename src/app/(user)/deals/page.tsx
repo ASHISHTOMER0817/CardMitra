@@ -56,6 +56,7 @@ const Deals = () => {
 							return (
 								<>
 									<CardLayout
+										classList="custom_shadow"
 										key={index}
 										placeOrder={
 											<button
