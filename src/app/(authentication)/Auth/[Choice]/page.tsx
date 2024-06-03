@@ -50,7 +50,7 @@ const Login = ({ params }: { params: { Choice: string } }) => {
 				</section>
 			</div>
 
-			<div className="show-on-smaller mobile-login-form p-[5%] h-screen">
+			<div className="show-on-smaller mobile-login-form p-[5%] h-screen flex flex-col">
 				<div className="flex gap-4">
 					<BackwardButton pageType="homePage"/>
 					<h5 className=" text-primaryBgClr">
@@ -61,7 +61,7 @@ const Login = ({ params }: { params: { Choice: string } }) => {
 						}
 					</h5>
 				</div>
-				<div className="flex flex-col justify-center" style={{height: '85%'}}>
+				<div className="flex flex-col justify-center" style={{flex: 1}}>
 					<h1 className="font-semibold my-8 text-center">
 						{
 							params.Choice === "login"
