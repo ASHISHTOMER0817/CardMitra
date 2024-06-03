@@ -108,27 +108,7 @@ h3 {
 	display: none;
 }
 
-@media screen and (min-width: 1024px) {
-	.header-items{
-		display: flex !important;
-		gap: 3rem;
-	}
-	.login-button{
-		margin-left: 0 !important;;
-	}
-}
 
-@media screen and (max-width: 768px) {
-	.button{
-		padding: 6px 1rem !important;
-	}
-	.data-section{
-		justify-content: space-between !important;
-	}
-	.hide-on-smaller{
-		display: none;
-	}
-}
 
 .login-button{
 	margin-left: auto;
@@ -160,3 +140,39 @@ h3 {
 	justify-content: space-evenly;
 }
 
+.login-para-mobile{
+	flex: 1 1 100%;
+}
+
+@media screen and (min-width: 1024px) {
+	.header-items{
+		display: flex !important;
+		gap: 3rem;
+	}
+	.login-button{
+		margin-left: 0 !important;;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.button{
+		padding: 6px 1rem !important;
+	}
+	.data-section{
+		justify-content: space-between !important;
+	}
+	.hide-on-smaller{
+		display: none;
+	}
+
+}
+
+@media screen and (min-width: 768px) {
+
+	.login-form{
+		min-width: 400px;
+	}
+	.show-on-smaller{
+		display: none;
+	}
+}
