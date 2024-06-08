@@ -186,6 +186,22 @@ h3 {
 	.hide-on-smaller{
 		display: none;
 	}
+	.rounded-big{
+		border-radius: 12px;
+	}
+	.float-right-sm{
+		float: right;
+	}
+	.order-history-wrapper{
+		grid-template-columns: auto !important;
+	}
+	.website-img{
+		height: 20px !important;
+		width: 20px !important;
+	}
+	.card-img{
+		width: 40px !important;
+	}
 
 }
 
@@ -196,5 +212,8 @@ h3 {
 	}
 	.show-on-smaller{
 		display: none;
+	}
+	.rounded-big{
+		border-radius: 1.5rem;
 	}
 }

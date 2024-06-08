@@ -88,7 +88,7 @@ const DashboardOverlay = ({
 				<div className="text-[16px] font-semibold sm:text-[8px] sm:font-bold sm:leading-[10px] ">
 					{name}
 				</div>
-				<div className="flex justify-between gap-5 items-start sm:gap-1 sm:items-center sm:mt-0">
+				<div style={{fontSize: '12px'}} className="flex justify-between gap-2 items-start sm:gap-1 sm:items-center sm:mt-0">
 					<Image
 						src={
 							site.label
@@ -109,11 +109,12 @@ const DashboardOverlay = ({
 					</div>
 				</div>
 				<div
-					className={`sm:leading-none sm:sm:text-[6px] sm:mt-0 sm:p-[2px] rounded-full ${
+					className={`sm:leading-none sm:sm:text-[6px] sm:mt-0 sm:p-[2px] px-2 rounded-full ${
 						delivered === "wrong OTP"
 							? "bg-[#F5EFC4] text-yellow-800"
 							: "bg-red-200 text-red-800"
 					}`}
+					style={{fontSize: '12px'}}
 				>
 					{/* <StatusBadge status={data.delivered} /> */}
 					{delivered}
