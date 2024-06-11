@@ -162,53 +162,53 @@ h3 {
 .custom_shadow:hover {
 	box-shadow: 0px 0px 8px 0px #b6b1b1;
 }
-.login-para-mobile{
+.login-para-mobile {
 	flex: 1 1 100%;
 }
 
 @media screen and (min-width: 1024px) {
-	.header-items{
+	.header-items {
 		display: flex !important;
 		gap: 3rem;
 	}
-	.login-button{
-		margin-left: 0 !important;;
+	.login-button {
+		margin-left: 0 !important;
 	}
 }
 
 @media screen and (max-width: 638px) {
-	.button{
+	.button {
 		padding: 6px 1rem !important;
 	}
-	.data-section{
+	.data-section {
 		justify-content: space-between !important;
 	}
-	.hide-on-smaller{
+	.hide-on-smaller {
 		display: none;
 	}
-	.rounded-big{
+	.rounded-big {
 		border-radius: 12px;
 	}
-	.float-right-sm{
+	.float-right-sm {
 		float: right;
 	}
-	.order-history-wrapper{
+	.order-history-wrapper {
 		grid-template-columns: auto !important;
 	}
-	.website-img{
+	.website-img {
 		height: 20px !important;
 		width: 20px !important;
 	}
-	.card-img{
+	.card-img {
 		width: 40px !important;
 	}
-	.order-history-navbar{
+	.order-history-navbar {
 		width: 100%;
 	}
-	.side-navigation{
+	.side-navigation {
 		gap: 8px !important;
 	}
-	.order-form{
+	.order-form {
 		width: 100%;
 	}
 	.center-on-small{
@@ -217,15 +217,17 @@ h3 {
 }
 
 @media screen and (min-width: 638px) {
-
-	.login-form{
+	.login-form {
 		min-width: 400px;
 	}
-	.show-on-smaller{
+	.show-on-smaller {
 		display: none;
 	}
-	.rounded-big{
+	.rounded-big {
 		border-radius: 1.5rem;
 	}
+}
 
+.custom_dateShadow {
+	box-shadow: 0px 0px 3px 0px #646060;
 }
