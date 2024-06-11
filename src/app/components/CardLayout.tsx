@@ -67,8 +67,8 @@ const CardLayout = ({
 					width={100}
 					height={150}
 				/>
-				<section className="flex flex-col gap-4 justify-around md:gap-0 sm:mt-1">
-					<div className=" text-wrap font-semibold  text-base md:h-[30px] sm:text-[14px] leading-4">
+				<section className="flex flex-col gap-4 justify-around sm:mt-1 sm:gap-2">
+					<div className=" text-wrap font-semibold  text-base md:h-[30px] sm:text-[14px]">
 						{" "}
 						{name}
 					</div>

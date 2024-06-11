@@ -60,10 +60,10 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 	// const placeOrder = () => {};
 	return (
 		<>
-			<div className="mt-16 mx-10 w-[90%] sm:flex sm:flex-col sm:mt-0 sm:ml-0">
+			<div className="sm:flex sm:flex-col">
 				<BackwardButton />
-				<section className="flex items-start text-sm justify-around sm:flex-col">
-					<div className="flex flex-col items-start gap-10 justify-around sm:gap-0">
+				<section className="flex items-start text-sm justify-around sm:flex-col flex-wrap">
+					<div className="flex flex-col items-start gap-10 justify-around sm:gap-0 sm:w-full">
 						{!data && !arr ? (
 							""
 						) : (
@@ -73,7 +73,7 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 							/>
 						)}
 					</div>
-					<div className="border px-10 py-7 rounded-2xl sm:py-3 sm:px-4">
+					<div className="border px-10 py-7 rounded-2xl sm:py-3 sm:px-4 order-form">
 						<div className="text-base font-semibold text-primaryBgClr text-center">
 							Order Form
 						</div>
@@ -87,7 +87,7 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 					<div className="text-base font-semibold mb-4">
 						Similar Products
 					</div>
-					<div className="grid grid-flow-row gap-3 grid-cols-3 sm:grid-cols-2 sm:-ml-5 sm:-mr-[50px]">
+					<div className="flex flex-wrap gap-4 items-center justify-center">
 						{!productList ? (
 							<Loader />
 						) : productList.products.length > 0 ? (
@@ -124,7 +124,7 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 																	false
 																	? " hover:bg-green-600"
 																	: " bg-gray-400"
-															} rounded-full border text-center w-auto text-white sm:-ml-[82px] sm:mr-[17px] sm:mt-1 sm:px-1 sm:py-0.5 sm:font-medium sm:text-[10px] sm:text-nowrap sm:leading-4`}
+															} rounded-full border text-center w-auto text-white sm:mt-1 sm:px-1 sm:py-2 sm:font-medium sm:text-[10px] sm:text-nowrap sm:leading-4`}
 														>
 															{requirement >
 																0 &&

@@ -171,7 +171,7 @@ const UserProfile = () => {
 				<h6 className="text-gray-400 mb-4 text-sm font-semibold sm:text-[10px] sm:mb-1">
 					PERSONAL
 				</h6>
-				<section className=" flex justify-between items-center sm:text-[10px]">
+				<section className=" flex justify-between items-center sm:text-[10px] flex-wrap">
 					<div>Name: {data?.user.name}</div>
 					<div>Email: {data?.user.email}</div>
 					<div>Contact: {data?.user.contact} </div>
@@ -182,7 +182,7 @@ const UserProfile = () => {
 					BANK DETAILS
 				</h6>
 
-				<section className="flex justify-between items-center sm:text-[10px]">
+				<section className="flex justify-between items-center sm:text-[10px] flex-wrap">
 					<div>
 						Bank Account Number: {data?.user.accountNo}
 					</div>

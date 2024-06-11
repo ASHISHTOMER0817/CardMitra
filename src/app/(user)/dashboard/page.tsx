@@ -127,7 +127,7 @@ const Dashboard = () => {
 				<h3 className="mt-0 mb-4 font-semibold sm:my-2">Dashboard</h3>
 				<div className="flex justify-start gap-3 sm:justify-between">
 					<div className="px-12 py-4 rounded-big bg-[#F3F3F3] md:min-w-[26%] sm:flex sm:flex-col sm:justify-between sm:items-center sm:py-3 sm:px-[6px]">
-						<h5 className="text-[#1844E1] sm:text-[10px] sm:leading-none text-center sm:mb-2">
+						<h5 className="text-[#1844E1] sm:text-[12px] font-bold sm:leading-none text-center sm:mb-2">
 							{profit}{" "}
 						</h5>{" "}
 						<div className="sm:text-[10px] leading-none text-center">
@@ -135,7 +135,7 @@ const Dashboard = () => {
 						</div>
 					</div>
 					<div className="px-12 py-4 rounded-big bg-[#F3F3F3] md:min-w-[26%] sm:flex sm:flex-col sm:justify-between sm:items-center sm:py-3  sm:px-[6px] ">
-						<h5 className="text-primaryBgClr sm:text-[10px] sm:leading-none text-center sm:mb-2">
+						<h5 className="text-primaryBgClr sm:text-[12px] font-bold sm:leading-none text-center sm:mb-2">
 							{ordersTillDate}
 						</h5>
 						<div className="sm:text-[10px] leading-none text-center">
@@ -143,7 +143,7 @@ const Dashboard = () => {
 						</div>
 					</div>
 					<div className="px-12 py-4 rounded-big bg-[#F3F3F3] md:min-w-[26%] sm:flex sm:flex-col sm:justify-between sm:items-center sm:py-3  sm:px-[6px]">
-						<h5 className="text-primaryBgClr sm:text-[10px] sm:leading-none text-center sm:mb-2">
+						<h5 className="text-primaryBgClr sm:text-[12px] font-bold sm:leading-none text-center sm:mb-2">
 							Rs. {commission}
 						</h5>
 						<div className="sm:text-[10px] leading-none text-center">

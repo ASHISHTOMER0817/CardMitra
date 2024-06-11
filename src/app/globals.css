@@ -208,6 +208,9 @@ h3 {
 	.side-navigation{
 		gap: 8px !important;
 	}
+	.order-form{
+		width: 100%;
+	}
 }
 
 @media screen and (min-width: 638px) {
