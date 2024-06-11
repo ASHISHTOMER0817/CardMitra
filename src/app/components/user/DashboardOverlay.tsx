@@ -70,7 +70,7 @@ const DashboardOverlay = ({
 
 	return (
 		<div
-			className={` text-sm h-24 bg-[#D0D6E0] rounded-2xl p-2 flex sm:h-12 sm:justify-around sm:pt-0.5 ${
+			className={` text-sm h-24 bg-[#D0D6E0] rounded-lg p-2 flex sm:h-12 sm:justify-around sm:pt-0.5 ${
 				acknowledge && "hidden"
 			}`}
 		>
@@ -109,12 +109,12 @@ const DashboardOverlay = ({
 					</div>
 				</div>
 				<div
-					className={`sm:leading-none sm:sm:text-[6px] sm:mt-0 sm:p-[2px] px-2 rounded-full ${
+					className={`sm:leading-none sm:text-[6px] sm:mt-0 sm:p-[2px] px-2 rounded-full ${
 						delivered === "wrong OTP"
 							? "bg-[#F5EFC4] text-yellow-800"
 							: "bg-red-200 text-red-800"
 					}`}
-					style={{fontSize: '12px'}}
+					style={{fontSize: '9px'}}
 				>
 					{/* <StatusBadge status={data.delivered} /> */}
 					{delivered}

@@ -31,9 +31,9 @@ const Deals = () => {
 	}, []);
 
 	return (
-		<div className=" my-12 sm:-mr-5 sm:-ml-7">
-			<h3 className="mb-8 mr-auto ml-10 font-semibold">Deals</h3>
-			<div className=" ml-8 grid grid-flow-row grid-cols-3 gap-3 sm:ml-2 sm:gap-1 sm:grid-cols-2">
+		<div className="">
+			<h3 className="mb-4 mr-auto font-semibold">Deals</h3>
+			<div className="flex gap-6 flex-wrap justify-center">
 				{/* <CardLayoutForDeals data={data!} /> */}
 
 				{!data ? (
@@ -56,7 +56,7 @@ const Deals = () => {
 							return (
 								<>
 									<CardLayout
-										classList="custom_shadow"
+										classList="custom_shadow h-auto"
 										key={index}
 										placeOrder={
 											<button

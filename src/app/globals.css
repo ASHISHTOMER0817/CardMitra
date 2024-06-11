@@ -117,7 +117,7 @@ h3 {
 	}
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 638px) {
 	.button {
 		padding: 6px 1rem !important;
 	}
@@ -176,7 +176,7 @@ h3 {
 	}
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 638px) {
 	.button{
 		padding: 6px 1rem !important;
 	}
@@ -202,10 +202,12 @@ h3 {
 	.card-img{
 		width: 40px !important;
 	}
-
+	.order-history-navbar{
+		width: 100%;
+	}
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 638px) {
 
 	.login-form{
 		min-width: 400px;

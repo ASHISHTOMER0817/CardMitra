@@ -27,7 +27,7 @@ const Navigation:React.FC<Options> = ({options}) =>{
       }
 
       const handleMenuVisiblity = (width: number) =>{
-            if(width>768){
+            if(width>638){
                   setMenuVisible(true);
             }
       }
@@ -47,7 +47,7 @@ const Navigation:React.FC<Options> = ({options}) =>{
       return <div className="flex fixed h-full ">
 
             { menuVisible &&
-                  <aside className={` ${isMobile > 768 ? 'w-20' : ''} overflow-hidden flex p-4 flex-col duration-300 gap-4 hover:w-48 side-navigation`} style={{borderRight: '3px solid grey', background: 'white', zIndex: 9}}>
+                  <aside className={` ${isMobile > 638 ? 'w-20' : ''} overflow-hidden flex p-4 flex-col duration-300 gap-4 hover:w-48 side-navigation`} style={{borderRight: '3px solid grey', background: 'white', zIndex: 9}}>
                         <Image src={logo} alt="icon" className="mb-4"/>
                         {
                               options.map((opt)=>{
@@ -57,7 +57,7 @@ const Navigation:React.FC<Options> = ({options}) =>{
                         <Logout />
                   </aside>
             }
-            { isMobile < 768 && isMobile > 1 &&
+            { isMobile < 638 && isMobile > 1 &&
                   <button className="h-12 p-2 side-navigation-button" style={{borderTopRightRadius: '12px', borderBottomRightRadius: '12px', background: '#e3e3e3', alignSelf: 'center'}} onClick={onSidebarButtonClick}>
                         <Image src={arrow} height={16} width={16} alt="left image" />
                   </button>

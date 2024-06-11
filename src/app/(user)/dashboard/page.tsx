@@ -83,7 +83,7 @@ const Dashboard = () => {
 		<>
 			<div className="mx-auto mb-16 sm:w-[100%]">
 				<div
-					className={`fixed top-2 right-2 w-[26%] text-sm bg-[#D0D6E0] rounded-2xl p-2 flex flex-col gap-4 bg-transparent sm:w-2/5 `}
+					className={`fixed top-2 right-2 text-sm bg-[#D0D6E0] rounded-lg p-2 flex flex-col gap-4 bg-transparent`}
 				>
 					{!data
 						? ""
@@ -130,7 +130,7 @@ const Dashboard = () => {
 						<h5 className="text-[#1844E1] sm:text-[10px] sm:leading-none text-center sm:mb-2">
 							{profit}{" "}
 						</h5>{" "}
-						<div className="sm:text-[10px] leading-none">
+						<div className="sm:text-[10px] leading-none text-center">
 							Today&apos;s Profit
 						</div>
 					</div>
@@ -138,7 +138,7 @@ const Dashboard = () => {
 						<h5 className="text-primaryBgClr sm:text-[10px] sm:leading-none text-center sm:mb-2">
 							{ordersTillDate}
 						</h5>
-						<div className="sm:text-[10px] leading-none ">
+						<div className="sm:text-[10px] leading-none text-center">
 							Orders placed till date
 						</div>
 					</div>
@@ -146,7 +146,7 @@ const Dashboard = () => {
 						<h5 className="text-primaryBgClr sm:text-[10px] sm:leading-none text-center sm:mb-2">
 							Rs. {commission}
 						</h5>
-						<div className="sm:text-[10px] leading-none ">
+						<div className="sm:text-[10px] leading-none text-center">
 							Commission earned
 						</div>
 					</div>

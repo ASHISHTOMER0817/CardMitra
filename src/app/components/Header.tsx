@@ -15,7 +15,7 @@ const Header = ({
 	return (
 		<>
 			<div
-				className={`flex justify-between w-full items-center gap-5 my-12 mr-auto sm:flex-col ${className}`}
+				className={`flex justify-between w-full items-center gap-5 mt-4 mb-8 mr-auto sm:flex-col ${className}`}
 			>
 				<h3 className="font-semibold sm:self-start">
 					{" "}

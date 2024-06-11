@@ -47,11 +47,11 @@ const CardLayout = ({
 }) => {
 	return (
 		<div
-			className={`p-7 border h-full rounded-2xl sm:px-4 sm:py-3 border-gray-400 ${classList}`}
+			className={`p-4 border h-full rounded-2xl sm:px-4 sm:py-3 border-gray-400 ${classList}`}
 		>
 			<div className="flex items-center mb-4 gap-4 sm:ml-4 sm:mb-2 float-right-sm">
 				<div className="mr-auto px-[10px] py-[5px] text-sm rounded-3xl border text-center bg-gray-200 sm:text-[10px] sm:px-1 sm:py-0">
-					Quantity: {quantity}
+					Q: {quantity}
 				</div>
 				{image}
 			</div>
