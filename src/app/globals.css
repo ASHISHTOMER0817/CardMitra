@@ -205,6 +205,9 @@ h3 {
 	.order-history-navbar{
 		width: 100%;
 	}
+	.side-navigation{
+		gap: 8px !important;
+	}
 }
 
 @media screen and (min-width: 638px) {

@@ -124,7 +124,7 @@ const Dashboard = () => {
 						  )
 						: ""}
 				</div>
-				<h3 className="my-6 font-semibold sm:my-2">Dashboard</h3>
+				<h3 className="mt-0 mb-4 font-semibold sm:my-2">Dashboard</h3>
 				<div className="flex justify-start gap-3 sm:justify-between">
 					<div className="px-12 py-4 rounded-big bg-[#F3F3F3] md:min-w-[26%] sm:flex sm:flex-col sm:justify-between sm:items-center sm:py-3 sm:px-[6px]">
 						<h5 className="text-[#1844E1] sm:text-[10px] sm:leading-none text-center sm:mb-2">

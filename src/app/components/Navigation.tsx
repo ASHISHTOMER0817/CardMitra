@@ -48,7 +48,7 @@ const Navigation:React.FC<Options> = ({options}) =>{
 
             { menuVisible &&
                   <aside className={` ${isMobile > 638 ? 'w-20' : ''} overflow-hidden flex p-4 flex-col duration-300 gap-4 hover:w-48 side-navigation`} style={{borderRight: '3px solid grey', background: 'white', zIndex: 9}}>
-                        <Image src={logo} alt="icon" className="mb-4"/>
+                        <Image src={logo} alt="icon" className="mb-4" style={{alignSelf: 'center'}}/>
                         {
                               options.map((opt)=>{
                                     return <OptionLink key={opt.name} link={opt.link} name={opt.name} icon={opt.icon} activeIcon={opt.activeIcon}  />
