@@ -15,7 +15,8 @@ const BackwardButton = ({ pageType }: { pageType?: string }) => {
 	return (
 		<Image
 			onClick={backward}
-			className={`mb-6 w-6 h-6 cursor-pointer sm:mb-1 rounded-full active:bg-gray-100`} 
+			className={`w-6 h-6 cursor-pointer sm:mb-1 rounded-full active:bg-gray-100`}
+
 			src={arrowLeft}
 			alt={""}
 		/>

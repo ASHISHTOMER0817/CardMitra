@@ -64,14 +64,14 @@ const LoginAuth = () => {
 			>
 				<>
 					<InputSpace
-					
+
 						type="email"
 						value={email}
 						placeholder="Email"
 						onChange={(value) => setEmail(value)}
 					/>
 					<InputSpace
-					
+
 						type="password"
 						value={password}
 						placeholder="Password"
@@ -87,7 +87,7 @@ const LoginAuth = () => {
 
 				<button
 					disabled={loader}
-					className="text-white border px-3 py-4 rounded-full hover:bg-green-600 bg-primaryBgClr w-96 cursor-pointer sm:w-48 sm:py-2"
+					className="text-white border px-3 py-4 rounded-full hover:bg-green-600 bg-primaryBgClr cursor-pointer sm:py-2"
 					type="submit"
 				>
 					Login

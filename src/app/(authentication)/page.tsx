@@ -247,7 +247,7 @@ export default function Home() {
 						/>
 					</Link>
 				</section>
-				<section className="text-center px-10 py-16 sm:py-0">
+				<section className="text-center px-10 py-16 sm:py-8">
 					<h5 className="my-4 font-medium text-primaryBgClr">
 						TOP RANKED SOLUTIONS
 					</h5>
@@ -265,7 +265,7 @@ export default function Home() {
 							href={"/Auth/signup"}
 							className="text-xl"
 						>
-							Become an Afilliate
+							Become an Affiliate
 						</Link>
 					</button>
 				</section>

@@ -8,9 +8,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Login = ({ params }: { params: { Choice: string } }) => {
 	return (	<>
-	<ToastContainer/>
-			<div className=" m-auto p-[5%] flex justify-around items-center h-screen sm:flex-col">
-				<section className={`flex flex-col justify-start gap-7 sm:gap-2 ${params.Choice === 'login'?'sm:mr-[50px]':'sm:mr-[100px]'}`}>
+			<ToastContainer/>
+
+			<div className=" m-auto p-[5%] flex flex-wrap justify-around items-center h-screen login-form-enclosing hide-on-smaller">
+
+				<section className={`flex flex-col justify-start  gap-7 sm:gap-2 login-para ${params.Choice === 'login'?'sm:mr-[50px]':'sm:mr-[100px]'}`}>
 					<BackwardButton pageType="homePage"/>
 
 					<h5 className=" text-primaryBgClr">
@@ -23,21 +25,23 @@ const Login = ({ params }: { params: { Choice: string } }) => {
 							? "Login"
 							: "Sign Up"}
 					</h1>
- 					{params.Choice === "login" ? (
-						<h4 className="text-[#494848] font-medium">
-							Access your account <br />{" "}
-							effortlessly and pick up <br /> right
-							where you left off
-						</h4>
-					) : (
-						<p className="text-gray-400 font-medium">
-							Become a part of our <br /> vibrant
-							community and <br /> unlock exclusive
-							benefits.
-						</p>
-					)}
+					<p className="text-gray-400 font-medium" style={{maxWidth: '200px'}}>
+
+						{params.Choice === "login" ? (
+							`Access your account
+							effortlessly and pick up right
+							where you left off`
+						) : (
+							`
+								Become a part of our vibrant
+								community and unlock exclusive
+								benefits.
+							`
+						)}
+					</p>
 				</section>
-				<section className="relative">
+
+				<section className="login-form">
 					{params.Choice === "login" ? (
 						<LoginAuth />
 					) : (
@@ -45,8 +49,37 @@ const Login = ({ params }: { params: { Choice: string } }) => {
 					)}
 				</section>
 			</div>
-			</>
-		
+
+			<div className="show-on-smaller mobile-login-form p-[5%] h-screen flex flex-col">
+				<div className="flex gap-4">
+					<BackwardButton pageType="homePage"/>
+					<h5 className=" text-primaryBgClr">
+						{
+							params.Choice === "login"
+							? "WELCOME BACK!"
+							: "JOIN THE COMMUNITY"
+						}
+					</h5>
+				</div>
+				<div className="flex flex-col justify-center" style={{flex: 1}}>
+					<h1 className="font-semibold my-8 text-center">
+						{
+							params.Choice === "login"
+							? "Login"
+							: "Sign Up"
+						}
+					</h1>
+					<section className="login-form">
+						{params.Choice === "login" ? (
+							<LoginAuth />
+						) : (
+							<SignUpAuth />
+						)}
+					</section>
+				</div>
+			</div>
+		</>
+
 	);
 };
 

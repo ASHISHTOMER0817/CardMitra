@@ -117,7 +117,7 @@ h3 {
 	}
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 638px) {
 	.button {
 		padding: 6px 1rem !important;
 	}
@@ -162,21 +162,69 @@ h3 {
 .custom_shadow:hover {
 	box-shadow: 0px 0px 8px 0px #b6b1b1;
 }
-.custom_dateShadow {
-	box-shadow: 0px 0px 3px 0px #646060;
+.login-para-mobile {
+	flex: 1 1 100%;
 }
 
-.helloKitty {
-	margin-bottom: 20px;
-	padding-right: 20px;
-	padding-left: 20px;
-	border-radius: 50px;
-	width: fit-content;
-	background-color: white;
-	padding-bottom: 8px;
-	padding-top: 8px;
-	font-size: 16px;
-	color: darkslategray;
-	margin-left: auto;
+@media screen and (min-width: 1024px) {
+	.header-items {
+		display: flex !important;
+		gap: 3rem;
+	}
+	.login-button {
+		margin-left: 0 !important;
+	}
+}
+
+@media screen and (max-width: 638px) {
+	.button {
+		padding: 6px 1rem !important;
+	}
+	.data-section {
+		justify-content: space-between !important;
+	}
+	.hide-on-smaller {
+		display: none;
+	}
+	.rounded-big {
+		border-radius: 12px;
+	}
+	.float-right-sm {
+		float: right;
+	}
+	.order-history-wrapper {
+		grid-template-columns: auto !important;
+	}
+	.website-img {
+		height: 20px !important;
+		width: 20px !important;
+	}
+	.card-img {
+		width: 40px !important;
+	}
+	.order-history-navbar {
+		width: 100%;
+	}
+	.side-navigation {
+		gap: 8px !important;
+	}
+	.order-form {
+		width: 100%;
+	}
+}
+
+@media screen and (min-width: 638px) {
+	.login-form {
+		min-width: 400px;
+	}
+	.show-on-smaller {
+		display: none;
+	}
+	.rounded-big {
+		border-radius: 1.5rem;
+	}
+}
+
+.custom_dateShadow {
 	box-shadow: 0px 0px 3px 0px #646060;
 }

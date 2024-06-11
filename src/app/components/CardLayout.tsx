@@ -47,15 +47,15 @@ const CardLayout = ({
 }) => {
 	return (
 		<div
-			className={`p-7 border rounded-2xl sm:p-0.5 border-gray-400 ${classList}`}
+			className={`p-4 border h-full rounded-2xl sm:px-4 sm:py-3 border-gray-400 ${classList}`}
 		>
-			<div className="flex items-center mb-4 gap-4 sm:ml-4 sm:mb-2">
+			<div className="flex items-center mb-4 gap-4 sm:ml-4 sm:mb-2 float-right-sm">
 				<div className="mr-auto px-[10px] py-[5px] text-sm rounded-3xl border text-center bg-gray-200 sm:text-[10px] sm:px-1 sm:py-0">
-					Quantity: {quantity}
+					Q: {quantity}
 				</div>
 				{image}
 			</div>
-			<div className="flex justify-center text-sm items-start md:gap-0 sm:flex-col sm:items-center">
+			<div className="flex justify-center text-sm items-start md:gap-0 sm:justify-between">
 				<Image
 					className="w-40 h-[150px] sm:h-[100px] sm:w-[100px]"
 					src={
@@ -67,8 +67,8 @@ const CardLayout = ({
 					width={100}
 					height={150}
 				/>
-				<section className="flex flex-col gap-4 justify-around md:gap-0 sm:mt-1">
-					<div className=" text-wrap font-semibold  text-base md:h-[30px] sm:text-[14px] leading-4">
+				<section className="flex flex-col gap-4 justify-around sm:mt-1 sm:gap-2">
+					<div className=" text-wrap font-semibold  text-base md:h-[30px] sm:text-[14px]">
 						{" "}
 						{name}
 					</div>
@@ -107,7 +107,7 @@ const CardLayout = ({
 					width={30}
 					height={30}
 					alt={""}
-					className="sm:h-[30px] sm:w-[30px] h-7 w-7"
+					className="website-img h-7 w-7"
 				/>
 
 				<div className="flex flex-col justify-start items-start text-sm font-semibold text-gray-600">
@@ -124,7 +124,7 @@ const CardLayout = ({
 									width={80}
 									height={40}
 									alt={""}
-									className="w-12 h-auto sm:w-5"
+									className="w-12 h-auto card-img"
 								/>
 								<div className="sm:font-light sm:text-[7px] sm:leading-3">
 									{label}

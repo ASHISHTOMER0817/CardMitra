@@ -9,7 +9,7 @@ const OdrHistory = () => {
 	// const [data, setData] = useState<order[]>();
 	const [arr, setArr] = useState<order[][]>();
 	const [listType, setListType] = useState("undelivered");
-	const newArr = [[{}], [{}], [{}]];
+	// const newArr = [[{}], [{}], [{}]];
 	useEffect(() => {
 		async function getData() {
 			try {
@@ -56,7 +56,10 @@ const OdrHistory = () => {
 			<Header
 				heading={"Order History"}
 				Children={
-					<nav className="flex justify-end items-center gap-3 text-gray-800 sm:text-xs">
+					<nav
+						className="flex items-center gap-3 text-gray-800 sm:text-xs order-history-navbar"
+						style={{ justifyContent: "space-evenly" }}
+					>
 						<div
 							onClick={() => setListType("all")}
 							className={`${
@@ -122,7 +125,7 @@ const OdrHistory = () => {
 				</div>
 			) : (
 				<>
-					{/* <div className="grid grid-flow-row gap-7 grid-cols-3 md:gap-3 sm:gap-1 sm:grid-cols-2">
+					{/*<div className="grid grid-flow-row gap-7 grid-cols-3 md:gap-3 sm:gap-1 sm:grid-cols-2">
 					{data.map(
 						(
 							{
@@ -197,8 +200,8 @@ const OdrHistory = () => {
 										).getFullYear()}
 									</div>
 								)}
-
-								<div className="grid grid-flow-row gap-7 grid-cols-3 md:gap-3 sm:gap-1 sm:grid-cols-2">
+								{/* grid grid-flow-row gap-7 grid-cols-3 md:gap-3 sm:gap-1 sm:grid-cols-2 */}
+								<div className="flex gap-6 flex-wrap justify-center">
 									{orderarr.map(
 										(
 											{

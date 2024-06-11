@@ -66,7 +66,7 @@ const UserProfile = () => {
 	}
 	return (
 		<>
-			<div className="w-[100%] mb-10 mx-auto mt-6 relative sm:ml-0">
+			<div className="w-[100%] mb-10 mx-auto sm:ml-0">
 				<div
 					className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}
 				></div>
@@ -114,12 +114,11 @@ const UserProfile = () => {
 						Submit
 					</button>
 				</form>
-				<BackwardButton />
-				<div className="flex justify-between mb-2 items-start">
-					<h3 className="font-semibold text-primaryBgClr">
+				<div className="flex justify-between mb-2 items-center flex-wrap gap-4 mb-4">
+					<h3 className="font-semibold text-primaryBgClr w-full">
 						{data?.user.name}
 					</h3>
-					<div className="p-4 flex justify-center pr-[3rem] gap-[10rem] items-start bg-gray-200 rounded-[20px] sm:pr-4 sm:py-1 sm:text-[10px] sm:gap-0.5">
+					<div className="p-4 w-full flex pr-[3rem] gap-[10rem] items-center bg-gray-200 rounded-[20px] sm:pr-4 sm:py-1 sm:text-[10px] sm:gap-0.5" style={{justifyContent: 'space-evenly'}}>
 						<div className="flex justify-center items-center text-lg sm:text-[11px] sm:leading-none">
 							Earnings:{" "}
 							<LiaRupeeSignSolid
@@ -127,12 +126,12 @@ const UserProfile = () => {
 								height={20}
 								className="text-primaryBgClr"
 							/>{" "}
-							<div className="text-primaryBgClr">
+							<div className="text-primaryBgClr font-bold">
 								{data?.user.paid}
 							</div>
 						</div>
-						<div className="text-gray-600 flex flex-col text-sm  justify-center items-center sm:text-[7px] sm:leading-none">
-							<div className="font-medium text-base">
+						<div className="text-gray-600 flex flex-col text-sm  justify-center items-center sm:text-[9px] sm:leading-none">
+							<div className="font-medium text-base sm:text-[11px]">
 								pending amount{" "}
 							</div>
 
@@ -145,7 +144,7 @@ const UserProfile = () => {
 								/>{" "}
 								{data?.verifiedAmt}
 							</div>
-							<div className="flex items-center">
+							<div className="flex items-center mb-2">
 								Unverified:{" "}
 								<LiaRupeeSignSolid
 									width={10}
@@ -172,7 +171,7 @@ const UserProfile = () => {
 				<h6 className="text-gray-400 mb-4 text-sm font-semibold sm:text-[10px] sm:mb-1">
 					PERSONAL
 				</h6>
-				<section className=" flex justify-between items-center sm:text-[10px]">
+				<section className=" flex justify-between items-center sm:text-[10px] flex-wrap">
 					<div>Name: {data?.user.name}</div>
 					<div>Email: {data?.user.email}</div>
 					<div>Contact: {data?.user.contact} </div>
@@ -183,12 +182,12 @@ const UserProfile = () => {
 					BANK DETAILS
 				</h6>
 
-				<section className="flex justify-between items-center sm:text-[10px]">
+				<section className="flex justify-between items-center sm:text-[10px] flex-wrap">
 					<div>
 						Bank Account Number: {data?.user.accountNo}
 					</div>
 					<div>IFSC Code: {data?.user.ifsc} </div>
-					<div className="mr-20">
+					<div className="">
 						UPI ID: {data?.user.upi}
 					</div>
 				</section>
