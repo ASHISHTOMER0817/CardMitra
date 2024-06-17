@@ -104,13 +104,13 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 			{!data ? (
 				<Loader />
 			) : (
-				<div className="mt-16 ml-8 w-full relative sm:ml-0">
+				<div className="w-full sm:ml-0">
 					<div
 						className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}
 					></div>
 					<div
 						// onSubmit={payment}
-						className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 sm:gap-2`}
+						className={`${overlay} bg-white flex px-2 z-20 absolute opacity-100 pt-2 pb-4 rounded-big flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 sm:gap-2 sm:w-4/5`}
 					>
 						<RxCross1
 							width={30}
@@ -118,7 +118,7 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 							className="p-2 cursor-pointer ml-auto hover:bg-gray-100 active:bg-gray-100 rounded-full"
 							onClick={() => setOverlay("hidden")}
 						/>
-						<h4 className="sm:text-nowrap text-xl">
+						<h4 className="sm:text text-xl text-center">
 							Are you sure the order has been
 							delivered?{" "}
 						</h4>
@@ -128,7 +128,7 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 									setOverlay("hidden");
 								}}
 								type="button"
-								className="px-3 py-1 hover:bg-gray-200 border-gray-200 border rounded-full active:bg-gray-200"
+								className="px-4 py-2 hover:bg-gray-200 border-gray-200 border rounded-full active:bg-gray-200"
 							>
 								Cancel
 							</button>
@@ -137,26 +137,26 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 									setDeliveryStatus("true")
 								}
 								type="button"
-								className="px-3 py-1 hover:bg-green-600 bg-primaryBgClr rounded-full text-white"
+								className="px-4 py-2 hover:bg-green-600 bg-primaryBgClr rounded-full text-white"
 							>
 								Confirm
 							</button>
 						</div>
 					</div>
 					<BackwardButton />
-					<section className="flex items-start text-sm justify-around sm:flex-col">
-						<div className="flex flex-col items-start gap-10 justify-around sm:gap-0">
+					<section className="flex items-start text-sm justify-around flex-wrap gap-4">
+						<div className="flex flex-col items-start justify-around sm:gap-0">
 							<ProductDetails
 								observer="user"
 								data={data.product!}
 								arr={arr}
 							/>
 						</div>
-						<div className="border px-10 py-7 rounded-2xl">
+						<div className="border px-10 py-7 rounded-2xl sm:px-4 sm:py-4 sm:w-full">
 							<div className="text-base font-semibold text-primaryBgClr text-center">
 								OTP Form
 							</div>
-							<hr className="my-5" />
+							<hr className="my-5 sm:my-2" />
 							{/* <OtpForm _id={params._id} /> */}
 							<div className=" flex flex-col justify-start gap-3">
 								<CopyDivToClipboard
@@ -177,6 +177,7 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 											? "hidden"
 											: ""
 									} w-96 sm:w-48 sm:py-2`}
+									style={{alignSelf: 'center'}}
 									onClick={() => {
 										copiedYet &&
 											GoogleForm();
@@ -190,6 +191,7 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 											? "hidden"
 											: ""
 									} w-96 sm:w-48 sm:py-2`}
+									style={{alignSelf: 'center'}}
 									onClick={() => {
 										copiedYet &&
 											setOtpStatusUpdate(
@@ -209,6 +211,7 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 											? ""
 											: "hidden"
 									} sm:w-48 sm:py-2 `}
+									style={{alignSelf: 'center'}}
 								>
 									Re-Submit OTP
 								</div>

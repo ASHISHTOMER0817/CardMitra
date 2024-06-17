@@ -42,7 +42,7 @@ const CopyDivToClipboard = ({
 				onClick={copyToClipboard}
 			>
 				<div
-					className="text-gray-500 rounded-full px-4 py-3 outline-none w-[384px]"
+					className="text-gray-500 rounded-full px-4 py-3 outline-none"
 					ref={divRef}
 					style={{
 						// padding: "10px",

@@ -62,7 +62,7 @@ export default function ProductDetails({
 						? "Quantity left: " + data?.requirement
 						: "Ordered quantity: 1"}{" "}
 				</div>
-				<div className="flex gap-10 justify-start items-center sm:flex-col sm:gap-0">
+				<div className="flex justify-start items-center flex-wrap sm:justify-center">
 					<Image
 						className="w-80 sm:w-56"
 						src={`/uploads/${data?.image}`}
@@ -70,22 +70,17 @@ export default function ProductDetails({
 						width={470}
 						height={550}
 					/>
-					<div className="flex flex-col gap-12 justify-center sm:gap-2 sm:mt-2 sm:text-lg sm:w-full">
+					<div className="flex flex-col gap-4 justify-center sm:gap-2 sm:mt-2 sm:text-lg sm:w-full">
 						{/* <div className=""> */}
 						<h4
-							className="font-semibold mb-2 sm:font-bold text-left sm:text-wrap sm:text-lg text-center"
-							// style={{
-							// 	fontSize:'18px',
-							// 	'@media (max-width: 639px)': {
-							// 		fontSize: '18px !important',
-							// 	    },
-							// }}
+							className="font-semibold mb-2 sm:font-bold text-left sm:text-wrap sm:text-lg center-on-small"
+
 						>
 							{data?.name}
 						</h4>
 						{/* </div> */}
 						{/* <div> */}
-						<div className="flex items-start gap-3 sm:text-sm justify-center">
+						<div className="flex items-start gap-3 sm:text-sm sm:justify-center">
 							<div className="">
 								<div className="font-semibold text-black">
 									{data?.price}
@@ -132,8 +127,8 @@ export default function ProductDetails({
 					</div>
 				</div>
 			</section>
-			<section className="w-full flex justify-between items-start ">
-				<div className="flex flex-col items-end ">
+			<section className="w-full flex justify-between items-start flex-wrap">
+				<div className="flex flex-col ">
 					<h6 className="mb-2 sm:text-[12px] sm:font-semibold">
 						bank cards to use
 					</h6>

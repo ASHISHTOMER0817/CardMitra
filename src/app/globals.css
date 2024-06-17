@@ -211,6 +211,9 @@ h3 {
 	.order-form {
 		width: 100%;
 	}
+	.center-on-small{
+		text-align: center;
+	}
 }
 
 @media screen and (min-width: 638px) {
