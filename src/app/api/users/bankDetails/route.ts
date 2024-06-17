@@ -8,9 +8,10 @@ Database()
 export async function POST(request: NextRequest) {
 
       try {
-            const { ifsc, upi, accountNo } = await(await request.json()).bankDetails
-            const {_id} = await GetToken()
-            const user = await User.updateOne({ _id: _id }, { $set: { ifsc, upi, accountNo } });
+            const { name, email, contact, ifsc, accountNo, upi } = await (await request.json()).bankDetails
+
+            const { _id } = await GetToken()
+            const user = await User.updateOne({ _id: _id }, { $set: { ifsc, upi, accountNo, name, email, contact } });
             if (!user) {
                   return NextResponse.json({
                         message: "Server error, please refresh the page", success: false

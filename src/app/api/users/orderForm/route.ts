@@ -53,7 +53,7 @@ export const POST = async (request: NextRequest) => {
                         orderedAt: new Date(),
                         delivered: 'undelivered',
                         otp: false,
-                        paid: false,
+                        paid: null,
                         acknowledgment: false,
                         // showOnHomePage: false
                   })

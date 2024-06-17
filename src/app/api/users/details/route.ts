@@ -20,11 +20,17 @@ export async function GET(request: NextRequest) {
             let amount = searchparams.get('paid')
             let orderList;
 
-            if (!userId) {
-                  const { role, _id } = await GetToken()
-                  // console.log('if condtion')
-                  // console.log(role, _id)
-                  userId = _id
+            if (!userId || userId === 'basicInfo') {
+                  const { _id } = await GetToken()
+                  if (!userId) userId = _id
+                  else {
+                        const user = await User.findOne({ _id: _id })
+                        console.log('basicinfo', user)
+                        return NextResponse.json({
+                              message: "Returning basic info about the user", success: true, data: user
+                        })
+
+                  }
                   // if (role === 'user') {
                   //       console.log('this is user')
                   //       // const userInfo = await User.findOne({ _id: _id })
@@ -34,7 +40,9 @@ export async function GET(request: NextRequest) {
                   //       // })
                   // }
             }
+
             const user = await User.findOne({ _id: userId })
+            console.log(user, '&& this is userId', userId)
 
             orderList = await Order.find({ user: userId }).populate("product")
 
@@ -43,10 +51,10 @@ export async function GET(request: NextRequest) {
             let totalUnVerifiedAmt = 0;
             if (orderList.length > 0) {
                   for (let i = 0; i < orderList.length; i++) {
-                        if (orderList[i].delivered === 'delivered' && orderList[i].paid === false) {
+                        if (orderList[i].delivered === 'delivered' && orderList[i].paid === null) {
                               total += orderList[i].product.price;
                         }
-                        if (orderList[i].delivered === 'unverified' && orderList[i].paid === false) {
+                        if (orderList[i].delivered === 'unverified' && orderList[i].paid === null) {
                               totalUnVerifiedAmt += orderList[i].product.price;
                         }
                   }
@@ -61,8 +69,8 @@ export async function GET(request: NextRequest) {
 
             if (amount && +amount > 0) {
                   orderList = await Order.updateMany(
-                        { user: userId, delivered: 'undelivered', paid: false },
-                        { $set: { paid: true } }
+                        { user: userId, delivered: 'undelivered', paid: null },
+                        { $set: { paid: new Date() } }
                   );
                   console.log(orderList)
                   console.log('this is -- ', userId, '--', totalAmt - +amount!)

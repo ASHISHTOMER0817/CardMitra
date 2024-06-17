@@ -9,7 +9,7 @@ const OdrHistory = () => {
 	// const [data, setData] = useState<order[]>();
 	const [arr, setArr] = useState<order[][]>();
 	const [listType, setListType] = useState("undelivered");
-	// const newArr = [[{}], [{}], [{}]];
+	// const newArr = [[[{}], [{}],], [[{}],[{}]]];
 	useEffect(() => {
 		async function getData() {
 			try {

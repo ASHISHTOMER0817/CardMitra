@@ -15,7 +15,7 @@ const OrderHistory = ({
 	_id: string;
 	otp: boolean;
 	delivered: string;
-	paid: boolean;
+	paid: null | Date;
 }) => {
 	function deliveryStatus(returnValue: string) {
 		if (
@@ -53,9 +53,9 @@ const OrderHistory = ({
 				name={product?.name}
 				price={product?.price}
 				commission={product?.commission}
-				classList={deliveryStatus(
-					"hover:border-primaryBgClr custom_shadow"
-				)}
+				classList={`${deliveryStatus(
+					"hover:border-primaryBgClr "
+				)} custom_shadow`}
 				site={product?.site}
 				deviceImage={product?.image}
 				cards={product?.cards}

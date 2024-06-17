@@ -1,6 +1,12 @@
 import React from "react";
 
-const StatusBadge = ({ status, paid }: { status: string; paid?: boolean }) => {
+const StatusBadge = ({
+	status,
+	paid,
+}: {
+	status: string;
+	paid?: null | Date;
+}) => {
 	let bgColor, textColor;
 
 	switch (status) {
@@ -31,9 +37,13 @@ const StatusBadge = ({ status, paid }: { status: string; paid?: boolean }) => {
 
 	return (
 		<div
-			className={`mx-auto rounded-full px-2 py-0.5 sm:text-[8px] sm:mt-2 sm:py-0 ${bgColor} ${textColor}`}
+			className={`mx-auto rounded-full px-4 py-1 sm:text-[8px] sm:mt-2 sm:py-0 ${bgColor} ${textColor}`}
 		>
-			{paid ? "Paid" : status}
+			{paid
+				? `paid on - ${new Date(paid).getDate()}-${new Date(
+						paid
+				  ).getMonth()}`
+				: status}
 		</div>
 	);
 };

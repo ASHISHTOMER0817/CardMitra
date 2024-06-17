@@ -37,7 +37,7 @@ export interface order {
 	delivered: string
 	orderedAt: string
 	_id: string
-	paid: boolean
+	paid: Date | null
 	acknowledgment: boolean
 }
 

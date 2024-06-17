@@ -28,7 +28,7 @@ export async function middleware(request: NextRequest) {
             })
 
             const adminPath = path === '/adminAddProduct' || path === '/adminBookers' || path === '/adminDashboard' || path === '/orders' || path === '/otpList' || path === '/transactions' || authPath
-            const userPath = path === '/dashboard' || path === '/deals' || path === '/odrHistory' || path === '/userProfile' || authPath
+            const userPath = path === '/dashboard' || path === '/deals' || path === '/odrHistory' || path === '/userProfile' || authPath || '/editUserDetails'
             // Admin Dynamic paths
             const adminDynamicPath = path.startsWith('/adminAddProduct/') || path.startsWith('/adminBookers/') || path.startsWith('/orders/')
             const userDynamicPath = path.startsWith('/odrHistory/') || path.startsWith('/deals/')
@@ -52,7 +52,7 @@ export async function middleware(request: NextRequest) {
 // See "Matching Paths" below to learn more
 export const config = {
       matcher: ['/dashboard', '/deals/:path*', '/odrHistory/:path*', '/userProfile', '/adminAddProduct/:path*', '/adminBookers/:path*', '/adminDashboard', '/orders/:path*', '/otpList', '/transactions'
-            , '/Auth/:path*', '/'
+            , '/Auth/:path*', '/', '/editUserDetails'
       ]
 }
 
