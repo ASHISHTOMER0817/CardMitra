@@ -194,6 +194,7 @@ h3 {
 	}
 	.order-history-wrapper {
 		grid-template-columns: auto !important;
+		justify-content: center;
 	}
 	.website-img {
 		height: 20px !important;

@@ -166,18 +166,15 @@ const UserProfile = () => {
 							href="/editUserDetails"
 							// onClick={() => setOverlay("")}
 
-							className="rounded-3xl float-right text-nowrap cursor-pointer flex py-1 px-2 border justify-center items-center border-gray-400 hover:border-gray-600 text-gray-500 hover:text-gray-600 sm:py-1 sm:text-[10px]"
+							className="rounded-3xl float-right text-nowrap cursor-pointer flex py-1 px-2 border justify-center items-center border-gray-400 hover:border-gray-600 text-gray-500 hover:text-gray-600 sm:py-1 sm:text-[12px]"
 						>
 							Edit
 							<VscEdit className="float-right ml-2" />
 						</Link>
 					</div>
 
-					<div
-						className="p-4 w-full flex pr-[3rem] gap-[10rem] items-center bg-gray-200 rounded-[20px] sm:pr-4 sm:py-1 sm:text-[10px] sm:gap-0.5"
-						style={{ justifyContent: "space-evenly" }}
-					>
-						<div className="flex justify-center items-center text-lg sm:text-[11px] sm:leading-none">
+					<div className="p-3 flex bg-gray-200 rounded-[12px] w-full sm:flex-col justify-around">
+						<div className="flex items-center text-lg sm:text-[14px] sm:leading-none">
 							Earnings:{" "}
 							<LiaRupeeSignSolid
 								width={20}
@@ -188,7 +185,7 @@ const UserProfile = () => {
 								{data?.user.paid}
 							</div>
 						</div>
-						<div className="text-gray-600 flex flex-col text-sm  justify-center items-center sm:text-[9px] sm:leading-none">
+						<div className="text-gray-600 flex flex-col text-sm sm:text-[12px] sm:leading-none sm:mt-3">
 							<div className="font-medium text-base sm:text-[11px]">
 								pending amount{" "}
 							</div>
@@ -214,21 +211,21 @@ const UserProfile = () => {
 						</div>
 					</div>
 				</div>
-				<h6 className="text-gray-400 mb-4 text-sm font-semibold sm:text-[10px] sm:mb-1">
+				<h6 className="text-gray-400 mb-4 text-sm font-semibold sm:text-[12px] sm:mb-1">
 					PERSONAL
 				</h6>
-				<section className=" flex justify-between items-center sm:text-[10px] flex-wrap">
+				<section className=" flex justify-between sm:text-[12px] flex-wrap  sm:flex-col sm:justify-start">
 					<div>Name: {data?.user.name}</div>
 					<div>Email: {data?.user.email}</div>
 					<div>Contact: {data?.user.contact} </div>
 				</section>
 
 				<hr className="border w-full my-7" />
-				<h6 className="text-gray-400 mb-4 text-sm font-semibold sm:text-[10px] sm:mb-1">
+				<h6 className="text-gray-400 mb-4 text-sm font-semibold sm:text-[12px] sm:mb-1">
 					BANK DETAILS
 				</h6>
 
-				<section className="flex justify-between items-center sm:text-[10px] flex-wrap">
+				<section className="flex justify-between sm:text-[12px] flex-wrap sm:flex-col sm:justify-start">
 					<div>
 						Bank Account Number: {data?.user.accountNo}
 					</div>
