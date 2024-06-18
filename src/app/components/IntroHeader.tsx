@@ -12,7 +12,7 @@ const Header = () => {
 		"Contact Us": "#contactUs",
 	};
 	return (
-		<div className="flex items-center mx-4 my-4 mb-1">
+		<div className="flex items-center mx-4 my-4">
 			{" "}
 			{/* className="grid  grid-rows-1 justify-between items-center grid-flow-col my-7 px-16 sm:gap-2 sm:justify-center " */}
 			<Link href={"/"} className="sm:w-8 sm:h-auto">

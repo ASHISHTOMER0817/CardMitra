@@ -146,20 +146,20 @@ export default function Home() {
 		<div className="">
 			<IntroHeader />
 			<main className=" min-h-screen text-center">
-				<section className="text-center px-10 bg-black py-16 sm:py-0 ">
-					<h5 className="my-4 font-medium text-primaryBgClr">
+				<section className="text-center px-10 bg-black py-16 sm:py-8">
+					<h5 className="my-4 font-medium text-primaryBgClr sm:my-0">
 						DEALS
 					</h5>
 					{/* <h1 className="font-extrabold ">
 					</h1> */}
-					<h1 className="my-6 font-extrabold text-gray-400 sm:leading-7">
+					<h1 className="my-4 font-extrabold text-gray-400 sm:leading-7">
 						amazing deals <br />
 						just, sign up and start earning
 						{/* Some of the amazing deals currently
 						available, <br /> you just have to sign up
 						and start your amazing journey */}
 					</h1>
-					<div className=" mb-10 mt-14 ml-8 grid grid-flow-row grid-cols-3 gap-3 sm:ml-2 sm:gap-1 sm:grid-cols-2">
+					<div className="mb-10 mt-14 ml-8 flex flex-wrap gap-3 sm:ml-2 sm:gap-1 sm:my-6">
 						{/* <CardLayoutForDeals data={data!} /> */}
 
 						{!data ? (
@@ -234,7 +234,7 @@ export default function Home() {
 					</div>
 					<Link
 						href={"/Auth/signup"}
-						className="text-black flex justify-center items-center gap-2 w-fit mx-auto bg-white  px-2 py-0.5 "
+						className="text-black flex justify-center items-center gap-2 w-fit mx-auto bg-white px-5 py-1 rounded-[12px] button"
 					>
 						<div className="font-serif font-semibold text-lg">
 							{" "}
@@ -248,7 +248,7 @@ export default function Home() {
 					</Link>
 				</section>
 				<section className="text-center px-10 py-16 sm:py-8">
-					<h5 className="my-4 font-medium text-primaryBgClr">
+					<h5 className="my-4 font-medium text-primaryBgClr  sm:my-0">
 						TOP RANKED SOLUTIONS
 					</h5>
 					<h1 className="font-extrabold sm:leading-7">
@@ -294,21 +294,18 @@ export default function Home() {
 						</h3>
 					</div>
 				</section>
-				<section
-					className="py-[3.75rem] text-center px-10 sm:py-12"
-					id="aboutUs"
-				>
-					<h5 className="font-medium text-primaryBgClr mb-8">
+				<section className="text-center px-10 py-16 sm:py-8" id="aboutUs" >
+					<h5 className="font-medium text-primaryBgClr mb-4">
 						ABOUT US
 					</h5>
-					<h1 className="font-extrabold">
+					<h1 className="font-extrabold sm:leading-7">
 						Simplify Phone Order <br />
 						Management
 					</h1>
 					<Image
 						src={phoneImg}
 						alt={"phones Image"}
-						className="my-12 mx-auto"
+						className="my-12 mx-auto sm:my-6"
 					></Image>
 					<h3 className="text-[#121212B2]">
 						We&apos;re on a mission to Streamline phone
@@ -321,18 +318,15 @@ export default function Home() {
 						today
 					</h3>
 				</section>
-				<section
-					className="text-center py-16 px-10 bg-[#242424] text-white "
-					id="ourFeatures"
-				>
-					<h5 className="font-medium text-primaryBgClr mb-8">
+				<section className="text-center py-16 px-10 bg-[#242424] text-white sm:py-8" id="ourFeatures" >
+					<h5 className="font-medium text-primaryBgClr mb-8 sm:mb-4">
 						OUR FEATURES
 					</h5>
-					<h1 className="font-extrabold ">
+					<h1 className="font-extrabold " style={{lineHeight: 1.75}}>
 						Unlock the power of seamless <br />
 						phone Order Management
 					</h1>
-					<div className="flex justify-center gap-x-32 mt-12 items-center text-left sm:gap-2 sm:flex-col">
+					<div className="flex justify-center gap-x-32 mt-12 items-center text-left sm:gap-2 sm:flex-col sm:mt-4">
 						<div className="flex flex-col p-9 rounded-2xl bg-[#FFFFFF1A] justify-start gap-y-3 sm:w-4/5 sm:py-3 sm:pl-4 sm:pr-0">
 							<GoBell className="w-12 h-12 rounded-3xl p-2 text-white bg-primaryBgClr" />
 
@@ -372,21 +366,18 @@ export default function Home() {
 						</div>
 					</div>
 				</section>
-				<section
-					className="pt-16 pb-24 px-10 bg-primaryBgClr"
-					id="testimonials"
-				>
-					<h5 className="font-medium text-white mb-8">
+				<section className="py-16 px-10 sm:py-8 bg-primaryBgClr" id="testimonials" >
+					<h5 className="font-medium text-white mb-8 sm:mb-4">
 						CUSTOMER TESTIMONIALS
 					</h5>
-					<h1 className="font-extrabold text-white mb-16">
+					<h1 className="font-extrabold text-white mb-16 sm:mb-4 sm:leading-7">
 						Hear What Our Clients <br />
 						Have to Say!
 					</h1>
 					<SimpleSlider reviewArr={arr} />
 				</section>
 
-				<section className="pt-24 pb-24 px-10 sm:pt-8 sm:pb-8">
+				<section className=" py-16 px-10 sm:py-8">
 					<h5 className="font-medium text-primaryBgClr mb-8">
 						BECOME AN AFFILIATE
 					</h5>
