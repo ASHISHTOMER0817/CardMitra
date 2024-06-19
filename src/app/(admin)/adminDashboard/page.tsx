@@ -65,8 +65,8 @@ const AdminDashboard = () => {
 	// 	}
 	// }
 	return (
-		<div className="mx-6 w-[95%] mt-6 md:text-xs sm:mx-0 sm:w-full">
-			<section className="mt-9 ">
+		<div className="mx-6 w-[95%] mt-3 md:text-xs sm:mx-0 sm:w-full">
+			<section className="">
 				<h3 className=" font-semibold mb-3">Dashboard</h3>
 				<div className="flex justify-start gap-2 sm:gap-1">
 					<div
@@ -106,9 +106,9 @@ const AdminDashboard = () => {
 					</div>
 				</div>
 			</section>
-			<section className="mt-9 ">
-				<div className="flex justify-between mb-3 items-center">
-					<h4 className="font-semibold">Overview</h4>
+			<section className="mt-9 sm:mt-4 ">
+				<div className="flex justify-between items-center">
+					<h3 className="font-semibold">Overview</h3>
 					<Link
 						href={"/orders"}
 						className="text-primaryBgClr text-base sm:text-xs"
@@ -133,7 +133,7 @@ const AdminDashboard = () => {
 				</div>
 			</section>
 
-			<section className="mt-9 ">
+			<section className="mt-9 sm:mt-4 ">
 				<div className="flex justify-between mb-3 items-center">
 					<h4 className="font-semibold sm:text-sm">
 						Order History
@@ -145,7 +145,7 @@ const AdminDashboard = () => {
 						VIEW ALL
 					</Link>
 				</div>
-				<div className="grid grid-flow-row gap-3 grid-cols-3 sm:grid-cols-2">
+				<div className="flex flex-wrap justify-center gap-4">
 					{!data ? (
 						<Loader />
 					) : (
@@ -169,7 +169,7 @@ const AdminDashboard = () => {
 				</div>
 			</section>
 
-			<section className="mt-9 ">
+			<section className="mt-9 sm:mt-4 ">
 				<div className="flex justify-between mb-3 items-center">
 					<h4 className="font-semibold sm:text-sm">
 						Affiliate Requests
