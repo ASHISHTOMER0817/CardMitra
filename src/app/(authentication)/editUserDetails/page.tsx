@@ -125,7 +125,7 @@ const EditUserDetails = () => {
 				<button
 					type="submit"
 					onClick={() => router.push("/userProfile")}
-					className="text-gray-500 hover:text-gray-700 border cursor-pointer rounded-full py-4 px-3 w-2/4  sm:py-2"
+					className="text-gray-500 hover:text-gray-700 border border-gray-500 cursor-pointer rounded-full py-4 px-3 w-2/4  sm:py-2"
 				>
 					Cancel
 				</button>

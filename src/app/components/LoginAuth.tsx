@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { FormEvent, useState } from "react";
 import InputSpace from "./InputSpace";
 import axios from "axios";
@@ -26,6 +26,7 @@ const LoginAuth = () => {
 				console.log(data);
 				router.push("/dashboard");
 			} else if (data === "admin") {
+				console.log("admin login");
 				router.push("/adminDashboard");
 			}
 		}
@@ -35,25 +36,25 @@ const LoginAuth = () => {
 		e.preventDefault();
 		try {
 			setLoader(true);
-			if(!email || !password){
-				setLoader(false)
-				Popup('error', 'Fill the form!!')
+			if (!email || !password) {
+				setLoader(false);
+				Popup("error", "Fill the form!!");
 				return;
 			}
-			const response =
-				await axios.post("/api/users/login", { user }
-			)
-			const  { success, message, data } = response.data
+			const response = await axios.post("/api/users/login", {
+				user,
+			});
+			const { success, message, data } = response.data;
 			// const success = response
 			console.log(success, message, data);
 			checkSuccess(success, message, data);
 		} catch (error: any) {
-			setLoader(false)
+			setLoader(false);
 			Popup("error", "Server error, please refresh");
 		}
 	}
 
-	// function PswrdNd() {}
+	function ForgetPassword() {}
 
 	return (
 		<>
@@ -64,26 +65,18 @@ const LoginAuth = () => {
 			>
 				<>
 					<InputSpace
-
 						type="email"
 						value={email}
 						placeholder="Email"
 						onChange={(value) => setEmail(value)}
 					/>
 					<InputSpace
-
 						type="password"
 						value={password}
 						placeholder="Password"
 						onChange={(value) => setPassword(value)}
 					/>
 				</>
-
-				{/* <div className="text-sm">
-				<div className="float-right text-primaryBgClr cursor-pointer">
-					Forgot Password{" "}
-				</div>
-			</div> */}
 
 				<button
 					disabled={loader}
@@ -92,6 +85,9 @@ const LoginAuth = () => {
 				>
 					Login
 				</button>
+				<div className="float-right text-sm text-primaryBgClr cursor-pointer">
+					Forgot Password{" "}
+				</div>
 			</form>
 		</>
 	);
