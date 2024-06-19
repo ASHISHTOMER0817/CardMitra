@@ -38,73 +38,71 @@ const Transactions = ({
 			{!data ? (
 				<Loader />
 			) : data.length > 0 ? (
-				<table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all sm:text-wrap">
-					<thead>
-						<tr className="bg-green-100 text-[#2f4f4f] sm:text-[8px]">
-							<th className="py-6 px-12 text-left sm:pr-0.5 sm:pl-2 sm:py-1">
-								Transaction ID
-							</th>
-							{!userId && (
-								<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
-									User name
+				<div className="" style={{overflow: 'auto'}}>
+					<table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all sm:text-wrap">
+						<thead>
+							<tr className="bg-green-100 text-[#2f4f4f] sm:text-[12px]">
+								<th className="p-3 text-left  sm:px-2 sm:py-2">
+									Transaction ID
 								</th>
-							)}
-							{/* {heading} */}
-							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
-								Date
-							</th>
+								{!userId && (
+									<th className="p-3 text-left  sm:px-2 sm:py-2">
+										User name
+									</th>
+								)}
+								{/* {heading} */}
+								<th className="p-3 text-left  sm:px-2 sm:py-2">
+									Date
+								</th>
 
-							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
-								Amount Paid
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						{data.map(
-							(
-								{
-									user,
-									dateOfPayment,
-									_id,
-									amount,
-								},
-								index
-							) => {
-								// const date = new Date(deliveryDate);
-								// let delivery = dateFormat(date);
-								// const orderDate = new Date(orderedAt);
-								// let order_at = dateFormat(orderDate);
+								<th className="p-3 text-left  text-nowrap sm:px-2 sm:py-2">
+									Amount Paid
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							{data.map(
+								(
+									{
+										user,
+										dateOfPayment,
+										_id,
+										amount,
+									},
+									index
+								) => {
 
-								return (
-									<tr
-										key={index}
-										className="even:bg-gray-100 sm:text-[8px]"
-									>
-										<td className="py-4 px-12 text-sm sm:text-[8px] sm:px-0.5 sm:py-1">
-											{_id}
-										</td>
-										{!userId && (
-											<td className="py-4 px-12 font-semibold sm:px-0.5 sm:py-1">
-												{
-													user.name
-												}
+									return (
+										<tr
+											key={index}
+											className="even:bg-gray-100 sm:text-[12px]"
+										>
+											<td className="p-3 text-sm sm:px-2 sm:py-2 text-nowrap">
+												{_id}
 											</td>
-										)}
-										<td className="py-4 px-12 text-gray-500 sm:px-0.5 sm:py-1">
-											{new Date(
-												dateOfPayment
-											).toDateString()}
-										</td>
+											{!userId && (
+												<td className="p-3 font-semibold sm:px-2 sm:py-2 text-nowrap">
+													{
+														user.name
+													}
+												</td>
+											)}
+											<td className="p-3 text-gray-500 sm:px-2 sm:py-2 text-nowrap">
+												{new Date(
+													dateOfPayment
+												).toDateString()}
+											</td>
 
-										<td className="py-4 px-12 text-primaryBgClr sm:px-0.5 sm:py-1">
-											{amount}
-										</td>
-									</tr>
-								);
-							}
-						)}
-					</tbody>
-				</table>
+											<td className="p-3 text-primaryBgClr sm:px-2 sm:py-2 text-nowrap">
+												{amount}
+											</td>
+										</tr>
+									);
+								}
+							)}
+						</tbody>
+					</table>
+				</div>
 			) : (
 				<div className="text-red-500 font-serif mx-auto mt-20 w-fit sm:text-[10px]">
 					No data to show !!

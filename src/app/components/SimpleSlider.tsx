@@ -70,7 +70,7 @@ export default function SimpleSlider({
 					return (
 						<div
 							key={index}
-							className="p-6 flex flex-col h-72 justify-center items-center gap-8 rounded-2xl bg-white carousel-item sm:text-xs"
+							className="p-6 flex flex-col h-72 justify-center items-center gap-8 rounded-2xl bg-white carousel-item"
 						>
 							{" "}
 							<div className="flex justify-center items-center mr-auto gap-5">

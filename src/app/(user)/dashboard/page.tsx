@@ -187,7 +187,7 @@ const Dashboard = () => {
 						You have not placed any product yet...
 					</div>
 				) : (
-					<div className="grid grid-flow-row gap-3 grid-cols-3 order-history-wrapper">
+					<div className="flex flex-wrap gap-3 order-history-wrapper">
 						{data
 							.slice(0, 3)
 							.map(
