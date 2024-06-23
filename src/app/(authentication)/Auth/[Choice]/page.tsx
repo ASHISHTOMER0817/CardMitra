@@ -1,5 +1,7 @@
 'use client'
 import React from "react";
+import logo from "@/../public/logo.svg"
+import Image from "next/image";
 import LoginAuth from "@/app/components/LoginAuth";
 import SignUpAuth from "@/app/components/SignUpAuth";
 import BackwardButton from "@/app/components/BackwardButton";
@@ -9,8 +11,9 @@ import "react-toastify/dist/ReactToastify.css";
 const Login = ({ params }: { params: { Choice: string } }) => {
 	return (	<>
 			<ToastContainer/>
-
-			<div className=" m-auto p-[5%] flex flex-wrap justify-around items-center h-screen login-form-enclosing hide-on-smaller">
+			{/* <Image src={logo} alt=""/> */}
+			{/* I have to add pt-0 in the below div parent element element */}
+			<div className=" m-auto p-[5%] pt-0 flex flex-wrap justify-around items-center h-screen login-form-enclosing hide-on-smaller">
 
 				<section className={`flex flex-col justify-start  gap-7 sm:gap-2 login-para ${params.Choice === 'login'?'sm:mr-[50px]':'sm:mr-[100px]'}`}>
 					<BackwardButton pageType="homePage"/>

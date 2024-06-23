@@ -114,16 +114,15 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 									i < users.order.length;
 									i++
 								) {
-									// const element = users.order[i];
+									const order = users.order[i];
 									if (
 										_id ===
-										users.order[i].user
-											._id
+										order.user
+											._id && order.delivered === 'delivered' && order.paid === null
 									) {
 										payable +=
-											users.order[i]
-												.product
-												.price;
+										order.product.price;
+												
 									}
 								}
 								return (

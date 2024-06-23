@@ -9,6 +9,7 @@ import utc from "dayjs/plugin/utc"
 import axios from "axios";
 import { ObjectId } from "mongodb";
 import mongoose from "mongoose";
+import { order } from "@/interface/productList";
 dayjs.extend(utc)
 
 Database()
@@ -57,14 +58,24 @@ export async function GET(request: NextRequest) {
 
 
                   //Orders placed today
-                  let order;
-                  const Orders = await Order.find({ orderedAt: new Date() })
-                  if (Orders.length <= 0) {
-                        order = 0
+                  let order = 0
+                  const Orders:order[] = await Order.find({})
+                 
+                  let arr = [0,0,0,0,0,0,0,0,0,0,0,0]
+                  for(const singleOrder of Orders){
+                        const currentYear = new Date().getFullYear()
+                        const currentMonth = new Date().getMonth() +1
+                        const currentDay = new Date().getDate()
+                        if(new Date(singleOrder.orderedAt).getFullYear() === currentYear && new Date(singleOrder.orderedAt).getMonth() +1 === currentMonth &&new Date(singleOrder.orderedAt).getDate() === currentDay ){
+                              order += 1
+                        }
+                        arr[new Date(singleOrder.orderedAt).getMonth()] += 1
 
-                  } else {
-                        order = Orders.length;
                   }
+                  console.log(arr)
+
+                  
+
                   console.log(syncOperation, 'this is sync Operation')
                   if (syncOperation === 'true') {
                         let otpList;
@@ -104,7 +115,7 @@ export async function GET(request: NextRequest) {
                   }
 
                   // const data = { orderHistory, deliveries, noOfAffiliate, order }
-                  const data = { orderHistory, noOfAffiliate, order }
+                  const data = { orderHistory, noOfAffiliate, order, arr }
                   console.log(data)
 
                   return NextResponse.json({

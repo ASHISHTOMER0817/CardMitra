@@ -6,15 +6,17 @@ import { useRouter } from "next/navigation";
 import { AxiosResponse } from "axios";
 import Popup from "./Popup";
 import Loader from "./loader";
+import Link from "next/link";
 
 const LoginAuth = () => {
 	const router = useRouter();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [loader, setLoader] = useState(false);
+	const [remember, setRemember] = useState(true);
 
-	const user = { email, password };
-
+	const user = { email, password, remember };
+	console.log(user)
 	function checkSuccess(success: boolean, message: string, data: string) {
 		if (success === false) {
 			Popup("error", message);
@@ -77,6 +79,26 @@ const LoginAuth = () => {
 						onChange={(value) => setPassword(value)}
 					/>
 				</>
+				<div className="flex text-sm text-gray-500">
+					<input
+						type="checkbox"
+						onChange={() => setRemember(!remember)}
+						checked={remember}
+						id="rememberMe"
+					/>{" "}
+					<label
+						htmlFor="rememberMe"
+						className="cursor-pointer"
+					>
+						Remember Me
+					</label>
+					<Link
+						href={"/forgotPassword"}
+						className="float-right ml-auto hover:border-primaryBgClr  hover:text-primaryBgClr cursor-pointer"
+					>
+						Forgot Password{" "}
+					</Link>
+				</div>
 
 				<button
 					disabled={loader}
@@ -85,9 +107,15 @@ const LoginAuth = () => {
 				>
 					Login
 				</button>
-				<div className="float-right text-sm text-primaryBgClr cursor-pointer">
-					Forgot Password{" "}
-				</div>
+				<Link
+					href={"/Auth/signup"}
+					className="float-right mx-auto text-sm text-gray-400 cursor-pointer"
+				>
+					I don&apos;t have an account?{" "}
+					<div className="float-right text-primaryBgClr font-semibold">
+						Signup
+					</div>{" "}
+				</Link>
 			</form>
 		</>
 	);

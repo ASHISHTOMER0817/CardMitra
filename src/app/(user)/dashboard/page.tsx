@@ -15,6 +15,7 @@ const Dashboard = () => {
 	const [profit, setProfit] = useState(0);
 	const [commission, setCommission] = useState(0);
 	const [ordersTillDate, setOrdersTillDate] = useState(0);
+	const [chartArr, setChartArr] = useState<number[]>([]);
 	const [userData, setUserData] = useState({
 		labels: [
 			"JAN",
@@ -32,10 +33,12 @@ const Dashboard = () => {
 		],
 		datasets: [
 			{
-				label: "My First Dataset",
-				data: [65, 59, 80, 81, 56, 55, 40, 65, 87, 30, 62],
+				label: "Order Placed",
+				data: [...chartArr],
 				fill: false,
-				borderColor: "rgb(75, 192, 192)",
+				borderColor: "rgb(57, 172, 115)",
+				// borderColor: "rgb(75, 192, 192)",
+
 				tension: 0.1,
 				width: "300px",
 			},
@@ -50,7 +53,6 @@ const Dashboard = () => {
 				// console.log(response.data.data);
 				// console.log(response.data.data.otpAction.length);
 				setData(response.data.data);
-
 				loops(response.data.data);
 				// console.log(response.data.message);
 			} catch {
@@ -61,18 +63,40 @@ const Dashboard = () => {
 		getData();
 	}, []);
 
+	useEffect(() => {
+		// Update userData when chartArr changes
+		setUserData((prevData) => ({
+			...prevData,
+			datasets: [
+				{
+					...prevData.datasets[0],
+					data: [...chartArr],
+				},
+			],
+		}));
+	}, [chartArr]);
+
 	function loops(todaysOrders: order[]) {
 		let total = 0;
 		let commission = 0;
-
+		// let ele = <div className="bg-pri"></div>
+		let arr = [0,0,0,0,0,0,0,0,0,0,0,0]
 		for (let i = 0; i < todaysOrders.length; i++) {
-			if (new Date(todaysOrders[i].orderedAt) === new Date()) {
+			const orderDate = new Date(todaysOrders[i].orderedAt);
+			const today = new Date();
+	
+			if (orderDate === today) {
 				total += todaysOrders[i].product.price;
+				console.log(orderDate,'and new date', today)
 			}
-		}
-		for (let i = 0; i < todaysOrders.length; i++) {
 			commission += todaysOrders[i].product.price;
+			const month = orderDate.getMonth();
+			console.log(month, 'this is month of the products ')
+			orderDate.getFullYear() === new Date().getFullYear() ? arr[month]+=1: ''
 		}
+		// console.log(arr)
+		setChartArr(arr)
+		console.log(chartArr,'thisis chart value')
 		setCommission(commission);
 		setProfit(total);
 		setOrdersTillDate(todaysOrders.length);
@@ -124,7 +148,9 @@ const Dashboard = () => {
 						  )
 						: ""}
 				</div>
-				<h3 className="mt-0 mb-4 font-semibold sm:my-2">Dashboard</h3>
+				<h3 className="mt-0 mb-4 font-semibold sm:my-2">
+					Dashboard
+				</h3>
 				<div className="flex justify-start gap-3 sm:justify-between">
 					<div className="px-12 py-4 rounded-big bg-[#F3F3F3] md:min-w-[26%] sm:flex sm:flex-col sm:justify-between sm:items-center sm:py-3 sm:px-[6px]">
 						<h5 className="text-[#1844E1] sm:text-[12px] font-bold sm:leading-none text-center sm:mb-2">

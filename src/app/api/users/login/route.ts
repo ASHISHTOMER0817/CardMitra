@@ -9,7 +9,7 @@ Database()
 export async function POST(request: NextRequest) {
       try {
             const reqBody = await request.json()
-            const { email, password } = reqBody.user;
+            const { email, password, remember } = reqBody.user;
             const user = await User.findOne({ email })
             const existingPassword = user.password
 
@@ -32,11 +32,12 @@ export async function POST(request: NextRequest) {
                         .setIssuedAt()
                         .setIssuer('Guru')
                         .setAudience('Orderee')
-                        .setExpirationTime('7 days')
+                        .setExpirationTime(remember ? '7 days' : '1 hr')
                         .sign(secret)
 
-                  const days = 7 * 24 * 60 * 60 * 1000
-                  cookies().set('joseToken', joseToken, { expires: Date.now() + days })
+                  const days =  7 * 24 * 60 * 60 * 1000
+                  const hour = 60 * 60 * 1000
+                  cookies().set('joseToken', joseToken, { expires: Date.now() + remember ? days : hour })
 
                   // Redirect the user/admin
                   // user.role === 'admin' ? redirect('/'): user.role === 'user' ? redirect('/dashboard'):''

@@ -23,7 +23,7 @@ const InputSpace: React.FC<InputProps> = ({
 
 	return (
 		<input
-			className={`py-4 px-3 outline-none border border-gray-400 rounded-full sm:py-2 sm:pl-6 ${classList}`}
+			className={`py-4 px-7 outline-none border border-gray-400 rounded-full sm:py-2 sm:pl-6 ${classList}`}
 			type={type}
 			placeholder={placeholder}
 			value={value}

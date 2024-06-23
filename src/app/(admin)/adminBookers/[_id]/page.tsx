@@ -151,7 +151,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 	async function payment() {
 		try {
 			const response = await axios.get(
-				`/api/users/details?paid=${amount}`
+				`/api/users/details?paid=${amount}&query=${params._id}`
 			);
 			setData(response.data.data);
 			if (response.data.status === 250) {

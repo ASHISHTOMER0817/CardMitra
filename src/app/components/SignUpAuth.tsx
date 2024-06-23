@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Popup from "./Popup";
 import Loader from "./loader";
+import Link from "next/link";
 const SingUpAuth = () => {
 	const router = useRouter();
 	const [name, setName] = useState("");
@@ -17,24 +18,24 @@ const SingUpAuth = () => {
 	async function sendData(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		try {
-			console.log('starting')
+			console.log("starting");
 			setLoader(true);
 			// Validate form inputs
 
 			if (name.length < 4) {
 				// Handle name validation error
 
-				Popup("error","Name must be at least 5 characters long");
-				console.log()
+				Popup(
+					"error",
+					"Name must be at least 5 characters long"
+				);
+				console.log();
 				setLoader(false);
 				return;
 			}
-			if ( contact.length < 10 || contact.length > 10) {
+			if (contact.length < 10 || contact.length > 10) {
 				// Handle phone number validation error
-				Popup(
-					"error",
-					"Phone number must be 10 digits long"
-				);
+				Popup("error", "Phone number must be 10 digits long");
 				setLoader(false);
 				return;
 			}
@@ -52,11 +53,17 @@ const SingUpAuth = () => {
 				return;
 			}
 			const user = { name, email, password, contact };
-			console.log('crossed if conditions', name, email, password, contact)
+			console.log(
+				"crossed if conditions",
+				name,
+				email,
+				password,
+				contact
+			);
 			const response = await axios.post("/api/users/signup", {
 				user,
 			});
-			console.log("data sent")
+			console.log("data sent");
 			const success = await response.data.success;
 			if (!success) {
 				Popup("error", response.data.message);
@@ -113,6 +120,12 @@ const SingUpAuth = () => {
 				>
 					Sign Up
 				</button>
+				<Link href={'/Auth/login'} className="cursor-pointer hover:text-green-500 text-primaryBgClr">
+					Login
+					<div className="float-left text-gray-500">
+						Already have an account?
+					</div>{" "}
+				</Link>
 			</form>
 		</>
 	);

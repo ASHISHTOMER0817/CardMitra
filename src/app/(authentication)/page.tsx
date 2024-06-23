@@ -140,7 +140,7 @@ export default function Home() {
 
 	const image = <Image src={VeriticalRuler} alt={""}></Image>;
 
-	const danda = <Image src={footerDanda} alt={""} />;
+	const danda = <Image src={footerDanda} alt={""} />
 
 	return (
 		<div className="">
@@ -377,7 +377,7 @@ export default function Home() {
 					<SimpleSlider reviewArr={arr} />
 				</section>
 
-				<section className=" py-16 px-10 sm:py-8">
+				{/* <section className=" py-16 px-10 sm:py-8">
 					<h5 className="font-medium text-primaryBgClr mb-8">
 						BECOME AN AFFILIATE
 					</h5>
@@ -399,7 +399,7 @@ export default function Home() {
 								form
 							</h5>
 						</div>
-						{/* <form
+						<form
 							onSubmit={sendData}
 							className="text-sm flex flex-col gap-y-5 items-center justify-center sm:w-full"
 						>
@@ -436,9 +436,9 @@ export default function Home() {
 							>
 								Send Request
 							</button>
-						</form> */}
+						</form>
 					</div>
-				</section>
+				</section> */}
 				<section className="bg-primaryBgClr flex justify-around py-4 text-sm text-white px-10 sm:px-0 sm:py-2 sm:justify-center sm:gap-5">
 					<div className="flex gap-x-7 sm:gap-1">
 						<Image
