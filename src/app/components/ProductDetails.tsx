@@ -128,7 +128,7 @@ export default function ProductDetails({
 				</div>
 			</section>
 			<section className="w-full flex justify-between items-start flex-wrap">
-				<div className="flex flex-col ">
+				<div className="flex flex-col items-start">
 					<h6 className="mb-2 sm:text-[12px] sm:font-semibold">
 						bank cards to use
 					</h6>

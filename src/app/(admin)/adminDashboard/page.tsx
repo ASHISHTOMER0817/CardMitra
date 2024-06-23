@@ -15,10 +15,13 @@ interface dashboardData {
 	deliveries: number;
 	noOfAffiliate: number;
 	order: number;
+	arr:number[]
 }
 const AdminDashboard = () => {
 	const [data, setData] = useState<dashboardData>();
 	const [syncOperation, setSyncOperation] = useState(false);
+	// const [chartArr, setChartArr] = useState<number[]>([0,0,0,0,0,0,0,0,0,0,0,0,]);
+	const [orders, setOrders] = useState(0)
 	const [userData, setUserData] = useState({
 		labels: [
 			"JAN",
@@ -36,8 +39,8 @@ const AdminDashboard = () => {
 		],
 		datasets: [
 			{
-				label: "Order placed monthly",
-				data: [65, 59, 80, 81, 56, 50],
+				label: "Order placed",
+				data: [0,0,0,0,0,0,0,0,0,0,0,0,],
 				fill: false,
 				borderColor: "rgb(75, 192, 192)",
 				tension: 0.1,
@@ -46,12 +49,27 @@ const AdminDashboard = () => {
 	});
 
 	useEffect(() => {
+		// Update userData when chartArr changes
+		setUserData((prevData) => ({
+			...prevData,
+			datasets: [
+				{
+					...prevData.datasets[0],
+					data: data?.arr ? [...data?.arr] : [0,0,0,0,0,0,0,0,0,0,0,0,],
+				},
+			],
+		}));
+	}, [data?.arr]);
+
+	useEffect(() => {
 		async function getData() {
 			try {
 				const response = await axios.get(
 					`/api/admin/dashboard?query=dashboard&syncOperation=${syncOperation.toString()}`
 				);
 				setData(response.data.data);
+				console.log(response.data.data)
+
 			} catch {
 				console.log("what is happening here !!");
 			}

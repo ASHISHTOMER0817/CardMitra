@@ -35,14 +35,16 @@ const StatusBadge = ({
 			textColor = "text-gray-800";
 	}
 
+	const monthName = ['Jan', 'Feb','Mar', 'Apr','May', 'June','July', 'Aug','Sep', 'Oct','Nov', 'Dec',]
+
 	return (
 		<div
-			className={`mx-auto rounded-full px-4 py-1 sm:text-[8px] sm:mt-2 sm:py-0 ${bgColor} ${textColor}`}
+			className={`text-center rounded-full px-4 py-1 sm:text-[8px] sm:mt-2 sm:py-0 ${bgColor} ${textColor}`}
 		>
 			{paid
-				? `paid on - ${new Date(paid).getDate()}-${new Date(
+				? `paid on ${new Date(paid).getDate()} - ${monthName[new Date(
 						paid
-				  ).getMonth()}`
+				  ).getMonth()]}`
 				: status}
 		</div>
 	);

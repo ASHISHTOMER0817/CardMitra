@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
             }
 
             const user = await User.findOne({ _id: userId })
-            console.log(user, '&& this is userId', userId)
+            // console.log(user, '&& this is userId', userId)
 
             orderList = await Order.find({ user: userId }).populate("product")
 
@@ -68,12 +68,14 @@ export async function GET(request: NextRequest) {
             // console.log('complete data', deliveredData)
 
             if (amount && +amount > 0) {
+                  console.log(amount)
                   orderList = await Order.updateMany(
-                        { user: userId, delivered: 'undelivered', paid: null },
+                        { user: userId, delivered: 'delivered', paid: null },
                         { $set: { paid: new Date() } }
                   );
+
                   console.log(orderList)
-                  console.log('this is -- ', userId, '--', totalAmt - +amount!)
+                  // console.log('this is -- ', userId, '--', totalAmt - +amount!)
                   user.unpaid = totalAmt - +amount!
                   user.paid += +amount!
                   await user.save()

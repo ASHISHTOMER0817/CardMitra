@@ -11,11 +11,11 @@ const OrderHistory = ({
 	delivered,
 	paid,
 }: {
-	product: productList;
-	_id: string;
-	otp: boolean;
-	delivered: string;
-	paid: null | Date;
+	product: productList
+	_id: string
+	otp: boolean
+	delivered: string
+	paid: null | Date
 }) => {
 	function deliveryStatus(returnValue: string) {
 		if (
