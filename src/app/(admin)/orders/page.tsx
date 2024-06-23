@@ -35,7 +35,7 @@ const AdminOrderHistory = () => {
 	}, []);
 
 	return (
-		<div className="flex flex-col mx-auto w-[90%] sm:mx-0 sm:w-[90%]">
+		<div className="flex flex-col mx-auto w-[90%]">
 			<Header
 				className="sm:mb-4"
 				heading={"Order History"}
@@ -77,7 +77,7 @@ const AdminOrderHistory = () => {
 						Currently there are no orders
 					</div>
 				) : (
-					<div className="grid grid-flow-row gap-7 grid-cols-3 md:gap-3 transition-all sm:grid-cols-2">
+					<div className="flex flex-wrap justify-center gap-4 transition-all">
 						{data.orderHistory.map(
 							(
 								data: productList,
@@ -101,7 +101,7 @@ const AdminOrderHistory = () => {
 					Currently there are no orders
 				</div>
 			) : (
-				<>
+				<div className="overflow-auto">
 					<table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all sm:text-wrap">
 						<thead>
 							<tr className="bg-green-100 text-[#2f4f4f] sm:text-[8px]">
@@ -199,7 +199,7 @@ const AdminOrderHistory = () => {
 							)}
 						</tbody>
 					</table>
-				</>
+				</div>
 			)}
 		</div>
 	);

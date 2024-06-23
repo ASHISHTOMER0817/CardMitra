@@ -64,7 +64,7 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={inter.className} style={{ display: "flex" }}>
 				<Navigation options={options} />
-				<div className="w-full px-6 py-4 ml-20 sm:ml-0 sm:px-2 sm:py-2">
+				<div className="w-full ml-20 sm:ml-0 sm:px-4 mt-3">
 					{children}
 					<ToastContainer />
 				</div>
