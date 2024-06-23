@@ -29,9 +29,9 @@ const ProductOrderList = ({ _id }: { _id: string }) => {
 			{!orders ? (
 				<Loader />
 			) : orders.length > 0 ? (
-				<table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all sm:text-wrap">
+				<table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all sm:text-wrap rounded-small">
 					<thead>
-						<tr className="bg-green-100 text-[#2f4f4f] sm:text-[8px]">
+						<tr className="bg-green-100 text-[#2f4f4f] sm:text-[10px]">
 							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
 								User
 							</th>
@@ -53,7 +53,7 @@ const ProductOrderList = ({ _id }: { _id: string }) => {
 						{orders.map((order, index) => (
 							<tr
 								key={index}
-								className="even:bg-gray-100 sm:text-[8px]"
+								className="even:bg-gray-100 sm:text-[10px]"
 							>
 								<td className="py-4 px-12 text-primaryBgClr sm:px-0.5 sm:py-1">
 									{order.user.name}

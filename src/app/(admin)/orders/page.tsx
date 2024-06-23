@@ -102,9 +102,9 @@ const AdminOrderHistory = () => {
 				</div>
 			) : (
 				<div className="overflow-auto">
-					<table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all sm:text-wrap">
+					<table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all sm:text-wrap rounded-small">
 						<thead>
-							<tr className="bg-green-100 text-[#2f4f4f] sm:text-[8px]">
+							<tr className="bg-green-100 text-[#2f4f4f] sm:text-[10px]">
 								<th className="py-4 px-12 text-left sm:pr-0.5 sm:pl-2 sm:py-1">
 									Affiliate
 								</th>
@@ -115,13 +115,13 @@ const AdminOrderHistory = () => {
 									Order ID
 								</th>
 								<th className="py-4 px-12 text-left sm:px-0.5 sm:py-1">
-									Order on
+									Date 
+								</th>
+								<th className="py-4 px-12 text-left sm:px-0.5 sm:py-1 text-nowrap">
+									Delivery Date
 								</th>
 								<th className="py-4 px-12 text-left sm:px-0.5 sm:py-1">
-									Delivery on
-								</th>
-								<th className="py-4 px-12 text-left sm:px-0.5 sm:py-1">
-									Order Status
+									Status
 								</th>
 							</tr>
 						</thead>
@@ -140,7 +140,7 @@ const AdminOrderHistory = () => {
 								) => (
 									<tr
 										key={index}
-										className="even:bg-gray-100 sm:text-[8px]"
+										className="even:bg-gray-100 sm:text-[10px]"
 									>
 										<td className="py-4 px-12 font-semibold sm:px-0.5 sm:py-1">
 											{user.name}

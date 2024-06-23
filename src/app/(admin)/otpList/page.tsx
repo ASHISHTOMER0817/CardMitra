@@ -117,7 +117,7 @@ const OtpList = () => {
 			) : otpList.length > 0 ? (
 				<table className="w-full rounded-2xl transition-all sm:text-wrap overflow-visible ">
 					<thead>
-						<tr className="bg-green-100 text-[#2f4f4f] sm:text-[8px]">
+						<tr className="bg-green-100 text-[#2f4f4f] sm:text-[10px]">
 							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
 								Zipcode
 							</th>
@@ -174,7 +174,7 @@ const OtpList = () => {
 												key={
 													index
 												}
-												className="even:bg-gray-100 sm:text-[8px]"
+												className="even:bg-gray-100 sm:text-[10px]"
 											>
 												<td className="py-4 px-12 sm:px-0.5 sm:py-1">
 													{
