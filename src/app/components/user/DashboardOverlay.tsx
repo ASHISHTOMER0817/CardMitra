@@ -2,14 +2,6 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import productList from "@/interface/productList";
 import phoneImage from "@/../public/phoneImage.jpg";
-// import amazon from "@/../public/static/amazon.svg";
-// import flipkart from "@/../public/static/flipkart.svg";
-// // import jiomart from "@/../public/static/jiomart.png";
-// import shopsy from "@/../public/static/shopsy.jpg";
-// import vivo from "@/../public/static/vivo.webp";
-// import oppo from "@/../public/static/oppo.png";
-// import mi from "@/../public/static/mi.jpg";
-// import samsung from "@/../public/static/samsung.png";
 import Link from "next/link";
 import axios from "axios";
 import Popup from "../Popup";
@@ -23,39 +15,10 @@ const DashboardOverlay = ({
 	product: productList;
 	orderObjectId: string;
 	delivered: string;
-	// order_id: string;
-	// _id: string;
 }) => {
-	const [siteImage, setSiteImage] = useState("");
+	// const [siteImage, setSiteImage] = useState("");
 	const { name, image, cards, site, _id } = product;
-	// const otpObjectId = data._id;
 	const [acknowledge, setAcknowledge] = useState(false);
-	// const siteArr = [
-	// 	{ name: "Amazon", image: amazon },
-	// 	{ name: "Flipkart", image: flipkart },
-	// 	{ name: "Jiomart", image: jiomart },
-	// 	{ name: "Shopsy", image: shopsy },
-	// 	{ name: "Vivo", image: vivo },
-	// 	{ name: "MI", image: mi },
-	// 	{ name: "Oppo", image: oppo },
-	// 	{ name: "Samsung", image: samsung },
-	// ];
-
-	// useEffect(() => {
-	// 	// setsiteImage(forLoop(site.label))
-	// 	function forLoop() {
-	// 		for (let i = 0; i < siteArr.length; i++) {
-	// 			if (siteArr[i].name === site.label) {
-	// 				setSiteImage(siteArr[i].image);
-	// 				console.log(true);
-	// 				return;
-	// 			}
-	// 			// console.log(false);
-	// 		}
-	// 	}
-	// 	forLoop();
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, []);
 
 	async function acknowledged(acknowledgment: string) {
 		try {
@@ -69,12 +32,12 @@ const DashboardOverlay = ({
 	}
 
 	return (
-		<div
+		<>
+			{/* <div
 			className={` text-sm h-24 bg-[#D0D6E0] rounded-lg p-2 flex sm:h-12 sm:justify-around sm:pt-0.5 ${
 				acknowledge && "hidden"
 			}`}
 		>
-			{/* Left column */}
 			<Image
 				src={image ? `/uploads/${image}` : phoneImage}
 				alt="User Image"
@@ -83,7 +46,7 @@ const DashboardOverlay = ({
 				height={300}
 			/>
 
-			{/* Middle column */}
+			
 			<div className="flex-1 flex flex-col ml-1 justify-center items-start space-y-2 sm:space-y-0 sm:justify-start sm:gap-[3px]">
 				<div className="text-[16px] font-semibold sm:text-[8px] sm:font-bold sm:leading-[10px] ">
 					{name}
@@ -116,12 +79,10 @@ const DashboardOverlay = ({
 					}`}
 					style={{fontSize: '9px'}}
 				>
-					{/* <StatusBadge status={data.delivered} /> */}
 					{delivered}
 				</div>
 			</div>
 
-			{/* Right column */}
 			<div className="flex flex-col justify-between items-center">
 				{delivered === "wrong OTP" ? (
 					<>
@@ -150,16 +111,80 @@ const DashboardOverlay = ({
 						}}
 						className="px-2 py-1 mt-auto min-w-[100px] hover:bg-gray-100 text-gray-500 border-gray-500 border rounded-full sm:text-[8px] sm:py-[1px] sm:px-1 sm:leading-none sm:min-w-min"
 					>
-						{/* <Link
-							href={
-								"/odrHistory?listType=cancelled"
-							}
-						></Link> */}
 						OK
 					</button>
 				) : null}
 			</div>
-		</div>
+		</div> */}
+			<div className={`bg-white shadow-md rounded-lg p-3 flex items-center space-x-3 max-w-xs ${acknowledge && 'hidden'}`}>
+				<Image
+					src={image ? `/uploads/${image}` : phoneImage}
+					alt={name}
+					className="w-16 h-16 object-cover rounded-md"
+					width={64}
+					height={64}
+				/>
+				<div className="flex-1">
+					<h3 className="font-semibold text-sm">{name}</h3>
+					<div className="flex items-center space-x-1 mt-1">
+						<Image
+							src={
+								site.label
+									? `/static/${site.label}.svg`
+									: "/static/samsung.png"
+							}
+							alt={site.label}
+							width={16}
+							height={16}
+							className="w-4 h-4"
+						/>
+						<span className="text-xs text-gray-600">
+							{cards[0]?.label}
+						</span>
+					</div>
+					<div
+						className={`text-xs mt-1 px-2 py-0.5 rounded-full inline-block
+          ${
+			delivered === "wrong OTP"
+				? "bg-yellow-100 text-yellow-800"
+				: "bg-red-100 text-red-800"
+		}`}
+					>
+						{delivered}
+					</div>
+				</div>
+				<div className="flex flex-col space-y-2">
+					{delivered === "wrong OTP" ? (
+						<>
+							<button
+								onClick={() =>
+									{acknowledged(orderObjectId);setAcknowledge(true)}
+								}
+								className="px-3 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full"
+							>
+								Cancel
+							</button>
+							<Link
+								href={`/odrHistory/${orderObjectId}`}
+							>
+								<button className="px-3 py-1 text-xs bg-blue-500 hover:bg-blue-600 text-white rounded-full">
+									Submit OTP
+								</button>
+							</Link>
+						</>
+					) : (
+						<button
+							onClick={() =>
+								{acknowledged(orderObjectId);setAcknowledge(true)}
+							}
+							className="px-3 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full"
+						>
+							OK
+						</button>
+					)}
+				</div>
+			</div>
+		</>
 	);
 };
 

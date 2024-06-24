@@ -35,7 +35,7 @@ const Transactions = ({
 
 	return (
 		<>
-			{!data ? (
+			{/* {!data ? (
 				<Loader />
 			) : data.length > 0 ? (
 				<div className="" style={{overflow: 'auto'}}>
@@ -50,7 +50,6 @@ const Transactions = ({
 										User name
 									</th>
 								)}
-								{/* {heading} */}
 								<th className="p-3 text-left  sm:px-2 sm:py-2">
 									Date
 								</th>
@@ -107,7 +106,51 @@ const Transactions = ({
 				<div className="text-red-500 font-serif mx-auto mt-20 w-fit sm:text-[10px]">
 					No data to show !!
 				</div>
-			)}
+			)} */}
+
+<div className="overflow-x-auto">
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-50">
+          <tr>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Transaction ID
+            </th>
+            {!userId && (
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                User Name
+              </th>
+            )}
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Date
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Amount Paid
+            </th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          {data?.map(({ user, dateOfPayment, _id, amount }, index) => (
+            <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {_id}
+              </td>
+              {!userId && (
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  {user.name}
+                </td>
+              )}
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {new Date(dateOfPayment).toDateString()}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-medium">
+                ₹{amount}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
 		</>
 	);
 };

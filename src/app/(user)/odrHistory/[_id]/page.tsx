@@ -42,27 +42,6 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 				setOtpStatus(response.data.data.otp);
 				setData(response.data.data);
 
-				// if (otpStatusUpdate && response.data.success) {
-				// 	const googleFormUrl =
-				// 		"https://docs.google.com/forms/d/e/1FAIpQLSeHWBZSHdKOpVySmjtTKwRvBUt00SbySSSDWNThh6iLo0iOaQ/viewform?usp=pp_url"; // Replace with your actual Google Form URL
-				// 	const newWindow = window.open(
-				// 		googleFormUrl,
-				// 		"_blank",
-				// 		"noopener,noreferrer"
-				// 	);
-
-				// 	// Check if the new window was successfully opened
-				// 	if (newWindow) {
-				// 		console.log(
-				// 			" The new window was opened successfully"
-				// 		);
-				// 	} else {
-				// 		console.log(
-				// 			"The new window was blocked or couldn't be opened"
-				// 		);
-				// 		// You can handle this case as needed, e.g., show an error message or fallback to another option
-				// 	}
-				// }
 				if (deliveryStatus && response.data.success) {
 					router.back();
 				}
@@ -88,14 +67,12 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 			"noopener,noreferrer"
 		);
 
-		// Check if the new window was successfully opened
 		if (newWindow) {
 			console.log(" The new window was opened successfully");
 		} else {
 			console.log(
 				"The new window was blocked or couldn't be opened"
 			);
-			// You can handle this case as needed, e.g., show an error message or fallback to another option
 		}
 	};
 

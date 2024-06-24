@@ -3,7 +3,6 @@ import React, { FormEvent, useState } from "react";
 import InputSpace from "./InputSpace";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { AxiosResponse } from "axios";
 import Popup from "./Popup";
 import Loader from "./loader";
 import Link from "next/link";
@@ -16,23 +15,20 @@ const LoginAuth = () => {
 	const [remember, setRemember] = useState(true);
 
 	const user = { email, password, remember };
-	console.log(user)
-	function checkSuccess(success: boolean, message: string, data: string) {
-		if (success === false) {
-			Popup("error", message);
-			setLoader(false);
-			return;
-		} else {
-			console.log("this is user/admin", data);
-			if (data === "user") {
-				console.log(data);
-				router.push("/dashboard");
-			} else if (data === "admin") {
-				console.log("admin login");
-				router.push("/adminDashboard");
-			}
-		}
-	}
+	// console.log(user)
+	// function checkSuccess(success: boolean, message: string, data: string) {
+	// 	if (success === false) {
+	// 		Popup("error", message);
+	// 		setLoader(false);
+	// 	} else {
+	// 		if (data === "user") {
+	// 			router.push("/deals");
+	// 			console.log("why is it not forwarding");
+	// 		} else if (data === "admin") {
+	// 			router.push("/adminDashboard");
+	// 		}
+	// 	}
+	// }
 
 	async function sendData(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
@@ -49,14 +45,19 @@ const LoginAuth = () => {
 			const { success, message, data } = response.data;
 			// const success = response
 			console.log(success, message, data);
-			checkSuccess(success, message, data);
+			// checkSuccess(success, message, data);
+
+			if (data === "user") router.push("/deals");
+			else if (data === "admin") router.push("/adminDashboard");
+			else  Popup("error", message);setLoader(false);
+			
 		} catch (error: any) {
 			setLoader(false);
 			Popup("error", "Server error, please refresh");
 		}
 	}
 
-	function ForgetPassword() {}
+	// function ForgetPassword() {}
 
 	return (
 		<>
@@ -112,7 +113,7 @@ const LoginAuth = () => {
 					className="float-right mx-auto text-sm text-gray-400 cursor-pointer"
 				>
 					I don&apos;t have an account?{" "}
-					<div className="float-right text-primaryBgClr font-semibold">
+					<div className="float-right text-primaryBgClr font-bold">
 						Signup
 					</div>{" "}
 				</Link>

@@ -106,7 +106,7 @@ const Dashboard = () => {
 	return (
 		<>
 			<div className="mx-auto mb-16 sm:w-[100%]">
-				<div
+				{/* <div
 					className={`fixed top-2 right-2 text-sm bg-[#D0D6E0] rounded-lg p-2 flex flex-col gap-4 bg-transparent`}
 				>
 					{!data
@@ -147,6 +147,22 @@ const Dashboard = () => {
 								}
 						  )
 						: ""}
+				</div> */}
+
+				<div className="fixed top-4 right-4 flex flex-col space-y-3 z-50">
+				{data && data.length > 0 && data.map(({ product, delivered, _id, acknowledgment }) => {
+				if ((delivered === "cancelled" || delivered === "wrong OTP") && acknowledgment === false) {
+					return (
+					<DashboardOverlay
+					key={_id}
+					product={product}
+					orderObjectId={_id}
+					delivered={delivered}
+					/>
+					);
+				}
+				return null;
+				})}
 				</div>
 				<h3 className="mt-0 mb-4 font-semibold sm:my-2">
 					Dashboard

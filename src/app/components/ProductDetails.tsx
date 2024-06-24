@@ -33,27 +33,6 @@ export default function ProductDetails({
 	data: productList;
 	arr: Array<MyArrayItem>;
 }) {
-	// const [siteImage, setSiteImage] = useState();
-	console.log(data?.site.label);
-
-	// useEffect(() => {
-	// 	// setsiteImage(forLoop(site.label))
-	// 	function forLoop() {
-	// 		for (let i = 0; i < siteArr.length; i++) {
-	// 			if (siteArr[i].name === data?.site.label) {
-	// 				console.log(data?.site.label);
-	// 				setSiteImage(siteArr[i].image);
-	// 				console.log(true);
-	// 				return;
-	// 			}
-	// 			// console.log(false);
-	// 		}
-	// 	}
-	// 	forLoop();
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, []);
-
-	console.log(arr);
 	return (
 		<>
 			<section className=" text-left mb-4 sm:w-full">

@@ -12,6 +12,7 @@ const SingUpAuth = () => {
 	const [password, setPassword] = useState("");
 	const [contact, setContact] = useState("");
 	const [loader, setLoader] = useState(false);
+	// const [remember, setRemember] = useState(true)
 
 	// console.log(Popup("error", 'something went wrong'))
 
@@ -112,6 +113,11 @@ const SingUpAuth = () => {
 					placeholder="Password"
 					onChange={(value) => setPassword(value)}
 				/>
+
+				{/* <div className="w-fit mr-auto text-sm">
+					<input type="checkbox" onChange={()=>setRemember(!remember)} checked={remember} id="checkbox" />
+					<label htmlFor="checkbox">Remember me</label>
+				</div> */}
 
 				<button
 					type="submit"

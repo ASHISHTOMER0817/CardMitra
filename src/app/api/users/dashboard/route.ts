@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
             const orderObjectId = request.nextUrl.searchParams.get('query')
             if (orderObjectId) {
                   console.log(orderObjectId, 'what is this???')
-                  const otpAction = await Otp.findOneAndUpdate({ _id: orderObjectId }, { $set: { acknowledgment: true } })
+                  const otpAction = await Order.findOneAndUpdate({ _id: orderObjectId }, { $set: { acknowledgment: true } })
                   console.log(otpAction)
             }
 

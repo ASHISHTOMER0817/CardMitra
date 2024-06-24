@@ -1,5 +1,7 @@
 "use client";
-import React, { useState } from 'react';
+import Popup from '@/app/components/Popup';
+import axios from 'axios';
+import React, { FormEvent, useState } from 'react';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
@@ -8,13 +10,19 @@ const ForgotPassword = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
 
-    const sendOtp = () => {
-        if (email) {
-            // Call the backend to send OTP
-            setOtpSent(true);
-        } else {
-            setError('Please enter a valid email address.');
-        }
+    async function sendOtp ()  {
+        // e.preventDefault()
+           try{
+            const response = await axios.post('/api/users/forgotPassword', {email})
+            const success = response.data.success;
+            console.log(success)
+            success && setOtpSent(true);
+           }catch{
+            Popup('error', 'Something went wrong')
+           }
+        // } else {
+        //     setError('Please enter a valid email address.');
+        // }
     };
 
     const handleSubmit = () => {

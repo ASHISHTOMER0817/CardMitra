@@ -34,7 +34,7 @@ export async function middleware(request: NextRequest) {
             const userDynamicPath = path.startsWith('/odrHistory/') || path.startsWith('/deals/')
             if (path === '/') {
                   if (payload.role === 'user') {
-                        return NextResponse.redirect(new URL('/dashboard', request.url))
+                        return NextResponse.redirect(new URL('/deals', request.url))
                   } else if (payload.role === 'admin') {
                         return NextResponse.redirect(new URL('/adminDashboard', request.url))
 
