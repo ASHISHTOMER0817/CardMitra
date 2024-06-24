@@ -26,9 +26,9 @@ const UserOrders = ({
 	//       }
 	// })
 	return (
-		<table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all sm:text-wrap">
+		<table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all sm:text-wrap rounded-small">
 			<thead>
-				<tr className="bg-green-100 text-[#2f4f4f] sm:text-[8px]">
+				<tr className="bg-green-100 text-[#2f4f4f] sm:text-[10px]">
 					<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
 						Order ID
 					</th>

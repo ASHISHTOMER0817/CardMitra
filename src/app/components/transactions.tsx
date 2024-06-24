@@ -39,7 +39,7 @@ const Transactions = ({
 				<Loader />
 			) : data.length > 0 ? (
 				<div className="" style={{overflow: 'auto'}}>
-					<table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all sm:text-wrap">
+					<table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all sm:text-wrap rounded-small">
 						<thead>
 							<tr className="bg-green-100 text-[#2f4f4f] sm:text-[12px]">
 								<th className="p-3 text-left  sm:px-2 sm:py-2">
@@ -47,7 +47,7 @@ const Transactions = ({
 								</th>
 								{!userId && (
 									<th className="p-3 text-left  sm:px-2 sm:py-2">
-										User name
+										User
 									</th>
 								)}
 								<th className="p-3 text-left  sm:px-2 sm:py-2">

@@ -13,7 +13,7 @@ const UserOrdersListRow = ({
 	product: productList;
 }) => {
 	return (
-		<tr className="even:bg-gray-100 sm:text-[8px]">
+		<tr className="even:bg-gray-100 sm:text-[10px]">
 			<td className="py-4 px-12 sm:px-0.5 sm:py-1 text-gray-500">
 				{orderId}
 			</td>

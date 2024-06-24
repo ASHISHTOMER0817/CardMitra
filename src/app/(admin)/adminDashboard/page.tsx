@@ -88,36 +88,35 @@ const AdminDashboard = () => {
 				<h3 className=" font-semibold mb-3">Dashboard</h3>
 				<div className="flex justify-start gap-2 sm:gap-1">
 					<div
-						className=" text-center px-20 py-8 rounded-3xl flex flex-col items-center bg-[#F3F3F3] cursor-pointer md:min-w-[20%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:pt-0 sm:pb-1 sm:px-1 sm:leading-none"
+						className="px-12 py-4 rounded-big bg-[#F3F3F3] md:min-w-[26%] sm:flex sm:flex-col sm:justify-between sm:items-center sm:py-3 sm:px-[6px]"
 						// href={"/otpList"}
 						onClick={() => setSyncOperation(true)}
 					>
-						{/* <h5 className="text-[#1844E1] sm:text-[10px] sm:leading-none">
-							{data?.deliveries}{" "}
-						</h5>{" "}
-						<div className="sm:text-[8px] ">
-							{" "}
-							Recent deliveries
-						</div> */}
-						<MdOutlineCloudSync className="w-6 h-6 text-primaryBgClr" />
-						<div className="px-2 py-0.5 rounded-full mx-auto my-auto">
+						<MdOutlineCloudSync className="w-6 h-6 text-primaryBgClr sm:h-[17px]" />
+						<div className="sm:text-[10px] leading-none text-center">
 							Sync orders
 						</div>
 					</div>
-					<div className=" text-center px-20 py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer md:min-w-[20%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:pt-0 sm:pb-1 sm:px-1 sm:leading-none">
-						<h5 className="text-primaryBgClr sm:text-[10px] sm:leading-none">
+					<div 
+					 	// className=" text-center px-20 py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer md:min-w-[20%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:pt-0 sm:pb-1 sm:px-1 sm:leading-none"
+						className="px-12 py-4 rounded-big bg-[#F3F3F3] md:min-w-[26%] sm:flex sm:flex-col sm:justify-between sm:items-center sm:py-3 sm:px-[6px]"
+					>
+						<h5 className="text-primaryBgClr sm:text-[12px] font-bold sm:leading-none text-center sm:mb-2">
 							{data?.order}
 						</h5>
-						<div className="sm:text-[8px] ">
+						<div className="sm:text-[10px] leading-none text-center">
 							{" "}
 							Today&apos;s Orders
 						</div>
 					</div>
-					<div className=" text-center px-20 py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer md:min-w-[20%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:pt-0 sm:pb-1 sm:px-1 sm:leading-none">
-						<h5 className="text-primaryBgClr sm:text-[10px] sm:leading-none">
+					<div 
+						// className=" text-center px-20 py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer md:min-w-[20%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:pt-0 sm:pb-1 sm:px-1 sm:leading-none"
+						className="px-12 py-4 rounded-big bg-[#F3F3F3] md:min-w-[26%] sm:flex sm:flex-col sm:justify-between sm:items-center sm:py-3 sm:px-[6px]"
+					>
+						<h5 className="text-primaryBgClr sm:text-[12px] font-bold sm:leading-none text-center sm:mb-2">
 							{data?.noOfAffiliate}
 						</h5>
-						<div className="sm:text-[8px] ">
+						<div className="sm:text-[10px] leading-none text-center">
 							{" "}
 							Affiliates Joined
 						</div>

@@ -243,7 +243,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	};
 
 	return (
-		<form onSubmit={postData} className="w-[90%] p-8 relative sm:pl-0">
+		<form onSubmit={postData} className="p-8 relative sm:px-0">
 			{loader ? (
 				<Loader />
 			) : (
@@ -306,7 +306,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 							Add
 						</button>
 					</div>
-					<div className="flex gap-10 mb-8 sm:flex-col">
+					<div className="flex gap-10 mb-8 sm:flex-col sm:mb-4 sm:gap-4">
 						<label
 							htmlFor="image"
 							className="cursor-pointer"
@@ -358,7 +358,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 									/>
 								</>
 							) : (
-								<div className="w-60 h-80 border-2 border-dotted border-[#ccc] flex flex-col justify-center items-center rounded-[20px]">
+								<div className="w-60 h-80 border-2 border-dotted border-[#ccc] flex flex-col justify-center items-center rounded-[20px] sm:w-full">
 									<Image
 										src={downloadImg}
 										alt=""
@@ -525,7 +525,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 					</div>
 
 					<div className="grid grid-flow-row grid-cols-2 items-end gap-x-6 gap-y-3 sm:flex sm:flex-col">
-						<div className="mb-4 flex flex-col w-full gap-6">
+						<div className="mb-4 sm:mb-0 flex flex-col w-full gap-6 sm:gap-2 sm:gap-2">
 							<label
 								htmlFor="bank"
 								className="font-bold sm:text-[13px]"
@@ -561,7 +561,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 							</div>
 							{/* <Image src={} alt={""}/> */}
 						</div>
-						<div className="mb-4 flex flex-col w-full gap-6">
+						<div className="mb-4 sm:mb-0 flex flex-col w-full gap-6 sm:gap-2 sm:gap-2">
 							<label
 								htmlFor="website"
 								className="font-bold sm:text-[13px]"
@@ -593,7 +593,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 								/>
 							</div>
 						</div>
-						<div className=" flex flex-col w-full gap-6">
+						<div className=" flex flex-col w-full gap-6 sm:gap-2">
 							<label
 								htmlFor="directLink"
 								className="font-bold sm:text-[13px]"
@@ -614,7 +614,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 								placeholder="Enter direct link"
 							/>
 						</div>
-						<div className=" flex flex-col w-full gap-6">
+						<div className=" flex flex-col w-full gap-6 sm:gap-2">
 							<label
 								htmlFor="requirement"
 								className="font-bold sm:text-[13px]"
@@ -635,7 +635,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 								placeholder="Requirement"
 							/>
 						</div>
-						<div className=" flex flex-col w-full gap-6">
+						<div className=" flex flex-col w-full gap-6 sm:gap-2">
 							<label
 								htmlFor="address"
 								className="font-bold sm:text-[13px]"
@@ -654,7 +654,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 								placeholder="Enter Address"
 							/>
 						</div>
-						<div className=" flex flex-col w-full gap-6">
+						<div className=" flex flex-col w-full gap-6 sm:gap-2">
 							<label
 								htmlFor="address"
 								className="font-bold sm:text-[13px]"

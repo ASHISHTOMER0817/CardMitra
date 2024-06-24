@@ -100,7 +100,7 @@ const EditUserDetails = () => {
 				value={contact}
 				type={"text"}
 				onChange={(value) => setContact(value)}
-				placeholder="Contact No."
+				placeholder="Contact"
 			/>
 			<InputSpace
 				value={accountNo}
