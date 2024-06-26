@@ -90,6 +90,7 @@ export async function POST(request: NextRequest) {
             console.log('step 2')
             const bytes = await file.arrayBuffer();
             console.log('step medium')
+            console.log('filepath', filePath);
             await fs.writeFile(filePath, Buffer.from(bytes));
 
             console.log('still working ')
