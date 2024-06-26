@@ -89,8 +89,9 @@ export async function POST(request: NextRequest) {
             const filePath = path.join(uploadDir, newFileName);
             console.log('step 2')
             const bytes = await file.arrayBuffer();
+            console.log('step medium')
             await fs.writeFile(filePath, Buffer.from(bytes));
-            
+
             console.log('still working ')
             const newProduct = await Product.create({
                   name,
