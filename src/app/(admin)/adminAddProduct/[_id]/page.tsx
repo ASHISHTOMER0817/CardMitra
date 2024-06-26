@@ -369,7 +369,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 									<span>
 										Browse Image
 										<input
-											required
+											// required
 											type="file"
 											className="hidden"
 											id="image"
@@ -525,7 +525,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 					</div>
 
 					<div className="grid grid-flow-row grid-cols-2 items-end gap-x-6 gap-y-3 sm:flex sm:flex-col">
-						<div className="mb-4 sm:mb-0 flex flex-col w-full gap-6 sm:gap-2 sm:gap-2">
+						<div className="mb-4 sm:mb-0 flex flex-col w-full gap-6 sm:gap-2">
 							<label
 								htmlFor="bank"
 								className="font-bold sm:text-[13px]"
@@ -561,7 +561,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 							</div>
 							{/* <Image src={} alt={""}/> */}
 						</div>
-						<div className="mb-4 sm:mb-0 flex flex-col w-full gap-6 sm:gap-2 sm:gap-2">
+						<div className="mb-4 sm:mb-0 flex flex-col w-full gap-6 sm:gap-2">
 							<label
 								htmlFor="website"
 								className="font-bold sm:text-[13px]"
