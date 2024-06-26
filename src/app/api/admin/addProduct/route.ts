@@ -91,6 +91,19 @@ export async function POST(request: NextRequest) {
             const bytes = await file.arrayBuffer();
             console.log('step medium')
             console.log('filepath', filePath);
+
+            // Ensure the upload directory exists
+            try {
+                  await fs.mkdir(uploadDir, { recursive: true });
+                  console.log('Upload directory created or already exists');
+            } catch (err) {
+                  console.error('Failed to create directory:', err);
+                  return NextResponse.json({
+                  message: 'Failed to create upload directory', status: 500, success: false
+                  });
+            }
+  
+
             await fs.writeFile(filePath, Buffer.from(bytes));
 
             console.log('still working ')
