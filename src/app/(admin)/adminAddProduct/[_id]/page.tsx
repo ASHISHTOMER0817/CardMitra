@@ -54,36 +54,6 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	const [optionFile, setOptionFile] = useState<File>();
 	const [updateOptions, setUpdateOptions] = useState(false);
 
-	// Cards Array
-	// const cardOptions: dropdown[] = [
-	// 	{
-	// 		value: "Amazon pay icici credit card",
-	// 		label: "Amazon pay icici credit card",
-	// 	},
-	// 	{
-	// 		value: "flipkart axis credit card",
-	// 		label: "flipkart axis credit card",
-	// 	},
-	// 	{ value: "Axis credit card", label: "Axis credit card" },
-	// 	{ value: "HDFC credit card", label: "HDFC credit card" },
-	// 	{ value: "SBI credit card", label: "SBI credit card" },
-	// 	{ value: "SBI cashback", label: "SBI cashback" },
-	// ];
-
-	//Site Array
-	// const siteOptions: dropdown[] = [
-	// 	// { value: "Amazon", label: "Amazon" },
-	// 	// { value: "Flipkart", label: "Flipkart" },
-	// 	// { value: "MI", label: "MI" },
-	// 	{ value: "Amazon", label: "Amazon" },
-	// 	{ value: "Flipkart", label: "Flipkart" },
-	// 	{ value: "Jiomart", label: "Jiomart" },
-	// 	{ value: "Shopsy", label: "Shopsy" },
-	// 	{ value: "Vivo", label: "Vivo" },
-	// 	{ value: "MI", label: "MI" },
-	// 	{ value: "Oppo", label: "Oppo" },
-	// 	{ value: "Samsung", label: "Samsung" },
-	// ];
 
 	// const [cardsArr, setCardsArr] = useState<string[]>();
 	// console.log(cards);
@@ -142,7 +112,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 		getData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [params?._id]);
-	console.log(cards, site);
+	console.log(cards, site, 'these are cards , site');
 
 	useEffect(() => {
 		async function getDate() {

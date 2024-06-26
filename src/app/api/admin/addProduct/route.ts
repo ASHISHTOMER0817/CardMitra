@@ -83,12 +83,14 @@ export async function POST(request: NextRequest) {
             }
             const uploadDir = path.join(process.cwd(), 'public', 'uploads');
 
+            console.log('step 1')
             const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
             const newFileName = `${uniqueSuffix}-${file.name}`;
             const filePath = path.join(uploadDir, newFileName);
+            console.log('step 2')
             const bytes = await file.arrayBuffer();
             await fs.writeFile(filePath, Buffer.from(bytes));
-
+            
             console.log('still working ')
             const newProduct = await Product.create({
                   name,
