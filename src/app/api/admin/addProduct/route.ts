@@ -81,8 +81,8 @@ export async function POST(request: NextRequest) {
                         message: 'upload an image', status: 400, success: false
                   })
             }
-            const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-
+            // const uploadDir = path.join(process.cwd(), 'public', 'uploads');
+            const uploadDir = path.join(process.cwd(), 'uploads');
             console.log('step 1')
             const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
             const newFileName = `${uniqueSuffix}-${file.name}`;
