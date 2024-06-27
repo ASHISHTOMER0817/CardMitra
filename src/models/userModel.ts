@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const passwordSchema = new mongoose.Schema({
 	user: {
@@ -147,7 +147,7 @@ const productSchema = new mongoose.Schema({
 		// required: true,
 	},
 	image: {
-		type: String,
+		type: Buffer,
 		// required:true
 	},
 	price: {
@@ -172,22 +172,9 @@ const productSchema = new mongoose.Schema({
 	//       "https://github.com/shaswata49/Node_Project/blob/main/frontend/src/images/Product/IMG-20230926-WA0002.jpg?raw=true"
 	//     ]
 	//   },
-	cards: [{
-		value: {
-			type: String
-		},
-		label: {
-			type: String
-		}
-	}],
-	site: {
-		value: {
-			type: String
-		},
-		label: {
-			type: String
-		}
-	},
+	site: { type: mongoose.Schema.Types.ObjectId, ref: 'sites' },
+	cards: [{ type: mongoose.Schema.Types.ObjectId, ref: 'cards' }],
+    
 	deals: {
 		type: Boolean,
 		default: true,
@@ -265,6 +252,18 @@ const dropDownOptionsSchema = new mongoose.Schema({
 	}],
 })
 
+const cardSchema = new mongoose.Schema({
+	value:{type: String},
+	label: {type:String},
+	image: {type:Buffer},
+});
+
+const siteSchema = new mongoose.Schema({
+	value:{type: String},
+	label: {type:String},
+	image: {type:Buffer},
+});
+
 const reviewSchema = new mongoose.Schema({
 	user: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
 	review: {
@@ -280,4 +279,7 @@ const Password = mongoose.models.passwords || mongoose.model("passwords", passwo
 const Transactions = mongoose.models.transactions || mongoose.model("transactions", transactionSchema)
 const Options = mongoose.models.options || mongoose.model('options', dropDownOptionsSchema)
 const Review = mongoose.models.reviews || mongoose.model('reviews', reviewSchema)
-export { User, Password, Product, Otp, Order, Transactions, Options, Review }
+
+const Card = mongoose.models.cards || mongoose.model('cards', cardSchema)
+const Site = mongoose.models.sites || mongoose.model('sites', siteSchema)
+export { User, Password, Product, Otp, Order, Transactions, Options, Review,         Card, Site }
