@@ -39,7 +39,7 @@ const StatusBadge = ({
 
 	return (
 		<div
-			className={`text-center rounded-full px-4 py-1 sm:text-[8px] sm:mt-2 sm:py-0 ${bgColor} ${textColor}`}
+			className={`text-center rounded-full px-4 py-1 sm:text-[14px] sm:mt-2 sm:py-0 ${bgColor} ${textColor}`}
 		>
 			{paid
 				? `paid on ${new Date(paid).getDate()} - ${monthName[new Date(

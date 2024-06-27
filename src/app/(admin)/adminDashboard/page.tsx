@@ -186,7 +186,7 @@ const AdminDashboard = () => {
 				</div>
 			</section>
 
-			<section className="mt-9 sm:mt-4 ">
+			<section className="mt-9 sm:mt-4 mb-3">
 				<div className="flex justify-between mb-3 items-center">
 					<h4 className="font-semibold sm:text-sm">
 						Affiliate Requests

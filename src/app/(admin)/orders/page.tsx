@@ -35,16 +35,16 @@ const AdminOrderHistory = () => {
 	}, []);
 
 	return (
-		<div className="flex flex-col mx-auto w-[90%]">
+		<div className="flex flex-col mx-auto">
 			<Header
 				className="sm:mb-4"
 				heading={"Order History"}
 				Children={
-					<div className="flex gap-[10px]">
+					<div className="flex gap-[10px] sm:w-full">
 						<div
 							onClick={() => setView("list")}
-							className={`px-3 py-1 gap-1 cursor-pointer flex justify-center items-center text-sm border border-black hover:bg-gray-200 sm:px-3 sm:py-0 sm:text-xs sm:text-nowrap ${
-								view === "list" && "bg-gray-200"
+							className={`px-3 py-1 gap-1 cursor-pointer flex justify-center items-center text-sm hover:bg-gray-200 sm:px-3 sm:py-0 sm:text-nowrap ${
+								view === "list" && "bg-gray-200 rounded-2xl"
 							}`}
 						>
 							<IoGridOutline />
@@ -52,8 +52,8 @@ const AdminOrderHistory = () => {
 						</div>
 						<div
 							onClick={() => setView("grid")}
-							className={`px-3 py-1 gap-1 cursor-pointer flex justify-center items-center text-sm border border-black hover:bg-gray-200 sm:px-3 sm:py-0 sm:text-xs sm:text-nowrap ${
-								view === "grid" && "bg-gray-200"
+							className={`px-3 py-1 gap-1 cursor-pointer flex justify-center items-center text-sm hover:bg-gray-200 sm:px-3 sm:py-0 sm:text-nowrap ${
+								view === "grid" && "bg-gray-200 rounded-2xl"
 							}`}
 						>
 							<IoListOutline />
@@ -61,7 +61,7 @@ const AdminOrderHistory = () => {
 						</div>
 						<Link
 							href="/adminAddProduct/newProduct"
-							className="w-36 text-center md:p-1 md:text-xs py-3 px-4 text-white bg-primaryBgClr hover:bg-green-600 rounded-full sm:w-[8rem]"
+							className="w-36 text-center ml-auto-small md:p-1 md:text-sm py-3 px-4 text-white bg-primaryBgClr hover:bg-green-600 rounded-full sm:w-[8rem]"
 						>
 							Add Product
 						</Link>
@@ -102,30 +102,30 @@ const AdminOrderHistory = () => {
 				</div>
 			) : (
 				<div className="overflow-auto">
-					<table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all sm:text-wrap rounded-small">
-						<thead>
-							<tr className="bg-green-100 text-[#2f4f4f] sm:text-[10px]">
-								<th className="py-4 px-12 text-left sm:pr-0.5 sm:pl-2 sm:py-1">
-									Affiliate
+					<table className="min-w-full divide-y divide-gray-200">
+						<thead className="bg-gray-50">
+							<tr>
+								<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+									User
 								</th>
-								<th className="py-4 px-12 text-left sm:px-0.5 sm:py-1">
+								<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 									Device
 								</th>
-								<th className="py-4 px-12 text-left sm:px-0.5 sm:py-1">
+								<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 									Order ID
 								</th>
-								<th className="py-4 px-12 text-left sm:px-0.5 sm:py-1">
+								<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 									Date 
 								</th>
-								<th className="py-4 px-12 text-left sm:px-0.5 sm:py-1 text-nowrap">
+								<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 									Delivery Date
 								</th>
-								<th className="py-4 px-12 text-left sm:px-0.5 sm:py-1">
+								<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 									Status
 								</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody className="bg-white divide-y divide-gray-200">
 							{data.orders.map(
 								(
 									{
@@ -138,17 +138,14 @@ const AdminOrderHistory = () => {
 									},
 									index
 								) => (
-									<tr
-										key={index}
-										className="even:bg-gray-100 sm:text-[10px]"
-									>
-										<td className="py-4 px-12 font-semibold sm:px-0.5 sm:py-1">
+									<tr key={index} className={index % 2 === 0 ? 'bg-white': 'bg-gray-50' } >
+										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 											{user.name}
 										</td>
-										<td className="py-4 px-12 sm:px-0.5 sm:py-1">
+										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 											{product.name}
 										</td>
-										<td className="py-4 px-12 text-sm sm:px-0.5 sm:py-1 sm:text-[8px]">
+										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 											{(() => {
 												const midIndex =
 													Math.floor(
@@ -178,15 +175,15 @@ const AdminOrderHistory = () => {
 												);
 											})()}
 										</td>
-										<td className="py-4 px-12 text-gray-500 sm:px-0.5 sm:py-1">
+										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 											{new Date(
 												orderedAt
 											).toDateString()}
 										</td>
-										<td className="py-4 px-12 text-gray-500 sm:px-0.5 sm:py-1">
+										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 											{deliveryDate}
 										</td>
-										<td className="py-4 px-12 sm:px-0.5 sm:py-0">
+										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 											{/* {delivered} */}
 											<StatusBadge
 												status={

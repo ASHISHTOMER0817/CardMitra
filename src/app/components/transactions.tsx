@@ -117,20 +117,20 @@ const Transactions = ({
             </th>
             {!userId && (
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                User Name
+                User
               </th>
             )}
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Date
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Amount Paid
+              Amount
             </th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           {data?.map(({ user, dateOfPayment, _id, amount }, index) => (
-            <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+            <tr key={index} className={index % 2 === 0 ? 'bg-white': 'bg-gray-50' }>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {_id}
               </td>
