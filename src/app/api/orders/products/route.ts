@@ -14,9 +14,6 @@ export async function GET(request: NextRequest) {
             console.log(productId)
             console.log(limit, 'thisis limit')
             if (limit) {
-                  // token 
-                  console.log('inside limit')
-                  console.log('i got here limit')
 
                   if (limit === 'none') {
                         const { _id } = await GetToken()
@@ -51,8 +48,15 @@ export async function GET(request: NextRequest) {
                         product.showOnHomePage = true
                   }
                   await product.save();
+                  let base64Image: any
+                  if (product && product.image) {
+                        base64Image = product.image.toString('base64');
+                  }
                   return NextResponse.json({
-                        message: 'showing the existing product', success: true, data: product
+                        message: 'showing the existing product', success: true, data: {
+                              ...product.toObject(), // Convert Mongoose document to plain JavaScript object
+                              image: base64Image // Replace buffer with base64 string
+                        }
                   })
             }
 

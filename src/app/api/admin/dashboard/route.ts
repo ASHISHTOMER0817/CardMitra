@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Database from "@/database/database";
-import { Order, Otp, Product, User } from "@/models/userModel";
+import { Order, Otp, Product, User, Card, Site } from "@/models/userModel";
 // import Dashboard from "@/app/(user)/dashboard/page";
 // import dateFormat from "@/app/components/dateFormat";
 import { todaysDate } from "@/app/components/lib";
@@ -36,21 +36,6 @@ export async function GET(request: NextRequest) {
             if (query === 'dashboard') {
                   const orderHistory = await Product.find({ deals: true }).limit(3)
 
-                  // // Recent deliveries
-                  // const startDate = dayjs()
-                  // console.log(startDate)
-
-
-                  // const otpList = await Otp.find({
-                  //       submittedAt: {
-                  //             $gte: dayjs().startOf('day').toDate(), // Convert Day.js object to JavaScript Date object
-                  //             $lt: dayjs().endOf('day').toDate(), // Convert Day.js object to JavaScript Date object
-                  //       },
-                  // })
-
-                  // const deliveries = otpList.length 
-
-
                   //Affiliate Array
                   const affiliate = await User.find()
                   const noOfAffiliate = affiliate.length
@@ -59,14 +44,14 @@ export async function GET(request: NextRequest) {
 
                   //Orders placed today
                   let order = 0
-                  const Orders:order[] = await Order.find({})
-                 
-                  let arr = [0,0,0,0,0,0,0,0,0,0,0,0]
-                  for(const singleOrder of Orders){
+                  const Orders: order[] = await Order.find({})
+
+                  let arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                  for (const singleOrder of Orders) {
                         const currentYear = new Date().getFullYear()
-                        const currentMonth = new Date().getMonth() +1
+                        const currentMonth = new Date().getMonth() + 1
                         const currentDay = new Date().getDate()
-                        if(new Date(singleOrder.orderedAt).getFullYear() === currentYear && new Date(singleOrder.orderedAt).getMonth() +1 === currentMonth &&new Date(singleOrder.orderedAt).getDate() === currentDay ){
+                        if (new Date(singleOrder.orderedAt).getFullYear() === currentYear && new Date(singleOrder.orderedAt).getMonth() + 1 === currentMonth && new Date(singleOrder.orderedAt).getDate() === currentDay) {
                               order += 1
                         }
                         arr[new Date(singleOrder.orderedAt).getMonth()] += 1
@@ -74,7 +59,7 @@ export async function GET(request: NextRequest) {
                   }
                   console.log(arr)
 
-                  
+
 
                   console.log(syncOperation, 'this is sync Operation')
                   if (syncOperation === 'true') {
@@ -123,14 +108,75 @@ export async function GET(request: NextRequest) {
                   })
 
             } else if (query === 'orderHistory') {
-                  const orderHistory = await Product.find({ show: true }).sort({ deals: -1 });
-                  const orders = await Order.find({}).sort({ orderedAt: -1 }).populate('user', 'name').populate('product')
-                  console.log('1st console', orderHistory)
-                  if (orderHistory) {
-                        return NextResponse.json({
-                              message: "Order history is being shown", status: false, data: { orderHistory, orders }
+                  // const orderHistory = await Product.find({ show: true }).sort({ deals: -1 });
+                  // const orders = await Order.find({}).sort({ orderedAt: -1 }).populate('user', 'name').populate('product')
+                  // console.log('1st console', orderHistory)
+                  // if (orderHistory) {
+                  // return NextResponse.json({
+                  //       message: "Order history is being shown", status: false, data: { orderHistory, orders }
+                  // })
+                  // }
+
+
+                     //    ------- .sort({ deals: -1 }) --------
+                  console.log('hello')
+                  const products = await Product.find({ show: true })
+                  .populate({path:'cards', select:'value image'})
+                  .populate('site').lean();
+                  // console.log('this is product', products)
+                        
+                  let orders = await Order.find({})
+                        .sort({ orderedAt: -1 })
+                        .populate('user', 'name')
+                        .populate({
+                              path: 'product',
+                              populate: [
+                                    { path: 'cards' },
+                                    { path: 'sites' }
+                              ]
                         })
-                  }
+                        .lean();
+
+                        // console.log(orders, 'these are orders')
+                  // Convert Buffer to base64 for easy transmission
+                  // Convert Buffer to base64 for easy transmission
+                  const orderHistory = products.map(product => ({
+                        ...product,
+                        image: product.image ? product.image.toString('base64') : null,
+                        cards: product.cards.map((card:any) => ({
+                              ...card,
+                              image: card.image ? card.image.toString('base64') : null
+                        })),
+                        site: {
+                              ...product.site,
+                              image: product.site?.image ? product.site.image.toString('base64') : null
+                        }
+                  }));
+
+                  orders = orders.map(order => ({
+                        ...order,
+                        product: {
+                              ...order.product,
+                              image: order.product.image ? order.product.image.toString('base64') : null,
+                              cards: order.product.cards.map((card:any) => ({
+                                    ...card,
+                                    image: card.image ? card.image.toString('base64') : null
+                              })),
+                              site: {
+                                    ...order.product.site,
+                                    image: order.product.site?.image ? order.product.site.image.toString('base64') : null
+                              }
+                        }
+                  }));
+                  console.log(orderHistory[0].cards,orderHistory[0].site , 'this is orders')
+
+                  return NextResponse.json({
+                        message: "Order history is being shown", status: false, data: {
+                              // orderHistory: productsWithBase64Images,
+                              // orders: ordersWithBase64Images
+                              orderHistory, orders
+                        }
+                  })
             }
             else if (_id) {
                   const product = await Product.findOne({ _id: _id })

@@ -2,28 +2,9 @@
 import React, { ReactNode } from "react";
 import Image from "next/image";
 import phoneImage from "@/../public/phoneImage.jpg";
-// import amazon from "@/../public/static/amazon.svg";
-// import flipkart from "@/../public/static/flipkart.svg";
-// import jiomart from "@/../public/static/jiomart.png";
-// import shopsy from "@/../public/static/shopsy.jpg";
-// import vivo from "@/../public/static/vivo.webp";
-// import oppo from "@/../public/static/oppo.png";
-// import mi from "@/../public/static/mi.jpg";
-// import samsung from "@/../public/static/samsung.png";
-
-// const siteArr = [
-// 	{ name: "Amazon", image: amazon },
-// 	{ name: "Flipkart", image: flipkart },
-// 	{ name: "Jiomart", image: jiomart },
-// 	{ name: "Shopsy", image: shopsy },
-// 	{ name: "Vivo", image: vivo },
-// 	{ name: "MI", image: mi },
-// 	{ name: "Oppo", image: oppo },
-// 	{ name: "Samsung", image: samsung },
-// ];
 
 const CardLayout = ({
-	image,
+	icons,
 	placeOrder,
 	quantity,
 	name,
@@ -34,17 +15,19 @@ const CardLayout = ({
 	deviceImage,
 	cards,
 }: {
-	image?: ReactNode;
+	icons?: ReactNode;
 	placeOrder?: ReactNode;
 	quantity: number;
 	name: string;
 	price: number;
 	commission: number;
 	classList?: string;
-	site: { value: string; label: string };
+	site: { value: string; label: string; image: any };
 	deviceImage: string;
-	cards: { value: string; label: string }[];
+	cards: { value: string; label: string; image: any }[];
 }) => {
+
+
 	return (
 		<div
 			className={`p-4 h-full border rounded-2xl sm:px-4 sm:py-3 border-gray-400 ${classList}`}
@@ -53,14 +36,14 @@ const CardLayout = ({
 				<div className="mr-auto px-[10px] py-[5px] text-sm rounded-3xl border text-center bg-gray-200 sm:text-[10px] sm:px-1 sm:py-0">
 					Q: {quantity}
 				</div>
-				{image}
+				{icons}
 			</div>
 			<div className="flex justify-center text-sm items-start md:gap-0 sm:justify-between">
 				<Image
 					className="w-40 h-[150px] sm:h-[100px] sm:w-[100px]"
 					src={
 						deviceImage
-							? `/uploads/${deviceImage}`
+							? `data:image/jpg;base64,${deviceImage}`
 							: phoneImage
 					}
 					alt={""}
@@ -98,21 +81,16 @@ const CardLayout = ({
 			<hr className="my-4 sm:my-2" />
 			<div className="flex justify-between items-center sm:w-full min-h-10">
 				<Image
-					src={
-						// `/cards/HDFC credit card.svg`
-						site.label
-							? `/static/${site.label}.svg`
-							: ""
-					}
+					src={`data:image/png;base64,${site.image}`}
 					width={30}
 					height={30}
-					alt={""}
+					alt={site.value}
 					className="website-img h-7 w-7"
 				/>
 
 				<div className="flex flex-col justify-start items-start text-sm font-semibold text-gray-600">
-					{cards?.map(({ label }, index) => {
-						console.log("thisiscard", label);
+					{cards?.map(({ value, image }, index) => {
+						console.log("thisiscard", value);
 						return (
 							<div
 								key={index}
@@ -120,14 +98,14 @@ const CardLayout = ({
 							>
 								{" "}
 								<Image
-									src={`/cards/${label}.svg`}
+									src={`data:image/jpg;base64,${image}`}
 									width={80}
 									height={40}
 									alt={""}
 									className="w-12 h-auto card-img"
 								/>
 								<div className="sm:font-light sm:text-[7px] sm:leading-3">
-									{label}
+									{value}
 								</div>
 							</div>
 						);

@@ -45,12 +45,12 @@ const CardLayoutAdminDashboard = ({ data }: { data: productList }) => {
 			Popup("error", "something went wrong");
 		}
 	}
-
+	console.log('this is site and cards', site, cards)
 	return (
 		<Link href={`/orders/${_id}`}>
 			<CardLayout
 				classList="hover:border-primaryBgClr"
-				image={
+				icons={
 					<>
 						<Link href={`/adminAddProduct/${_id}`}>
 							<Image

@@ -24,7 +24,7 @@ import { IoAddSharp } from "react-icons/io5";
 export interface dropdown {
 	value: string;
 	label: string;
-	_id?: string;
+	// image:string;
 }
 const ProductForm = ({ params }: { params: { _id: string } }) => {
 	const [name, setName] = useState("");
@@ -118,8 +118,8 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 		async function getDate() {
 			try {
 				const response = await axios.get("/api/admin/options");
-				setCardOptions(response.data.data.cardOptions);
-				setSiteOptions(response.data.data.siteOptions);
+				setCardOptions(response.data.data.cards);
+				setSiteOptions(response.data.data.sites);
 				if (response.data.success !== true) {
 					Popup("error", "server error, please refresh");
 				}

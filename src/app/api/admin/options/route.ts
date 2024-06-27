@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Database from "@/database/database";
-import { Options } from "@/models/userModel";
+import { Card, Options, Site } from "@/models/userModel";
 
 Database()
 
@@ -16,15 +16,17 @@ export async function GET(request: NextRequest) {
                         console.log(cards)
                   }
             }
-            const options = await Options.findOne({ id: 'options' })
-            const siteOptions = options.sites
-            const cardOptions = options.cards
-            console.log(options)
-            if (options) {
+            // const options = await Options.findOne({ id: 'options' })
+
+            const sites = await Site.find({}).select('value label');
+            const cards = await Card.find({}).select('value label');
+            // const siteOptions = 
+            // const cardOptions = 
+            console.log(sites, cards)
                   return NextResponse.json({
-                        message: 'something went wrong', success: true, data: { siteOptions, cardOptions }
+                        message: 'something went wrong', success: true, data: { sites, cards }
                   })
-            }
+            
       } catch {
             return NextResponse.json({
                   message: 'something went wrong', success: false

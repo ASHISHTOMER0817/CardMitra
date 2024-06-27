@@ -3,9 +3,9 @@ import { ObjectId } from "mongoose"
 interface productList {
 	productLink: string
 	requirement: number
-	cards: { value: string, label: string, _id?: string }[]
+	cards: { value: string, label: string, image: string }[]
 	site: {
-		value: string, label: string
+		value: string, label: string, image:string
 	}
 	quantity: number
 	name: string
