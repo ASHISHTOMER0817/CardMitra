@@ -14,8 +14,6 @@ export async function GET(request: NextRequest) {
             let productId = request.nextUrl.searchParams.get('productId')
             let otpstatus = params.get('otpStatus')
             let deliveryStatus = params.get('deliveryStatus')
-            console.log('1st', odrId)
-            console.log('2nd', productId)
             if (odrId) {
                   const order: order | null = await Order.findOne({ _id: odrId }).populate({
                         path: 'product',

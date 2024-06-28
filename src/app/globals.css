@@ -196,10 +196,10 @@ h3 {
 		grid-template-columns: auto !important;
 		justify-content: center;
 	}
-	.website-img {
+	/* .website-img {
 		height: 20px !important;
 		width: 20px !important;
-	}
+	} */
 	.card-img {
 		width: 40px !important;
 	}

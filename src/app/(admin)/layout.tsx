@@ -63,7 +63,56 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={inter.className} style={{ display: "flex" }}>
+			{/* <div
+				className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}
+			></div>
+			<form
+				onSubmit={payment}
+				className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 sm:gap-2`}
+			>
+				<RxCross1
+					width={20}
+					height={20}
+					className=" cursor-pointer ml-auto hover:bg-gray-100 active:bg-gray-100 rounded-full"
+					onClick={() => setOverlay("hidden")}
+				/>
+				<h4 className="sm:text-nowrap text-xl">
+					{overlayElement?.heading}
+				</h4>
+				<input
+					hidden={
+						overlayElement?.action !== "payment"
+							? true
+							: false
+					}
+					type="number"
+					required
+					placeholder="Amount"
+					className="outline-none border-b pb-2 border-black sm:text-sm"
+					value={amount}
+					onChange={(e) => setAmount(+e.target.value)}
+				/>{" "}
+				<div className="flex justify-center gap-3 items-center">
+					<button
+						onClick={() => {
+							setOverlay("hidden");
+						}}
+						type="button"
+						className="px-3 py-1 hover:bg-gray-200 border-gray-200 border rounded-full active:bg-gray-200"
+					>
+						Cancel
+					</button>
+					<button
+						onClick={buttonOperation}
+						type="submit"
+						className="px-3 py-1 hover:bg-green-600 bg-primaryBgClr rounded-full text-white"
+					>
+						 {overlayElement?.button}
+					</button>
+				</div>
+			</form> */}
 				<Navigation options={options} />
+
 				<div className="w-full ml-20 sm:ml-0 sm:px-4 mt-3 sm:mt-0">
 					{children}
 					<ToastContainer />

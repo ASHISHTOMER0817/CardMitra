@@ -82,11 +82,12 @@ const CardLayout = ({
 			<div className="flex justify-between items-center sm:w-full min-h-10">
 				<Image
 					src={`data:image/png;base64,${site.image}`}
-					width={40}
-					height={40}
+					width={56}
+					height={56}
 					alt={site.value}
-					className="website-img h-auto w-10"
+					className=" sm: h-auto w-14"
 				/>
+				{/*Removed the website-img class */}
 
 				<div className="flex flex-col justify-start items-start text-sm font-semibold text-gray-600">
 					{cards?.map(({ value, image }, index) => {

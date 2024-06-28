@@ -45,7 +45,11 @@ export async function GET(request: NextRequest) {
                   // console.log('i got here too')
                   else if (limit === 'homePage') {
                         console.log('else if condition')
-                        const products = await Product.find({ showOnHomePage: true })
+                        const allProducts:productList[] = await Product.find({ showOnHomePage: true })
+                        .populate({path:'cards', select:'value image'})
+                        .populate('site').lean();
+
+                        const products = bufferToString(allProducts)
                         
                         return NextResponse.json({ data: products, success: true, status: 200 })
                   }

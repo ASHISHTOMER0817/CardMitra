@@ -89,7 +89,10 @@ const Dashboard = () => {
 				total += todaysOrders[i].product.price;
 				console.log(orderDate, "and new date", today);
 			}
-			commission += todaysOrders[i].product.price;
+			if(todaysOrders[i].delivered === 'delivered' || todaysOrders[i].delivered === 'unverified'){
+
+				commission +=  todaysOrders[i].product.commission;
+			}
 			const month = orderDate.getMonth();
 			console.log(month, "this is month of the products ");
 			orderDate.getFullYear() === new Date().getFullYear()

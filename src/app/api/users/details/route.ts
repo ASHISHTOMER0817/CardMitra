@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
             const user = await User.findOne({ _id: userId })
             // console.log(user, '&& this is userId', userId)
 
-            orderList = await Order.find({ user: userId }).populate("product")
+            orderList = await Order.find({ user: userId }).populate({path:"product", select:"-image"})
 
             // Current amount to pay
             let total = 0;

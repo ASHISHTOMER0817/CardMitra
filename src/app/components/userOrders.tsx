@@ -26,7 +26,8 @@ const UserOrders = ({
 	//       }
 	// })
 	return (
-		<table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all sm:text-wrap rounded-small">
+		<>
+			{/* <table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all sm:text-wrap rounded-small">
 			<thead>
 				<tr className="bg-green-100 text-[#2f4f4f] sm:text-[10px]">
 					<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
@@ -55,12 +56,7 @@ const UserOrders = ({
 						orderId,
 						delivered,
 					}) =>
-						// index
 						{
-							// const date = new Date(deliveryDate);
-							// let delivery = dateFormat(date);
-							// const orderDate = new Date(orderedAt);
-							// let order_at = dateFormat(orderDate);
 
 							return (
 								<>
@@ -86,7 +82,65 @@ const UserOrders = ({
 						}
 				)}
 			</tbody>
-		</table>
+		</table> */}
+			<div className="overflow-x-auto">
+
+			
+			<table className="min-w-full divide-y divide-gray-200 text-nowrap">
+				<thead className="bg-green-100">
+					<tr>
+						<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider sm:px-2 sm:py-1 sm:text-[10px]">
+							Order ID
+						</th>
+						<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+							Date
+						</th>
+							
+						<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+						Product
+						</th>
+						<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+							Price
+						</th>
+					</tr>
+				</thead>
+				<tbody className="text-[13px]">
+					{data.map(
+						(
+							{
+								product,
+								orderedAt,
+								orderId,
+								delivered,
+							},
+							index
+						) => {
+							return (
+								<>
+									{listType ===
+										delivered && (
+										<UserOrdersListRow
+											key={index}
+											orderId={
+												orderId
+											}
+											orderedAt={new Date(
+												orderedAt
+											).toDateString()}
+											product={
+												product
+											}
+											index={index}
+										/>
+									)}{" "}
+								</>
+							);
+						}
+					)}
+				</tbody>
+			</table>
+			</div>
+		</>
 	);
 };
 

@@ -4,6 +4,8 @@ import Database from "@/database/database";
 import getToken from "@/app/components/getToken"
 // import { Product } from "@/models/userModel";
 import mongoose from "mongoose";
+import { bufferToStringOrders } from "@/app/components/bufferToString";
+import { order } from "@/interface/productList";
 // import { NextResponse } from 'next/server'
 // import { NextRequest } from 'next/server'
 
@@ -19,7 +21,7 @@ export async function GET(request: NextRequest) {
                   const otpAction = await Order.findOneAndUpdate({ _id: orderObjectId }, { $set: { acknowledgment: true } })
                   console.log(otpAction)
             }
-            
+
             // Convert the userId string to a mongoose.Schema.Types.ObjectId object
             const userObjectId = new mongoose.Types.ObjectId(_id);
             console.log(userObjectId)
@@ -31,7 +33,7 @@ export async function GET(request: NextRequest) {
             // }).populate('product')
             // console.log(immediateActionOrders, 'otpaction is this')
             console.log('till here')
-            const order = await Order.find({ user: userObjectId })
+            const order: order = await Order.find({ user: userObjectId })
                   .sort({ orderedAt: -1 })
                   .populate({
                         path: 'product',
@@ -42,25 +44,11 @@ export async function GET(request: NextRequest) {
                   })
                   .limit(3) // Limit the number of documents to 3
                   .lean();
-                  console.log(order, "so this is order")
+            console.log(order, "so this is order")
 
-            const orders = order.map(order => ({
-                  ...order,
-                  product: {
-                        ...order.product,
-                        image: order.product.image ? order.product.image.toString('base64') : null,
-                        cards: order.product.cards.map((card: any) => ({
-                              ...card,
-                              image: card.image ? card.image.toString('base64') : null
-                        })),
-                        site: {
-                              ...order.product.site,
-                              image: order.product.site?.image ? order.product.site.image.toString('base64') : null
-                        }
-                  }  
-            }));
+            let orders;
+            if (order) { orders = bufferToStringOrders(order) }
             console.log('these are converted', orders)
-            // console.log(orderHistory[0].cards,orderHistory[0].site , 'this is orders')
 
 
 
