@@ -69,35 +69,35 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 			} mx-auto md:text-[10px] overflow-auto`}
 		>
 			{heading === "approved" && (
-				<h3 className="font-semibold mb-4 pb-2 sm:mb-0 sm:pb-0">User List</h3>
+				<h3 className="font-semibold my-12 sm:my-4 sm:text-xs">User List</h3>
 			)}
 			{!users ? (
 				<Loader />
 			) : users.allRequest.length > 0 ? (
-				<table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all sm:text-wrap rounded-small">
-					<thead>
-						<tr className="bg-green-100 text-[#2f4f4f] sm:text-[10px]">
-							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
+				<table className="min-w-full divide-y divide-gray-200">
+					<thead className="bg-gray-50">
+						<tr>
+							<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 								Name
 							</th>
-							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
+							<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 								Email
 							</th>
-							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
+							<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 								Contact
 							</th>
 
 							{heading && (
-								<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
+								<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 									Amount
 								</th>
 							)}
-							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
+							<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 								Action
 							</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody className="bg-white divide-y divide-gray-200">
 						{users.allRequest.map(
 							(
 								{
@@ -127,27 +127,24 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 									}
 								}
 								return (
-									<tr
-										key={index}
-										className="even:bg-gray-100 sm:text-[10px]"
-									>
-										<td className="py-4 px-12 font-semibold text-primaryBgClr sm:px-0.5 sm:py-1">
+									<tr key={index} className={index % 2 === 0 ? 'bg-white': 'bg-gray-50'} >
+										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 											{name}
 										</td>
-										<td className="py-4 px-12 text-gray-500 sm:px-0.5 sm:py-1">
+										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 											{email}
 										</td>
-										<td className="py-4 px-12 text-gray-500 text-sm text-[8px] sm:px-0.5 sm:py-1 sm:text-[8px]">
+										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 											{contact}
 										</td>
 
 										{heading && (
-											<td className="py-4 px-12 text-gray-500 text-sm text-[8px] sm:px-0.5 sm:py-1 sm:text-[8px]">
+											<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 												{isApprove &&
 													payable}
 											</td>
 										)}
-										<td className="py-4 px-12 text-gray-500 flex justify-start gap-2 sm:px-0.5 sm:py-1">
+										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex gap-2">
 											{!isApprove ? (
 												<>
 													<div
@@ -157,7 +154,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 																_id
 															)
 														}
-														className="text-sm text-white hover:bg-green-600 py-2 px-5 cursor-pointer  rounded-full border bg-primaryBgClr sm:py-0 sm:text-[8px] sm:my-auto sm:h-fit sm:px-1"
+														className="text-sm text-white hover:bg-green-600 py-2 px-5 cursor-pointer  rounded-full border bg-primaryBgClr sm:py-1 sm:text-[12px] sm:my-auto sm:h-fit sm:px-3"
 													>
 														Accept
 													</div>
@@ -168,7 +165,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 																_id
 															)
 														}
-														className="text-sm py-2 px-5 cursor-pointer hover:bg-slate-100 rounded-full border text-red-500 sm:py-0 sm:text-[8px] sm:my-auto sm:h-fit sm:px-1"
+														className="text-sm py-2 px-5 cursor-pointer hover:bg-slate-100 rounded-full border text-red-500 sm:py-1 sm:text-[12px] sm:my-auto sm:h-fit sm:px-3"
 													>
 														Reject
 													</div>

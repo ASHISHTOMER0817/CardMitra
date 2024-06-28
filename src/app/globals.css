@@ -227,6 +227,9 @@ h3 {
 	.rounded-small{
 		border-radius: 4px;
 	}
+	.ml-auto-small{
+		margin-left: auto;
+	}
 }
 
 @media screen and (min-width: 638px) {
