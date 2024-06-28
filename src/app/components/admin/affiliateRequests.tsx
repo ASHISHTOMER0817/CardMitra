@@ -129,7 +129,9 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 								return (
 									<tr key={index} className={index % 2 === 0 ? 'bg-white': 'bg-gray-50'} >
 										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-											{name}
+											<Link href={`/adminBookers/${_id}`}>
+												{name}
+											</Link>
 										</td>
 										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 											{email}

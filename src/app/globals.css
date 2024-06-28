@@ -230,6 +230,9 @@ h3 {
 	.ml-auto-small{
 		margin-left: auto;
 	}
+	.align-left-small{
+		align-items: start;
+	}
 }
 
 @media screen and (min-width: 638px) {

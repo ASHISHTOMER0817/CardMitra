@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Order, Otp, User } from "@/models/userModel";
+import { Order, Otp, User, Product } from "@/models/userModel";
 import Database from "@/database/database";
 import getToken from "@/app/components/getToken"
 // import { Product } from "@/models/userModel";
@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
                   const otpAction = await Order.findOneAndUpdate({ _id: orderObjectId }, { $set: { acknowledgment: true } })
                   console.log(otpAction)
             }
-
+            
             // Convert the userId string to a mongoose.Schema.Types.ObjectId object
             const userObjectId = new mongoose.Types.ObjectId(_id);
             console.log(userObjectId)
@@ -30,11 +30,43 @@ export async function GET(request: NextRequest) {
             //       ], acknowledgment: false
             // }).populate('product')
             // console.log(immediateActionOrders, 'otpaction is this')
-            const order = await Order.find({ user: userObjectId }).populate('product');
+            console.log('till here')
+            const order = await Order.find({ user: userObjectId })
+                  .sort({ orderedAt: -1 })
+                  .populate({
+                        path: 'product',
+                        populate: [
+                              { path: 'cards' },
+                              { path: 'site' }
+                        ]
+                  })
+                  .limit(3) // Limit the number of documents to 3
+                  .lean();
+                  console.log(order, "so this is order")
+
+            const orders = order.map(order => ({
+                  ...order,
+                  product: {
+                        ...order.product,
+                        image: order.product.image ? order.product.image.toString('base64') : null,
+                        cards: order.product.cards.map((card: any) => ({
+                              ...card,
+                              image: card.image ? card.image.toString('base64') : null
+                        })),
+                        site: {
+                              ...order.product.site,
+                              image: order.product.site?.image ? order.product.site.image.toString('base64') : null
+                        }
+                  }  
+            }));
+            console.log('these are converted', orders)
+            // console.log(orderHistory[0].cards,orderHistory[0].site , 'this is orders')
+
+
 
             // const todaysOrders = await Order.find({ createdAt: dateFormat(new Date()) }).populate('product')
             return NextResponse.json({
-                  data: order, message: 'User data successfully retrieved', success: true
+                  data: orders, message: 'User data successfully retrieved', success: true
             })
 
       } catch (error) {

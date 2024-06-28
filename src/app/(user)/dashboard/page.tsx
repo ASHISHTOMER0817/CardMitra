@@ -80,23 +80,25 @@ const Dashboard = () => {
 		let total = 0;
 		let commission = 0;
 		// let ele = <div className="bg-pri"></div>
-		let arr = [0,0,0,0,0,0,0,0,0,0,0,0]
+		let arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 		for (let i = 0; i < todaysOrders.length; i++) {
 			const orderDate = new Date(todaysOrders[i].orderedAt);
 			const today = new Date();
-	
+
 			if (orderDate === today) {
 				total += todaysOrders[i].product.price;
-				console.log(orderDate,'and new date', today)
+				console.log(orderDate, "and new date", today);
 			}
 			commission += todaysOrders[i].product.price;
 			const month = orderDate.getMonth();
-			console.log(month, 'this is month of the products ')
-			orderDate.getFullYear() === new Date().getFullYear() ? arr[month]+=1: ''
+			console.log(month, "this is month of the products ");
+			orderDate.getFullYear() === new Date().getFullYear()
+				? (arr[month] += 1)
+				: "";
 		}
 		// console.log(arr)
-		setChartArr(arr)
-		console.log(chartArr,'thisis chart value')
+		setChartArr(arr);
+		console.log(chartArr, "thisis chart value");
 		setCommission(commission);
 		setProfit(total);
 		setOrdersTillDate(todaysOrders.length);
@@ -149,21 +151,42 @@ const Dashboard = () => {
 						: ""}
 				</div> */}
 
-				<div className="fixed top-4 right-4 flex flex-col space-y-3 z-50">
-				{data && data.length > 0 && data.map(({ product, delivered, _id, acknowledgment }) => {
-				if ((delivered === "cancelled" || delivered === "wrong OTP") && acknowledgment === false) {
-					return (
-					<DashboardOverlay
-					key={_id}
-					product={product}
-					orderObjectId={_id}
-					delivered={delivered}
-					/>
-					);
-				}
-				return null;
-				})}
-				</div>
+				{/* <div className="fixed top-4 right-4 flex flex-col space-y-3 z-50">
+					{data &&
+						data.length > 0 &&
+						data.map(
+							({
+								product,
+								delivered,
+								_id,
+								acknowledgment,
+							}) => {
+								if (
+									(delivered ===
+										"cancelled" ||
+										delivered ===
+											"wrong OTP") &&
+									acknowledgment === false
+								) {
+									return (
+										<DashboardOverlay
+											key={_id}
+											product={
+												product
+											}
+											orderObjectId={
+												_id
+											}
+											delivered={
+												delivered
+											}
+										/>
+									);
+								}
+								return null;
+							}
+						)}
+				</div> */}
 				<h3 className="mt-0 mb-4 font-semibold sm:my-2">
 					Dashboard
 				</h3>
@@ -231,7 +254,7 @@ const Dashboard = () => {
 				) : (
 					<div className="flex flex-wrap gap-3 order-history-wrapper">
 						{data
-							.slice(0, 3)
+							// .slice(0, 3)
 							.map(
 								(
 									{

@@ -149,28 +149,7 @@ export async function GET(request: NextRequest) {
                   let orders = await Order.find({})
                         .sort({ orderedAt: -1 })
                         .populate('user', 'name')
-                        // .select('-image')
-                        // .populate({
-                        //       path: 'product',
-                        //       populate: [
-                        //             { path: 'cards' },
-                        //             { path: 'sites' }
-                        //       ]
-                        // })
                         .lean();
-
-                  // const orderHistory = products.map(product => ({
-                  //       ...product,
-                  //       image: product.image ? product.image.toString('base64') : null,
-                  //       cards: product.cards.map((card:any) => ({
-                  //             ...card,
-                  //             image: card.image ? card.image.toString('base64') : null
-                  //       })),
-                  //       site: {
-                  //             ...product.site,
-                  //             image: product.site?.image ? product.site.image.toString('base64') : null
-                  //       }
-                  // }));
 
                   const orderHistory = bufferToString(products)
 

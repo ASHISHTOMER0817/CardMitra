@@ -213,7 +213,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	};
 
 	return (
-		<form onSubmit={postData} className="p-8 relative sm:px-0">
+		<form onSubmit={postData} className="p-8 sm:px-0">
 			{loader ? (
 				<Loader />
 			) : (
@@ -381,7 +381,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 								placeholder="Product name"
 								className=" outline-none border-b border-black text-2xl font-bold mb-6 mt-4 sm:text-base"
 							/>
-							<div className="flex items-center gap-7 mb-4 font-normal sm:text-[12px] sm:gap-3">
+							<div className="flex flex-wrap items-center gap-7 mb-4 font-normal sm:text-[12px] sm:gap-3">
 								<div className=" flex flex-col items-start">
 									<input
 										required
