@@ -14,7 +14,7 @@ export const POST = async (request: NextRequest) => {
             const {
                   orderNumber,
                   objectId,
-                  deliveryDate
+                  // deliveryDate
             } = reqBody.formData
             const { _id } = await GetToken()
             if (_id) {
@@ -29,11 +29,11 @@ export const POST = async (request: NextRequest) => {
                   console.log(product)
                   const requirement = product.requirement
                   console.log(requirement)
-                  console.log(deliveryDate)
+                  // console.log(deliveryDate)
 
                   //Change Format
-                  const delivery_date = dateFormat(deliveryDate)
-                  console.log('delivery date', delivery_date, typeof delivery_date)
+                  // const delivery_date = dateFormat(deliveryDate)
+                  // console.log('delivery date', delivery_date, typeof delivery_date)
 
                   //check if requirement fulfilled
                   if (requirement === 0) {
@@ -49,7 +49,7 @@ export const POST = async (request: NextRequest) => {
                         product: productId,
                         user: userObjectId,
                         orderId: orderNumber,
-                        deliveryDate: delivery_date,
+                        // deliveryDate: delivery_date,
                         orderedAt: new Date(),
                         delivered: 'undelivered',
                         otp: false,
