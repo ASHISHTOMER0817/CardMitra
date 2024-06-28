@@ -22,8 +22,6 @@ const Transactions = ({
 				);
 				if (response.data.success) {
 					setData(response.data.data);
-				} else {
-					Popup("error", response.data.message);
 				}
 			} catch {
 				Popup("error", "Something missing, refresh the page");
@@ -35,7 +33,7 @@ const Transactions = ({
 
 	return (
 		<>
-			{/* {!data ? (
+			{!data ? (
 				<Loader />
 			) : data.length > 0 ? (
 				<div className="" style={{overflow: 'auto'}}>
@@ -106,9 +104,9 @@ const Transactions = ({
 				<div className="text-red-500 font-serif mx-auto mt-20 w-fit sm:text-[10px]">
 					No data to show !!
 				</div>
-			)} */}
+			)}
 
-<div className="overflow-x-auto">
+{/* <div className="overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
@@ -149,7 +147,57 @@ const Transactions = ({
           ))}
         </tbody>
       </table>
-    </div>
+    </div> */}
+
+
+
+
+	{/*Latest Design changes */}
+    {/* <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <h1 className="text-2xl font-semibold mb-6">Transactions List</h1>
+      <div className="overflow-x-auto bg-white shadow-md rounded-lg">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-green-100">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+                Transaction ID
+              </th>
+              {!userId && (
+                <th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+                  User Name
+                </th>
+              )}
+              <th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+                Date
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+                Amount Paid
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {data?.map(({ user, dateOfPayment, _id, amount }, index) => (
+              <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
+                <td className="py-4 px-12 text-gray-500">
+                  {_id}
+                </td>
+                {!userId && (
+                  <td className="py-4 px-12 font-semibold text-primaryBgClr">
+                    {user.name}
+                  </td>
+                )}
+                <td className="py-4 px-12 text-gray-500">
+                  {new Date(dateOfPayment).toDateString()}
+                </td>
+                <td className="py-4 px-12 text-gray-500">
+                  ₹{amount}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div> */}
 
 		</>
 	);
