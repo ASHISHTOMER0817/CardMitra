@@ -3,9 +3,9 @@ import { ObjectId } from "mongoose"
 interface productList {
 	productLink: string
 	requirement: number
-	cards: { value: string, label: string, image: string }[]
+	cards: { value: string, label: string, image: string | Buffer }[]
 	site: {
-		value: string, label: string, image:string
+		value: string, label: string, image:string | Buffer
 	}
 	quantity: number
 	name: string
@@ -22,7 +22,7 @@ interface productList {
 		third: string
 		fourth: string
 	}
-	image: string,
+	image: any,
 	zipCode: string
 	showOnHomePage: boolean
 }
@@ -91,4 +91,10 @@ export interface Data {
 export interface ReviewInterface {
 	user: user
 	review: string
+}
+
+export interface CardAndSite {
+	value:string
+	label:string
+	image:string | Buffer
 }
