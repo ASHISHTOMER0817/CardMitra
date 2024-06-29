@@ -6,7 +6,7 @@ import Popup from "./Popup";
 
 const OrderForm = ({ objectId }: { objectId: string }) => {
 	const [orderNumber, setOrderNumber] = useState("");
-	const [deliveryDate, setDeliveryDate] = useState(Date);
+	// const [deliveryDate, setDeliveryDate] = useState(Date);
 	// const [address, setAddress] = useState("");
 	const router = useRouter();
 
@@ -14,9 +14,9 @@ const OrderForm = ({ objectId }: { objectId: string }) => {
 		setOrderNumber(e.target.value);
 	};
 
-	const handleDeliveryDateChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setDeliveryDate(e.target.value);
-	};
+	// const handleDeliveryDateChange = (e: ChangeEvent<HTMLInputElement>) => {
+	// 	setDeliveryDate(e.target.value);
+	// };
 
 	// const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
 	// 	setAddress(e.target.value);
@@ -28,7 +28,7 @@ const OrderForm = ({ objectId }: { objectId: string }) => {
 		try {
 			const formData = {
 				orderNumber,
-				deliveryDate,
+				// deliveryDate,
 				objectId,
 			};
 			const response = await axios.post("/api/users/orderForm", {
@@ -58,7 +58,7 @@ const OrderForm = ({ objectId }: { objectId: string }) => {
 
 		// Reset the form fields after submission (optional)
 		setOrderNumber("");
-		setDeliveryDate("");
+		// setDeliveryDate("");
 		// setAddress("");
 	};
 
@@ -77,15 +77,15 @@ const OrderForm = ({ objectId }: { objectId: string }) => {
 				style={{width: '100% !important'}}
 			/>
 
-			<label htmlFor="date">Date of Delivery</label>
-			<input
+			{/* <label htmlFor="date">Date of Delivery</label> */}
+			{/* <input
 				type="date"
 				placeholder="DD-MM-YYYY"
 				value={deliveryDate}
 				onChange={handleDeliveryDateChange}
 				required
 				style={{width: '100% !important'}}
-			/>
+			/> */}
 
 			{/* <label htmlFor="address">Address</label> */}
 			{/* <input

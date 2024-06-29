@@ -29,9 +29,9 @@ export default function ProductDetails({
 	data,
 	arr,
 }: {
-	observer?: string;
-	data: productList;
-	arr: Array<MyArrayItem>;
+	observer?: string
+	data: productList
+	arr: Array<MyArrayItem>
 }) {
 	return (
 		<>
@@ -44,7 +44,7 @@ export default function ProductDetails({
 				<div className="flex justify-start items-center flex-wrap sm:justify-center">
 					<Image
 						className="w-80 sm:w-56"
-						src={`/uploads/${data?.image}`}
+						src={`data:image/jpg;base64,${data?.image}`}
 						alt={""}
 						width={470}
 						height={550}
@@ -112,14 +112,14 @@ export default function ProductDetails({
 						bank cards to use
 					</h6>
 					{data?.cards
-						? data?.cards.map(({ label }, index) => {
+						? data?.cards.map(({ label, image }, index) => {
 								return (
 									<div
 										className="flex justify-center items-center gap-1"
 										key={index}
 									>
 										<Image
-											src={`/cards/${label}.svg`}
+											src={`data:image/jpg;base64,${image}`}
 											width={80}
 											height={40}
 											alt={""}
@@ -158,11 +158,11 @@ export default function ProductDetails({
 						<Image
 							src={
 								data?.site?.label
-									? `/static/${data?.site?.label}.svg`
+									? `data:image/png;base64,${data?.site?.image}`
 									: "/static/samsung.png"
 							}
-							width={30}
-							height={30}
+							width={40}
+							height={40}
 							alt="icon"
 						/>
 					</Link>

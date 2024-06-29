@@ -9,7 +9,8 @@ import utc from "dayjs/plugin/utc"
 import axios from "axios";
 import { ObjectId } from "mongodb";
 import mongoose from "mongoose";
-import { order } from "@/interface/productList";
+import productList, { order } from "@/interface/productList";
+import bufferToString from "@/app/components/bufferToString";
 dayjs.extend(utc)
 
 Database()
@@ -34,7 +35,27 @@ export async function GET(request: NextRequest) {
             console.log('this is id', _id, operation)
 
             if (query === 'dashboard') {
-                  const orderHistory = await Product.find({ deals: true }).limit(3)
+                  let products = await Product.find({ deals: true })
+                  .limit(3) 
+                  .populate({path:'cards', select:'value image'})
+                  .populate('site').lean();
+
+
+
+                  // Converting images to base64 string
+                  let orderHistory = products.map(product => ({
+                        ...product,
+                        image: product.image ? product.image.toString('base64') : null,
+                        cards: product.cards.map((card:any) => ({
+                              ...card,
+                              image: card.image ? card.image.toString('base64') : null
+                        })),
+                        site: {
+                              ...product.site,
+                              image: product.site?.image ? product.site.image.toString('base64') : null
+                        }
+                  }));
+
 
                   //Affiliate Array
                   const affiliate = await User.find()
@@ -120,7 +141,7 @@ export async function GET(request: NextRequest) {
 
                      //    ------- .sort({ deals: -1 }) --------
                   console.log('hello')
-                  const products = await Product.find({ show: true })
+                  const products:any = await Product.find({ show: true })
                   .populate({path:'cards', select:'value image'})
                   .populate('site').lean();
                   // console.log('this is product', products)
@@ -128,47 +149,32 @@ export async function GET(request: NextRequest) {
                   let orders = await Order.find({})
                         .sort({ orderedAt: -1 })
                         .populate('user', 'name')
-                        .populate({
-                              path: 'product',
-                              populate: [
-                                    { path: 'cards' },
-                                    { path: 'sites' }
-                              ]
-                        })
                         .lean();
 
-                        // console.log(orders, 'these are orders')
-                  // Convert Buffer to base64 for easy transmission
-                  // Convert Buffer to base64 for easy transmission
-                  const orderHistory = products.map(product => ({
-                        ...product,
-                        image: product.image ? product.image.toString('base64') : null,
-                        cards: product.cards.map((card:any) => ({
-                              ...card,
-                              image: card.image ? card.image.toString('base64') : null
-                        })),
-                        site: {
-                              ...product.site,
-                              image: product.site?.image ? product.site.image.toString('base64') : null
-                        }
-                  }));
+                  const orderHistory = bufferToString(products)
 
-                  orders = orders.map(order => ({
-                        ...order,
-                        product: {
-                              ...order.product,
-                              image: order.product.image ? order.product.image.toString('base64') : null,
-                              cards: order.product.cards.map((card:any) => ({
-                                    ...card,
-                                    image: card.image ? card.image.toString('base64') : null
-                              })),
-                              site: {
-                                    ...order.product.site,
-                                    image: order.product.site?.image ? order.product.site.image.toString('base64') : null
-                              }
-                        }
-                  }));
-                  console.log(orderHistory[0].cards,orderHistory[0].site , 'this is orders')
+
+
+
+
+
+
+                  // orders = orders.map(order => ({
+                  //       ...order,
+                  //       product: {
+                  //             ...order.product,
+                  //             image: order.product.image ? order.product.image.toString('base64') : null,
+                  //             cards: order.product.cards.map((card:any) => ({
+                  //                   ...card,
+                  //                   image: card.image ? card.image.toString('base64') : null
+                  //             })),
+                  //             site: {
+                  //                   ...order.product.site,
+                  //                   image: order.product.site?.image ? order.product.site.image.toString('base64') : null
+                  //             }
+                  //       }
+                  // }));
+                  // console.log(orderHistory[0].cards,orderHistory[0].site , 'this is orders')
 
                   return NextResponse.json({
                         message: "Order history is being shown", status: false, data: {
@@ -179,30 +185,33 @@ export async function GET(request: NextRequest) {
                   })
             }
             else if (_id) {
-                  const product = await Product.findOne({ _id: _id })
+                  const product = await Product.findOne({ _id: _id }).select('-image')
                   console.log('else if condition running', _id)
                   if (operation === 'remove') {
 
                         // await Product.findOneAndUpdate({ _id: _id }, { $set: { deals: false } })
-                        product.deals = false
+                        product.deals = false;
                         product.save()
-                        console.log('deal removed')
+                        // console.log('deal removed')
                         return NextResponse.json({
                               message: "deal removed", success: true, operation
                         })
                   } else if (operation === 'add') {
-                        console.log('add condition')
-                        product.deals = true
+                        // console.log('add condition')
+                        product.deals = true;
                         product.save()
                         return NextResponse.json({
                               message: "deal added back", success: true, operation
                         })
                   } else if (operation === 'delete') {
-                        const deleteProduct = await Product.findOneAndUpdate(
-                              { _id: _id },
-                              { $set: { show: false } },
-                              { new: true }
-                        ); console.log(deleteProduct)
+                        // const deleteProduct = await Product.findOneAndUpdate(
+                        //       { _id: _id },
+                        //       { $set: { show: false } },
+                        //       { new: true }
+                        // );
+                        //  console.log(deleteProduct)
+                        product.show = false;
+                        product.save()
                         return NextResponse.json({
                               message: "Product Deleted", success: true, operation
                         })

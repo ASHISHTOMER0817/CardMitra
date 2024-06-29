@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Order, Otp, User } from "@/models/userModel";
+import { Order, Otp, User, Product } from "@/models/userModel";
 import Database from "@/database/database";
 import getToken from "@/app/components/getToken"
 // import { Product } from "@/models/userModel";
 import mongoose from "mongoose";
+import { bufferToStringOrders } from "@/app/components/bufferToString";
+import { order } from "@/interface/productList";
 // import { NextResponse } from 'next/server'
 // import { NextRequest } from 'next/server'
 
@@ -30,11 +32,29 @@ export async function GET(request: NextRequest) {
             //       ], acknowledgment: false
             // }).populate('product')
             // console.log(immediateActionOrders, 'otpaction is this')
-            const order = await Order.find({ user: userObjectId }).populate('product');
+            console.log('till here')
+            const order: order = await Order.find({ user: userObjectId })
+                  .sort({ orderedAt: -1 })
+                  .populate({
+                        path: 'product',
+                        populate: [
+                              { path: 'cards' },
+                              { path: 'site' }
+                        ]
+                  })
+                  .limit(3) // Limit the number of documents to 3
+                  .lean();
+            console.log(order, "so this is order")
+
+            let orders;
+            if (order) { orders = bufferToStringOrders(order) }
+            console.log('these are converted', orders)
+
+
 
             // const todaysOrders = await Order.find({ createdAt: dateFormat(new Date()) }).populate('product')
             return NextResponse.json({
-                  data: order, message: 'User data successfully retrieved', success: true
+                  data: orders, message: 'User data successfully retrieved', success: true
             })
 
       } catch (error) {

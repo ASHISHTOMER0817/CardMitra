@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import Database from "@/database/database";
 import { Product, User } from "@/models/userModel";
 import GetToken from "@/app/components/getToken";
+import bufferToString from "@/app/components/bufferToString";
+import productList from "@/interface/productList";
 
 Database()
 export async function GET(request: NextRequest) {
@@ -14,28 +16,41 @@ export async function GET(request: NextRequest) {
             console.log(productId)
             console.log(limit, 'thisis limit')
             if (limit) {
-
+                  // let products = await Product.find({})
                   if (limit === 'none') {
                         const { _id } = await GetToken()
                         const user = await User.findOne({ _id: _id })
-                        const products = await Product.find({ deals: true })
-
+                  // products =  products.find({deals:true})
+                        let productsArr:productList[] = await Product.find({ deals: true })
+                        .populate({path:'cards', select:'value image'})
+                        .populate('site').lean();
+                        console.log(productsArr)
+                      const products = bufferToString(productsArr)
                         const data = { products, user }
-                        // console.log('1st console', products)
+                        console.log('1st console', products)
 
                         return NextResponse.json({ data: data, success: true, status: 200 })
                   }
                   else if (limit === 'three') {
                         const { _id } = await GetToken()
                         const user = await User.findOne({ _id: _id })
-                        const products = await Product.find({ deals: true }).limit(3)
+                        const productsArr:productList[] = await Product.find({ deals: true }).limit(3)
+                        .populate({path:'cards', select:'value image'})
+                        .populate('site').lean();
+
+                        const products = bufferToString(productsArr)
                         const data = { products, user }
                         return NextResponse.json({ data: data, success: true, status: 200 })
                   }
                   // console.log('i got here too')
                   else if (limit === 'homePage') {
                         console.log('else if condition')
-                        const products = await Product.find({ showOnHomePage: true })
+                        const allProducts:productList[] = await Product.find({ showOnHomePage: true })
+                        .populate({path:'cards', select:'value image'})
+                        .populate('site').lean();
+
+                        const products = bufferToString(allProducts)
+                        
                         return NextResponse.json({ data: products, success: true, status: 200 })
                   }
             } else if (productId) {

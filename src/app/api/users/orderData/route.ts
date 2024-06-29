@@ -1,6 +1,8 @@
 import { NextResponse, NextRequest } from "next/server";
 import Database from "@/database/database";
 import { Order } from "@/models/userModel";
+import { order } from "@/interface/productList";
+import { bufferToStringOrders } from "@/app/components/bufferToString";
 
 
 Database()
@@ -12,20 +14,24 @@ export async function GET(request: NextRequest) {
             let productId = request.nextUrl.searchParams.get('productId')
             let otpstatus = params.get('otpStatus')
             let deliveryStatus = params.get('deliveryStatus')
-            console.log('1st', odrId)
-            console.log('2nd', productId)
             if (odrId) {
-                  const order = await Order.findOne({ _id: odrId }).populate('product')
-                  if (otpstatus === 'true') {
-                        order.otp = true;
-                  }
-                  if (deliveryStatus === 'true' && order.otp) {
-                        order.delivered = 'unverified'
-                  }
-                  const updatedOrder = await order.save()
+                  const order: order | null = await Order.findOne({ _id: odrId }).populate({
+                        path: 'product',
+                        populate: [
+                              { path: 'cards' },
+                              { path: 'site' }
+                        ]
+                  }).lean()
+                  const updateOrder = await Order.findOne({ _id: odrId })
+                  otpstatus === 'true' ? updateOrder.otp = true : deliveryStatus === 'true' ? updateOrder.delivered = 'unverified' : ''
+
+                  const updatedOrder = await updateOrder.save()
                   console.log('2nd console', updatedOrder)
+                  let orders;
+                  if (order) { orders = bufferToStringOrders(order) }
+                  console.log(orders, 'after converting buffer to string')
                   return NextResponse.json({
-                        data: order, message: 'User data successfully retrieved', success: true
+                        data: orders, message: 'User data successfully retrieved', success: true
                   })
             } else if (productId) {
                   console.log('objectId')

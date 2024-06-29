@@ -21,11 +21,11 @@ const orderSchema = new mongoose.Schema({
 	orderId: {
 		type: String,
 	},
-	deliveryDate: {
-		type: String,
-		required: true,
-		// format: Date
-	},
+	// deliveryDate: {
+	// 	type: String,
+	// 	// required: true,
+	// 	// format: Date
+	// },
 	otp: {
 		default: false,
 		type: Boolean

@@ -23,7 +23,7 @@ const CardLayout = ({
 	commission: number;
 	classList?: string;
 	site: { value: string; label: string; image: any };
-	deviceImage: string;
+	deviceImage: any;
 	cards: { value: string; label: string; image: any }[];
 }) => {
 
@@ -82,11 +82,12 @@ const CardLayout = ({
 			<div className="flex justify-between items-center sm:w-full min-h-10">
 				<Image
 					src={`data:image/png;base64,${site.image}`}
-					width={30}
-					height={30}
+					width={56}
+					height={56}
 					alt={site.value}
-					className="website-img h-7 w-7"
+					className=" sm: h-auto w-14"
 				/>
+				{/*Removed the website-img class */}
 
 				<div className="flex flex-col justify-start items-start text-sm font-semibold text-gray-600">
 					{cards?.map(({ value, image }, index) => {

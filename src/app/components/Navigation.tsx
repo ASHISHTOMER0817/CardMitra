@@ -36,8 +36,8 @@ const Navigation:React.FC<Options> = ({options}) =>{
       }
 
       const handleClickOutside = (event: MouseEvent) => {
-            console.log('inside function', event.target, sidebarRef.current, !sidebarRef.current?.contains(event.target as Node), !buttonRef.current?.contains(event.target as Node));
-            if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node) && !buttonRef.current?.contains(event.target as Node)) {
+           console.log('width: ', window.innerWidth)
+            if (window.innerWidth<=638 && sidebarRef.current && !sidebarRef.current.contains(event.target as Node) && !buttonRef.current?.contains(event.target as Node)) {
                   setMenuVisible(false);
             }
       }
