@@ -32,7 +32,7 @@ const ReviewForm = () => {
 	};
 
 	return (
-		<div className="p-6 bg-white rounded-[20px] shadow-lg w-2/5 mx-auto">
+		<div className="p-6 bg-white rounded-[20px] shadow-lg mx-auto review-width no-shadow-small sm:px-1">
 			<h2 className="text-2xl font-bold text-green-600 mb-4">
 				Submit Your Review
 			</h2>

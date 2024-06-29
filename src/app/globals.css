@@ -210,7 +210,7 @@ h3 {
 		gap: 8px !important;
 	}
 	.order-form {
-		width: 100%;
+		width: 100% !important;;
 	}
 	.center-on-small{
 		text-align: center;
@@ -232,6 +232,9 @@ h3 {
 	}
 	.align-left-small{
 		align-items: start;
+	}
+	.no-shadow-small{
+		box-shadow: none;
 	}
 }
 
@@ -348,4 +351,8 @@ h3 {
 	.slider-container .slick-dots {
 	  bottom: -30px;
 	}
-    }
+	}
+
+.review-width{
+	width: min(100%, 600px);
+}

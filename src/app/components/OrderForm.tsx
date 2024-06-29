@@ -99,7 +99,7 @@ const OrderForm = ({ objectId }: { objectId: string }) => {
 
 			<button
 				type="submit"
-				className="text-white border rounded-3xl py-4 px-3 hover:bg-green-600 bg-primaryBgClr w-96 sm:w-48 sm:py-2" style={{alignSelf: 'center'}}
+				className="text-white border order-form rounded-3xl py-4 px-3 hover:bg-green-600 bg-primaryBgClr w-96 sm:w-48 sm:py-2" style={{alignSelf: 'center'}}
 			>
 				Submit
 			</button>
