@@ -37,6 +37,8 @@ const config: Config = {
 
 			'sm': { 'max': '639px' },
 			// => @media (max-width: 639px) { ... }
+			'lgmax': { 'max': '1024px' },
+			// => @media (max-width: 1024px) { ... }
 		}
 
 	},

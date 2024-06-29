@@ -254,3 +254,98 @@ h3 {
 .slick-dots{
 	bottom: -40px;
 }
+
+
+
+
+/* Add these styles to your existing CSS FOR HOMEPAGE */
+
+@media (max-width: 1024px) {
+	.lgMax\:py-8 {
+	  padding-top: 2rem;
+	  padding-bottom: 2rem;
+	}
+    
+	.lgMax\:px-4 {
+	  padding-left: 1rem;
+	  padding-right: 1rem;
+	}
+    
+	.lgMax\:text-2xl {
+	  font-size: 1.5rem;
+	  line-height: 2rem;
+	}
+    
+	.lgMax\:text-lg {
+	  font-size: 1.125rem;
+	  line-height: 1.75rem;
+	}
+    
+	.lgMax\:gap-4 {
+	  gap: 1rem;
+	}
+    
+	.lgMax\:flex-col {
+	  flex-direction: column;
+	}
+    
+	.lgMax\:items-center {
+	  align-items: center;
+	}
+    
+	.lgMax\:w-full {
+	  width: 100%;
+	}
+    
+	.lgMax\:mx-auto {
+	  margin-left: auto;
+	  margin-right: auto;
+	}
+    }
+    
+    @media (max-width: 768px) {
+	.xs\:text-xl {
+	  font-size: 1.25rem;
+	  line-height: 1.75rem;
+	}
+    
+	.xs\:text-base {
+	  font-size: 1rem;
+	  line-height: 1.5rem;
+	}
+    
+	.xs\:gap-2 {
+	  gap: 0.5rem;
+	}
+    
+	.xs\:px-2 {
+	  padding-left: 0.5rem;
+	  padding-right: 0.5rem;
+	}
+    }
+
+
+/* STYPE FOR TESTIMONIALS */
+
+
+.slider-container .slick-list {
+	margin: 0 -8px;
+    }
+    
+    .slider-container .slick-slide > div {
+	padding: 8px;
+    }
+    
+    .slider-container .slick-dots {
+	bottom: -40px;
+    }
+    
+    .slider-container .slick-dots li button:before {
+	color: white;
+    }
+    
+    @media (max-width: 640px) {
+	.slider-container .slick-dots {
+	  bottom: -30px;
+	}
+    }
