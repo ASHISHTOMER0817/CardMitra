@@ -256,7 +256,7 @@ const UserProfile = () => {
     </div> */}
   
 
-  <div className="max-w-6xl mx-auto px-4 py-8 md:py-6 sm:py-4">
+  <div className="max-w-6xl mx-auto px-4">
       <div className="flex  justify-between items-start md:items-center mb-8 md:mb-6 sm:mb-4">
         <h1 className="text-3xl md:text-2xl sm:text-xl font-bold text-gray-800 mb-4 md:mb-0">{data?.user.name}</h1>
         <div className="flex space-x-4 md:space-x-3 sm:space-x-2">
