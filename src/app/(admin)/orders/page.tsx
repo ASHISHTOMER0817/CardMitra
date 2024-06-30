@@ -216,7 +216,7 @@ const AdminOrderHistory = () => {
 					</div> */}
 
 					{/*Latest Design changes */}
-					<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+					<div className="">
 						{/* <h1 className="text-2xl font-semibold mb-6">
 							Order List
 						</h1> */}

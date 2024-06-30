@@ -52,7 +52,7 @@ const OdrHistory = () => {
 	}, []);
 
 	return (
-		<div className="flex flex-col mx-auto">
+		<div className="flex flex-col mx-auto px-4 sm:px-0">
 			<Header
 				heading={"Order History"}
 				Children={
