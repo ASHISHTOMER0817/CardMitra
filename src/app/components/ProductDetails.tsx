@@ -41,7 +41,7 @@ export default function ProductDetails({
 						? "Quantity left: " + data?.requirement
 						: "Ordered quantity: 1"}{" "}
 				</div>
-				<div className="flex justify-start items-center flex-wrap sm:justify-center">
+				<div className="flex justify-start items-center flex-wrap sm:justify-center gap-5">
 					<Image
 						className="w-80 sm:w-56"
 						src={`data:image/jpg;base64,${data?.image}`}
@@ -123,7 +123,7 @@ export default function ProductDetails({
 											width={80}
 											height={40}
 											alt={""}
-											className="w-8 h-auto"
+											className="w-16 h-auto"
 										/>
 										<div
 											// key={index}
@@ -161,6 +161,7 @@ export default function ProductDetails({
 									? `data:image/png;base64,${data?.site?.image}`
 									: "/static/samsung.png"
 							}
+							className="h-auto w-12"
 							width={40}
 							height={40}
 							alt="icon"

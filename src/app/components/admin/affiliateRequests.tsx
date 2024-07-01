@@ -219,7 +219,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
       {heading === "approved" && (
         <h1 className="text-2xl font-semibold mb-6">User List</h1>
       )}
-      <div className="overflow-x-auto bg-white shadow-md rounded-lg">
+      <div className="overflow-x-auto bg-white shadow-md rounded-[8px]">
         {!users ? (
           <Loader />
         ) : users.allRequest.length > 0 ? (

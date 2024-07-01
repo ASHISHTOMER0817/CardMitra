@@ -112,7 +112,7 @@ const Dashboard = () => {
 		<>
 			<div className="mx-auto mb-16 sm:w-[100%]">
 				{/* <div
-					className={`fixed top-2 right-2 text-sm bg-[#D0D6E0] rounded-lg p-2 flex flex-col gap-4 bg-transparent`}
+					className={`fixed top-2 right-2 text-sm bg-[#D0D6E0] rounded-[8px] p-2 flex flex-col gap-4 bg-transparent`}
 				>
 					{!data
 						? ""

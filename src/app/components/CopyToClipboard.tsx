@@ -11,7 +11,7 @@ const CopyDivToClipboard = ({
 }: {
 	orderId: string;
 	classList?: string;
-	stateChange: () => void;
+	stateChange?: () => void;
 }) => {
 	const divRef = useRef<HTMLDivElement>(null);
 
@@ -23,7 +23,7 @@ const CopyDivToClipboard = ({
 				.then(() => {
 					// alert(`Copied the text: ${text}`);
 					Popup("info", `Copied successfully`, 700);
-					stateChange();
+					// stateChange();
 				})
 				.catch((err) => {
 					console.error("Failed to copy: ", err);
@@ -38,11 +38,11 @@ const CopyDivToClipboard = ({
 				<div>Copy OrderID before proceeding</div>
 			</div>
 			<div
-				className="flex justify-center items-center gap-1 cursor-pointer"
+				className="flex justify-center items-center gap-1 cursor-pointer "
 				onClick={copyToClipboard}
 			>
 				<div
-					className="text-gray-500 rounded-full px-4 py-3 outline-none"
+					className="text-gray-500 rounded-full px-4 py-3 outline-none w-full"
 					ref={divRef}
 					style={{
 						// padding: "10px",

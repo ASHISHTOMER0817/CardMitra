@@ -54,6 +54,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	const [optionFile, setOptionFile] = useState<File>();
 	const [updateOptions, setUpdateOptions] = useState(false);
 
+	const [returnAmt, setReturnAmt] = useState<number>()
 
 	// const [cardsArr, setCardsArr] = useState<string[]>();
 	// console.log(cards);
@@ -172,13 +173,13 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 			formData.append("price", price!.toString());
 			formData.append("requirement", requirement!.toString());
 			formData.append("address", address);
-
+			formData.append("returnAmt",(returnAmt? returnAmt : 0).toString())
 			formData.append("card", JSON.stringify(cards));
 			formData.append("site", JSON.stringify(site));
 			formData.append("file", file!);
 			formData.append("info", JSON.stringify(info));
 			formData.append("zipCode", zipCode);
-			console.log(formData);
+			console.log(formData.get('returnAmt'));
 			const response = await axios.post(
 				`/api/admin/addProduct?query=newProduct`,
 				formData
@@ -409,6 +410,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 										</span>
 									</label>
 								</div>
+								
 								<div className="flex-col flex items-start">
 									<input
 										required
@@ -429,7 +431,37 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 										htmlFor="commission"
 										className=""
 									>
-										Commission:
+										Commission{" "}
+										<span className="text-gray-300">
+											/ Unit:
+										</span>
+									</label>
+								</div>
+								<div className=" flex flex-col items-start">
+									<input
+										required
+										id="returnAmt"
+										type="number"
+										placeholder="0"
+										value={returnAmt}
+										onChange={(e) =>
+											setReturnAmt(
+												+e
+													.target
+													.value
+											)
+										}
+										className=" outline-none px-2 border-b border-black font-semibold text-primaryBgClr py-1"
+									/>
+									<label
+										draggable="true"
+										htmlFor="returnAmt"
+										className=""
+									>
+										Return Amount{" "}
+										<span className="text-gray-300">
+											/ Unit:
+										</span>
 									</label>
 								</div>
 							</div>
@@ -437,7 +469,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 								** Points to remember while
 								Ordering **
 							</h6>
-							<div className="text-gray-500 flex flex-col gap-5 text-sm">
+							<div className="text-gray-500 flex flex-col gap-5 text-sm w-2/4 lgmax:w-full ">
 								<input
 									type="text"
 									className="border-b border-b-black outline-none mt-8"

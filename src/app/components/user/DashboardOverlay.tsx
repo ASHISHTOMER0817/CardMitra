@@ -34,14 +34,14 @@ const DashboardOverlay = ({
 	return (
 		<>
 			{/* <div
-			className={` text-sm h-24 bg-[#D0D6E0] rounded-lg p-2 flex sm:h-12 sm:justify-around sm:pt-0.5 ${
+			className={` text-sm h-24 bg-[#D0D6E0] rounded-[8px] p-2 flex sm:h-12 sm:justify-around sm:pt-0.5 ${
 				acknowledge && "hidden"
 			}`}
 		>
 			<Image
 				src={image ? `/uploads/${image}` : phoneImage}
 				alt="User Image"
-				className="w-20 h-auto rounded-lg sm:h-[30px] sm:w-[30px]"
+				className="w-20 h-auto rounded-[8px] sm:h-[30px] sm:w-[30px]"
 				width={200}
 				height={300}
 			/>
@@ -116,11 +116,11 @@ const DashboardOverlay = ({
 				) : null}
 			</div>
 		</div> */}
-			<div className={`bg-white shadow-md rounded-lg p-3 flex items-center space-x-3 max-w-xs ${acknowledge && 'hidden'}`}>
+			<div className={`bg-white shadow-md rounded-[8px] p-3 flex items-center space-x-3 max-w-xs ${acknowledge && 'hidden'}`}>
 				<Image
 					src={image ? `/uploads/${image}` : phoneImage}
 					alt={name}
-					className="w-16 h-16 object-cover rounded-md"
+					className="w-16 h-16 object-cover rounded-[6px]"
 					width={64}
 					height={64}
 				/>

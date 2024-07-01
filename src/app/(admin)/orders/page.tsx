@@ -220,7 +220,7 @@ const AdminOrderHistory = () => {
 						{/* <h1 className="text-2xl font-semibold mb-6">
 							Order List
 						</h1> */}
-						<div className="overflow-x-auto bg-white shadow-md rounded-lg">
+						<div className="overflow-x-auto bg-white shadow-md rounded-[8px]">
 							<table className="min-w-full divide-y divide-gray-200 text-nowrap">
 								<thead className="bg-green-100">
 									<tr>

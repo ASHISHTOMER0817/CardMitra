@@ -11,12 +11,24 @@ import Popup from "@/app/components/Popup";
 import { RxCross1 } from "react-icons/rx";
 import { useRouter } from "next/navigation";
 
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+	DialogClose
+} from "@/components/ui/dialog";
+
 // interface productTypes {
 // 	product: productList;
 // 	orderNumber: string;
 // 	deliveryDate: Date;
 // 	otp: boolean;
 // }
+
 const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 	const [data, setData] = useState<order>();
 	const [arr, setArr] = useState<Array<MyArrayItem>>([]);
@@ -76,13 +88,86 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 		}
 	};
 
+	const GoogleFormPage = () => {
+		return (
+			<>
+				<CopyDivToClipboard
+					orderId={params._id}
+					// classList={otpStatus ? "hidden" : ""}
+					// stateChange={function () {
+					// 	setCopiedYet(true);
+					// }}
+				/>
+
+				<button
+					className={`text-gray-700 border-orange-200 border rounded-3xl self-center px-4 py-3 hover:bg-orange-50 bg-white ${
+						"" // otpStatus ? "hidden" : ""
+					} w-96 sm:w-48 sm:py-2`}
+					onClick={() => {
+						GoogleForm();
+					}}
+				>
+					Fill google form
+				</button>
+				<button
+					className={`text-white border self-center rounded-3xl px-4 py-3 hover:bg-green-600 bg-primaryBgClr ${
+						"" // otpStatus ? "hidden" : ""
+					} w-96 sm:w-48 sm:py-2`}
+					onClick={() => {
+						setOtpStatusUpdate("true");
+						// handleSubmit();
+						setOtpStatus(true);
+					}}
+				>
+					Confirm
+				</button>
+			</>
+		);
+	};
+
+	const ReSubmit = () => {
+		return (
+			<>
+				<div
+					onClick={() => setOtpStatus(false)}
+					className={`text-white border text-center cursor-pointer self-center rounded-3xl px-4 py-3 hover:bg-green-600 bg-primaryBgClr w-96  sm:w-48 sm:py-2 `}
+				>
+					Re-Submit OTP
+				</div>
+				<Dialog>
+				<DialogTrigger
+					onClick={() => setOverlay("")}
+					className={`cursor-pointer mx-auto mt-3 text-xs border-b border-b-gray-500 hover:border-b-gray-800 hover:text-gray-800 text-gray-500 `}
+				>
+					confirm product delivery
+				</DialogTrigger>
+
+				
+					{/* <DialogTrigger>Open</DialogTrigger> */}
+					<DialogContent className="bg-white rounded-[20px]">
+						<DialogHeader>
+							<DialogTitle>
+								Product got delivered, Right?
+							</DialogTitle>
+							<DialogDescription>
+								Click confirm if you are sure that the product has been delivered
+							</DialogDescription>
+						</DialogHeader>
+						<DialogFooter className=" gap-3">
+							
+							<DialogClose className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50">Cancel</DialogClose>
+							<button className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50" onClick={()=>setDeliveryStatus('true')}>Confirm</button>
+						</DialogFooter>
+					</DialogContent>
+				</Dialog>
+			</>
+		);
+	};
+
 	return (
 		<div>
-			{!data ? (
-				<Loader />
-			) : (
-				<div className="w-full sm:ml-0">
-					<div
+			<div className="w-full sm:ml-0">
+				{/* <div
 						className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}
 					></div>
 					<div
@@ -119,97 +204,36 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 								Confirm
 							</button>
 						</div>
-					</div>
-					<BackwardButton />
-					<section className="flex items-start text-sm justify-around flex-wrap gap-4">
-						<div className="flex flex-col items-start justify-around sm:gap-0">
+					</div> */}
+				<BackwardButton />
+				<section className="flex items-start text-sm justify-around flex-wrap gap-4">
+					<div className="flex flex-col items-start justify-around sm:gap-0">
+						{!data ? (
+							<Loader />
+						) : (
 							<ProductDetails
 								observer="user"
-								data={data.product!}
+								data={data?.product}
 								arr={arr}
 							/>
+						)}
+					</div>
+					<div className="border px-10 py-7 rounded-2xl sm:px-4 sm:py-4 sm:w-full">
+						<div className="text-base font-semibold text-primaryBgClr text-center">
+							OTP Form
 						</div>
-						<div className="border px-10 py-7 rounded-2xl sm:px-4 sm:py-4 sm:w-full">
-							<div className="text-base font-semibold text-primaryBgClr text-center">
-								OTP Form
-							</div>
-							<hr className="my-5 sm:my-2" />
-							{/* <OtpForm _id={params._id} /> */}
-							<div className=" flex flex-col justify-start gap-3">
-								<CopyDivToClipboard
-									orderId={params._id}
-									classList={
-										otpStatus
-											? "hidden"
-											: ""
-									}
-									stateChange={function () {
-										setCopiedYet(true);
-									}}
-								/>
-
-								<button
-									className={`text-gray-700 border-orange-200 border rounded-3xl px-4 py-3 hover:bg-orange-50 bg-white ${
-										otpStatus
-											? "hidden"
-											: ""
-									} w-96 sm:w-48 sm:py-2`}
-									style={{alignSelf: 'center'}}
-									onClick={() => {
-										copiedYet &&
-											GoogleForm();
-									}}
-								>
-									Fill google form
-								</button>
-								<button
-									className={`text-white border rounded-3xl px-4 py-3 hover:bg-green-600 bg-primaryBgClr ${
-										otpStatus
-											? "hidden"
-											: ""
-									} w-96 sm:w-48 sm:py-2`}
-									style={{alignSelf: 'center'}}
-									onClick={() => {
-										copiedYet &&
-											setOtpStatusUpdate(
-												"true"
-											);
-										// handleSubmit();
-									}}
-								>
-									Confirm
-								</button>
-								<div
-									onClick={() =>
-										setOtpStatus(false)
-									}
-									className={`text-white border text-center cursor-pointer rounded-3xl px-4 py-3 hover:bg-green-600 bg-primaryBgClr w-96 ${
-										otpStatus
-											? ""
-											: "hidden"
-									} sm:w-48 sm:py-2 `}
-									style={{alignSelf: 'center'}}
-								>
-									Re-Submit OTP
-								</div>
-								<div
-									onClick={() =>
-										setOverlay("")
-									}
-									className={`cursor-pointer mx-auto mt-3 text-xs border-b border-b-gray-500 hover:border-b-gray-800 hover:text-gray-800 text-gray-500 ${
-										otpStatus
-											? ""
-											: "hidden"
-									}`}
-								>
-									Click to confirm if the
-									product got delivered
-								</div>
-							</div>
+						<hr className="my-5 sm:my-2" />
+						{/* <OtpForm _id={params._id} /> */}
+						<div className=" flex flex-col justify-start gap-3">
+							{otpStatus ? (
+								<ReSubmit />
+							) : (
+								<GoogleFormPage />
+							)}
 						</div>
-					</section>
-				</div>
-			)}
+					</div>
+				</section>
+			</div>
 		</div>
 	);
 };
