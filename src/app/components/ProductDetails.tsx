@@ -35,8 +35,8 @@ export default function ProductDetails({
 }) {
 	return (
 		<>
-			<section className=" text-left mb-4 sm:w-full">
-				<div className="bg-[#FC08081A] text-[#FC0808] text-center px-4 py-1 mb-3 rounded-full sm:w-full sm:text-nowrap">
+			<section className=" text-left sm:w-full">
+				<div className="bg-[#FC08081A] text-[#FC0808] text-center px-4 py-1 rounded-full sm:w-full sm:text-nowrap">
 					{observer !== "user" || !observer
 						? "Quantity left: " + data?.requirement
 						: "Ordered quantity: 1"}{" "}
@@ -169,7 +169,7 @@ export default function ProductDetails({
 					</Link>
 				</div>
 			</section>
-			<section className="text-wrap flex text-gray-600 text-sm flex-col justify-start mt-4 gap-2 sm:mb-4 sm:w-full">
+			<section className="text-wrap flex text-gray-600 text-sm flex-col justify-start gap-2 sm:mb-4 sm:w-full">
 				<div className=" text-black text-lg sm:text-[12px] font-semibold">
 					Address
 				</div>

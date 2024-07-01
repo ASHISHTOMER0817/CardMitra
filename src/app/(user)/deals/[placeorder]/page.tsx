@@ -63,7 +63,7 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 			<div className="sm:flex sm:flex-col">
 				<BackwardButton />
 				<section className="flex items-start text-sm justify-around sm:flex-col flex-wrap">
-					<div className="flex flex-col items-start gap-10 justify-around sm:gap-0 sm:w-full">
+					<div className="flex flex-col items-start justify-around sm:gap-0 sm:w-full">
 						{!data && !arr ? (
 							""
 						) : (

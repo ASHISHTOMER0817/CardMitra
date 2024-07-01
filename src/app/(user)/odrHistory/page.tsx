@@ -57,7 +57,7 @@ const OdrHistory = () => {
 				heading={"Order History"}
 				Children={
 					<nav
-						className="flex items-center gap-3 text-gray-800 sm:text-xs order-history-navbar"
+						className="flex items-center gap-3 text-gray-800 sm:text-sm order-history-navbar overflow-auto"
 						style={{ justifyContent: "space-evenly" }}
 					>
 						<div
@@ -184,7 +184,7 @@ const OdrHistory = () => {
 						return (
 							<div key={index}>
 								{noOfOrders > 0 && (
-									<div className="custom_dateShadow px-5 py-2 mb-5 w-fit rounded-full ml-auto bg-transparent text-[#2F4F4F] text-base">
+									<div className="custom_dateShadow px-5 py-2 mb-5 w-fit sm:text-[12px] sm:py-0 sm:px-2 rounded-full ml-auto bg-transparent text-[#2F4F4F] text-base">
 										{" "}
 										{new Date(
 											orderarr[0].orderedAt
