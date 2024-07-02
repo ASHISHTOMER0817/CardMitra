@@ -25,63 +25,65 @@ const ProductOrderList = ({ _id }: { _id: string }) => {
 	}, [_id]);
 
 	return (
-		<div className="overflow-hidden rounded-2xl">
-		<div className="overflow-x-auto bg-white shadow-md rounded-[8px] text-sm">
+		<div className="overflow-hidden rounded-2xl mb-4">
+		
 			{!orders ? (
 				<Loader />
 			) : orders.length > 0 ? (
-				<table className=" min-w-full divide-y divide-gray-200 text-nowrap">
-					<thead>
-						<tr className="bg-green-100">
-							<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-								User
-							</th>
-							<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-								Order ID
-							</th>
-							<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-								Order
-							</th>
-							<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-								Status
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						{orders.map((order, index) => (
-							<tr
-								key={index}
-								className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}
-							>
-								<td className="py-4 px-12 font-semibold text-primaryBgClr">
-									{order.user.name}
-								</td>
-								<td className="py-4 px-12 text-gray-500">
-									{order._id}
-								</td>
-								<td className="py-4 px-12 text-gray-500">
-									{new Date(
-										order.orderedAt
-									).toDateString()}
-								</td>
-								<td className="py-4 px-12 text-gray-500">
-									<StatusBadge
-										status={
-											order.delivered
-										}
-									/>
-									{/* {order.delivered} */}
-								</td>
+				<div className="overflow-x-auto bg-white shadow-md rounded-[8px] text-sm">
+					<table className=" min-w-full divide-y divide-gray-200 text-nowrap">
+						<thead>
+							<tr className="bg-green-100">
+								<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+									User
+								</th>
+								<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+									Order ID
+								</th>
+								<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+									Order
+								</th>
+								<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+									Status
+								</th>
 							</tr>
-						))}
-					</tbody>
-				</table>
+						</thead>
+						<tbody>
+							{orders.map((order, index) => (
+								<tr
+									key={index}
+									className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}
+								>
+									<td className="py-4 px-12 font-semibold text-primaryBgClr">
+										{order.user.name}
+									</td>
+									<td className="py-4 px-12 text-gray-500">
+										{order._id}
+									</td>
+									<td className="py-4 px-12 text-gray-500">
+										{new Date(
+											order.orderedAt
+										).toDateString()}
+									</td>
+									<td className="py-4 px-12 text-gray-500">
+										<StatusBadge
+											status={
+												order.delivered
+											}
+										/>
+										{/* {order.delivered} */}
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
 			) : (
 				<div className="mt-24 mx-auto text-red-500 font-serif">
 					No order has been placed yet...
 				</div>
 			)}
-		</div>
+		
 		</div>
 	);
 };

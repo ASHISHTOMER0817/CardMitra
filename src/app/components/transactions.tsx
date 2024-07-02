@@ -153,7 +153,7 @@ const Transactions = ({
 
 
 	{/*Latest Design changes */}
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="mx-auto ">
       {/* <h1 className="text-2xl font-semibold mb-6">Transactions List</h1> */}
       <div className="overflow-x-auto bg-white shadow-md rounded-[8px]">
         <table className="min-w-full divide-y divide-gray-200 text-nowrap">
@@ -177,7 +177,7 @@ const Transactions = ({
           </thead>
           <tbody>
             {data?.map(({ user, dateOfPayment, _id, amount }, index) => (
-              <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
+              <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}>
                 <td className="py-4 px-6 text-gray-500">
                   {_id}
                 </td>

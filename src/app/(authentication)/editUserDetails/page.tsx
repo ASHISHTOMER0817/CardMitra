@@ -185,7 +185,7 @@ const EditUserDetails = () => {
 
 <form
   onSubmit={sendData}
-  className="bg-white shadow-lg rounded-[8px] p-8 mx-auto my-10 max-w-md w-full space-y-6"
+  className="bg-white shadow-lg rounded-[8px] p-8 mx-auto max-w-md w-full space-y-6 no-shadow-small"
 >
   <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Your Information</h2>
   <p className="text-sm text-gray-600 text-center mb-6">

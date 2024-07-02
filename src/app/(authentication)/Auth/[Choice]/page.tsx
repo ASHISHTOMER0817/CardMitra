@@ -193,7 +193,7 @@ const Login = ({ params }: { params: { Choice: string } }) => {
 					className="flex flex-col justify-center"
 					style={{ flex: 1 }}
 				>
-					<h1 className="font-semibold my-8 text-center">
+					<h1 className="font-semibold my-4 text-center">
 						{params.Choice === "login"
 							? "Login"
 							: "Sign Up"}

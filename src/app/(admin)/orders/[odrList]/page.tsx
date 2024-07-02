@@ -73,7 +73,7 @@ const OrderList = ({ params }: { params: { odrList: string } }) => {
 	}
 
 	return (
-		<div className="m-10 flex flex-col mx-auto w-4/5 gap-9 sm:ml-0 sm:mr-0 sm:w-full">
+		<div className="flex flex-col mx-auto">
 			<BackwardButton />
 			{!data ? (
 				<Loader />
@@ -85,7 +85,7 @@ const OrderList = ({ params }: { params: { odrList: string } }) => {
 					<div
 						className={`flex ${
 							data?.deals
-								? "items-start"
+								? "items-center"
 								: "items-center"
 						} justify-center gap-5`}
 					>
@@ -140,7 +140,7 @@ const OrderList = ({ params }: { params: { odrList: string } }) => {
 					</div>
 				</div>
 			)}
-			<h5 className="text-left font-semibold">Order Details</h5>
+			<h5 className="text-left font-semibold mt-6 my-4">Order Details</h5>
 			<ProductOrderList _id={_id} />
 		</div>
 	);
