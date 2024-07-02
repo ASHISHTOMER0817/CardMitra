@@ -214,6 +214,9 @@ const productSchema = new mongoose.Schema({
 	},
 	returnAmount: {
 		type: Number
+	},
+	Date:{
+		type:Date
 	}
 });
 

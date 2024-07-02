@@ -142,6 +142,7 @@ export async function GET(request: NextRequest) {
                      //    ------- .sort({ deals: -1 }) --------
                   console.log('hello')
                   const products:any = await Product.find({ show: true })
+                  .sort({Date: -1})
                   .populate({path:'cards', select:'value image'})
                   .populate('site').lean();
                   // console.log('this is product', products)

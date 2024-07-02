@@ -39,7 +39,7 @@ const CardLayout = ({
 				{icons}
 			</div>
 			<div className="flex justify-center text-sm items-start md:gap-0 sm:justify-between">
-				<Image
+				<Image loading="lazy" quality={30}
 					className="w-40 h-[150px] sm:h-[100px] sm:w-[100px]"
 					src={
 						deviceImage
@@ -80,7 +80,7 @@ const CardLayout = ({
 			</div>
 			<hr className="my-4 sm:my-2" />
 			<div className="flex justify-between items-center sm:w-full min-h-10">
-				<Image
+				<Image loading="lazy" quality={30} fetchPriority="low"
 					src={`data:image/png;base64,${site.image}`}
 					width={56}
 					height={56}
@@ -98,7 +98,7 @@ const CardLayout = ({
 								className="flex justify-center items-center gap-1"
 							>
 								{" "}
-								<Image
+								<Image loading="lazy" quality={40} fetchPriority="low"
 									src={`data:image/jpg;base64,${image}`}
 									width={80}
 									height={40}

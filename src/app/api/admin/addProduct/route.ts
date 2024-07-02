@@ -251,7 +251,8 @@ export async function POST(request: NextRequest) {
                   info,
                   zipCode,
                   returnAmount: +returnAmount!,
-                  showOnHomePage: false
+                  showOnHomePage: false,
+                  Date:new Date()
             });
             console.log(newProduct, 'this newProduct')
 
