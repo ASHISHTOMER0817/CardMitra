@@ -193,6 +193,7 @@ export async function POST(request: NextRequest) {
             const productLink = formData.get('productLink');
             const price = formData.get('price');
             const requirement = formData.get('requirement');
+            const returnAmount = formData.get('returnAmt')
             const address = formData.get('address');
             const cardObj: any = formData.get('card');
             const siteObj: any = formData.get('site');
@@ -222,7 +223,7 @@ export async function POST(request: NextRequest) {
             //     if (!siteDoc) {
             //       siteDoc = await Site.create(site);
             //     }
-            console.log(siteDoc, 'this is site')
+            // console.log(siteDoc, 'this is site')
 
             // Find or create card documents
             const cardIds = await Promise.all(cards.map(async (card) => {
@@ -234,6 +235,8 @@ export async function POST(request: NextRequest) {
                   return cardDoc._id;
             }));
             console.log('these are cards', cardIds)
+
+            console.log(+returnAmount!, typeof returnAmount, 'i got here!!!!')
 
             const newProduct = await Product.create({
                   name,
@@ -247,6 +250,7 @@ export async function POST(request: NextRequest) {
                   image: imageData,
                   info,
                   zipCode,
+                  returnAmount: +returnAmount!,
                   showOnHomePage: false
             });
             console.log(newProduct, 'this newProduct')

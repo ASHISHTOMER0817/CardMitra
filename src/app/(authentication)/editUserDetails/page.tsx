@@ -30,7 +30,7 @@ const InputSpace: React.FC<InputProps> = ({
 	return (
 	  <input
 	    id={id}
-	    className={`w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${classList}`}
+	    className={`w-full px-3 py-2 border border-gray-300 rounded-[6px] shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${classList}`}
 	    type={type}
 	    placeholder={placeholder}
 	    value={value}
@@ -185,7 +185,7 @@ const EditUserDetails = () => {
 
 <form
   onSubmit={sendData}
-  className="bg-white shadow-lg rounded-lg p-8 mx-auto my-10 max-w-md w-full space-y-6 no-shadow-small sm:mt-0"
+  className="bg-white shadow-lg rounded-[8px] p-8 mx-auto my-10 max-w-md w-full space-y-6"
 >
   <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Your Information</h2>
   <p className="text-sm text-gray-600 text-center mb-6">
@@ -219,13 +219,13 @@ const EditUserDetails = () => {
     <button
       type="button"
       onClick={() => router.push("/userProfile")}
-      className="flex-1 py-2 px-4 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      className="flex-1 py-2 px-4 border border-gray-300 rounded-[6px] text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
     >
       Cancel
     </button>
     <button
       type="submit"
-      className="flex-1 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primaryBgClr hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      className="flex-1 py-2 px-4 border border-transparent rounded-[6px] shadow-sm text-sm font-medium text-white bg-primaryBgClr hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
     >
       Submit
     </button>

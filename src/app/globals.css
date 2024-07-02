@@ -2,6 +2,97 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+	:root {
+		--background: 0 0% 100%;
+		--foreground: 224 71.4% 4.1%;
+
+		--card: 0 0% 100%;
+
+		--card-foreground: 224 71.4% 4.1%;
+
+		--popover: 0 0% 100%;
+		--popover-foreground: 224 71.4% 4.1%;
+
+		--primary: 220.9 39.3% 11%;
+		--primary-foreground: 210 20% 98%;
+
+		--secondary: 220 14.3% 95.9%;
+		--secondary-foreground: 220.9 39.3% 11%;
+
+		--muted: 220 14.3% 95.9%;
+		--muted-foreground: 220 8.9% 46.1%;
+
+		--accent: 220 14.3% 95.9%;
+		--accent-foreground: 220.9 39.3% 11%;
+
+		--destructive: 0 84.2% 60.2%;
+		--destructive-foreground: 210 20% 98%;
+
+		--border: 220 13% 91%;
+		--input: 220 13% 91%;
+		--ring: 224 71.4% 4.1%;
+
+		--radius: 0.5rem;
+	}
+
+	.dark {
+		--background: 224 71.4% 4.1%;
+		--foreground: 210 20% 98%;
+
+		--card: 224 71.4% 4.1%;
+		--card-foreground: 210 20% 98%;
+
+		--popover: 224 71.4% 4.1%;
+		--popover-foreground: 210 20% 98%;
+
+		--primary: 210 20% 98%;
+		--primary-foreground: 220.9 39.3% 11%;
+
+		--secondary: 215 27.9% 16.9%;
+		--secondary-foreground: 210 20% 98%;
+
+		--muted: 215 27.9% 16.9%;
+		--muted-foreground: 217.9 10.6% 64.9%;
+
+		--accent: 215 27.9% 16.9%;
+		--accent-foreground: 210 20% 98%;
+
+		--destructive: 0 62.8% 30.6%;
+		--destructive-foreground: 210 20% 98%;
+
+		--border: 215 27.9% 16.9%;
+		--input: 215 27.9% 16.9%;
+		--ring: 216 12.2% 83.9%;
+	}
+}
+
+@layer base {
+	* {
+		@apply border-border;
+	}
+	body {
+		@apply bg-background text-foreground;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Custom CSS */
+
 :root {
 	--primary: rgb(57 172 115);
 	--secondary: white;
@@ -197,9 +288,9 @@ h3 {
 		justify-content: center;
 	}
 	/* .website-img {
-		height: 20px !important;
-		width: 20px !important;
-	} */
+      height: 20px !important;
+      width: 20px !important;
+    } */
 	.card-img {
 		width: 40px !important;
 	}
@@ -212,25 +303,25 @@ h3 {
 	.order-form {
 		width: 100% !important;;
 	}
-	.center-on-small{
+	.center-on-small {
 		text-align: center;
 	}
-	.carousel-item{
+	.carousel-item {
 		padding: 30px;
 	}
-	.left-on-small{
+	.left-on-small {
 		text-align: left;
 	}
-	.flex.float-right-sm{
+	.flex.float-right-sm {
 		flex-direction: column-reverse;
 	}
-	.rounded-small{
+	.rounded-small {
 		border-radius: 4px;
 	}
-	.ml-auto-small{
+	.ml-auto-small {
 		margin-left: auto;
 	}
-	.align-left-small{
+	.align-left-small {
 		align-items: start;
 	}
 	.no-shadow-small{
@@ -254,100 +345,95 @@ h3 {
 	box-shadow: 0px 0px 3px 0px #646060;
 }
 
-.slick-dots{
+.slick-dots {
 	bottom: -40px;
 }
-
-
-
 
 /* Add these styles to your existing CSS FOR HOMEPAGE */
 
 @media (max-width: 1024px) {
 	.lgMax\:py-8 {
-	  padding-top: 2rem;
-	  padding-bottom: 2rem;
+		padding-top: 2rem;
+		padding-bottom: 2rem;
 	}
-    
-	.lgMax\:px-4 {
-	  padding-left: 1rem;
-	  padding-right: 1rem;
-	}
-    
-	.lgMax\:text-2xl {
-	  font-size: 1.5rem;
-	  line-height: 2rem;
-	}
-    
-	.lgMax\:text-lg {
-	  font-size: 1.125rem;
-	  line-height: 1.75rem;
-	}
-    
-	.lgMax\:gap-4 {
-	  gap: 1rem;
-	}
-    
-	.lgMax\:flex-col {
-	  flex-direction: column;
-	}
-    
-	.lgMax\:items-center {
-	  align-items: center;
-	}
-    
-	.lgMax\:w-full {
-	  width: 100%;
-	}
-    
-	.lgMax\:mx-auto {
-	  margin-left: auto;
-	  margin-right: auto;
-	}
-    }
-    
-    @media (max-width: 768px) {
-	.xs\:text-xl {
-	  font-size: 1.25rem;
-	  line-height: 1.75rem;
-	}
-    
-	.xs\:text-base {
-	  font-size: 1rem;
-	  line-height: 1.5rem;
-	}
-    
-	.xs\:gap-2 {
-	  gap: 0.5rem;
-	}
-    
-	.xs\:px-2 {
-	  padding-left: 0.5rem;
-	  padding-right: 0.5rem;
-	}
-    }
 
+	.lgMax\:px-4 {
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+
+	.lgMax\:text-2xl {
+		font-size: 1.5rem;
+		line-height: 2rem;
+	}
+
+	.lgMax\:text-lg {
+		font-size: 1.125rem;
+		line-height: 1.75rem;
+	}
+
+	.lgMax\:gap-4 {
+		gap: 1rem;
+	}
+
+	.lgMax\:flex-col {
+		flex-direction: column;
+	}
+
+	.lgMax\:items-center {
+		align-items: center;
+	}
+
+	.lgMax\:w-full {
+		width: 100%;
+	}
+
+	.lgMax\:mx-auto {
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+@media (max-width: 768px) {
+	.xs\:text-xl {
+		font-size: 1.25rem;
+		line-height: 1.75rem;
+	}
+
+	.xs\:text-base {
+		font-size: 1rem;
+		line-height: 1.5rem;
+	}
+
+	.xs\:gap-2 {
+		gap: 0.5rem;
+	}
+
+	.xs\:px-2 {
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+	}
+}
 
 /* STYPE FOR TESTIMONIALS */
 
-
 .slider-container .slick-list {
 	margin: 0 -8px;
-    }
-    
-    .slider-container .slick-slide > div {
+}
+
+.slider-container .slick-slide > div {
 	padding: 8px;
-    }
-    
-    .slider-container .slick-dots {
+}
+
+.slider-container .slick-dots {
 	bottom: -40px;
-    }
-    
-    .slider-container .slick-dots li button:before {
+}
+
+.slider-container .slick-dots li button:before {
 	color: white;
-    }
-    
-    @media (max-width: 640px) {
+}
+
+@media (max-width: 640px) {
 	.slider-container .slick-dots {
 	  bottom: -30px;
 	}

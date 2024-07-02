@@ -18,7 +18,7 @@ import Link from "next/link";
 
 
 // const InfoCard = ({ title, children }:{title:string | undefined, children:ReactNode}) => {
-// 	return(<div className="bg-white shadow-md rounded-lg overflow-hidden">
+// 	return(<div className="bg-white shadow-md rounded-[8px] overflow-hidden">
 // 	  <div className="px-6 py-4 bg-gray-50 border-b">
 // 	    <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
 // 	  </div>
@@ -38,7 +38,7 @@ import Link from "next/link";
 
 
 const InfoCard = ({ title, children }:{title:string | undefined, children:ReactNode}) => (
-	<div className="bg-white shadow-md rounded-lg overflow-hidden">
+	<div className="bg-white shadow-md rounded-[8px] overflow-hidden">
 	  <div className="px-6 py-4 md:px-4 md:py-3 sm:px-3 sm:py-2 bg-gray-50 border-b">
 	    <h3 className="text-lg md:text-base sm:text-sm font-semibold text-gray-800">{title}</h3>
 	  </div>
@@ -214,7 +214,7 @@ const UserProfile = () => {
         </div>
       </div>
 
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden mb-8">
+      <div className="bg-white shadow-lg rounded-[8px] overflow-hidden mb-8">
         <div className="p-6 bg-gradient-to-r from-green-400 to-blue-500 text-white">
           <h2 className="text-2xl font-semibold mb-4">Earnings Overview</h2>
           <div className="flex justify-between items-center">
@@ -245,7 +245,7 @@ const UserProfile = () => {
         </InfoCard>
       </div>
 
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div className="bg-white shadow-lg rounded-[8px] overflow-hidden">
         <div className="px-6 py-4 bg-gray-50 border-b">
           <h2 className="text-xl font-semibold text-gray-800">Transactions</h2>
         </div>
@@ -275,7 +275,7 @@ const UserProfile = () => {
         </div>
       </div>
 
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden mb-8 md:mb-6 sm:mb-4">
+      <div className="bg-white shadow-lg rounded-[8px] overflow-hidden mb-8 md:mb-6 sm:mb-4">
         <div className="p-6 md:p-4 sm:p-3 bg-gradient-to-r from-green-400 to-blue-500 text-white">
           <h2 className="text-2xl md:text-xl sm:text-lg font-semibold mb-4 md:mb-3 sm:mb-2">Earnings Overview</h2>
           <div className="flex justify-between items-center md:flex-col md:items-start">
@@ -306,7 +306,7 @@ const UserProfile = () => {
         </InfoCard>
       </div>
 
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div className="bg-white shadow-lg rounded-[8px] overflow-hidden">
         <div className="px-6 py-4 md:px-4 md:py-3 sm:px-3 sm:py-2 bg-gray-50 border-b">
           <h2 className="text-xl md:text-lg sm:text-base font-semibold text-gray-800">Transactions</h2>
         </div>

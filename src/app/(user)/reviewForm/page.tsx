@@ -10,6 +10,7 @@ const ReviewForm = () => {
 
 	const handleCancel = () => {
 		setReview("");
+		router.back()
 	};
 
 	const handleSubmit = async (event: FormEvent) => {
@@ -43,7 +44,7 @@ const ReviewForm = () => {
 			</p>
 			<form onSubmit={handleSubmit}>
 				<textarea
-					className="w-full h-40 p-4 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+					className="w-full h-40 p-4 mb-4 border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-green-600"
 					placeholder="Write your review here..."
 					value={review}
 					onChange={(e) => setReview(e.target.value)}

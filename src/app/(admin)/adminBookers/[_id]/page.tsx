@@ -16,6 +16,26 @@ import Loader from "@/app/components/loader";
 import Transactions from "@/app/components/transactions";
 import { IoIosArrowDown } from "react-icons/io";
 
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+	DialogClose,
+} from "@/components/ui/dialog";
+
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
 const InfoCard = ({
 	title,
 	children,
@@ -23,7 +43,7 @@ const InfoCard = ({
 	title: string | undefined;
 	children: ReactNode;
 }) => (
-	<div className="bg-white shadow-md rounded-lg overflow-hidden">
+	<div className="bg-white shadow-md rounded-[8px] overflow-hidden">
 		<div className="px-6 py-4 md:px-4 md:py-3 sm:px-3 sm:py-2 bg-gray-50 border-b">
 			<h3 className="text-lg md:text-base sm:text-sm font-semibold text-gray-800">
 				{title}
@@ -55,34 +75,37 @@ const InfoItem = ({
 const Bookers = ({ params }: { params: { _id: string } }) => {
 	const [data, setData] = useState<UserDetails>();
 	const [listType, setListType] = useState("delivered");
-	const [amount, setAmount] = useState<number>();
-	const [overlay, setOverlay] = useState("hidden");
+	const [amount, setAmount] = useState("");
 	const [overlayElement, setOverlayElement] = useState<{
-		action: string;
 		heading: string;
+		desc: string;
 		button: string;
+		action:string
 	}>();
 	const [deleteOperation, setDeleteOperation] = useState(false);
 	const [dis_approve, setDis_approve] = useState(false);
 	const [transactions, setTransactions] = useState(false);
 	const [dropDown, setdropDown] = useState(false);
 	// const [refresh, setRefresh] = useState(false);
-	// const router = useRouter();
+	const router = useRouter();
 
 	const paymentElement = {
-		action: "payment",
-		heading: "Write, the amount you paid",
-		button: "Submit",
+		heading: `The pending amount is ₹${" "} ${data?.totalAmt}${" + "}${data?.unpaid}`,
+		desc: "Write the amount, you have paid to the user.",
+		button: "Confirm",
+		action:'payment'
 	};
 	const deleteAccountElement = {
-		action: "delete",
-		heading: "You really want to delete this account",
+		heading: `Delete ${data?.user.name} account`,
+		desc: "You really want to delete this account. This action is irreversible",
 		button: "Delete",
+		action: 'delete'
 	};
 	const dis_approveAccountElement = {
-		action: "dis_approve",
 		heading: "Are you sure about dis-approving this user",
+		desc: "Are you sure about this. Remember it causes discomfort to the user",
 		button: "Dis-Approve",
+		action: 'dis-approve',
 	};
 
 	useEffect(() => {
@@ -93,11 +116,13 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 				const response = await axios.get(
 					`/api/users/details?query=${params._id}&delete=${deleteOperation}&dis_approve=${dis_approve}`
 				);
-				setData(response.data.data);
+				const data = response.data.data;
+				setData(data);
+				setAmount((+data.unpaid + +data.totalAmt).toString());
 				console.log(response.data.data);
 				if (response.data.status === 250) {
 					Popup("success", response.data.message);
-					console.log("really----");
+
 					// setRefresh(true)
 				}
 			} catch {
@@ -211,13 +236,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 			setDis_approve(true);
 		}
 		setListType("undelivered");
-		// payment();
-		setOverlay("hidden");
 	};
-
-	// const bankDetails = [{key:'Account Number',value: data?.user?.accountNo},{key:'IFSC Code',value: data?.user?.ifsc},{key:'UPI ID',value: data?.user?.upi}]
-	// const personal = [{key:'Name',value: data?.user?.name},{key:'Email',value: data?.user?.email},{key:'Contact',value: data?.user?.contact}]
-	// const deliveryStatus = ['undelivered','cancelled','wrong OTP','transactions']
 
 	return (
 		<>
@@ -353,94 +372,161 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 				</div>
 			)}
 		</div> */}
-
-			<div className="max-w-6xl mx-auto sm:px-0">
-				<div className="flex justify-between items-start md:items-center mb-4">
-					<h1 className="text-3xl md:text-2xl sm:text-xl font-bold text-gray-800 ">
-						{data?.user?.name}
-					</h1>
-					<div className="flex space-x-4 md:space-x-3 sm:space-x-2">
-						<button className="text-gray-700 border border-gray-300 rounded-md px-3 py-2 md:px-2 md:py-1 sm:text-xs hover:bg-gray-100 transition-colors duration-200">
-							Edit Profile
-						</button>
-						<button className="bg-red-500 text-white rounded-md px-3 py-2 md:px-2 md:py-1 sm:text-xs hover:bg-red-600 transition-colors duration-200">
-							Delete Account
-						</button>
-					</div>
-				</div>
-
-				<div className="grid md:grid-cols-1 gap-8 md:gap-6 sm:gap-4 mb-8 md:mb-6 sm:mb-4">
-					<InfoCard title="Personal Information">
-						<InfoItem
-							label="Name"
-							value={data?.user.name}
+			<Dialog>
+				<DropdownMenu>
+					<DialogContent className="bg-white rounded-[20px]">
+						<DialogHeader>
+							<DialogTitle>
+								{overlayElement?.heading}
+								{/* The pending amount is ₹
+								{data?.totalAmt}
+								{" + "}
+								{data?.unpaid} */}
+							</DialogTitle>
+							<DialogDescription>
+								{overlayElement?.desc}
+								{/* Write the amount, you have paid
+								to the user. */}
+							</DialogDescription>
+						</DialogHeader>
+						<input
+							type="number"
+							className={`border border-solid rounded-[10px] px-3 py-2 ${
+								overlayElement?.button ===
+								"Confirm"
+									? ""
+									: "hidden"
+							}`}
+							placeholder="Paid Amount"
+							value={amount}
+							onChange={(e) =>
+								setAmount(e.target.value)
+							}
 						/>
-						<InfoItem
-							label="Email"
-							value={data?.user.email}
-						/>
-						<InfoItem
-							label="Contact"
-							value={data?.user.contact}
-						/>
-					</InfoCard>
-					<InfoCard title="Bank Details">
-						<InfoItem
-							label="Account Number"
-							value={data?.user.accountNo}
-						/>
-						<InfoItem
-							label="IFSC Code"
-							value={data?.user.ifsc}
-						/>
-						<InfoItem
-							label="UPI ID"
-							value={data?.user.upi}
-						/>
-					</InfoCard>
-				</div>
-
-				<div className="bg-white shadow-lg rounded-lg overflow-hidden mb-8 md:mb-6 sm:mb-4">
-					<div className="flex justify-start gap-4 p-4 border-b overflow-x-auto">
-						{[
-							"Delivered",
-							"Undelivered",
-							"Cancelled",
-							"Wrong OTP",
-							"Transactions",
-						].map((status) => (
-							<button
-								key={status}
-								onClick={() =>
-									setListType(
-										status.toLowerCase()
-									)
-								}
-								className={`text-sm p-2 rounded-full cursor-pointer whitespace-nowrap ${
-									listType ===
-									status.toLowerCase()
-										? "bg-primaryBgClr text-white"
-										: "hover:bg-gray-100"
-								} sm:text-xs sm:p-1`}
+						<DialogFooter className=" gap-3">
+							<DialogClose className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50">
+								Cancel
+							</DialogClose>
+							<DialogClose
+								className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50"
+								onClick={buttonOperation }
 							>
-								{status}
-							</button>
-						))}
-					</div>
-					<div className="p-6 md:p-4 sm:p-3">
-						{listType === "transactions" ? (
-							<Transactions _id={params._id} />
-						) : (
-							data && (
-								<UserOrders
-									data={data?.orderList}
-									listType={listType}
+								{overlayElement?.button}
+							</DialogClose>
+						</DialogFooter>
+					</DialogContent>
+					<div className="max-w-6xl mx-auto px-4 py-8 md:py-6 sm:py-4">
+						<div className="flex justify-between items-start md:items-center mb-8 md:mb-6 sm:mb-4">
+							<h1 className="text-3xl md:text-2xl sm:text-xl font-bold text-gray-800 mb-4 md:mb-0">
+								{data?.user?.name}
+							</h1>
+							<div className="flex space-x-4 md:space-x-3 sm:space-x-2">
+								<DialogTrigger onClick={()=>setOverlayElement(paymentElement)} className="text-gray-700 border border-gray-300 rounded-[6px] px-3 py-2 md:px-2 md:py-1 sm:text-xs hover:bg-gray-100 transition-colors duration-200">
+									Pay
+								</DialogTrigger>
+
+								<DropdownMenuTrigger className=" text-gray-700 border border-gray-300 rounded-[6px] px-3 py-2 md:px-2 md:py-1 sm:text-xs hover:bg-gray-100 transition-colors duration-200">
+									Action
+								</DropdownMenuTrigger>
+
+								{/* <DropdownMenuTrigger>
+									Open
+								</DropdownMenuTrigger> */}
+								<DropdownMenuContent className="bg-white">
+
+									<DropdownMenuItem className="cursor-pointer " onClick={()=>setOverlayElement(dis_approveAccountElement)}>
+									<DialogTrigger>Dis-Approve</DialogTrigger>	
+									</DropdownMenuItem>
+									<DropdownMenuSeparator />
+									<DropdownMenuItem className="cursor-pointer " onClick={()=>setOverlayElement(deleteAccountElement)}>
+										 <DialogTrigger>Delete Account</DialogTrigger>
+									</DropdownMenuItem>
+								</DropdownMenuContent>
+							</div>
+						</div>
+
+						<div className="grid md:grid-cols-1 gap-8 md:gap-6 sm:gap-4 mb-8 md:mb-6 sm:mb-4">
+							<InfoCard title="Personal Information">
+								<InfoItem
+									label="Name"
+									value={data?.user.name}
 								/>
-							)
-						)}
+								<InfoItem
+									label="Email"
+									value={data?.user.email}
+								/>
+								<InfoItem
+									label="Contact"
+									value={data?.user.contact}
+								/>
+							</InfoCard>
+							<InfoCard title="Bank Details">
+								<InfoItem
+									label="Account Number"
+									value={
+										data?.user.accountNo
+									}
+								/>
+								<InfoItem
+									label="IFSC Code"
+									value={data?.user.ifsc}
+								/>
+								<InfoItem
+									label="UPI ID"
+									value={data?.user.upi}
+								/>
+							</InfoCard>
+						</div>
+
+						<div className="bg-white shadow-lg rounded-[8px] overflow-hidden mb-8 md:mb-6 sm:mb-4">
+							<div className="flex justify-start gap-4 p-4 border-b overflow-x-auto">
+								{[
+									"Delivered",
+									"Undelivered",
+									"Cancelled",
+									"Wrong OTP",
+									"Transactions",
+								].map((status) => (
+									<button
+										key={status}
+										onClick={() =>
+											setListType(
+												status.toLowerCase()
+											)
+										}
+										className={`text-sm p-2 rounded-full cursor-pointer whitespace-nowrap ${
+											listType ===
+											status.toLowerCase()
+												? "bg-primaryBgClr text-white"
+												: "hover:bg-gray-100"
+										} sm:text-xs sm:p-1`}
+									>
+										{status}
+									</button>
+								))}
+							</div>
+							<div className="p-6 md:p-4 sm:p-3">
+								{listType === "transactions" ? (
+									<Transactions
+										_id={params._id}
+									/>
+								) : (
+									data && (
+										<UserOrders
+											data={
+												data?.orderList
+											}
+											listType={
+												listType
+											}
+										/>
+									)
+								)}
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
+				</DropdownMenu>
+			</Dialog>
 		</>
 	);
 };

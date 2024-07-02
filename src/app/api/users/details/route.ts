@@ -13,6 +13,12 @@ export async function GET(request: NextRequest) {
 
             // Searchparams
             let userId = searchparams.get('query')
+            let deleteUser = searchparams.get('delete')
+            let disApprove = searchparams.get('dis_approve')
+            // if(deleteUser){}
+            // if(disApprove){
+            //       const user
+            // }
             console.log('thisis userId', userId)
             const adminSideUserId = userId;
             console.log('passing value', adminSideUserId)

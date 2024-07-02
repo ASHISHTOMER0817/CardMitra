@@ -61,7 +61,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
+		<html lang="en" >
 			<body className={inter.className} style={{ display: "flex" }}>
 			{/* <div
 				className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}

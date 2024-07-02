@@ -458,7 +458,7 @@ export default function Home() {
 				</main>
 			</div> */}
 
-<IntroHeader />
+			<IntroHeader />
 			<section className="text-center px-10 bg-black py-16 lgMax:py-8 lgMax:px-4">
 				<h5 className="my-4 font-medium text-primaryBgClr lgMax:my-2 lgMax:text-lg">
 					DEALS
@@ -553,7 +553,7 @@ export default function Home() {
 					effortlessly <br /> with our comprehensive
 					solution
 				</h3>
-				<button className="button button-primary button-lg mt-4">
+				<button className="button bg-primaryBgClr hover:bg-[#16a34a] text-white button-lg mt-4">
 					<Link href={"/Auth/signup"} className="text-xl">
 						Become an Affiliate
 					</Link>

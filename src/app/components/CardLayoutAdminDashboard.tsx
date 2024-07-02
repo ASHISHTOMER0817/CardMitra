@@ -49,7 +49,7 @@ const CardLayoutAdminDashboard = ({ data }: { data: productList }) => {
 	return (
 		<Link href={`/orders/${_id}`}>
 			<CardLayout
-				classList="hover:border-primaryBgClr"
+				classList="hover:border-primaryBgClr custom_shadow"
 				icons={
 					<>
 						<Link href={`/adminAddProduct/${_id}`}>

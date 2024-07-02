@@ -33,7 +33,7 @@ const Transactions = ({
 
 	return (
 		<>
-			{!data ? (
+			{/* {!data ? (
 				<Loader />
 			) : data.length > 0 ? (
 				<div className="" style={{overflow: 'auto'}}>
@@ -104,7 +104,7 @@ const Transactions = ({
 				<div className="text-red-500 font-serif mx-auto mt-20 w-fit sm:text-[10px]">
 					No data to show !!
 				</div>
-			)}
+			)} */}
 
 {/* <div className="overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200">
@@ -153,10 +153,10 @@ const Transactions = ({
 
 
 	{/*Latest Design changes */}
-    {/* <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-2xl font-semibold mb-6">Transactions List</h1>
-      <div className="overflow-x-auto bg-white shadow-md rounded-lg">
-        <table className="min-w-full divide-y divide-gray-200">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* <h1 className="text-2xl font-semibold mb-6">Transactions List</h1> */}
+      <div className="overflow-x-auto bg-white shadow-md rounded-[8px]">
+        <table className="min-w-full divide-y divide-gray-200 text-nowrap">
           <thead className="bg-green-100">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
@@ -178,18 +178,18 @@ const Transactions = ({
           <tbody>
             {data?.map(({ user, dateOfPayment, _id, amount }, index) => (
               <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
-                <td className="py-4 px-12 text-gray-500">
+                <td className="py-4 px-6 text-gray-500">
                   {_id}
                 </td>
                 {!userId && (
-                  <td className="py-4 px-12 font-semibold text-primaryBgClr">
+                  <td className="py-4 px-6 font-semibold text-primaryBgClr">
                     {user.name}
                   </td>
                 )}
-                <td className="py-4 px-12 text-gray-500">
+                <td className="py-4 px-6 text-gray-500">
                   {new Date(dateOfPayment).toDateString()}
                 </td>
-                <td className="py-4 px-12 text-gray-500">
+                <td className="py-4 px-6 text-gray-500">
                   ₹{amount}
                 </td>
               </tr>
@@ -197,7 +197,7 @@ const Transactions = ({
           </tbody>
         </table>
       </div>
-    </div> */}
+    </div>
 
 		</>
 	);

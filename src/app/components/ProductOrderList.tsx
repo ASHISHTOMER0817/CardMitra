@@ -25,26 +25,24 @@ const ProductOrderList = ({ _id }: { _id: string }) => {
 	}, [_id]);
 
 	return (
-		<>
+		<div className="overflow-hidden rounded-2xl">
+		<div className="overflow-x-auto bg-white shadow-md rounded-[8px] text-sm">
 			{!orders ? (
 				<Loader />
 			) : orders.length > 0 ? (
-				<table className="w-full rounded-2xl overflow-hidden text-nowrap transition-all sm:text-wrap rounded-small">
+				<table className=" min-w-full divide-y divide-gray-200 text-nowrap">
 					<thead>
-						<tr className="bg-green-100 text-[#2f4f4f] sm:text-[10px]">
-							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
+						<tr className="bg-green-100">
+							<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
 								User
 							</th>
-							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
+							<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
 								Order ID
 							</th>
-							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
+							<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
 								Order
 							</th>
-							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
-								Delivery
-							</th>
-							<th className="py-6 px-12 text-left sm:px-0.5 sm:py-1">
+							<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
 								Status
 							</th>
 						</tr>
@@ -53,23 +51,20 @@ const ProductOrderList = ({ _id }: { _id: string }) => {
 						{orders.map((order, index) => (
 							<tr
 								key={index}
-								className="even:bg-gray-100 sm:text-[10px]"
+								className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}
 							>
-								<td className="py-4 px-12 text-primaryBgClr sm:px-0.5 sm:py-1">
+								<td className="py-4 px-12 font-semibold text-primaryBgClr">
 									{order.user.name}
 								</td>
-								<td className="py-4 px-12 text-gray-500 sm:px-0.5 sm:py-1">
+								<td className="py-4 px-12 text-gray-500">
 									{order._id}
 								</td>
-								<td className="py-4 px-12 sm:px-0.5 sm:py-1">
+								<td className="py-4 px-12 text-gray-500">
 									{new Date(
 										order.orderedAt
 									).toDateString()}
 								</td>
-								<td className="py-4 px-12 sm:px-0.5 sm:py-1">
-									{order.deliveryDate}
-								</td>
-								<td className="py-4 px-12 font-semibold sm:px-0.5 sm:py-1">
+								<td className="py-4 px-12 text-gray-500">
 									<StatusBadge
 										status={
 											order.delivered
@@ -86,7 +81,8 @@ const ProductOrderList = ({ _id }: { _id: string }) => {
 					No order has been placed yet...
 				</div>
 			)}
-		</>
+		</div>
+		</div>
 	);
 };
 

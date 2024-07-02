@@ -15,6 +15,13 @@ export async function GET(request: NextRequest) {
             let otpstatus = params.get('otpStatus')
             let deliveryStatus = params.get('deliveryStatus')
             if (odrId) {
+                  
+                  const updateOrder = await Order.findOne({ _id: odrId })
+                  if (otpstatus === 'true') { updateOrder.otp = true }
+                  if (deliveryStatus === 'true') { updateOrder.delivered = 'unverified' }
+                  const updatedOrder = await updateOrder.save()
+
+                  console.log('2nd console', updatedOrder)
                   const order: order | null = await Order.findOne({ _id: odrId }).populate({
                         path: 'product',
                         populate: [
@@ -22,11 +29,7 @@ export async function GET(request: NextRequest) {
                               { path: 'site' }
                         ]
                   }).lean()
-                  const updateOrder = await Order.findOne({ _id: odrId })
-                  otpstatus === 'true' ? updateOrder.otp = true : deliveryStatus === 'true' ? updateOrder.delivered = 'unverified' : ''
 
-                  const updatedOrder = await updateOrder.save()
-                  console.log('2nd console', updatedOrder)
                   let orders;
                   if (order) { orders = bufferToStringOrders(order) }
                   console.log(orders, 'after converting buffer to string')

@@ -174,7 +174,7 @@ const productSchema = new mongoose.Schema({
 	//   },
 	site: { type: mongoose.Schema.Types.ObjectId, ref: 'sites' },
 	cards: [{ type: mongoose.Schema.Types.ObjectId, ref: 'cards' }],
-    
+
 	deals: {
 		type: Boolean,
 		default: true,
@@ -209,10 +209,12 @@ const productSchema = new mongoose.Schema({
 	zipCode: {
 		type: String
 	},
-	showOnHomePage: { type: Boolean }
-
-
-
+	showOnHomePage: {
+		type: Boolean
+	},
+	returnAmount: {
+		type: Number
+	}
 });
 
 const transactionSchema = new mongoose.Schema({
@@ -253,15 +255,15 @@ const dropDownOptionsSchema = new mongoose.Schema({
 })
 
 const cardSchema = new mongoose.Schema({
-	value:{type: String},
-	label: {type:String},
-	image: {type:Buffer},
+	value: { type: String },
+	label: { type: String },
+	image: { type: Buffer },
 });
 
 const siteSchema = new mongoose.Schema({
-	value:{type: String},
-	label: {type:String},
-	image: {type:Buffer},
+	value: { type: String },
+	label: { type: String },
+	image: { type: Buffer },
 });
 
 const reviewSchema = new mongoose.Schema({
@@ -282,4 +284,4 @@ const Review = mongoose.models.reviews || mongoose.model('reviews', reviewSchema
 
 const Card = mongoose.models.cards || mongoose.model('cards', cardSchema)
 const Site = mongoose.models.sites || mongoose.model('sites', siteSchema)
-export { User, Password, Product, Otp, Order, Transactions, Options, Review,         Card, Site }
+export { User, Password, Product, Otp, Order, Transactions, Options, Review, Card, Site }
