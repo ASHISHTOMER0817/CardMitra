@@ -41,7 +41,7 @@ export default function ProductDetails({
 						? "Quantity left: " + data?.requirement
 						: "Ordered quantity: 1"}{" "}
 				</div>
-				<div className="flex justify-start items-center flex-wrap sm:justify-center gap-5">
+				<div className="flex justify-start items-center flex-wrap sm:justify-center gap-5 sm:gap-2">
 					<Image
 						className="w-80 sm:w-56"
 						src={`data:image/jpg;base64,${data?.image}`}

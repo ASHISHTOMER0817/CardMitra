@@ -32,18 +32,18 @@ const UserOrdersListRow = ({
 
 			<tr
 				key={index}
-				className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}
+				className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}
 			>
-				<td className="py-4 px-12 text-gray-500 truncate sm:px-2 sm:py-1">{orderId}</td>
+				<td className="py-4 px-6 text-gray-500 truncate sm:px-2 sm:py-1">{orderId}</td>
 
-				<td className="py-4 px-12 font-semibold text-primaryBgClr">
+				<td className="py-4 px-6 font-semibold text-primaryBgClr">
 					{new Date(orderedAt).toDateString()}
 				</td>
 
-				<td className="py-4 px-12 text-gray-500 ">
+				<td className="py-4 px-6 text-gray-500 ">
 					{product.name}{" "}
 				</td>
-				<td className="py-4 px-12 text-gray-500">
+				<td className="py-4 px-6 text-gray-500">
 					₹{product.price}
 				</td>
 			</tr>

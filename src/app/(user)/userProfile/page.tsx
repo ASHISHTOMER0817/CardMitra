@@ -256,7 +256,7 @@ const UserProfile = () => {
     </div> */}
   
 
-  <div className="max-w-6xl mx-auto px-4 sm:px-0">
+  <div className="max-w-6xl mx-auto sm:px-0">
       <div className="flex  justify-between items-start md:items-center sm:mb-4">
         <h1 className="text-3xl md:text-2xl sm:text-xl font-bold text-gray-800 mb-4 md:mb-0">{data?.user.name}</h1>
         <div className="flex space-x-4 md:space-x-3 sm:space-x-2 flex-wrap justify-end">
@@ -310,7 +310,7 @@ const UserProfile = () => {
         <div className="px-6 py-4 md:px-4 md:py-3 sm:px-3 sm:py-2 bg-gray-50 border-b">
           <h2 className="text-xl md:text-lg sm:text-base font-semibold text-gray-800">Transactions</h2>
         </div>
-        <div className="p-6 md:p-4 sm:p-3">
+        <div className="p-6 md:p-4 sm:p-0">
           <Transactions _id={data?.user._id!} />
         </div>
       </div>

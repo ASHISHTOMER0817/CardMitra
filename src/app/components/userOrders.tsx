@@ -83,7 +83,7 @@ const UserOrders = ({
 				)}
 			</tbody>
 		</table> */}
-			<div className="overflow-x-auto">
+			<div className="overflow-x-auto bg-white shadow-md rounded-[8px]">
 
 			
 			<table className="min-w-full divide-y divide-gray-200 text-nowrap">

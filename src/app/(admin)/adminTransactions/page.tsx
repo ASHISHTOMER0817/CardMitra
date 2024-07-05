@@ -23,8 +23,8 @@ const AdminTransactions = () => {
 	// }, []);
 
 	return (
-		<div className="mx-auto mt-6 sm:mt-0">
-			<h3 className="font-semibold my-12 sm:my-4 sm:text-xs">
+		<div className="mx-auto">
+			<h3 className="font-semibold mb-4 sm:text-xs">
 				Transactions
 			</h3>
 			<Transactions _id={""} />

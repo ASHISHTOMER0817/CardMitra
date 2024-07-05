@@ -113,7 +113,7 @@ export default function RootLayout({
 			</form> */}
 				<Navigation options={options} />
 
-				<div className="w-full ml-20 sm:ml-0 sm:px-4 mt-3 sm:mt-0">
+				<div className="w-full ml-20 sm:ml-0 px-4 mt-3">
 					{children}
 					<ToastContainer />
 				</div>
