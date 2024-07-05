@@ -92,7 +92,7 @@ const AdminDashboard = () => {
 						// href={"/otpList"}
 						onClick={() => setSyncOperation(true)}
 					>
-						<MdOutlineCloudSync className="w-6 h-6 text-primaryBgClr sm:h-[17px]" />
+						<MdOutlineCloudSync className="w-6 h-6 text-primaryBgClr mx-auto sm:h-[17px]" />
 						<div className="sm:text-[10px] leading-none text-center">
 							Sync orders
 						</div>

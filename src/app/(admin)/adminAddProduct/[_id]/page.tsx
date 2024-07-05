@@ -21,6 +21,17 @@ import { useRouter } from "next/navigation";
 import { RxCross1 } from "react-icons/rx";
 import { IoAddSharp } from "react-icons/io5";
 
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+	DialogClose,
+} from "@/components/ui/dialog";
+
 export interface dropdown {
 	value: string;
 	label: string;
@@ -54,7 +65,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	const [optionFile, setOptionFile] = useState<File>();
 	const [updateOptions, setUpdateOptions] = useState(false);
 
-	const [returnAmt, setReturnAmt] = useState<number>()
+	const [returnAmt, setReturnAmt] = useState<number>();
 
 	// const [cardsArr, setCardsArr] = useState<string[]>();
 	// console.log(cards);
@@ -113,7 +124,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 		getData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [params?._id]);
-	console.log(cards, site, 'these are cards , site');
+	console.log(cards, site, "these are cards , site");
 
 	useEffect(() => {
 		async function getDate() {
@@ -173,13 +184,16 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 			formData.append("price", price!.toString());
 			formData.append("requirement", requirement!.toString());
 			formData.append("address", address);
-			formData.append("returnAmt",(returnAmt? returnAmt : 0).toString())
+			formData.append(
+				"returnAmt",
+				(returnAmt ? returnAmt : 0).toString()
+			);
 			formData.append("card", JSON.stringify(cards));
 			formData.append("site", JSON.stringify(site));
 			formData.append("file", file!);
 			formData.append("info", JSON.stringify(info));
 			formData.append("zipCode", zipCode);
-			console.log(formData.get('returnAmt'));
+			console.log(formData.get("returnAmt"));
 			const response = await axios.post(
 				`/api/admin/addProduct?query=newProduct`,
 				formData
@@ -214,28 +228,91 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	};
 
 	return (
-		<form onSubmit={postData} className="p-8 sm:px-0">
-			{loader ? (
-				<Loader />
-			) : (
-				<>
-					<div
+		<Dialog>
+			<form onSubmit={postData} className="p-8 sm:px-0">
+				{loader ? (
+					<Loader />
+				) : (
+					<>
+						{/* <div
 						className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}
-					></div>
-					<div
-						className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 sm:w-4/5 sm:top-2/4 sm:-translate-y-2/4`}
-					>
-						<RxCross1
+					></div> */}
+						<div
+							className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 sm:w-4/5 sm:top-2/4 sm:-translate-y-2/4`}
+						>
+							{/* <RxCross1
 							className=" w-6 h-6 cursor-pointer ml-auto p-1 hover:bg-gray-100 active:bg-gray-100 rounded-full sm:w-7 sm:h-7"
 							onClick={() => setOverlay("hidden")}
-						/>
-						<h4 className="sm:text-xs">
-							Write, {addOption} name you want to
-							add
-						</h4>
-						<input
+						/> */}
+
+							{/* <DialogTrigger>Open</DialogTrigger> */}
+							<DialogContent>
+								<DialogHeader>
+									<DialogTitle>										Write, {addOption}{" "}
+										name you want to add
+</DialogTitle>
+									{/* <DialogDescription>
+									</DialogDescription> */}
+								</DialogHeader>
+								<input
+									type="text"
+									placeholder={`${
+										addOption === "site"
+											? "Site Name"
+											: "Card name"
+									}`}
+									className="outline-none border-b pb-2 border-black sm:text-xs"
+									value={optionName}
+									onChange={(e) =>
+										setOptionName(
+											e.target.value
+										)
+									}
+								/>{" "}
+								<input
+									type="file"
+									placeholder={`${
+										addOption === "site"
+											? "Site Image"
+											: "Card Image"
+									}`}
+									className={`outline-none border-b pb-2 border-black sm:text-xs `}
+									onChange={({
+										target,
+									}) => {
+										if (target.files) {
+											setOptionFile(
+												target
+													.files[0]
+											);
+										}
+									}}
+								/>{" "}
+								<DialogFooter className=" gap-3">
+									<DialogClose className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50">
+										Cancel
+									</DialogClose>
+									<DialogClose
+										className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50"
+										onClick={() => {
+											optionName &&
+												AddOption(
+													optionName
+												);
+										}}
+									>
+										Add
+									</DialogClose>
+								</DialogFooter>
+							</DialogContent>
+
+							{/* <h4 className="sm:text-xs">
+								Write, {addOption} name you want
+								to add
+							</h4> */}
+
+							{/* <input
 							type="text"
-							// required
 							placeholder={`${
 								addOption === "site"
 									? "Site Name"
@@ -249,14 +326,12 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 						/>{" "}
 						<input
 							type="file"
-							// required
 							placeholder={`${
 								addOption === "site"
 									? "Site Image"
 									: "Card Image"
 							}`}
 							className={`outline-none border-b pb-2 border-black sm:text-xs `}
-							// value={optionName}
 							onChange={({ target }) => {
 								if (target.files) {
 									setOptionFile(
@@ -264,85 +339,44 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 									);
 								}
 							}}
-						/>{" "}
-						<button
-							onClick={() => {
-								// setListType("reduce");
-								setOverlay("hidden");
-								optionName &&
-									AddOption(optionName);
-							}}
-							className="px-3 py-1 hover:bg-gray-200"
-						>
-							Add
-						</button>
-					</div>
-					<div className="flex gap-10 mb-8 sm:flex-col sm:mb-4 sm:gap-4">
-						<label
-							htmlFor="image"
-							className="cursor-pointer"
-							onDragOver={handleDragOver}
-							onDrop={handleDrop}
-						>
-							{image ? (
-								<>
-									<Image
-										src={image}
-										alt="Uploaded"
-										style={{
-											maxWidth: "100%",
-											maxHeight:
-												"100%",
-										}}
-										width={250}
-										height={300}
-									/>
-									<input
-										type="file"
-										className="hidden cursor-pointer"
-										id="image"
-										onChange={({
-											target,
-										}) => {
-											if (
-												target.files
-											) {
-												const file =
-													target
-														.files[0];
-												// console.log(file);
-												setImage(
-													URL.createObjectURL(
-														file
-													)
-												);
-												// console.log(
-												// 	URL.createObjectURL(
-												// 		file
-												// 	)
-												// );
-												setFile(
-													file
-												);
-											}
-										}}
-									/>
-								</>
-							) : (
-								<div className="w-60 h-80 border-2 border-dotted border-[#ccc] flex flex-col justify-center items-center rounded-[20px] sm:w-full">
-									<Image
-										src={downloadImg}
-										alt=""
-										className="w-9 h-9"
-									/>
-									<span>Drag and Drop</span>
-									<span>or</span>
-									<span>
-										Browse Image
+						/>{" "} */}
+							{/* <button
+								onClick={() => {
+									// setListType("reduce");
+									setOverlay("hidden");
+									optionName &&
+										AddOption(
+											optionName
+										);
+								}}
+								className="px-3 py-1 hover:bg-gray-200"
+							>
+								Add
+							</button> */}
+						</div>
+						<div className="flex gap-10 mb-8 sm:flex-col sm:mb-4 sm:gap-4">
+							<label
+								htmlFor="image"
+								className="cursor-pointer"
+								onDragOver={handleDragOver}
+								onDrop={handleDrop}
+							>
+								{image ? (
+									<>
+										<Image
+											src={image}
+											alt="Uploaded"
+											style={{
+												maxWidth: "100%",
+												maxHeight:
+													"100%",
+											}}
+											width={250}
+											height={300}
+										/>
 										<input
-											// required
 											type="file"
-											className="hidden"
+											className="hidden cursor-pointer"
 											id="image"
 											onChange={({
 												target,
@@ -353,347 +387,427 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 													const file =
 														target
 															.files[0];
-
+													// console.log(file);
 													setImage(
 														URL.createObjectURL(
 															file
 														)
 													);
-
+													// console.log(
+													// 	URL.createObjectURL(
+													// 		file
+													// 	)
+													// );
 													setFile(
 														file
 													);
 												}
 											}}
 										/>
-									</span>
-								</div>
-							)}
-						</label>
-						<div className="">
-							<input
-								required
-								id="name"
-								type="text"
-								value={name}
-								onChange={(e) =>
-									setName(e.target.value)
-								}
-								placeholder="Product name"
-								className=" outline-none border-b border-black text-2xl font-bold mb-6 mt-4 sm:text-base"
-							/>
-							<div className="flex flex-wrap items-center gap-7 mb-4 font-normal sm:text-[12px] sm:gap-3">
-								<div className=" flex flex-col items-start">
-									<input
-										required
-										id="price"
-										type="number"
-										placeholder="0"
-										value={price}
-										onChange={(e) =>
-											setPrice(
-												+e
-													.target
-													.value
-											)
-										}
-										className=" outline-none px-2 border-b border-black font-semibold text-primaryBgClr py-1"
-									/>
-									<label
-										draggable="true"
-										htmlFor="price"
-										className=""
-									>
-										Price{" "}
-										<span className="text-gray-300">
-											/ Unit:
+									</>
+								) : (
+									<div className="w-60 h-80 border-2 border-dotted border-[#ccc] flex flex-col justify-center items-center rounded-[20px] sm:w-full">
+										<Image
+											src={
+												downloadImg
+											}
+											alt=""
+											className="w-9 h-9"
+										/>
+										<span>
+											Drag and Drop
 										</span>
-									</label>
-								</div>
-								
-								<div className="flex-col flex items-start">
-									<input
-										required
-										id="commission"
-										type="number"
-										placeholder="0"
-										value={commission}
-										onChange={(e) =>
-											setCommission(
-												+e
-													.target
-													.value
-											)
-										}
-										className="  outline-none border-b border-black font-semibold px-2 py-1"
-									/>
-									<label
-										htmlFor="commission"
-										className=""
-									>
-										Commission{" "}
-										<span className="text-gray-300">
-											/ Unit:
+										<span>or</span>
+										<span>
+											Browse Image
+											<input
+												// required
+												type="file"
+												className="hidden"
+												id="image"
+												onChange={({
+													target,
+												}) => {
+													if (
+														target.files
+													) {
+														const file =
+															target
+																.files[0];
+
+														setImage(
+															URL.createObjectURL(
+																file
+															)
+														);
+
+														setFile(
+															file
+														);
+													}
+												}}
+											/>
 										</span>
-									</label>
+									</div>
+								)}
+							</label>
+							<div className="">
+								<input
+									required
+									id="name"
+									type="text"
+									value={name}
+									onChange={(e) =>
+										setName(
+											e.target.value
+										)
+									}
+									placeholder="Product name"
+									className=" outline-none border-b border-black text-2xl font-bold mb-6 mt-4 sm:text-base"
+								/>
+								<div className="flex flex-wrap items-center gap-7 mb-4 font-normal sm:text-[12px] sm:gap-3">
+									<div className=" flex flex-col items-start">
+										<input
+											required
+											id="price"
+											type="number"
+											placeholder="0"
+											value={price}
+											onChange={(
+												e
+											) =>
+												setPrice(
+													+e
+														.target
+														.value
+												)
+											}
+											className=" outline-none px-2 border-b border-black font-semibold text-primaryBgClr py-1"
+										/>
+										<label
+											draggable="true"
+											htmlFor="price"
+											className=""
+										>
+											Price{" "}
+											<span className="text-gray-300">
+												/ Unit:
+											</span>
+										</label>
+									</div>
+
+									<div className="flex-col flex items-start">
+										<input
+											required
+											id="commission"
+											type="number"
+											placeholder="0"
+											value={
+												commission
+											}
+											onChange={(
+												e
+											) =>
+												setCommission(
+													+e
+														.target
+														.value
+												)
+											}
+											className="  outline-none border-b border-black font-semibold px-2 py-1"
+										/>
+										<label
+											htmlFor="commission"
+											className=""
+										>
+											Commission{" "}
+											<span className="text-gray-300">
+												/ Unit:
+											</span>
+										</label>
+									</div>
+									<div className=" flex flex-col items-start">
+										<input
+											required
+											id="returnAmt"
+											type="number"
+											placeholder="0"
+											value={
+												returnAmt
+											}
+											onChange={(
+												e
+											) =>
+												setReturnAmt(
+													+e
+														.target
+														.value
+												)
+											}
+											className=" outline-none px-2 border-b border-black font-semibold text-primaryBgClr py-1"
+										/>
+										<label
+											draggable="true"
+											htmlFor="returnAmt"
+											className=""
+										>
+											Return Amount{" "}
+											<span className="text-gray-300">
+												/ Unit:
+											</span>
+										</label>
+									</div>
 								</div>
-								<div className=" flex flex-col items-start">
+								<h6 className="text-red-500">
+									** Points to remember
+									while Ordering **
+								</h6>
+								<div className="text-gray-500 flex flex-col gap-5 text-sm w-2/4 lgmax:w-full ">
 									<input
-										required
-										id="returnAmt"
-										type="number"
-										placeholder="0"
-										value={returnAmt}
+										type="text"
+										className="border-b border-b-black outline-none mt-8"
+										value={info.first}
 										onChange={(e) =>
-											setReturnAmt(
-												+e
+											setInfo({
+												...info,
+												first: e
 													.target
-													.value
-											)
+													.value,
+											})
 										}
-										className=" outline-none px-2 border-b border-black font-semibold text-primaryBgClr py-1"
 									/>
-									<label
-										draggable="true"
-										htmlFor="returnAmt"
-										className=""
-									>
-										Return Amount{" "}
-										<span className="text-gray-300">
-											/ Unit:
-										</span>
-									</label>
+									<input
+										type="text"
+										className="border-b border-b-black outline-none"
+										value={info.second}
+										onChange={(e) =>
+											setInfo({
+												...info,
+												second: e
+													.target
+													.value,
+											})
+										}
+									/>
+									<input
+										type="text"
+										className="border-b border-b-black outline-none"
+										value={info.third}
+										onChange={(e) =>
+											setInfo({
+												...info,
+												third: e
+													.target
+													.value,
+											})
+										}
+									/>
+									<input
+										type="text"
+										className="border-b border-b-black outline-none"
+										value={info.fourth}
+										onChange={(e) =>
+											setInfo({
+												...info,
+												fourth: e
+													.target
+													.value,
+											})
+										}
+									/>
 								</div>
 							</div>
-							<h6 className="text-red-500">
-								** Points to remember while
-								Ordering **
-							</h6>
-							<div className="text-gray-500 flex flex-col gap-5 text-sm w-2/4 lgmax:w-full ">
+						</div>
+
+						<div className="grid grid-flow-row grid-cols-2 items-end gap-x-6 gap-y-3 sm:flex sm:flex-col">
+							<div className="mb-4 sm:mb-0 flex flex-col w-full gap-6 sm:gap-2">
+								<label
+									htmlFor="bank"
+									className="font-bold sm:text-[13px]"
+								>
+									Offers available on bank
+									cards
+								</label>
+
+								<div className="relative flex gap-1">
+									<Select
+										defaultValue={
+											cardOptions
+										}
+										isMulti
+										// name="colors"
+										options={
+											cardOptions
+										}
+										className="basic-multi-select flex-1 sm:text-[10px]"
+										classNamePrefix="select"
+										onChange={
+											handleChange
+										}
+										styles={
+											defaultStyles
+										}
+										value={
+											cards
+												? cards
+												: cardOptions[0]
+										}
+									/>
+									<DialogTrigger>
+										<IoAddSharp
+											onClick={() => {
+												// setOverlay("");
+												setAddOption(
+													"card"
+												);
+											}}
+											className="border border-gray-500 rounded-full p-2 hover:bg-gray-100 w-[37px] h-[37px]"
+										/>
+									</DialogTrigger>
+								</div>
+								{/* <Image src={} alt={""}/> */}
+							</div>
+							<div className="mb-4 sm:mb-0 flex flex-col w-full gap-6 sm:gap-2">
+								<label
+									htmlFor="website"
+									className="font-bold sm:text-[13px]"
+								>
+									Websites
+								</label>
+
+								<div className="relative flex gap-1">
+									<Dropdown
+										options={
+											siteOptions
+										}
+										onChange={
+											handleDropdownChangeSite
+										}
+										value={
+											site
+												? site
+												: siteOptions[0]
+										}
+										className="flex-1 sm:text-[10px]"
+									/>
+									<DialogTrigger>
+										<IoAddSharp
+											onClick={() => {
+												// setOverlay("");
+												setAddOption(
+													"site"
+												);
+											}}
+											className="border border-gray-500 rounded-full p-2 hover:bg-gray-100 w-10 h-10"
+										/>
+									</DialogTrigger>
+								</div>
+							</div>
+							<div className=" flex flex-col w-full gap-6 sm:gap-2">
+								<label
+									htmlFor="directLink"
+									className="font-bold sm:text-[13px]"
+								>
+									Direct Links:
+								</label>
 								<input
+									required
+									id="directLink"
 									type="text"
-									className="border-b border-b-black outline-none mt-8"
-									value={info.first}
+									value={productLink}
 									onChange={(e) =>
-										setInfo({
-											...info,
-											first: e
-												.target
-												.value,
-										})
+										setProductLink(
+											e.target.value
+										)
 									}
+									className=" border border-gray-300 rounded-full p-2 w-full sm:text-[10px]"
+									placeholder="Enter direct link"
 								/>
+							</div>
+							<div className=" flex flex-col w-full gap-6 sm:gap-2">
+								<label
+									htmlFor="requirement"
+									className="font-bold sm:text-[13px]"
+								>
+									Requirement:
+								</label>
 								<input
-									type="text"
-									className="border-b border-b-black outline-none"
-									value={info.second}
+									required
+									id="requirement"
+									type="number"
+									value={requirement}
 									onChange={(e) =>
-										setInfo({
-											...info,
-											second: e
-												.target
-												.value,
-										})
+										setRequirement(
+											+e.target
+												.value
+										)
 									}
+									className=" border border-gray-300 rounded-full p-2 w-full sm:text-[10px]"
+									placeholder="Requirement"
 								/>
+							</div>
+							<div className=" flex flex-col w-full gap-6 sm:gap-2">
+								<label
+									htmlFor="address"
+									className="font-bold sm:text-[13px]"
+								>
+									Address:
+								</label>
 								<input
+									required
+									id="address"
 									type="text"
-									className="border-b border-b-black outline-none"
-									value={info.third}
+									value={address}
 									onChange={(e) =>
-										setInfo({
-											...info,
-											third: e
-												.target
-												.value,
-										})
+										setAddress(
+											e.target.value
+										)
 									}
+									className=" border border-gray-300 rounded-full p-2 w-full sm:text-[10px]"
+									placeholder="Enter Address"
 								/>
+							</div>
+							<div className=" flex flex-col w-full gap-6 sm:gap-2">
+								<label
+									htmlFor="address"
+									className="font-bold sm:text-[13px]"
+								>
+									Zip Code:
+								</label>
 								<input
+									required
+									id="zipcode"
 									type="text"
-									className="border-b border-b-black outline-none"
-									value={info.fourth}
+									value={zipCode}
 									onChange={(e) =>
-										setInfo({
-											...info,
-											fourth: e
-												.target
-												.value,
-										})
+										setZipCode(
+											e.target.value
+										)
 									}
+									className=" border border-gray-300 rounded-full p-2 w-full sm:text-[10px]"
+									placeholder="Enter Zip Code"
 								/>
 							</div>
 						</div>
-					</div>
-
-					<div className="grid grid-flow-row grid-cols-2 items-end gap-x-6 gap-y-3 sm:flex sm:flex-col">
-						<div className="mb-4 sm:mb-0 flex flex-col w-full gap-6 sm:gap-2">
-							<label
-								htmlFor="bank"
-								className="font-bold sm:text-[13px]"
+						<div className="ml-auto w-fit flex gap-3 mt-8 sm:mr-auto">
+							<button
+								onClick={() => router.back()}
+								className="w-64 p-2 text-red-500 hover:bg-gray-100 border-red-500 border rounded-full sm:w-[8rem] sm:py-0 sm-px-0.5"
+								type="reset"
 							>
-								Offers available on bank cards
-							</label>
-
-							<div className="relative flex gap-1">
-								<Select
-									defaultValue={cardOptions}
-									isMulti
-									// name="colors"
-									options={cardOptions}
-									className="basic-multi-select flex-1 sm:text-[10px]"
-									classNamePrefix="select"
-									onChange={handleChange}
-									styles={defaultStyles}
-									value={
-										cards
-											? cards
-											: cardOptions[0]
-									}
-								/>
-								<IoAddSharp
-									onClick={() => {
-										setOverlay("");
-										setAddOption(
-											"card"
-										);
-									}}
-									className="border border-gray-500 rounded-full p-2 hover:bg-gray-100 w-[37px] h-[37px]"
-								/>
-							</div>
-							{/* <Image src={} alt={""}/> */}
-						</div>
-						<div className="mb-4 sm:mb-0 flex flex-col w-full gap-6 sm:gap-2">
-							<label
-								htmlFor="website"
-								className="font-bold sm:text-[13px]"
+								Cancel
+							</button>
+							<button
+								className="w-64 p-2 text-white hover:bg-green-600 bg-primaryBgClr rounded-full sm:w-[8rem] sm:py-0 sm-px-0.5"
+								type="submit"
 							>
-								Websites
-							</label>
-
-							<div className="relative flex gap-1">
-								<Dropdown
-									options={siteOptions}
-									onChange={
-										handleDropdownChangeSite
-									}
-									value={
-										site
-											? site
-											: siteOptions[0]
-									}
-									className="flex-1 sm:text-[10px]"
-								/>
-								<IoAddSharp
-									onClick={() => {
-										setOverlay("");
-										setAddOption(
-											"site"
-										);
-									}}
-									className="border border-gray-500 rounded-full p-2 hover:bg-gray-100 w-10 h-10"
-								/>
-							</div>
+								Add Product
+							</button>
 						</div>
-						<div className=" flex flex-col w-full gap-6 sm:gap-2">
-							<label
-								htmlFor="directLink"
-								className="font-bold sm:text-[13px]"
-							>
-								Direct Links:
-							</label>
-							<input
-								required
-								id="directLink"
-								type="text"
-								value={productLink}
-								onChange={(e) =>
-									setProductLink(
-										e.target.value
-									)
-								}
-								className=" border border-gray-300 rounded-full p-2 w-full sm:text-[10px]"
-								placeholder="Enter direct link"
-							/>
-						</div>
-						<div className=" flex flex-col w-full gap-6 sm:gap-2">
-							<label
-								htmlFor="requirement"
-								className="font-bold sm:text-[13px]"
-							>
-								Requirement:
-							</label>
-							<input
-								required
-								id="requirement"
-								type="number"
-								value={requirement}
-								onChange={(e) =>
-									setRequirement(
-										+e.target.value
-									)
-								}
-								className=" border border-gray-300 rounded-full p-2 w-full sm:text-[10px]"
-								placeholder="Requirement"
-							/>
-						</div>
-						<div className=" flex flex-col w-full gap-6 sm:gap-2">
-							<label
-								htmlFor="address"
-								className="font-bold sm:text-[13px]"
-							>
-								Address:
-							</label>
-							<input
-								required
-								id="address"
-								type="text"
-								value={address}
-								onChange={(e) =>
-									setAddress(e.target.value)
-								}
-								className=" border border-gray-300 rounded-full p-2 w-full sm:text-[10px]"
-								placeholder="Enter Address"
-							/>
-						</div>
-						<div className=" flex flex-col w-full gap-6 sm:gap-2">
-							<label
-								htmlFor="address"
-								className="font-bold sm:text-[13px]"
-							>
-								Zip Code:
-							</label>
-							<input
-								required
-								id="zipcode"
-								type="text"
-								value={zipCode}
-								onChange={(e) =>
-									setZipCode(e.target.value)
-								}
-								className=" border border-gray-300 rounded-full p-2 w-full sm:text-[10px]"
-								placeholder="Enter Zip Code"
-							/>
-						</div>
-					</div>
-					<div className="ml-auto w-fit flex gap-3 mt-8 sm:mr-auto">
-						<button
-							onClick={() => router.back()}
-							className="w-64 p-2 text-red-500 hover:bg-gray-100 border-red-500 border rounded-full sm:w-[8rem] sm:py-0 sm-px-0.5"
-							type="reset"
-						>
-							Cancel
-						</button>
-						<button
-							className="w-64 p-2 text-white hover:bg-green-600 bg-primaryBgClr rounded-full sm:w-[8rem] sm:py-0 sm-px-0.5"
-							type="submit"
-						>
-							Add Product
-						</button>
-					</div>
-				</>
-			)}
-		</form>
+					</>
+				)}
+			</form>
+		</Dialog>
 	);
 };
 
