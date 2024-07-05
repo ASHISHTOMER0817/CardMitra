@@ -17,7 +17,7 @@ const Deals = () => {
 					"/api/orders/products?limit=none"
 				);
 				const allProducts = response.data.data;
-				console.log(allProducts);
+				// console.log(allProducts);
 				setData(allProducts);
 			} catch {
 				Popup(

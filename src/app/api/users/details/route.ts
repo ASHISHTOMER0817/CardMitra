@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
             let userId = searchparams.get('query')
             let deleteUser = searchparams.get('delete')
             let disApprove = searchparams.get('dis_approve')
-            // if(deleteUser){}
+            if(deleteUser){}
             // if(disApprove){
             //       const user
             // }

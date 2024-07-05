@@ -40,7 +40,7 @@ const CardLayout = ({
 			</div>
 			<div className="flex justify-center text-sm items-start md:gap-0 sm:justify-between">
 				<Image loading="lazy" quality={30}
-					className="w-40 h-[150px] sm:h-[100px] sm:w-[100px]"
+					className="w-40 h-auto sm:h-auto sm:w-[100px]"
 					src={
 						deviceImage
 							? `data:image/jpg;base64,${deviceImage}`
@@ -48,7 +48,7 @@ const CardLayout = ({
 					}
 					alt={""}
 					width={100}
-					height={150}
+					height={120}
 				/>
 				<section className="flex flex-col gap-4 justify-around sm:mt-1 sm:gap-2">
 					<div className=" text-wrap font-semibold text-base md:h-[30px] sm:text-[14px] left-on-small">
