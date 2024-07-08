@@ -9,6 +9,7 @@ import Link from "next/link";
 import Loader from "@/app/components/loader";
 import { Legend, plugins } from "chart.js";
 import { MdOutlineCloudSync } from "react-icons/md";
+import Popup from "@/app/components/Popup";
 
 interface dashboardData {
 	orderHistory: productList[];
@@ -65,10 +66,11 @@ const AdminDashboard = () => {
 		async function getData() {
 			try {
 				const response = await axios.get(
-					`/api/admin/dashboard?query=dashboard&syncOperation=${syncOperation.toString()}`
+					`/api/admin/dashboard?query=dashboard&syncOperation=${syncOperation}`
 				);
 				setData(response.data.data);
 				console.log(response.data.data)
+				Popup('success', response.data.succss)
 
 			} catch {
 				console.log("what is happening here !!");
@@ -88,7 +90,7 @@ const AdminDashboard = () => {
 				<h3 className=" font-semibold mb-3">Dashboard</h3>
 				<div className="flex justify-start gap-2 sm:gap-1">
 					<div
-						className="px-12 py-4 rounded-big bg-[#F3F3F3] md:min-w-[26%] sm:flex sm:flex-col sm:justify-between sm:items-center sm:py-3 sm:px-[6px]"
+						className="px-12 py-4 cursor-pointer rounded-big bg-[#F3F3F3] md:min-w-[26%] sm:flex sm:flex-col sm:justify-between sm:items-center sm:py-3 sm:px-[6px]"
 						// href={"/otpList"}
 						onClick={() => setSyncOperation(true)}
 					>

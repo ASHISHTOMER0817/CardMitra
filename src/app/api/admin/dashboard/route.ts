@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
                   //Affiliate Array
                   const affiliate = await User.find()
                   const noOfAffiliate = affiliate.length
-                  console.log(noOfAffiliate)
+                  // console.log(noOfAffiliate)
 
 
                   //Orders placed today
@@ -78,16 +78,15 @@ export async function GET(request: NextRequest) {
                         arr[new Date(singleOrder.orderedAt).getMonth()] += 1
 
                   }
-                  console.log(arr)
 
 
 
                   console.log(syncOperation, 'this is sync Operation')
-                  if (syncOperation === 'true') {
+                  if (syncOperation) {
                         let otpList;
 
                         try {
-                              const response = await axios.get('https://script.google.com/macros/s/AKfycbyuK5OcltMUfXOUKjbqzqQ9Rd8t23GB8UYMcEVvwBn1yzB2vryD5FhyGfsFVrX1RkW0og/exec');
+                              const response = await axios.get('https://script.google.com/macros/s/AKfycbw82DtxZZc7b8ks98MALeEwZM8_1x94HftUpdYbEDCwfeX_Nbci9JWVv3NDAAfxEkMx/exec');
                               otpList = response.data.data;
                               console.log('try part')
                         } catch (error) {
@@ -99,8 +98,8 @@ export async function GET(request: NextRequest) {
                         for (let i = 0; i < otpList.length; i++) {
                               testBulkOprations.push({
                                     updateOne: {
-                                          filter: { _id: otpList[i]._id },
-                                          update: { $set: { delivered: otpList[i].deliveryStatus } },
+                                          filter: { _id: otpList[i].OrderID },
+                                          update: { $set: { delivered: otpList[i].status } },
                                           // upsert: false // Adjust based on whether you want to insert if not found
                                     }
                               })
@@ -122,25 +121,13 @@ export async function GET(request: NextRequest) {
 
                   // const data = { orderHistory, deliveries, noOfAffiliate, order }
                   const data = { orderHistory, noOfAffiliate, order, arr }
-                  console.log(data)
+                  // console.log(data)
 
                   return NextResponse.json({
                         message: "Order history is being shown", status: false, data: data,
                   })
 
             } else if (query === 'orderHistory') {
-                  // const orderHistory = await Product.find({ show: true }).sort({ deals: -1 });
-                  // const orders = await Order.find({}).sort({ orderedAt: -1 }).populate('user', 'name').populate('product')
-                  // console.log('1st console', orderHistory)
-                  // if (orderHistory) {
-                  // return NextResponse.json({
-                  //       message: "Order history is being shown", status: false, data: { orderHistory, orders }
-                  // })
-                  // }
-
-
-                     //    ------- .sort({ deals: -1 }) --------
-                  console.log('hello')
                   const products:any = await Product.find({ show: true })
                   .sort({Date: -1})
                   .populate({path:'cards', select:'value image'})
@@ -153,29 +140,6 @@ export async function GET(request: NextRequest) {
                         .lean();
 
                   const orderHistory = bufferToString(products)
-
-
-
-
-
-
-
-                  // orders = orders.map(order => ({
-                  //       ...order,
-                  //       product: {
-                  //             ...order.product,
-                  //             image: order.product.image ? order.product.image.toString('base64') : null,
-                  //             cards: order.product.cards.map((card:any) => ({
-                  //                   ...card,
-                  //                   image: card.image ? card.image.toString('base64') : null
-                  //             })),
-                  //             site: {
-                  //                   ...order.product.site,
-                  //                   image: order.product.site?.image ? order.product.site.image.toString('base64') : null
-                  //             }
-                  //       }
-                  // }));
-                  // console.log(orderHistory[0].cards,orderHistory[0].site , 'this is orders')
 
                   return NextResponse.json({
                         message: "Order history is being shown", status: false, data: {

@@ -65,7 +65,7 @@ export const POST = async (request: NextRequest) => {
 
                   console.log(newOrder)
                   return NextResponse.json({
-                        message: "Details of order has been successfully saved ", success: true, status: 200
+                        message: "order successfully saved ", success: true, status: 200
                   })
             }
 
