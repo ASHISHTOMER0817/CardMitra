@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
             const _id = searchparams.get('_id')
             const operation = searchparams.get('operation')
             const syncOperation = searchparams.get('syncOperation')
-            console.log('this is id', _id, operation)
+            // console.log('this is id', _id, operation)
 
             if (query === 'dashboard') {
                   let products = await Product.find({ deals: true })

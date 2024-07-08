@@ -207,6 +207,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 
 			formData.append("info", JSON.stringify(info));
 			formData.append("zipCode", zipCode);
+			formData.append("productId", params._id)
 			// console.log(formData.get("returnAmt"));
 			const response = await axios.post(
 				`/api/admin/addProduct?query=newProduct`,

@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
             const productId = searchParams.get('productId')
             const icon = searchParams.get('icon')
             console.log(productId)
-            console.log(limit, 'thisis limit')
+            // console.log(limit, 'thisis limit')
             if (limit) {
                   // let products = await Product.find({})
                   if (limit === 'none') {
@@ -24,10 +24,10 @@ export async function GET(request: NextRequest) {
                         let productsArr:productList[] = await Product.find({ deals: true })
                         .populate({path:'cards', select:'value image'})
                         .populate('site').lean();
-                        console.log(productsArr)
+                        // console.log(productsArr)
                       const products = bufferToString(productsArr)
                         const data = { products, user }
-                        console.log('1st console', products)
+                        // console.log('1st console', products)
 
                         return NextResponse.json({ data: data, success: true, status: 200 })
                   }
@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
                   }
                   // console.log('i got here too')
                   else if (limit === 'homePage') {
-                        console.log('else if condition')
+                        // console.log('else if condition')
                         const allProducts:productList[] = await Product.find({ showOnHomePage: true })
                         .populate({path:'cards', select:'value image'})
                         .populate('site').lean();
@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
                         return NextResponse.json({ data: products, success: true, status: 200 })
                   }
             } else if (productId) {
-                  console.log('else if condition')
+                  // console.log('else if condition')
                   const product = await Product.findOne({ _id: productId })
                   .populate({path:'cards', select:'value label'})
                   .populate({path:'site', select: 'value label'})

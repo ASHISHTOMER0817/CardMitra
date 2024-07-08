@@ -195,7 +195,7 @@ export async function POST(request: NextRequest) {
             const price = formData.get('price');
             const requirement = formData.get('requirement');
             const returnAmount = formData.get('returnAmt')
-            console.log(returnAmount)
+            // console.log(returnAmount)
             const address = formData.get('address');
             const cardObj: any = formData.get('card');
             const siteObj: any = formData.get('site');
@@ -205,20 +205,21 @@ export async function POST(request: NextRequest) {
             const site: dropdown = JSON.parse(siteObj);
             const info = JSON.parse(infoList);
             const zipCode = formData.get('zipCode');
+            const productId = formData.get('productId')
 
             let fileBuffer;
             if (file) {
                   // Handle file upload
                   fileBuffer = Buffer.from(await file.arrayBuffer());
-              } else if (existingImg) {
+            } else if (existingImg) {
                   // Handle base64 string
                   const base64Data = existingImg.split(',')[1];
                   fileBuffer = Buffer.from(base64Data, 'base64');
-              } else {
+            } else {
                   return NextResponse.json({
                         message: 'Upload an image', success: false, status: 400
                   })
-              }
+            }
 
             // const fileBuffer =  Buffer.from(await file.arrayBuffer());
             const imageData = new Binary(fileBuffer);
@@ -238,14 +239,11 @@ export async function POST(request: NextRequest) {
                   // if (!cardDoc) {
                   //   cardDoc = await Card.create(card);
                   // }
-                  console.log(card.value)
+                  // console.log(card.value)
                   return cardDoc._id;
             }));
-            console.log('these are cards', cardIds)
 
-            console.log(+returnAmount!, typeof returnAmount, 'i got here!!!!')
-
-            const newProduct = await Product.create({
+            const productDetails = {
                   name,
                   commission: +commission!,
                   productLink,
@@ -259,13 +257,28 @@ export async function POST(request: NextRequest) {
                   zipCode,
                   returnAmount: +returnAmount!,
                   showOnHomePage: false,
-                  Date:new Date()
-            });
-            console.log(newProduct, 'this newProduct')
+                  Date: new Date()
+            }
+            console.log(productDetails, 'and:--', price)
+            if (productId !== 'newProduct') {
+                  console.log('rng if candsn')
+                  const existingProduct = await Product.findOneAndUpdate({ _id:productId }, { $set: { ...productDetails } }, { new: true })
+                  console.log('heyar is existing prdct',existingProduct)
+                  return NextResponse.json({
+                        message: 'Product updated', success: true,
+                  });
 
-            return NextResponse.json({
-                  message: 'Product added', success: true,
-            });
+            } else {
+
+                  const newProduct = await Product.create({
+                        ...productDetails
+                  });
+                  console.log(newProduct, 'this newProduct')
+
+                  return NextResponse.json({
+                        message: 'Product added', success: true,
+                  });
+            }
 
       } catch (error) {
             console.error('Error:', error);
