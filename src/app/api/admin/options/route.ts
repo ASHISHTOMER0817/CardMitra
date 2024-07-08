@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
                   if (optiontype === 'card') {
                         const document = await Options.findOneAndUpdate({ id: 'options' })
                         const cards = document.cards.push(option)
-                        console.log(cards)
+                        // console.log(cards)
                   }
             }
             // const options = await Options.findOne({ id: 'options' })
@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
             const cards = await Card.find({}).select('value label');
             // const siteOptions = 
             // const cardOptions = 
-            console.log(sites, cards)
+            // console.log(sites, cards)
                   return NextResponse.json({
                         message: 'something went wrong', success: true, data: { sites, cards }
                   })

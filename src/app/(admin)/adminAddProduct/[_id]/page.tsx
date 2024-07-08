@@ -199,10 +199,10 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 			);
 			formData.append("card", JSON.stringify(cards));
 			formData.append("site", JSON.stringify(site));
-			if (existingImg) {
-				formData.append("existingImg", existingImg);
+			if (file) {
+				formData.append("file", file);
 			} else {
-				formData.append("file", file!);
+				formData.append("existingImg", existingImg);
 			}
 
 			formData.append("info", JSON.stringify(info));
