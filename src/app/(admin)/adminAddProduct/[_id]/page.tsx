@@ -44,7 +44,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	const [cards, setCards] = useState<dropdown[]>([]);
 	const [site, setSite] = useState<dropdown>();
 	const [productLink, setProductLink] = useState("");
-	const [image, setImage] = useState("");
+	const [image, setImage] = useState<any>();
 	const [file, setFile] = useState<File>();
 	const [requirement, setRequirement] = useState<number>();
 	const [address, setAddress] = useState("");
@@ -56,7 +56,6 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	});
 	const [zipCode, setZipCode] = useState("");
 	const [loader, setLoader] = useState(false);
-	const [overlay, setOverlay] = useState("hidden");
 	const router = useRouter();
 	const [siteOptions, setSiteOptions] = useState<dropdown[]>([]);
 	const [cardOptions, setCardOptions] = useState<dropdown[]>([]);
@@ -64,7 +63,8 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	const [optionName, setOptionName] = useState("");
 	const [optionFile, setOptionFile] = useState<File>();
 	const [updateOptions, setUpdateOptions] = useState(false);
-
+	const [existingImg, setExistingImage] = useState("");
+	const [buttonClick, setButtonClick] = useState(false)
 	const [returnAmt, setReturnAmt] = useState<number>();
 
 	// const [cardsArr, setCardsArr] = useState<string[]>();
@@ -73,8 +73,9 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	// const [visible, setVisible] = useState(false);
 
 	//function to set Site
-	const handleDropdownChangeSite = (option: dropdown) => {
+	const handleDropdownChangeSite: any = (option: dropdown) => {
 		setSite(option);
+		// console.log(option)
 	};
 	// Function to set Cards
 	const handleChange = (selectedOptions: any) => {
@@ -90,10 +91,15 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 					const response = await axios.get(
 						`/api/orders/products?productId=${params?._id}`
 					);
-					console.log(response.data.data);
+					// console.log(response.data.data);
 					const product: productList = await response.data
 						.data;
-					setImage(`/uploads/${product.image}`);
+					setImage(
+						`data:image/jpg;base64,${product.image}`
+					);
+					setExistingImage(
+						`data:image/jpg;base64,${product.image}`
+					);
 					setName(product.name);
 					setPrice(product.price);
 					setCommission(product.commission);
@@ -112,7 +118,9 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 					// const newSite = delete product.site._id
 					// console.log('newSite', newSite)
 					setSite(product.site);
+					// console.log(product.site)
 					setZipCode(product.zipCode);
+					setReturnAmt(product.returnAmount);
 					setLoader(false);
 				}
 				return;
@@ -124,7 +132,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 		getData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [params?._id]);
-	console.log(cards, site, "these are cards , site");
+	// console.log(cards, site, "these are cards , site");
 
 	useEffect(() => {
 		async function getDate() {
@@ -175,6 +183,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	async function postData(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		try {
+			setButtonClick(true)
 			// Creating a formData instance
 			const formData = new FormData();
 
@@ -190,25 +199,33 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 			);
 			formData.append("card", JSON.stringify(cards));
 			formData.append("site", JSON.stringify(site));
-			formData.append("file", file!);
+			if (existingImg) {
+				formData.append("existingImg", existingImg);
+			} else {
+				formData.append("file", file!);
+			}
+
 			formData.append("info", JSON.stringify(info));
 			formData.append("zipCode", zipCode);
-			console.log(formData.get("returnAmt"));
+			// console.log(formData.get("returnAmt"));
 			const response = await axios.post(
 				`/api/admin/addProduct?query=newProduct`,
 				formData
 			);
 
-			console.log(response);
+			// console.log(response);
 			if (response.data.success) {
+
 				Popup("success", response.data.message);
 				router.back();
 			} else {
+				setButtonClick(false)
 				Popup("error", response.data.message);
 			}
 		} catch (error: any) {
+			setButtonClick(false)
 			Popup("error", "Something went wrong, try again later");
-			console.log("Something went wrong, please try again later");
+			// console.log("Something went wrong, please try again later");
 		}
 	}
 
@@ -238,7 +255,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 						className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}
 					></div> */}
 						<div
-							className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 sm:w-4/5 sm:top-2/4 sm:-translate-y-2/4`}
+							className={` bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 sm:w-4/5 sm:top-2/4 sm:-translate-y-2/4`}
 						>
 							{/* <RxCross1
 							className=" w-6 h-6 cursor-pointer ml-auto p-1 hover:bg-gray-100 active:bg-gray-100 rounded-full sm:w-7 sm:h-7"
@@ -248,9 +265,13 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 							{/* <DialogTrigger>Open</DialogTrigger> */}
 							<DialogContent>
 								<DialogHeader>
-									<DialogTitle>										Write, {addOption}{" "}
+									<DialogTitle>
+										{" "}
+										Write, {
+											addOption
+										}{" "}
 										name you want to add
-</DialogTitle>
+									</DialogTitle>
 									{/* <DialogDescription>
 									</DialogDescription> */}
 								</DialogHeader>
@@ -799,7 +820,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 							</button>
 							<button
 								className="w-64 p-2 text-white hover:bg-green-600 bg-primaryBgClr rounded-full sm:w-[8rem] sm:py-0 sm-px-0.5"
-								type="submit"
+								type="submit" disabled={buttonClick}
 							>
 								Add Product
 							</button>

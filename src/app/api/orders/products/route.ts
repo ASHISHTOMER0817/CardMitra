@@ -56,6 +56,9 @@ export async function GET(request: NextRequest) {
             } else if (productId) {
                   console.log('else if condition')
                   const product = await Product.findOne({ _id: productId })
+                  .populate({path:'cards', select:'value label'})
+                  .populate({path:'site', select: 'value label'})
+
                   // console.log(product)
                   if (icon === 'false') {
                         product.showOnHomePage = false

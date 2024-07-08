@@ -25,6 +25,7 @@ interface productList {
 	image: any,
 	zipCode: string
 	showOnHomePage: boolean
+	returnAmount:number
 }
 export default productList
 

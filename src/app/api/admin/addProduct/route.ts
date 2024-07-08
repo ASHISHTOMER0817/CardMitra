@@ -188,12 +188,14 @@ export async function POST(request: NextRequest) {
             // Handle product upload
             const formData = await request.formData();
             const name = formData.get('name');
-            const file = formData.get('file') as File;
+            const file = formData.get('file') as File | null;
+            const existingImg = formData.get('existingImg') as string | null;
             const commission = formData.get('commission');
             const productLink = formData.get('productLink');
             const price = formData.get('price');
             const requirement = formData.get('requirement');
             const returnAmount = formData.get('returnAmt')
+            console.log(returnAmount)
             const address = formData.get('address');
             const cardObj: any = formData.get('card');
             const siteObj: any = formData.get('site');
@@ -204,17 +206,22 @@ export async function POST(request: NextRequest) {
             const info = JSON.parse(infoList);
             const zipCode = formData.get('zipCode');
 
-            if (!file) {
+            let fileBuffer;
+            if (file) {
+                  // Handle file upload
+                  fileBuffer = Buffer.from(await file.arrayBuffer());
+              } else if (existingImg) {
+                  // Handle base64 string
+                  const base64Data = existingImg.split(',')[1];
+                  fileBuffer = Buffer.from(base64Data, 'base64');
+              } else {
                   return NextResponse.json({
-                        message: 'upload an image', status: 400, success: false
-                  });
-            }
-            // console.log(formData, 'and this is file', file)
+                        message: 'Upload an image', success: false, status: 400
+                  })
+              }
 
-            const fileBuffer = Buffer.from(await file.arrayBuffer());
-            // console.log(fileBuffer, 'fileBuffer')
+            // const fileBuffer =  Buffer.from(await file.arrayBuffer());
             const imageData = new Binary(fileBuffer);
-            // console.log(imageData, 'here is imageData')
 
 
 
