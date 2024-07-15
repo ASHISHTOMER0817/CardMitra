@@ -311,7 +311,7 @@ const UserProfile = () => {
           <h2 className="text-xl md:text-lg sm:text-base font-semibold text-gray-800">Transactions</h2>
         </div>
         <div className="p-6 md:p-4 sm:p-0">
-          <Transactions _id={data?.user._id!} />
+          <Transactions _id={data?.user._id!} user={true} />
         </div>
       </div>
     </div>

@@ -3,14 +3,14 @@ import { transactions } from "@/interface/productList";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Popup from "./Popup";
-import dateFormat from "./dateFormat";
-import Loader from "./loader";
+// import dateFormat from "./dateFormat";
+// import Loader from "./loader";
 
 const Transactions = ({
-	// userPage,
+	user,
 	_id,
 }: {
-	// userPage: boolean;
+	user?: boolean;
 	_id: string;
 }) => {
 	const [data, setData] = useState<transactions[]>();
@@ -27,6 +27,7 @@ const Transactions = ({
 				Popup("error", "Something missing, refresh the page");
 			}
 		}
+		// console.log('this is side - ----   ', user)
 		getData();
 	}, [_id]);
 	const userId = _id;
@@ -171,7 +172,9 @@ const Transactions = ({
                 Date
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-                Amount Paid
+                {/* Amount Received */}
+		    
+		    {user ? 'Amount Received': 'Amount Paid'}
               </th>
             </tr>
           </thead>

@@ -38,7 +38,7 @@ const CardLayout = ({
 				</div>
 				{icons}
 			</div>
-			<div className="flex justify-center text-sm items-start md:gap-0 sm:justify-between gap-2.5">
+			<div className="flex justify-center text-sm items-start md:gap-5 sm:justify-between gap-2.5">
 				<Image loading="lazy" quality={30}
 					className="w-40 h-auto sm:h-auto sm:w-[100px]"
 					src={

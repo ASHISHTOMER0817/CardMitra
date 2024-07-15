@@ -137,6 +137,7 @@ export async function GET(request: NextRequest) {
                   let orders = await Order.find({})
                         .sort({ orderedAt: -1 })
                         .populate('user', 'name')
+                        .populate('product')
                         .lean();
 
                   const orderHistory = bufferToString(products)

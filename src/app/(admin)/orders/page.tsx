@@ -18,6 +18,10 @@ interface joint {
 const AdminOrderHistory = () => {
 	const [data, setData] = useState<joint>();
 	const [view, setView] = useState("grid");
+	const [zipcode, setZipcode] = useState<string>("");
+	const [startDate, setStartDate] = useState<Date | null>(null);
+	const [endDate, setEndDate] = useState<Date | null>(null);
+	// const [total, setTotal] = useState<number | null>();
 
 	useEffect(() => {
 		async function getData() {
@@ -33,7 +37,7 @@ const AdminOrderHistory = () => {
 		}
 		getData();
 	}, []);
-
+	console.log(endDate)
 	return (
 		<div className="flex flex-col mx-auto">
 			<Header
@@ -215,11 +219,104 @@ const AdminOrderHistory = () => {
 						</table>
 					</div> */}
 
+					<div className=" flex md:flex-col md:w-fit mb-7">
+						<input
+							className="mr-2"
+							type="text"
+							placeholder="pincode"
+							value={zipcode}
+							onChange={(e) =>
+								setZipcode(e.target.value)
+							}
+						/>
+						{/* <input type="Date" placeholder="start Date" value={startDate?.toString()} onChange={(e)=> setStartDate(new Date(e.target.value))}/>
+							<input type="Date" placeholder="End Date" value={endDate?.toString()} onChange={(e)=> setEndDate(new Date(e.target.value))} /> */}
+						{/* <div className="flex ml-auto w-fit"> */}
+						<input
+							className="ml-auto md:mr-auto md:ml-0"
+							type="date"
+							placeholder="Start Date"
+							value={
+								startDate
+									? startDate
+											.toISOString()
+											.substring(
+												0,
+												10
+											)
+									: ""
+							}
+							onChange={(e) =>
+								setStartDate(
+									e.target.value
+										? new Date(
+												e.target.value
+										  )
+										: null
+								)
+							}
+						/>
+
+						<div className="mx-4 text-gray-400">to</div>
+						<input
+							className="md:mr-auto"
+							type="date"
+							placeholder="End Date"
+							value={
+								endDate
+									? endDate
+											.toISOString()
+											.substring(
+												0,
+												10
+											)
+									: ""
+							}
+							onChange={(e) =>
+								setEndDate(
+									e.target.value
+										? new Date(
+												e.target.value
+										  )
+										: null
+								)
+							}
+						/>
+						<div>
+							Total:{" "}
+							{data.orders.reduce((sum, order) => {
+								const orderedAt = new Date(
+									order.orderedAt
+								); // Assuming orderedAt is a property of product
+								let show = true;
+
+								if (
+									(zipcode &&
+										order.product
+											.zipCode !==
+											zipcode) ||
+									(startDate &&
+										orderedAt.valueOf() <=
+											startDate.valueOf()) ||
+									(endDate &&
+										orderedAt.valueOf() >=
+											endDate.valueOf())
+								) {
+									show = false;
+								}
+
+								return show
+									? sum +
+											order.product
+												.price
+									: sum;
+							}, 0)}
+						</div>
+						{/* </div> */}
+					</div>
+
 					{/*Latest Design changes */}
 					<div className="">
-						{/* <h1 className="text-2xl font-semibold mb-6">
-							Order List
-						</h1> */}
 						<div className="overflow-x-auto bg-white shadow-md rounded-[8px]">
 							<table className="min-w-full divide-y divide-gray-200 text-nowrap">
 								<thead className="bg-green-100">
@@ -231,14 +328,15 @@ const AdminOrderHistory = () => {
 											Device
 										</th>
 										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+											Pincode
+										</th>
+										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
 											Order ID
 										</th>
 										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
 											Date
 										</th>
-										{/* <th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-											Delivery Date
-										</th> */}
+
 										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
 											Status
 										</th>
@@ -251,65 +349,92 @@ const AdminOrderHistory = () => {
 												user,
 												product,
 												orderedAt,
-												// deliveryDate,
 												delivered,
 												_id,
 											},
 											index
-										) => (
-											<tr
-												key={
-													index
-												}
-												className={
-													index %
-														2 ===
-													0
-														? "bg-gray-100"
-														: "bg-white"
-												}
-											>
-												<td className="py-4 px-6 text-sm font-semibold text-primaryBgClr">
-													{
-														user.name
-													}
-												</td>
-												<td className="py-4 px-6 text-sm text-gray-500">
-													{
-														product.name
-													}
-												</td>
-												<td className="py-4 px-6 text-sm text-gray-500">
-													<span
-														className="block overflow-hidden text-ellipsis whitespace-nowrap"
-														title={
-															_id
+										) => {
+											let show =
+												true;
+											if (
+												(zipcode &&
+													product.zipCode !==
+														zipcode) ||
+												(startDate &&
+													new Date(
+														orderedAt
+													).valueOf() <=
+														startDate.valueOf()) ||
+												(endDate &&
+													new Date(
+														orderedAt
+													).valueOf() >=
+														endDate.valueOf())
+											)
+												show =
+													false;
+											return (
+												show && (
+													<tr
+														key={
+															index
+														}
+														className={
+															index %
+																2 ===
+															0
+																? "bg-gray-100"
+																: "bg-white"
 														}
 													>
-														{
-															_id
-														}
-													</span>
-												</td>
-												<td className="py-4 px-6 text-sm text-gray-500">
-													{new Date(
-														orderedAt
-													).toDateString()}
-												</td>
-												{/* <td className="py-4 px-6 text-sm text-gray-500">
+														<td className="py-4 px-6 text-sm font-semibold text-primaryBgClr">
+															{
+																user.name
+															}
+														</td>
+														<td className="py-4 px-6 text-sm text-gray-500">
+															{
+																product.name
+															}
+														</td>
+														<td className="py-4 px-6 text-sm text-gray-500">
+															{
+																product.zipCode
+															}
+														</td>
+														<td className="py-4 px-6 text-sm text-gray-500">
+															<span
+																className="block overflow-hidden text-ellipsis whitespace-nowrap"
+																title={
+																	_id
+																}
+															>
+																{
+																	_id
+																}
+															</span>
+														</td>
+														<td className="py-4 px-6 text-sm text-gray-500">
+															{new Date(
+																orderedAt
+															).toDateString()}
+														</td>
+														{/* <td className="py-4 px-6 text-sm text-gray-500">
 													{
 														deliveryDate
 													}
 												</td> */}
-												<td className="py-4 px-6 text-sm text-gray-500">
-													<StatusBadge
-														status={
-															delivered
-														}
-													/>
-												</td>
-											</tr>
-										)
+														<td className="py-4 px-6 text-sm text-gray-500">
+															<StatusBadge
+																status={
+																	delivered
+																}
+															/>
+														</td>
+													</tr>
+												)
+											);
+										}
 									)}
 								</tbody>
 							</table>

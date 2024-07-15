@@ -116,7 +116,7 @@ const Deals = () => {
 					)
 				) : (
 					<div className="text-red-500 font-serif mx-auto w-fit ">
-						No other products to order
+						Stay tuned for crazy deals...
 					</div>
 				)}
 			</div>

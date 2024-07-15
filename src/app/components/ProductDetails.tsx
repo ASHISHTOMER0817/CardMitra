@@ -144,7 +144,7 @@ export default function ProductDetails({
 				</div>
 				<div>
 					<h6 className="mb-2 sm:text-[12px] sm:font-semibold">
-						Website
+						Product Link
 					</h6>
 
 					<Link
