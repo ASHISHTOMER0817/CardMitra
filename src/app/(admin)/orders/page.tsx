@@ -45,6 +45,9 @@ const AdminOrderHistory = () => {
 				heading={"Order History"}
 				Children={
 					<div className="flex gap-[10px] sm:w-full">
+						<button  onClick={()=>window.print()} className={`px-3 py-1 gap-1 rounded-2xl cursor-pointer flex justify-center items-center text-sm hover:bg-gray-200 sm:px-3 sm:py-0 ${view === 'grid' && 'hidden'}`}>
+							Print
+						</button>
 						<div
 							onClick={() => setView("list")}
 							className={`px-3 py-1 gap-1 cursor-pointer flex justify-center items-center text-sm hover:bg-gray-200 sm:px-3 sm:py-0 sm:text-nowrap ${
@@ -71,6 +74,7 @@ const AdminOrderHistory = () => {
 						>
 							Add Product
 						</Link>
+						
 					</div>
 				}
 			/>
@@ -233,7 +237,7 @@ const AdminOrderHistory = () => {
 							<input type="Date" placeholder="End Date" value={endDate?.toString()} onChange={(e)=> setEndDate(new Date(e.target.value))} /> */}
 						{/* <div className="flex ml-auto w-fit"> */}
 						<input
-							className="ml-auto md:mr-auto md:ml-0"
+							className="md:mr-auto"
 							type="date"
 							placeholder="Start Date"
 							value={
@@ -282,7 +286,7 @@ const AdminOrderHistory = () => {
 								)
 							}
 						/>
-						<div>
+						<div className="ml-auto">
 							Total:{" "}
 							{data.orders.reduce((sum, order) => {
 								const orderedAt = new Date(
@@ -326,6 +330,9 @@ const AdminOrderHistory = () => {
 										</th>
 										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
 											Device
+										</th>
+										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+										Price
 										</th>
 										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
 											Pincode
@@ -399,6 +406,11 @@ const AdminOrderHistory = () => {
 														</td>
 														<td className="py-4 px-6 text-sm text-gray-500">
 															{
+																product.price
+															}
+														</td>
+														<td className="py-4 px-6 text-sm text-gray-500">
+															{
 																product.zipCode
 															}
 														</td>
@@ -419,11 +431,7 @@ const AdminOrderHistory = () => {
 																orderedAt
 															).toDateString()}
 														</td>
-														{/* <td className="py-4 px-6 text-sm text-gray-500">
-													{
-														deliveryDate
-													}
-												</td> */}
+														
 														<td className="py-4 px-6 text-sm text-gray-500">
 															<StatusBadge
 																status={

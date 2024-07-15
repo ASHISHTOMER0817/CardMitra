@@ -86,7 +86,7 @@ export async function GET(request: NextRequest) {
                         let otpList;
 
                         try {
-                              const response = await axios.get('https://script.google.com/macros/s/AKfycbw82DtxZZc7b8ks98MALeEwZM8_1x94HftUpdYbEDCwfeX_Nbci9JWVv3NDAAfxEkMx/exec');
+                              const response = await axios.get('https://script.google.com/macros/s/AKfycbwA7ltqd1DatJM0Od_rteBT1tgUy3msAQoItJZ6n0-csJDTZnC5fluiiU91C3wSKR0/exec');
                               otpList = response.data.data;
                               console.log('try part')
                         } catch (error) {

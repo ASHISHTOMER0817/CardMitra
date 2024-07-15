@@ -58,10 +58,10 @@ export async function GET(request: NextRequest) {
             if (orderList.length > 0) {
                   for (let i = 0; i < orderList.length; i++) {
                         if (orderList[i].delivered === 'delivered' && orderList[i].paid === null) {
-                              total += orderList[i].product.price;
+                              total += orderList[i].product.price + orderList[i].product.commission;
                         }
                         if (orderList[i].delivered === 'unverified' && orderList[i].paid === null) {
-                              totalUnVerifiedAmt += orderList[i].product.price;
+                              totalUnVerifiedAmt += orderList[i].product.price + orderList[i].product.commission;
                         }
                   }
             }

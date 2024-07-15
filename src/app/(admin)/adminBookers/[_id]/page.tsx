@@ -90,7 +90,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 	const router = useRouter();
 
 	const paymentElement = {
-		heading: `The pending amount is ₹${" "} ${data?.totalAmt}${" + "}${data?.unpaid}`,
+		heading: `The pending amount is ₹${" "} ${(!data?.totalAmt ? 0: data?.totalAmt) - (!data?.unpaid ? 0: data?.unpaid)}${" + "}${data?.unpaid}`,
 		desc: "Write the amount, you have paid to the user.",
 		button: "Confirm",
 		action:'payment'
@@ -118,7 +118,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 				);
 				const data = response.data.data;
 				setData(data);
-				setAmount((+data.unpaid + +data.totalAmt).toString());
+				setAmount((+data.totalAmt).toString());
 				console.log(response.data.data);
 				if (response.data.status === 250) {
 					Popup("success", response.data.message);

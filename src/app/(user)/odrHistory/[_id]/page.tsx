@@ -72,7 +72,7 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 
 	const GoogleForm = async () => {
 		const googleFormUrl =
-			"https://docs.google.com/forms/d/e/1FAIpQLSeHWBZSHdKOpVySmjtTKwRvBUt00SbySSSDWNThh6iLo0iOaQ/viewform?usp=pp_url"; // Replace with your actual Google Form URL
+			"https://docs.google.com/forms/d/e/1FAIpQLSeRDhNchCdKMxAqOpF9QgUHWP_r4QwkHwnDYevHaVDg0kd6JQ/viewform"; // Replace with your actual Google Form URL
 		const newWindow = window.open(
 			googleFormUrl,
 			"_blank",

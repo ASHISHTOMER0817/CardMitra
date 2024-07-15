@@ -123,7 +123,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 												._id && order.delivered === 'delivered' && order.paid === null
 										) {
 											payable +=
-											order.product.price;
+											order.product.price + order.product.commission;
 													
 										}
 									}
