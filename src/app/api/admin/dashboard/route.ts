@@ -36,9 +36,9 @@ export async function GET(request: NextRequest) {
 
             if (query === 'dashboard') {
                   let products = await Product.find({ deals: true })
-                  .limit(3) 
-                  .populate({path:'cards', select:'value image'})
-                  .populate('site').lean();
+                        .limit(3)
+                        .populate({ path: 'cards', select: 'value image' })
+                        .populate('site').lean();
 
 
 
@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
                   let orderHistory = products.map(product => ({
                         ...product,
                         image: product.image ? product.image.toString('base64') : null,
-                        cards: product.cards.map((card:any) => ({
+                        cards: product.cards.map((card: any) => ({
                               ...card,
                               image: card.image ? card.image.toString('base64') : null
                         })),
@@ -60,7 +60,6 @@ export async function GET(request: NextRequest) {
                   //Affiliate Array
                   const affiliate = await User.find()
                   const noOfAffiliate = affiliate.length
-                  // console.log(noOfAffiliate)
 
 
                   //Orders placed today
@@ -80,9 +79,7 @@ export async function GET(request: NextRequest) {
                   }
 
 
-
-                  console.log(syncOperation, 'this is sync Operation')
-                  if (syncOperation) {
+                  if (syncOperation === 'true') {
                         let otpList;
 
                         try {
@@ -128,12 +125,12 @@ export async function GET(request: NextRequest) {
                   })
 
             } else if (query === 'orderHistory') {
-                  const products:any = await Product.find({ show: true })
-                  .sort({Date: -1})
-                  .populate({path:'cards', select:'value image'})
-                  .populate('site').lean();
+                  const products: any = await Product.find({ show: true })
+                        .sort({ Date: -1 })
+                        .populate({ path: 'cards', select: 'value image' })
+                        .populate('site').lean();
                   // console.log('this is product', products)
-                        
+
                   let orders = await Order.find({})
                         .sort({ orderedAt: -1 })
                         .populate('user', 'name')

@@ -9,7 +9,7 @@ import Popup from "./Popup";
 import Link from "next/link";
 import { IoCheckmark } from "react-icons/io5";
 import { GoPlus } from "react-icons/go";
-import { Icons } from "react-toastify";
+// import { Icons } from "react-toastify";
 
 const CardLayoutAdminDashboard = ({ data }: { data: productList }) => {
 	const {

@@ -13,14 +13,14 @@ import Popup from "@/app/components/Popup";
 
 interface dashboardData {
 	orderHistory: productList[];
-	deliveries: number;
+	// deliveries: number;
 	noOfAffiliate: number;
 	order: number;
 	arr:number[]
 }
 const AdminDashboard = () => {
 	const [data, setData] = useState<dashboardData>();
-	const [syncOperation, setSyncOperation] = useState(false);
+	const [syncOperation, setSyncOperation] = useState<boolean>(false);
 	// const [chartArr, setChartArr] = useState<number[]>([0,0,0,0,0,0,0,0,0,0,0,0,]);
 	const [orders, setOrders] = useState(0)
 	const [userData, setUserData] = useState({
