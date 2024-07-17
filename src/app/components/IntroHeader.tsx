@@ -31,12 +31,12 @@ const Header = () => {
 				})}
 			</ul>
 			<Link
-				className="button bg-primaryBgClr hover:bg-[#16a34a] text-white font-bold me-3 login-button"
+				className="button bg-primaryBgClr hover:bg-[#16a34a] hover:text-white text-white font-bold me-3 login-button"
 				href={"/Auth/login"}
 			>
 				Login
 			</Link>
-			<Link className="button font-bold" href={"/Auth/signup"}>
+			<Link className="button font-bold " href={"/Auth/signup"}>
 				Sign Up
 			</Link>
 		</div>
