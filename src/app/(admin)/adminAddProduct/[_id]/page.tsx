@@ -67,16 +67,11 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	const [buttonClick, setButtonClick] = useState(false)
 	const [returnAmt, setReturnAmt] = useState<number>();
 
-	// const [cardsArr, setCardsArr] = useState<string[]>();
-	// console.log(cards);
-	// const [arr, setArr] = useState<string[]>([]);
-	// const [visible, setVisible] = useState(false);
-
 	//function to set Site
 	const handleDropdownChangeSite: any = (option: dropdown) => {
 		setSite(option);
-		// console.log(option)
 	};
+
 	// Function to set Cards
 	const handleChange = (selectedOptions: any) => {
 		setCards(selectedOptions);
@@ -91,7 +86,6 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 					const response = await axios.get(
 						`/api/orders/products?productId=${params?._id}`
 					);
-					// console.log(response.data.data);
 					const product: productList = await response.data
 						.data;
 					setImage(
@@ -206,7 +200,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 			}
 
 			formData.append("info", JSON.stringify(info));
-			
+
 			formData.append("zipCode", zipCode);
 			formData.append("productId", params._id)
 			// console.log(formData.get("returnAmt"));
@@ -227,7 +221,6 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 		} catch (error: any) {
 			setButtonClick(false)
 			Popup("error", "Something went wrong, try again later");
-			// console.log("Something went wrong, please try again later");
 		}
 	}
 
@@ -410,17 +403,12 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 													const file =
 														target
 															.files[0];
-													// console.log(file);
 													setImage(
 														URL.createObjectURL(
 															file
 														)
 													);
-													// console.log(
-													// 	URL.createObjectURL(
-													// 		file
-													// 	)
-													// );
+													
 													setFile(
 														file
 													);
@@ -688,7 +676,6 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 										/>
 									</DialogTrigger>
 								</div>
-								{/* <Image src={} alt={""}/> */}
 							</div>
 							<div className="mb-4 sm:mb-0 flex flex-col w-full gap-6 sm:gap-2">
 								<label

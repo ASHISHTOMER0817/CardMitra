@@ -6,7 +6,7 @@ import fs from 'fs/promises';
 import { NextRequest, NextResponse } from 'next/server';
 import { Options, Product, Card, Site } from '@/models/userModel';
 import { dropdown } from '@/app/(admin)/adminAddProduct/[_id]/page';
-
+import sharp from "sharp"
 
 
 import { Binary } from "mongodb"
@@ -188,6 +188,7 @@ export async function POST(request: NextRequest) {
             // Handle product upload
             const formData = await request.formData();
             const name = formData.get('name');
+            console.log('workin til her')
             const file = formData.get('file') as File | null;
             const existingImg = formData.get('existingImg') as string | null;
             const commission = formData.get('commission');
@@ -206,35 +207,38 @@ export async function POST(request: NextRequest) {
             const info = JSON.parse(infoList);
             const zipCode = formData.get('zipCode');
             const productId = formData.get('productId')
-
+            console.log('this is file', console.log(file?.type), 'below si the file', file)
             let fileBuffer;
-            if (file) {
-                  // Handle file upload
-                  fileBuffer = Buffer.from(await file.arrayBuffer());
-            } else if (existingImg) {
-                  // Handle base64 string
-                  const base64Data = existingImg.split(',')[1];
-                  fileBuffer = Buffer.from(base64Data, 'base64');
+
+            if (file || existingImg) {
+                  let originalBuffer;
+                  if (file) {
+                        originalBuffer = Buffer.from(await file.arrayBuffer());
+                  } else if (existingImg) {
+                        const base64Data = existingImg.split(',')[1];
+                        originalBuffer = Buffer.from(base64Data, 'base64');
+                  }
+
+                  if (originalBuffer) fileBuffer = await sharp(new Uint8Array(originalBuffer))
+                        .resize({ width: 160, height: undefined, fit: 'contain' })
+                        .webp()
+                        .toBuffer();
             } else {
                   return NextResponse.json({
                         message: 'Upload an image', success: false, status: 400
-                  })
+                  });
             }
 
             const imageData = new Binary(fileBuffer);
 
 
 
-            // Find the site document or create if it doesn't exist
+            // Find the site document
             let siteDoc = await Site.findOne({ value: site.value });
 
             // Find or create card documents
             const cardIds = await Promise.all(cards.map(async (card) => {
                   let cardDoc = await Card.findOne({ value: card.value });
-                  // if (!cardDoc) {
-                  //   cardDoc = await Card.create(card);
-                  // }
-                  // console.log(card.value)
                   return cardDoc._id;
             }));
 
@@ -257,8 +261,8 @@ export async function POST(request: NextRequest) {
             console.log(productDetails, 'and:--', price)
             if (productId !== 'newProduct') {
                   console.log('rng if candsn')
-                  const existingProduct = await Product.findOneAndUpdate({ _id:productId }, { $set: { ...productDetails } }, { new: true })
-                  console.log('heyar is existing prdct',existingProduct)
+                  const existingProduct = await Product.findOneAndUpdate({ _id: productId }, { $set: { ...productDetails } }, { new: true })
+                  console.log('heyar is existing prdct', existingProduct)
                   return NextResponse.json({
                         message: 'Product updated', success: true,
                   });
