@@ -525,7 +525,7 @@ export default function Home() {
 						// </div>
 					)}
 				</div>
-				<Link
+				{/* <Link
 					href={"/Auth/signup"}
 					className="text-black flex justify-center items-center gap-2 w-fit mx-auto bg-white px-5 py-1 rounded-[12px] button"
 				>
@@ -537,7 +537,7 @@ export default function Home() {
 						width={14}
 						className="w-[14px] h-auto"
 					/>
-				</Link>
+				</Link> */}
 			</section>
 
 			<section className="text-center px-10 py-16 lgMax:py-8 lgMax:px-4">
