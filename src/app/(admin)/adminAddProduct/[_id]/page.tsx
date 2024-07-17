@@ -206,6 +206,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 			}
 
 			formData.append("info", JSON.stringify(info));
+			
 			formData.append("zipCode", zipCode);
 			formData.append("productId", params._id)
 			// console.log(formData.get("returnAmt"));

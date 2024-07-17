@@ -221,17 +221,12 @@ export async function POST(request: NextRequest) {
                   })
             }
 
-            // const fileBuffer =  Buffer.from(await file.arrayBuffer());
             const imageData = new Binary(fileBuffer);
 
 
 
             // Find the site document or create if it doesn't exist
             let siteDoc = await Site.findOne({ value: site.value });
-            //     if (!siteDoc) {
-            //       siteDoc = await Site.create(site);
-            //     }
-            // console.log(siteDoc, 'this is site')
 
             // Find or create card documents
             const cardIds = await Promise.all(cards.map(async (card) => {
