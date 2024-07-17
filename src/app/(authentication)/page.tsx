@@ -519,10 +519,10 @@ export default function Home() {
 								);
 							}
 						)
-					) : (
-						<div className="text-red-500 font-serif mx-auto w-fit ">
-							No other products to order
-						</div>
+					) : (""
+						// <div className="text-red-500 font-serif mx-auto w-fit ">
+						// 	No other products to order
+						// </div>
 					)}
 				</div>
 				<Link
@@ -553,7 +553,7 @@ export default function Home() {
 					effortlessly <br /> with our comprehensive
 					solution
 				</h3>
-				<button className="button bg-primaryBgClr hover:bg-[#16a34a] text-white button-lg mt-4">
+				<button className=" bg-primaryBgClr rounded-full hover:bg-green-600 text-white button-lg mt-4">
 					<Link href={"/Auth/signup"} className="text-xl">
 						Become an Affiliate
 					</Link>
