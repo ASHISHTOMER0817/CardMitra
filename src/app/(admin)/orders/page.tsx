@@ -332,7 +332,7 @@ const AdminOrderHistory = () => {
 											Device
 										</th>
 										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-										Price
+										Return Amt
 										</th>
 										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
 											Pincode
@@ -406,7 +406,7 @@ const AdminOrderHistory = () => {
 														</td>
 														<td className="py-4 px-6 text-sm text-gray-500">
 															{
-																product.price
+																+product.price + +product.commission
 															}
 														</td>
 														<td className="py-4 px-6 text-sm text-gray-500">
