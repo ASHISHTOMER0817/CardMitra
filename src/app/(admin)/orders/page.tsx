@@ -311,8 +311,8 @@ const AdminOrderHistory = () => {
 
 								return show
 									? sum +
-											order.product
-												.price
+											(+order.product
+												.price + +order.product.commission)
 									: sum;
 							}, 0)}
 						</div>
