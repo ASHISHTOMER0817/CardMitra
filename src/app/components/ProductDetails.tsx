@@ -1,29 +1,18 @@
 import productList from "@/interface/productList";
 import Link from "next/link";
 import Image from "next/image";
-import phoneImage from "@/../public/phoneImage.jpg";
+// import phoneImage from "@/../public/phoneImage.jpg";
 import cardVerticalLine from "@/../public/cardVerticalLine.svg";
-import amazon from "@/../public/static/amazon.svg";
-import flipkart from "@/../public/static/flipkart.svg";
-// import jiomart from "@/../public/static/jiomart.png";
-import shopsy from "@/../public/static/shopsy.jpg";
-import vivo from "@/../public/static/vivo.webp";
-import oppo from "@/../public/static/oppo.png";
-import mi from "@/../public/static/mi.jpg";
-import samsung from "@/../public/static/samsung.png";
-import { useEffect, useState } from "react";
+// import amazon from "@/../public/static/amazon.svg";
+// import flipkart from "@/../public/static/flipkart.svg";
+// import shopsy from "@/../public/static/shopsy.jpg";
+// import vivo from "@/../public/static/vivo.webp";
+// import oppo from "@/../public/static/oppo.png";
+// import mi from "@/../public/static/mi.jpg";
+// import samsung from "@/../public/static/samsung.png";
+// import { useEffect, useState } from "react";
 import { MyArrayItem } from "../(user)/deals/[placeorder]/page";
 
-// const siteArr = [
-// 	{ name: "Amazon", image: amazon },
-// 	{ name: "Flipkart", image: flipkart },
-// 	{ name: "Jiomart", image: jiomart },
-// 	{ name: "Shopsy", image: shopsy },
-// 	{ name: "Vivo", image: vivo },
-// 	{ name: "MI", image: mi },
-// 	{ name: "Oppo", image: oppo },
-// 	{ name: "Samsung", image: samsung },
-// ];
 export default function ProductDetails({
 	observer,
 	data,
@@ -35,7 +24,7 @@ export default function ProductDetails({
 }) {
 	return (
 		<>
-			<section className=" text-left sm:w-full">
+			<section className=" text-left sm:w-full mt-5">
 				<div className="bg-[#FC08081A] text-[#FC0808] text-center px-4 py-1 rounded-full sm:w-full sm:text-nowrap">
 					{observer !== "user" || !observer
 						? "Quantity left: " + data?.requirement
@@ -106,7 +95,7 @@ export default function ProductDetails({
 					</div>
 				</div>
 			</section>
-			<section className="w-full flex justify-between items-start flex-wrap">
+			<section className="w-full flex justify-between items-start flex-wrap mt-5">
 				<div className="flex flex-col items-start">
 					<h6 className="mb-2 sm:text-[12px] sm:font-semibold">
 						bank cards to use
@@ -169,7 +158,7 @@ export default function ProductDetails({
 					</Link>
 				</div>
 			</section>
-			<section className="text-wrap flex text-gray-600 text-sm flex-col justify-start gap-2 sm:mb-4 sm:w-full">
+			<section className="text-wrap flex text-gray-600 text-sm flex-col justify-start gap-2 sm:mb-4 sm:w-full mt-3">
 				<div className=" text-black text-lg sm:text-[12px] font-semibold">
 					Address
 				</div>

@@ -54,18 +54,18 @@ const ProductOrderList = ({ _id }: { _id: string }) => {
 									key={index}
 									className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}
 								>
-									<td className="py-4 px-12 font-semibold text-primaryBgClr">
+									<td className="py-4 px-6 font-semibold text-primaryBgClr">
 										{order.user.name}
 									</td>
-									<td className="py-4 px-12 text-gray-500">
+									<td className="py-4 px-6 text-gray-500">
 										{order._id}
 									</td>
-									<td className="py-4 px-12 text-gray-500">
+									<td className="py-4 px-6 text-gray-500">
 										{new Date(
 											order.orderedAt
 										).toDateString()}
 									</td>
-									<td className="py-4 px-12 text-gray-500">
+									<td className="py-4 px-6 text-gray-500">
 										<StatusBadge
 											status={
 												order.delivered
