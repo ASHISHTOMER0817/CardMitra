@@ -16,8 +16,8 @@ import { ToastContainer } from "../components/nextToast";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "Order Phones",
-	description: "Owned by Guru",
+	title: "Card Mitra",
+	description: "Cards to Cash",
 };
 
 const options = [

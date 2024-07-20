@@ -32,7 +32,9 @@ export async function middleware(request: NextRequest) {
             // Admin Dynamic paths
             const adminDynamicPath = path.startsWith('/adminAddProduct/') || path.startsWith('/adminBookers/') || path.startsWith('/orders/')
             const userDynamicPath = path.startsWith('/odrHistory/') || path.startsWith('/deals/')
-            if (path === '/') {
+
+            // if (path === '/') {
+            if (authPath) {
                   if (payload.role === 'user') {
                         return NextResponse.redirect(new URL('/deals', request.url))
                   } else if (payload.role === 'admin') {
