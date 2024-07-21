@@ -13,6 +13,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
 	title: "Card Mitra",
 	description: "Cards to Cash",
+	icons:{
+		icon:{url:'/favicon.svg', sizes: '32x32', type: 'image/svg+xml'}
+	}
 };
 
 export default function RootLayout({
