@@ -6,29 +6,19 @@ import Popup from "./Popup";
 
 const OrderForm = ({ objectId }: { objectId: string }) => {
 	const [orderNumber, setOrderNumber] = useState("");
-	// const [deliveryDate, setDeliveryDate] = useState(Date);
-	// const [address, setAddress] = useState("");
 	const router = useRouter();
+	const [disabled, setDisabled] = useState(false)
 
 	const handleOrderNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setOrderNumber(e.target.value);
 	};
-
-	// const handleDeliveryDateChange = (e: ChangeEvent<HTMLInputElement>) => {
-	// 	setDeliveryDate(e.target.value);
-	// };
-
-	// const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
-	// 	setAddress(e.target.value);
-	// };
-
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		setDisabled(true)
 
 		try {
 			const formData = {
 				orderNumber,
-				// deliveryDate,
 				objectId,
 			};
 			const response = await axios.post("/api/users/orderForm", {
@@ -47,19 +37,17 @@ const OrderForm = ({ objectId }: { objectId: string }) => {
 			}
 
 			Popup("success", message);
-			// console.log(response.data);
 			setTimeout(() => {
 				router.back();
-			}, 2000);
+			}, 400);
 		} catch {
 			Popup("error", "Failed to submit form, please try again");
+			setDisabled(false)
 			console.log("Failed to submit form, please try again");
 		}
 
 		// Reset the form fields after submission (optional)
 		setOrderNumber("");
-		// setDeliveryDate("");
-		// setAddress("");
 	};
 
 	return (
@@ -76,28 +64,7 @@ const OrderForm = ({ objectId }: { objectId: string }) => {
 				required
 				style={{width: '100% !important'}}
 			/>
-
-			{/* <label htmlFor="date">Date of Delivery</label> */}
-			{/* <input
-				type="date"
-				placeholder="DD-MM-YYYY"
-				value={deliveryDate}
-				onChange={handleDeliveryDateChange}
-				required
-				style={{width: '100% !important'}}
-			/> */}
-
-			{/* <label htmlFor="address">Address</label> */}
-			{/* <input
-				type="text"
-				placeholder="Address"
-				value={address}
-				onChange={handleAddressChange}
-				required
-				style={{width: '100% !important'}}
-			/> */}
-
-			<button
+			<button disabled={disabled}
 				type="submit"
 				className="text-white border order-form rounded-3xl py-4 px-3 hover:bg-green-600 bg-primaryBgClr w-96 sm:w-48 sm:py-2" style={{alignSelf: 'center'}}
 			>
