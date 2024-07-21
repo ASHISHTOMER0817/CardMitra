@@ -249,9 +249,9 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 						{/* <div
 						className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}
 					></div> */}
-						<div
+						{/* <div
 							className={` bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 sm:w-4/5 sm:top-2/4 sm:-translate-y-2/4`}
-						>
+						> */}
 							{/* <RxCross1
 							className=" w-6 h-6 cursor-pointer ml-auto p-1 hover:bg-gray-100 active:bg-gray-100 rounded-full sm:w-7 sm:h-7"
 							onClick={() => setOverlay("hidden")}
@@ -369,7 +369,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 							>
 								Add
 							</button> */}
-						</div>
+						{/* </div> */}
 						<div className="flex gap-10 mb-8 sm:flex-col sm:mb-4 sm:gap-4">
 							<label
 								htmlFor="image"
