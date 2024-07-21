@@ -20,7 +20,10 @@ export async function POST(request: NextRequest) {
             console.log(tokenData, 'and', remember)
             console.log('password verified', verifyPassword)
             //if user doesn't exist
-            if (user && verifyPassword) {
+            if (!user || !verifyPassword) return NextResponse.json({
+                  message: 'email or password is wrong!', success: false, data: user.role
+            });
+            else if (user && verifyPassword) {
                   //check if user actually exist 
 
                   const secret = new TextEncoder().encode(
@@ -48,7 +51,7 @@ export async function POST(request: NextRequest) {
             }
       } catch {
             return NextResponse.json({
-                  message: "email or password doesn't match!", success: false
+                  message: "server error", success: false
             })
       }
 

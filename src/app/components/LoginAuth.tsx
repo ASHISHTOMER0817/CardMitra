@@ -47,9 +47,9 @@ const LoginAuth = () => {
 			console.log(success, message, data);
 			// checkSuccess(success, message, data);
 
-			if (data === "user") router.push("/deals");
+			if(!success){Popup("error", message);setLoader(false)}
+			else if (data === "user") router.push("/deals");
 			else if (data === "admin") router.push("/adminDashboard");
-			else  Popup("error", message);setLoader(false);
 			
 		} catch (error: any) {
 			setLoader(false);
