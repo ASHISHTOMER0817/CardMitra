@@ -36,15 +36,17 @@ export const defaultStyles: StylesConfig<
 	}),
 };
 function Dropdown({
+	// defaultValue,
 	options,
 	onChange,
-	value,
+	// value,
 	className,
 	customStyles,
 }: {
+	//  defaultValue:dropdown
 	options: dropdown[];
 	onChange: any;
-	value: dropdown;
+	// value: dropdown;
 	className?: string;
 	customStyles?: StylesConfig<dropdown, boolean, GroupBase<dropdown>>;
 }) {
@@ -66,7 +68,7 @@ function Dropdown({
 		<Select
 			className={`basic-single rounded-full ${className}`}
 			classNamePrefix="select"
-			defaultValue={options[0]}
+			// defaultValue={defaultValue}
 			isDisabled={isDisabled}
 			isLoading={isLoading}
 			isClearable={isClearable}
@@ -76,7 +78,7 @@ function Dropdown({
 			options={options}
 			styles={{ ...defaultStyles, ...customStyles }}
 			onChange={handleChange}
-			value={value}
+			// value={value}
 			// styles={style}
 		/>
 	);

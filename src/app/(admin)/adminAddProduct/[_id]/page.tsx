@@ -642,9 +642,9 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 
 								<div className="relative flex gap-1">
 									<Select
-										defaultValue={
-											cardOptions
-										}
+										// defaultValue={
+										// 	cardOptions
+										// }
 										isMulti
 										// name="colors"
 										options={
@@ -658,11 +658,11 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 										styles={
 											defaultStyles
 										}
-										value={
-											cards
-												? cards
-												: cardOptions[0]
-										}
+										// value={
+										// 	cards
+										// 		? cards
+										// 		: cardOptions[0]
+										// }
 									/>
 									<DialogTrigger>
 										<IoAddSharp
@@ -693,11 +693,14 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 										onChange={
 											handleDropdownChangeSite
 										}
-										value={
-											site
-												? site
-												: siteOptions[0]
-										}
+										// defaultValue={
+										// 	siteOptions[0]
+										// }
+										// value={
+										// 	site
+										// 		? site
+										// 		: siteOptions[0]
+										// }
 										className="flex-1 sm:text-[10px]"
 									/>
 									<DialogTrigger>
