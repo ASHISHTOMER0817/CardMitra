@@ -240,11 +240,11 @@ const OtpList = () => {
 																_id
 															);
 														}}
-														value={
-															selectOption(
-																delivered
-															)!
-														}
+														// value={
+														// 	selectOption(
+														// 		delivered
+														// 	)!
+														// }
 														// customStyles={
 														// 	customStyles
 														// }
