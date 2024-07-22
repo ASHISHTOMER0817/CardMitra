@@ -22,6 +22,7 @@ export async function GET(request: NextRequest) {
                         const user = await User.findOne({ _id: _id })
                   // products =  products.find({deals:true})
                         let productsArr:productList[] = await Product.find({ deals: true })
+                        .sort({Date:-1})
                         .populate({path:'cards', select:'value image'})
                         .populate('site').lean();
                         // console.log(productsArr)
