@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
                               { path: 'site' }
                         ]
                   })
-                  .limit(3) // Limit the number of documents to 3
+                  // .limit(3) // Limit the number of documents to 3
                   .lean();
             console.log(order, "so this is order")
 

@@ -50,11 +50,8 @@ const Dashboard = () => {
 				const response = await axios.get(
 					"/api/users/dashboard"
 				);
-				// console.log(response.data.data);
-				// console.log(response.data.data.otpAction.length);
 				setData(response.data.data);
 				loops(response.data.data);
-				// console.log(response.data.message);
 			} catch {
 				Popup("error", "Something went wrong, please refresh");
 				console.log("Please try again later");
@@ -64,7 +61,6 @@ const Dashboard = () => {
 	}, []);
 
 	useEffect(() => {
-		// Update userData when chartArr changes
 		setUserData((prevData) => ({
 			...prevData,
 			datasets: [
@@ -76,22 +72,26 @@ const Dashboard = () => {
 		}));
 	}, [chartArr]);
 
-	function loops(todaysOrders: order[]) {
+	function loops(orders: order[]) {
 		let total = 0;
 		let commission = 0;
-		// let ele = <div className="bg-pri"></div>
 		let arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-		for (let i = 0; i < todaysOrders.length; i++) {
-			const orderDate = new Date(todaysOrders[i].orderedAt);
+		for (let i = 0; i < orders.length; i++) {
+			const orderDate = new Date(orders[i].orderedAt);
 			const today = new Date();
 
-			if (orderDate === today) {
-				total += todaysOrders[i].product.price;
+			if (
+				`${orderDate.getDate()}/${orderDate.getMonth()}/${orderDate.getFullYear()}` ===
+				`${today.getDate()}/${today.getMonth()}/${today.getFullYear()}`
+			) {
+				total += (orders[i].product.price + orders[i].product.commission);
 				console.log(orderDate, "and new date", today);
 			}
-			if(todaysOrders[i].delivered === 'delivered' || todaysOrders[i].delivered === 'unverified'){
-
-				commission +=  todaysOrders[i].product.commission;
+			if (
+				orders[i].delivered === "delivered" ||
+				orders[i].delivered === "unverified"
+			) {
+				commission += orders[i].product.commission;
 			}
 			const month = orderDate.getMonth();
 			console.log(month, "this is month of the products ");
@@ -99,12 +99,11 @@ const Dashboard = () => {
 				? (arr[month] += 1)
 				: "";
 		}
-		// console.log(arr)
 		setChartArr(arr);
 		console.log(chartArr, "thisis chart value");
 		setCommission(commission);
 		setProfit(total);
-		setOrdersTillDate(todaysOrders.length);
+		setOrdersTillDate(orders.length);
 		console.log(total);
 	}
 
@@ -199,7 +198,7 @@ const Dashboard = () => {
 							{profit}{" "}
 						</h5>{" "}
 						<div className="sm:text-[10px] leading-none text-center">
-							Today&apos;s Profit
+							Today&apos;s Order value
 						</div>
 					</div>
 					<div className="px-12 py-4 rounded-big bg-[#F3F3F3] md:min-w-[26%] sm:flex sm:flex-col sm:justify-between sm:items-center sm:py-3  sm:px-[6px] ">
@@ -257,7 +256,7 @@ const Dashboard = () => {
 				) : (
 					<div className="flex flex-wrap gap-3 order-history-wrapper">
 						{data
-							// .slice(0, 3)
+							.slice(0, 3)
 							.map(
 								(
 									{
