@@ -16,13 +16,14 @@ interface dashboardData {
 	// deliveries: number;
 	noOfAffiliate: number;
 	order: number;
-	arr:number[]
+	arr: number[];
 }
 const AdminDashboard = () => {
 	const [data, setData] = useState<dashboardData>();
 	const [syncOperation, setSyncOperation] = useState<boolean>(false);
 	// const [chartArr, setChartArr] = useState<number[]>([0,0,0,0,0,0,0,0,0,0,0,0,]);
-	const [orders, setOrders] = useState(0)
+	const [disabled, setDisabled] = useState(false);
+	const [orders, setOrders] = useState(0);
 	const [userData, setUserData] = useState({
 		labels: [
 			"JAN",
@@ -41,7 +42,7 @@ const AdminDashboard = () => {
 		datasets: [
 			{
 				label: "Order placed",
-				data: [0,0,0,0,0,0,0,0,0,0,0,0,],
+				data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 				fill: false,
 				borderColor: "rgb(75, 192, 192)",
 				tension: 0.1,
@@ -56,7 +57,9 @@ const AdminDashboard = () => {
 			datasets: [
 				{
 					...prevData.datasets[0],
-					data: data?.arr ? [...data?.arr] : [0,0,0,0,0,0,0,0,0,0,0,0,],
+					data: data?.arr
+						? [...data?.arr]
+						: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 				},
 			],
 		}));
@@ -65,15 +68,17 @@ const AdminDashboard = () => {
 	useEffect(() => {
 		async function getData() {
 			try {
+				setDisabled(true)
 				const response = await axios.get(
 					`/api/admin/dashboard?query=dashboard&syncOperation=${syncOperation}`
 				);
 				setData(response.data.data);
-				console.log(response.data.data)
-				Popup('success', response.data.succss)
-
+				console.log(response.data.data);
+				setDisabled(false)
+				Popup("success", response.data.success);
 			} catch {
 				console.log("what is happening here !!");
+				setDisabled(false)
 			}
 		}
 		getData();
@@ -89,18 +94,19 @@ const AdminDashboard = () => {
 			<section className="">
 				<h3 className=" font-semibold mb-3">Dashboard</h3>
 				<div className="flex justify-start gap-2 sm:gap-1">
-					<div
-						className="px-12 py-4 cursor-pointer rounded-big bg-[#F3F3F3] md:min-w-[26%] sm:flex sm:flex-col sm:justify-between sm:items-center sm:py-3 sm:px-[6px]"
+					<button
+						className="px-12 py-4 rounded-big bg-[#F3F3F3] md:min-w-[26%] sm:flex sm:flex-col sm:justify-between sm:items-center sm:py-3 sm:px-[6px]"
 						// href={"/otpList"}
+						disabled={disabled}
 						onClick={() => setSyncOperation(true)}
 					>
 						<MdOutlineCloudSync className="w-6 h-6 text-primaryBgClr mx-auto sm:h-[17px]" />
 						<div className="sm:text-[10px] leading-none text-center">
 							Sync orders
 						</div>
-					</div>
-					<div 
-					 	// className=" text-center px-20 py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer md:min-w-[20%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:pt-0 sm:pb-1 sm:px-1 sm:leading-none"
+					</button>
+					<div
+						// className=" text-center px-20 py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer md:min-w-[20%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:pt-0 sm:pb-1 sm:px-1 sm:leading-none"
 						className="px-12 py-4 rounded-big bg-[#F3F3F3] md:min-w-[26%] sm:flex sm:flex-col sm:justify-between sm:items-center sm:py-3 sm:px-[6px]"
 					>
 						<h5 className="text-primaryBgClr sm:text-[12px] font-bold sm:leading-none text-center sm:mb-2">
@@ -111,7 +117,7 @@ const AdminDashboard = () => {
 							Today&apos;s Orders
 						</div>
 					</div>
-					<div 
+					<div
 						// className=" text-center px-20 py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer md:min-w-[20%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:pt-0 sm:pb-1 sm:px-1 sm:leading-none"
 						className="px-12 py-4 rounded-big bg-[#F3F3F3] md:min-w-[26%] sm:flex sm:flex-col sm:justify-between sm:items-center sm:py-3 sm:px-[6px]"
 					>

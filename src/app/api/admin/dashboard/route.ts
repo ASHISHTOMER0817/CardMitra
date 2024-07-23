@@ -92,7 +92,13 @@ export async function GET(request: NextRequest) {
                         }
                         let testBulkOprations = [];
                         console.log(otpList.length, 'this is otplist length')
-                        for (let i = 0; i < otpList.length; i++) {
+                        for (let i = 1; i < otpList.length; i++) {
+
+                              if (!mongoose.Types.ObjectId.isValid(otpList[i].OrderID)) {
+                                    console.warn(`Skipping invalid OrderID: ${otpList[i].OrderID}`);
+                                    continue;
+                                  }
+                              
                               testBulkOprations.push({
                                     updateOne: {
                                           filter: { _id: otpList[i].OrderID },
@@ -121,7 +127,7 @@ export async function GET(request: NextRequest) {
                   // console.log(data)
 
                   return NextResponse.json({
-                        message: "Order history is being shown", status: false, data: data,
+                        message: "Order history is being shown", success: true, data: data,
                   })
 
             } else if (query === 'orderHistory') {
@@ -140,7 +146,7 @@ export async function GET(request: NextRequest) {
                   const orderHistory = bufferToString(products)
 
                   return NextResponse.json({
-                        message: "Order history is being shown", status: false, data: {
+                        message: "Order history is being shown", success: true, data: {
                               // orderHistory: productsWithBase64Images,
                               // orders: ordersWithBase64Images
                               orderHistory, orders

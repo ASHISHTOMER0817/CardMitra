@@ -14,7 +14,6 @@ export async function GET(request: NextRequest) {
             const productId = searchParams.get('productId')
             const icon = searchParams.get('icon')
             console.log(productId)
-            // console.log(limit, 'thisis limit')
             if (limit) {
                   // let products = await Product.find({})
                   if (limit === 'none') {
