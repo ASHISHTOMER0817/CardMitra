@@ -15,10 +15,10 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 	const [users, setUsers] = useState<{
 		allRequest: user[];
 		order: order[];
-		passwords:{
-			user:string,
-			password:string
-		}[]
+		passwords: {
+			user: string;
+			password: string;
+		}[];
 	}>();
 	const [refreshData, setRefreshData] = useState(false);
 
@@ -64,179 +64,214 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 		}
 	}
 
-	function findPassword (email:string){
-		if(users) for( let userData of users?.passwords){
-			if(userData.user === email){
-				return userData.password;
+	function findPassword(email: string) {
+		if (users?.passwords)
+			for (let userData of users.passwords) {
+				if (userData.user === email) {
+					return userData.password;
+				}
 			}
-		};
 	}
 
 	return (
 		<>
-		
-		<div
-			className={`${
-				heading === "approved" && " sm:w-full"
-			} mx-auto md:text-[10px] `}
-		>
-			{heading === "approved" && (
-				<h3 className="font-semibold mb-4 sm:text-xs">User List</h3>
-			)}
-			{!users ? (
-				<Loader />
-			) : users.allRequest.length > 0 ? (
-				<div className="overflow-x-auto bg-white shadow-md rounded-[8px]">
-					<table className="min-w-full divide-y divide-gray-200">
-						<thead className="bg-green-100">
-							<tr>
-								<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-									Name
-								</th>
-								<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-									Email
-								</th>
-								<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-									Contact
-								</th>
-
-								{heading && (
+			<div
+				className={`${
+					heading === "approved" && " sm:w-full"
+				} mx-auto md:text-[10px] `}
+			>
+				{heading === "approved" && (
+					<h3 className="font-semibold mb-4 sm:text-xs">
+						User List
+					</h3>
+				)}
+				{!users ? (
+					<Loader />
+				) : users.allRequest.length > 0 ? (
+					<div className="overflow-x-auto bg-white shadow-md rounded-[8px]">
+						<table className="min-w-full divide-y divide-gray-200">
+							<thead className="bg-green-100">
+								<tr>
 									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-										Amount
+										Name
 									</th>
-								)}
-								{<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-									Password
-								</th>}
+									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+										Email
+									</th>
+									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+										Contact
+									</th>
 
-								<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-									Action
-								</th>
-							</tr>
-						</thead>
-						<tbody className="bg-white divide-y divide-gray-200">
-							{users.allRequest.map(
-								(
+									{heading && (
+										<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+											Amount
+										</th>
+									)}
 									{
-										name,
-										email,
-										contact,
-										isApprove,
-										_id,
-									},
-									index
-								) => {
-									let payable = 0;
-									for (
-										let i = 0;
-										i < users.order.length;
-										i++
-									) {
-										const order = users.order[i];
-										if (
-											_id ===
-											order.user
-												._id && order.delivered === 'delivered' && order.paid === null
-										) {
-											payable +=
-											order.product.price + order.product.commission;
-													
-										}
+										<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+											Password
+										</th>
 									}
-									return (
-										<tr key={index} className={index % 2 === 0 ? 'bg-white': 'bg-gray-50'} >
-											<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-												<Link href={`/adminBookers/${_id}`}>
-													{name}
-												</Link>
-											</td>
-											<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-												{email}
-											</td>
-											<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-												{contact}
-											</td>
 
-											{heading && (
+									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+										Action
+									</th>
+								</tr>
+							</thead>
+							<tbody className="bg-white divide-y divide-gray-200">
+								{users.allRequest.map(
+									(
+										{
+											name,
+											email,
+											contact,
+											isApprove,
+											_id,
+										},
+										index
+									) => {
+										let payable = 0;
+										for (
+											let i = 0;
+											i <
+											users.order
+												.length;
+											i++
+										) {
+											const order =
+												users
+													.order[
+													i
+												];
+											if (
+												_id ===
+													order
+														.user
+														._id &&
+												order.delivered ===
+													"delivered" &&
+												order.paid ===
+													null
+											) {
+												payable +=
+													order
+														.product
+														.price +
+													order
+														.product
+														.commission;
+											}
+										}
+										return (
+											<tr
+												key={
+													index
+												}
+												className={
+													index %
+														2 ===
+													0
+														? "bg-white"
+														: "bg-gray-50"
+												}
+											>
 												<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-													{isApprove &&
-														payable}
-												</td>
-											)}
-											<td>
-												{findPassword(email)}
-											</td>
-											<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex gap-2">
-												{!isApprove ? (
-													<>
-														<div
-															onClick={() =>
-																isAccept(
-																	true,
-																	_id
-																)
-															}
-															className="text-sm text-white hover:bg-green-600 py-2 px-5 cursor-pointer  rounded-full border bg-primaryBgClr sm:py-1 sm:text-[12px] sm:my-auto sm:h-fit sm:px-3"
-														>
-															Accept
-														</div>
-														<div
-															onClick={() =>
-																isAccept(
-																	false,
-																	_id
-																)
-															}
-															className="text-sm py-2 px-5 cursor-pointer hover:bg-slate-100 rounded-full border text-red-500 sm:py-1 sm:text-[12px] sm:my-auto sm:h-fit sm:px-3"
-														>
-															Reject
-														</div>
-													</>
-												) : (
 													<Link
 														href={`/adminBookers/${_id}`}
 													>
-														<Image
-															src={
-																view
-															}
-															alt="View"
-															width={
-																30
-															}
-															className={`cursor-pointer h-auto sm:h-[17px] sm:w-[17px] sm:mt-[1px] ${
-																!(
-																	index %
-																	2
-																)
-																	? "hover:bg-gray-200"
-																	: "hover:bg-[#d3d1d1]"
-															} rounded-full`}
-														/>
+														{
+															name
+														}
 													</Link>
+												</td>
+												<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+													{
+														email
+													}
+												</td>
+												<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+													{
+														contact
+													}
+												</td>
+
+												{heading && (
+													<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+														{isApprove &&
+															payable}
+													</td>
 												)}
-											</td>
-										</tr>
-									);
-								}
-							)}
-						</tbody>
-					</table>
-				</div>
-			) : (
-				<div className="mx-auto w-fit mt-20 text-red-500 font-serif">
-					No data to show !!
-				</div>
-			)}
-		</div>
-
-
-
-
-
+												<td>
+													{findPassword(
+														email
+													)}
+												</td>
+												<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex gap-2">
+													{!isApprove ? (
+														<>
+															<div
+																onClick={() =>
+																	isAccept(
+																		true,
+																		_id
+																	)
+																}
+																className="text-sm text-white hover:bg-green-600 py-2 px-5 cursor-pointer  rounded-full border bg-primaryBgClr sm:py-1 sm:text-[12px] sm:my-auto sm:h-fit sm:px-3"
+															>
+																Accept
+															</div>
+															<div
+																onClick={() =>
+																	isAccept(
+																		false,
+																		_id
+																	)
+																}
+																className="text-sm py-2 px-5 cursor-pointer hover:bg-slate-100 rounded-full border text-red-500 sm:py-1 sm:text-[12px] sm:my-auto sm:h-fit sm:px-3"
+															>
+																Reject
+															</div>
+														</>
+													) : (
+														<Link
+															href={`/adminBookers/${_id}`}
+														>
+															<Image
+																src={
+																	view
+																}
+																alt="View"
+																width={
+																	30
+																}
+																className={`cursor-pointer h-auto sm:h-[17px] sm:w-[17px] sm:mt-[1px] ${
+																	!(
+																		index %
+																		2
+																	)
+																		? "hover:bg-gray-200"
+																		: "hover:bg-[#d3d1d1]"
+																} rounded-full`}
+															/>
+														</Link>
+													)}
+												</td>
+											</tr>
+										);
+									}
+								)}
+							</tbody>
+						</table>
+					</div>
+				) : (
+					<div className="mx-auto w-fit mt-20 text-red-500 font-serif">
+						No data to show !!
+					</div>
+				)}
+			</div>
 
 			{/*Latest Design changes */}
-    {/* <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+			{/* <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {heading === "approved" && (
         <h1 className="text-2xl font-semibold mb-6">User List</h1>
       )}
@@ -311,17 +346,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
         )}
       </div>
     </div> */}
-
-
-
-
-
-
-
-
-
 		</>
-
 	);
 };
 
