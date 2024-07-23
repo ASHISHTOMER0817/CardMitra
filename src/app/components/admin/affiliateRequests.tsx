@@ -15,6 +15,10 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 	const [users, setUsers] = useState<{
 		allRequest: user[];
 		order: order[];
+		passwords:{
+			user:string,
+			password:string
+		}[]
 	}>();
 	const [refreshData, setRefreshData] = useState(false);
 
@@ -60,6 +64,14 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 		}
 	}
 
+	function findPassword (email:string){
+		if(users) for( let userData of users?.passwords){
+			if(userData.user === email){
+				return userData.password;
+			}
+		};
+	}
+
 	return (
 		<>
 		
@@ -93,6 +105,10 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 										Amount
 									</th>
 								)}
+								{<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+									Password
+								</th>}
+
 								<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 									Action
 								</th>
@@ -147,6 +163,9 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 														payable}
 												</td>
 											)}
+											<td>
+												{findPassword(email)}
+											</td>
 											<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex gap-2">
 												{!isApprove ? (
 													<>
