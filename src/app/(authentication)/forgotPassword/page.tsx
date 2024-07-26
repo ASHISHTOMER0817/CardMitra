@@ -22,7 +22,7 @@ const ForgotPassword = () => {
 			const data = response.data;
 			data.success && setOtpSent(true);
 			setOtp(response.data.data.toString());
-            console.log(response.data.data)
+            // console.log(response.data.data)
 		} catch {
 			Popup("error", "Something went wrong");
 		}
