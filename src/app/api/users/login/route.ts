@@ -7,13 +7,24 @@ import * as jose from 'jose'
 
 Database()
 export async function POST(request: NextRequest) {
+    function capitalizeFirstLetter(string:string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      }
       try {
+
+
+          
+        //   let str = "hello";
+        //   let capitalizedStr = capitalizeFirstLetter(str);
+        //   console.log(capitalizedStr); // Output: "Hello"
+          
             const reqBody = await request.json();
             const { email, password, remember } = reqBody.user;
-            const user = await User.findOne({ email });
+            const user = await User.findOne({ email:email.toLowerCase() });
+            const uppercaseUser = await User.findOne({email:capitalizeFirstLetter(email)})
         
             // If user doesn't exist
-            if (!user) {
+            if (!user && !uppercaseUser) {
                 return NextResponse.json({
                     message: 'Email or password is wrong!',
                     success: false,

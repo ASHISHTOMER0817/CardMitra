@@ -13,6 +13,7 @@ export const POST = async (request: NextRequest) => {
             const reqBody = await request.json()
             const {
                   orderNumber,
+                  ordererName,
                   objectId,
                   // deliveryDate
             } = reqBody.formData
@@ -55,7 +56,7 @@ export const POST = async (request: NextRequest) => {
                         otp: false,
                         paid: null,
                         acknowledgment: false,
-                        // showOnHomePage: false
+                        ordererName
                   })
 
                   // Decrease requirement by 1

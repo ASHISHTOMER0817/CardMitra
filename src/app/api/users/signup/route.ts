@@ -14,7 +14,8 @@ export async function POST(request: NextRequest) {
             const user = await User.findOne({
                   $or: [
                         { email },
-                        { contact }
+                        { contact },
+                        
                   ]
             });
 
@@ -28,7 +29,7 @@ export async function POST(request: NextRequest) {
 
                   // Instance of password
                   const newPassword = Password.create({
-                        user: email,
+                        user: email.toLowerCase(),
                         password
                   })
                   console.log(newPassword)
@@ -39,7 +40,7 @@ export async function POST(request: NextRequest) {
                   console.log('2.5th', hashedPassword)
 
                   //save new user
-                  const savedUser = await User.create({ name, email, contact, password: hashedPassword });
+                  const savedUser = await User.create({ name, email:email.toLowerCase(), contact, password: hashedPassword });
                   console.log("4th", savedUser)
                   return NextResponse.json({
                         message: "Logged In successfully", success: true

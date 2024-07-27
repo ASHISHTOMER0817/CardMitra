@@ -40,6 +40,7 @@ export interface order {
 	_id: string
 	paid: Date | null
 	acknowledgment: boolean
+	ordererName:string
 }
 
 export interface otp {

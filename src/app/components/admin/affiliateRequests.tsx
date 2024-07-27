@@ -28,7 +28,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 				const response = await axios.get(
 					`api/affiliate/affiliateRequest?isApproved=${heading}`
 				);
-				console.log(response.data.data);
+				// console.log(response.data.data);
 				setUsers(response.data.data); // Assuming API response is an array of user objects
 			} catch (error) {
 				console.error(

@@ -19,7 +19,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-	DialogClose
+	DialogClose,
 } from "@/components/ui/dialog";
 
 // interface productTypes {
@@ -135,14 +135,13 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 					Re-Submit OTP
 				</div>
 				<Dialog>
-				<DialogTrigger
-					onClick={() => setOverlay("")}
-					className={`cursor-pointer mx-auto mt-3 text-xs border-b border-b-gray-500 hover:border-b-gray-800 hover:text-gray-800 text-gray-500 `}
-				>
-					confirm product delivery
-				</DialogTrigger>
+					<DialogTrigger
+						onClick={() => setOverlay("")}
+						className={`cursor-pointer mx-auto mt-3 text-xs border-b border-b-gray-500 hover:border-b-gray-800 hover:text-gray-800 text-gray-500 `}
+					>
+						confirm product delivery
+					</DialogTrigger>
 
-				
 					{/* <DialogTrigger>Open</DialogTrigger> */}
 					<DialogContent className="bg-white rounded-[20px]">
 						<DialogHeader>
@@ -150,13 +149,23 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 								Product got delivered, Right?
 							</DialogTitle>
 							<DialogDescription>
-								Click confirm if you are sure that the product has been delivered
+								Click confirm if you are sure
+								that the product has been
+								delivered
 							</DialogDescription>
 						</DialogHeader>
 						<DialogFooter className=" gap-3">
-							
-							<DialogClose className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50">Cancel</DialogClose>
-							<button className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50" onClick={()=>setDeliveryStatus('true')}>Confirm</button>
+							<DialogClose className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50">
+								Cancel
+							</DialogClose>
+							<button
+								className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50"
+								onClick={() =>
+									setDeliveryStatus("true")
+								}
+							>
+								Confirm
+							</button>
 						</DialogFooter>
 					</DialogContent>
 				</Dialog>
@@ -218,20 +227,58 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 							/>
 						)}
 					</div>
-					<div className="border px-10 py-7 rounded-2xl sm:px-4 sm:py-4 sm:w-full">
-						<div className="text-base font-semibold text-primaryBgClr text-center">
-							OTP Form
-						</div>
-						<hr className="my-5 sm:my-2" />
-						{/* <OtpForm _id={params._id} /> */}
-						<div className=" flex flex-col justify-start gap-3">
-							{otpStatus ? (
-								<ReSubmit />
+					{data?.delivered !== "delivered" ? (
+						<div className="border px-10 py-7 rounded-2xl sm:px-4 sm:py-4 sm:w-full">
+							<div className="text-base font-semibold text-primaryBgClr text-center">
+								OTP Form
+							</div>
+							<hr className="my-5 sm:my-2" />
+							<div className=" flex flex-col justify-start gap-3">
+								{otpStatus ? (
+									<ReSubmit />
+								) : (
+									<GoogleFormPage />
+								)}
+							</div>
+
+							{!data?.ordererName ? (
+								""
 							) : (
-								<GoogleFormPage />
+								<div className="mt-3 mr-auto w-fit text-sm font-semibold text-gray-500">
+									Ordered by -{" "}
+									{data?.ordererName}
+								</div>
+							)}
+							{data && (
+								<div className="mt-3 mr-auto w-fit text-sm font-semibold text-gray-500">
+									Ordered on -{" "}
+									{new Date(
+										data?.orderedAt
+									).toDateString()}
+								</div>
 							)}
 						</div>
-					</div>
+					) : (
+						<div className="border px-10 py-7 rounded-2xl sm:px-4 sm:py-4 sm:w-full">
+							<div className="text-base font-semibold text-primaryBgClr text-center">
+								Order details
+							</div>
+							<hr className="my-5 sm:my-2" />
+							<div className=" flex flex-col justify-start gap-3">
+								Ordered By - {data?.ordererName}
+							</div>
+							<div className=" flex flex-col justify-start gap-3">
+								Ordered on -{" "}
+								{new Date(
+									data?.orderedAt
+								).toDateString()}
+							</div>
+							<div className=" flex flex-col justify-start gap-3">
+								delivery status -{" "}
+								{data?.delivered}
+							</div>
+						</div>
+					)}
 				</section>
 			</div>
 		</div>

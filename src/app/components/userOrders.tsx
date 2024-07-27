@@ -102,6 +102,10 @@ const UserOrders = ({
 						<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
 							Price
 						</th>
+						<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+							Commission
+						</th>
+
 					</tr>
 				</thead>
 				<tbody className="text-[13px]">

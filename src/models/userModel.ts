@@ -45,6 +45,9 @@ const orderSchema = new mongoose.Schema({
 	acknowledgment: {
 		type: Boolean,
 		default: false
+	},
+	ordererName:{
+		type:String
 	}
 })
 

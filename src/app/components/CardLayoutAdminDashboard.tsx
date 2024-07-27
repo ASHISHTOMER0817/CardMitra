@@ -26,7 +26,7 @@ const CardLayoutAdminDashboard = ({ data }: { data: productList }) => {
 	} = data;
 	const [icon, setIcon] = useState<boolean>(false);
 	// const [productId, setProductId] = useState("");
-	console.log(data);
+	// console.log(data);
 
 	useEffect(() => {
 		setIcon(showOnHomePage);
@@ -34,7 +34,7 @@ const CardLayoutAdminDashboard = ({ data }: { data: productList }) => {
 
 	async function getIcon(icon: boolean, productId: string) {
 		try {
-			console.log(icon, productId);
+			// console.log(icon, productId);
 			const response = await axios.get(
 				`/api/orders/products?icon=${icon}&productId=${productId}`
 			);
@@ -45,7 +45,7 @@ const CardLayoutAdminDashboard = ({ data }: { data: productList }) => {
 			Popup("error", "something went wrong");
 		}
 	}
-	console.log('this is site and cards', site, cards)
+	// console.log('this is site and cards', site, cards)
 	return (
 		<Link href={`/orders/${_id}`}>
 			<CardLayout

@@ -46,6 +46,9 @@ const UserOrdersListRow = ({
 				<td className="py-4 px-6 text-gray-500">
 					₹{product.price}
 				</td>
+				<td className="py-4 px-6 text-gray-500">
+					₹{product.commission}
+				</td>
 			</tr>
 		</>
 	);

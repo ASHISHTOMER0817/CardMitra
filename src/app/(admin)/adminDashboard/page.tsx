@@ -72,12 +72,12 @@ const AdminDashboard = () => {
 				const response = await axios.get(
 					`/api/admin/dashboard?query=dashboard&syncOperation=${syncOperation}`
 				);
-				setData(response.data.data);
-				console.log(response.data.data);
+				// console.log(response.data.data);
 				setDisabled(false)
+				setData(response.data.data);
 				Popup("success", response.data.success);
 			} catch {
-				console.log("what is happening here !!");
+				// console.log("what is happening here !!");
 				setDisabled(false)
 			}
 		}

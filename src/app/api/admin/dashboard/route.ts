@@ -15,17 +15,6 @@ dayjs.extend(utc)
 
 Database()
 export async function GET(request: NextRequest) {
-
-      // function to calculate something below
-      // async function noOfDays(key: string, value: string) {
-      //       const order = await Order.find({ [key]: value })
-      //       if (order.length <= 0) {
-      //             return 0;
-      //       } else {
-      //             return order.length;
-      //       }
-
-      // }
       try {
             const searchparams = request.nextUrl.searchParams
             const query = searchparams.get('query')
@@ -94,8 +83,8 @@ export async function GET(request: NextRequest) {
                         console.log(otpList.length, 'this is otplist length')
                         for (let i = 1; i < otpList.length; i++) {
 
-                              if (!mongoose.Types.ObjectId.isValid(otpList[i].OrderID)) {
-                                    console.warn(`Skipping invalid OrderID: ${otpList[i].OrderID}`);
+                              if (!mongoose.Types.ObjectId.isValid(otpList[i].OrderID.toString())) {
+                                    console.warn(`Skipping invalid OrderID: ${otpList[i].OrderID.toString()}`);
                                     continue;
                                   }
                               

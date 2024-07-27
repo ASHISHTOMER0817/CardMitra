@@ -100,11 +100,11 @@ const Dashboard = () => {
 				: "";
 		}
 		setChartArr(arr);
-		console.log(chartArr, "thisis chart value");
+		// console.log(chartArr, "thisis chart value");
 		setCommission(commission);
 		setProfit(total);
 		setOrdersTillDate(orders.length);
-		console.log(total);
+		// console.log(total);
 	}
 
 	return (

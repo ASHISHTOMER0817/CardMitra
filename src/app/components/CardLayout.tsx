@@ -91,7 +91,7 @@ const CardLayout = ({
 
 				<div className="flex flex-col justify-start items-start text-sm font-semibold text-gray-600">
 					{cards?.map(({ value, image }, index) => {
-						console.log("thisiscard", value);
+						// console.log("thisiscard", value);
 						return (
 							<div
 								key={index}

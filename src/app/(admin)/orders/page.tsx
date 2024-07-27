@@ -21,6 +21,7 @@ const AdminOrderHistory = () => {
 	const [zipcode, setZipcode] = useState<string>("");
 	const [startDate, setStartDate] = useState<Date | null>(null);
 	const [endDate, setEndDate] = useState<Date | null>(null);
+	const [name, setName] = useState("");
 	// const [total, setTotal] = useState<number | null>();
 
 	useEffect(() => {
@@ -37,7 +38,7 @@ const AdminOrderHistory = () => {
 		}
 		getData();
 	}, []);
-	console.log(endDate)
+	console.log(endDate);
 	return (
 		<div className="flex flex-col mx-auto">
 			<Header
@@ -45,7 +46,12 @@ const AdminOrderHistory = () => {
 				heading={"Order History"}
 				Children={
 					<div className="flex gap-[10px] sm:w-full">
-						<button  onClick={()=>window.print()} className={`px-3 py-1 gap-1 rounded-2xl cursor-pointer flex justify-center items-center text-sm hover:bg-gray-200 sm:px-3 sm:py-0 ${view === 'grid' && 'hidden'}`}>
+						<button
+							onClick={() => window.print()}
+							className={`px-3 py-1 gap-1 rounded-2xl cursor-pointer flex justify-center items-center text-sm hover:bg-gray-200 sm:px-3 sm:py-0 ${
+								view === "grid" && "hidden"
+							}`}
+						>
 							Print
 						</button>
 						<div
@@ -74,7 +80,6 @@ const AdminOrderHistory = () => {
 						>
 							Add Product
 						</Link>
-						
 					</div>
 				}
 			/>
@@ -233,6 +238,15 @@ const AdminOrderHistory = () => {
 								setZipcode(e.target.value)
 							}
 						/>
+						<input
+							className="mr-2"
+							type="text"
+							placeholder="Name"
+							value={name}
+							onChange={(e) =>
+								setName(e.target.value)
+							}
+						/>
 						{/* <input type="Date" placeholder="start Date" value={startDate?.toString()} onChange={(e)=> setStartDate(new Date(e.target.value))}/>
 							<input type="Date" placeholder="End Date" value={endDate?.toString()} onChange={(e)=> setEndDate(new Date(e.target.value))} /> */}
 						{/* <div className="flex ml-auto w-fit"> */}
@@ -304,15 +318,23 @@ const AdminOrderHistory = () => {
 											startDate.valueOf()) ||
 									(endDate &&
 										orderedAt.valueOf() >=
-											endDate.valueOf())
+											endDate.valueOf()) ||
+									(name &&
+										(order.ordererName ||
+											order.user.name) !==
+											name)
 								) {
 									show = false;
 								}
 
 								return show
 									? sum +
-											(+order.product
-												.price + +order.product.commission)
+											(+order
+												.product
+												.price +
+												+order
+													.product
+													.commission)
 									: sum;
 							}, 0)}
 						</div>
@@ -332,7 +354,7 @@ const AdminOrderHistory = () => {
 											Device
 										</th>
 										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-										Return Amt
+											Return Amt
 										</th>
 										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
 											Pincode
@@ -358,6 +380,7 @@ const AdminOrderHistory = () => {
 												orderedAt,
 												delivered,
 												_id,
+												ordererName,
 											},
 											index
 										) => {
@@ -376,7 +399,11 @@ const AdminOrderHistory = () => {
 													new Date(
 														orderedAt
 													).valueOf() >=
-														endDate.valueOf())
+														endDate.valueOf()) ||
+												(name &&
+													(ordererName ||
+														user.name) !==
+														name)
 											)
 												show =
 													false;
@@ -405,9 +432,8 @@ const AdminOrderHistory = () => {
 															}
 														</td>
 														<td className="py-4 px-6 text-sm text-gray-500">
-															{
-																+product.price + +product.commission
-															}
+															{+product.price +
+																+product.commission}
 														</td>
 														<td className="py-4 px-6 text-sm text-gray-500">
 															{
@@ -431,7 +457,7 @@ const AdminOrderHistory = () => {
 																orderedAt
 															).toDateString()}
 														</td>
-														
+
 														<td className="py-4 px-6 text-sm text-gray-500">
 															<StatusBadge
 																status={
