@@ -32,7 +32,6 @@ export const metadata: Metadata = {
 	icons:{
 		icon:{url:'/favicon.svg', sizes: '32x32', type: 'image/svg+xml'}
 	}
-
 };
 
 const options = [

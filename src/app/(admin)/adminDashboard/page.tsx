@@ -75,7 +75,8 @@ const AdminDashboard = () => {
 				// console.log(response.data.data);
 				setDisabled(false)
 				setData(response.data.data);
-				Popup("success", response.data.success);
+
+				response.data.status === 300 && Popup("success", response.data.success);
 			} catch {
 				// console.log("what is happening here !!");
 				setDisabled(false)

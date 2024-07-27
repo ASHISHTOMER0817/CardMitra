@@ -55,6 +55,9 @@ export async function GET(request: NextRequest) {
                   let order = 0
                   const Orders: order[] = await Order.find({})
 
+                  
+
+                  let status = 200;
                   let arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                   for (const singleOrder of Orders) {
                         const currentYear = new Date().getFullYear()
@@ -105,6 +108,7 @@ export async function GET(request: NextRequest) {
                         try {
                               const result = await Order.bulkWrite(testBulkOprations);
                               console.log('Bulk write result:', result);
+                              status = 300;
                         } catch (bulkError) {
                               console.error('Error during bulkWrite:', bulkError);
                               return NextResponse.json({ message: 'Bulk write operation failed', success: false });
@@ -113,10 +117,10 @@ export async function GET(request: NextRequest) {
 
                   // const data = { orderHistory, deliveries, noOfAffiliate, order }
                   const data = { orderHistory, noOfAffiliate, order, arr }
-                  // console.log(data)
+                  
 
                   return NextResponse.json({
-                        message: "Order history is being shown", success: true, data: data,
+                        message: "Order history is being shown", success: true,status:status, data: data,
                   })
 
             } else if (query === 'orderHistory') {
