@@ -20,7 +20,7 @@ interface dashboardData {
 }
 const AdminDashboard = () => {
 	const [data, setData] = useState<dashboardData>();
-	const [syncOperation, setSyncOperation] = useState<boolean>(false);
+	// const [syncOperation, setSyncOperation] = useState<boolean>(false);
 	// const [chartArr, setChartArr] = useState<number[]>([0,0,0,0,0,0,0,0,0,0,0,0,]);
 	const [disabled, setDisabled] = useState(false);
 	const [orders, setOrders] = useState(0);
@@ -65,31 +65,38 @@ const AdminDashboard = () => {
 		}));
 	}, [data?.arr]);
 
+	async function sync() {
+		try {
+			setDisabled(true);
+			const response = await axios.get(
+				'/api/admin/dashboard?syncOperation=true'
+			);
+			setDisabled(false);
+
+			if (response.data.success) {
+				Popup("success", response.data.message);
+			} else {
+				Popup("error", response.data.success);
+			}
+		} catch {
+			setDisabled(false);
+		}
+	}
+
 	useEffect(() => {
 		async function getData() {
 			try {
-				setDisabled(true)
 				const response = await axios.get(
-					`/api/admin/dashboard?query=dashboard&syncOperation=${syncOperation}`
+					'/api/admin/dashboard?query=dashboard'
 				);
-				// console.log(response.data.data);
-				setDisabled(false)
 				setData(response.data.data);
-
-				response.data.status === 300 && Popup("success", response.data.success);
 			} catch {
-				// console.log("what is happening here !!");
-				setDisabled(false)
+				console.log("something went wrong");
 			}
 		}
 		getData();
-	}, [syncOperation]);
+	}, []);
 
-	// async function syncOperation(){
-	// 	try{
-	// 		const response = await axios.get('')
-	// 	}
-	// }
 	return (
 		<div className="mx-6 w-[95%] mt-3 md:text-xs sm:mx-0 sm:w-full">
 			<section className="">
@@ -99,7 +106,7 @@ const AdminDashboard = () => {
 						className="px-12 py-4 rounded-big bg-[#F3F3F3] md:min-w-[26%] sm:flex sm:flex-col sm:justify-between sm:items-center sm:py-3 sm:px-[6px]"
 						// href={"/otpList"}
 						disabled={disabled}
-						onClick={() => setSyncOperation(true)}
+						onClick={sync}
 					>
 						<MdOutlineCloudSync className="w-6 h-6 text-primaryBgClr mx-auto sm:h-[17px]" />
 						<div className="sm:text-[10px] leading-none text-center">

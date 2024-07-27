@@ -21,7 +21,52 @@ export async function GET(request: NextRequest) {
             const _id = searchparams.get('_id')
             const operation = searchparams.get('operation')
             const syncOperation = searchparams.get('syncOperation')
-            // console.log('this is id', _id, operation)
+
+            if (syncOperation === 'true') {
+                  let otpList;
+
+                  try {
+                        const response = await axios.get('https://script.google.com/macros/s/AKfycbwA7ltqd1DatJM0Od_rteBT1tgUy3msAQoItJZ6n0-csJDTZnC5fluiiU91C3wSKR0/exec');
+                        otpList = response.data.data;
+                        console.log('try part')
+                  } catch (error) {
+                        console.error('Error fetching data from Google Sheets:', error);
+                        return NextResponse.json({ message: 'Failed to fetch data from Google Sheets', success: false });
+                  }
+                  let testBulkOprations = [];
+                  console.log(otpList.length, 'this is otplist length')
+                  for (let i = 1; i < otpList.length; i++) {
+
+                        if (!mongoose.Types.ObjectId.isValid(otpList[i].OrderID.toString())) {
+                              console.warn(`Skipping invalid OrderID: ${otpList[i].OrderID.toString()}`);
+                              continue;
+                            }
+                        
+                        testBulkOprations.push({
+                              updateOne: {
+                                    filter: { _id: otpList[i].OrderID },
+                                    update: { $set: { delivered: otpList[i].status } },
+                                    // upsert: false // Adjust based on whether you want to insert if not found
+                              }
+                        })
+
+                  }
+
+
+
+                  console.log(testBulkOprations, 'bulkOperations')
+                  // Execute bulkWrite
+                  try {
+                        const result = await Order.bulkWrite(testBulkOprations);
+                        console.log('Bulk write result:', result);
+                        return NextResponse.json({
+                              message: "sync successful", success: true,
+                        })
+                  } catch (bulkError) {
+                        console.error('Error during bulkWrite:', bulkError);
+                        return NextResponse.json({ message: 'Bulk write operation failed', success: false });
+                  }
+            }
 
             if (query === 'dashboard') {
                   let products = await Product.find({ deals: true })
@@ -54,10 +99,7 @@ export async function GET(request: NextRequest) {
                   //Orders placed today
                   let order = 0
                   const Orders: order[] = await Order.find({})
-
                   
-
-                  let status = 200;
                   let arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                   for (const singleOrder of Orders) {
                         const currentYear = new Date().getFullYear()
@@ -70,57 +112,12 @@ export async function GET(request: NextRequest) {
 
                   }
 
-
-                  if (syncOperation === 'true') {
-                        let otpList;
-
-                        try {
-                              const response = await axios.get('https://script.google.com/macros/s/AKfycbwA7ltqd1DatJM0Od_rteBT1tgUy3msAQoItJZ6n0-csJDTZnC5fluiiU91C3wSKR0/exec');
-                              otpList = response.data.data;
-                              console.log('try part')
-                        } catch (error) {
-                              console.error('Error fetching data from Google Sheets:', error);
-                              return NextResponse.json({ message: 'Failed to fetch data from Google Sheets', success: false });
-                        }
-                        let testBulkOprations = [];
-                        console.log(otpList.length, 'this is otplist length')
-                        for (let i = 1; i < otpList.length; i++) {
-
-                              if (!mongoose.Types.ObjectId.isValid(otpList[i].OrderID.toString())) {
-                                    console.warn(`Skipping invalid OrderID: ${otpList[i].OrderID.toString()}`);
-                                    continue;
-                                  }
-                              
-                              testBulkOprations.push({
-                                    updateOne: {
-                                          filter: { _id: otpList[i].OrderID },
-                                          update: { $set: { delivered: otpList[i].status } },
-                                          // upsert: false // Adjust based on whether you want to insert if not found
-                                    }
-                              })
-
-                        }
-
-
-
-                        console.log(testBulkOprations, 'bulkOperations')
-                        // Execute bulkWrite
-                        try {
-                              const result = await Order.bulkWrite(testBulkOprations);
-                              console.log('Bulk write result:', result);
-                              status = 300;
-                        } catch (bulkError) {
-                              console.error('Error during bulkWrite:', bulkError);
-                              return NextResponse.json({ message: 'Bulk write operation failed', success: false });
-                        }
-                  }
-
                   // const data = { orderHistory, deliveries, noOfAffiliate, order }
                   const data = { orderHistory, noOfAffiliate, order, arr }
                   
 
                   return NextResponse.json({
-                        message: "Order history is being shown", success: true,status:status, data: data,
+                        message: "Order history is being shown", success: true,status:200, data: data,
                   })
 
             } else if (query === 'orderHistory') {
