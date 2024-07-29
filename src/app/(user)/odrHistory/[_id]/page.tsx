@@ -215,71 +215,72 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 						</div>
 					</div> */}
 				<BackwardButton />
-				<section className="flex items-start text-sm justify-around flex-wrap gap-4">
-					<div className="flex flex-col items-start justify-around sm:gap-0">
-						{!data ? (
-							<Loader />
-						) : (
+				{!data ? (
+					<Loader />
+				) : (
+					<section className="flex items-start text-sm justify-around flex-wrap gap-4">
+						<div className="flex flex-col items-start justify-around sm:gap-0">
 							<ProductDetails
 								observer="user"
 								data={data?.product}
 								arr={arr}
 							/>
-						)}
-					</div>
-					{data?.delivered !== "delivered" ? (
-						<div className="border px-10 py-7 rounded-2xl sm:px-4 sm:py-4 sm:w-full">
-							<div className="text-base font-semibold text-primaryBgClr text-center">
-								OTP Form
-							</div>
-							<hr className="my-5 sm:my-2" />
-							<div className=" flex flex-col justify-start gap-3">
-								{otpStatus ? (
-									<ReSubmit />
+						</div>
+						{data?.delivered !== "delivered" ? (
+							<div className="border px-10 py-7 rounded-2xl sm:px-4 sm:py-4 sm:w-full">
+								<div className="text-base font-semibold text-primaryBgClr text-center">
+									OTP Form
+								</div>
+								<hr className="my-5 sm:my-2" />
+								<div className=" flex flex-col justify-start gap-3">
+									{otpStatus ? (
+										<ReSubmit />
+									) : (
+										<GoogleFormPage />
+									)}
+								</div>
+
+								{!data?.ordererName ? (
+									""
 								) : (
-									<GoogleFormPage />
+									<div className="mt-3 mr-auto w-fit text-sm font-semibold text-gray-500">
+										Ordered by -{" "}
+										{data?.ordererName}
+									</div>
+								)}
+								{data && (
+									<div className="mt-3 mr-auto w-fit text-sm font-semibold text-gray-500">
+										Ordered on -{" "}
+										{new Date(
+											data?.orderedAt
+										).toDateString()}
+									</div>
 								)}
 							</div>
-
-							{!data?.ordererName ? (
-								""
-							) : (
-								<div className="mt-3 mr-auto w-fit text-sm font-semibold text-gray-500">
-									Ordered by -{" "}
+						) : (
+							<div className="border px-10 py-7 rounded-2xl sm:px-4 sm:py-4 sm:w-full">
+								<div className="text-base font-semibold text-primaryBgClr text-center">
+									Order details
+								</div>
+								<hr className="my-5 sm:my-2" />
+								<div className=" flex flex-col justify-start gap-3">
+									Ordered By -{" "}
 									{data?.ordererName}
 								</div>
-							)}
-							{data && (
-								<div className="mt-3 mr-auto w-fit text-sm font-semibold text-gray-500">
+								<div className=" flex flex-col justify-start gap-3">
 									Ordered on -{" "}
 									{new Date(
 										data?.orderedAt
 									).toDateString()}
 								</div>
-							)}
-						</div>
-					) : (
-						<div className="border px-10 py-7 rounded-2xl sm:px-4 sm:py-4 sm:w-full">
-							<div className="text-base font-semibold text-primaryBgClr text-center">
-								Order details
+								<div className=" flex flex-col justify-start gap-3">
+									delivery status -{" "}
+									{data?.delivered}
+								</div>
 							</div>
-							<hr className="my-5 sm:my-2" />
-							<div className=" flex flex-col justify-start gap-3">
-								Ordered By - {data?.ordererName}
-							</div>
-							<div className=" flex flex-col justify-start gap-3">
-								Ordered on -{" "}
-								{new Date(
-									data?.orderedAt
-								).toDateString()}
-							</div>
-							<div className=" flex flex-col justify-start gap-3">
-								delivery status -{" "}
-								{data?.delivered}
-							</div>
-						</div>
-					)}
-				</section>
+						)}
+					</section>
+				)}
 			</div>
 		</div>
 	);

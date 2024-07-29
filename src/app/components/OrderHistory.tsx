@@ -17,24 +17,25 @@ const OrderHistory = ({
 	delivered: string
 	paid: null | Date
 }) => {
-	function deliveryStatus(returnValue: string) {
-		if (
-			delivered !== "cancelled" &&
-			delivered !== "delivered" &&
-			delivered !== "unverified"
-		) {
-			return returnValue;
-		} else {
-			return "";
-		}
-	}
+	// function deliveryStatus(returnValue: string) {
+	// 	if (
+	// 		delivered !== "cancelled" &&
+	// 		delivered !== "delivered" &&
+	// 		delivered !== "unverified"
+	// 	) {
+	// 		return returnValue;
+	// 	} else {
+	// 		return "";
+	// 	}
+	// }
 
 	// console.log(data[0]?.product?.site)
 	return (
 		<Link
 			className="cursor-pointer "
 			// style={{ boxShadow:  }}
-			href={deliveryStatus(`/odrHistory/${_id}`)}
+			// href={deliveryStatus(`/odrHistory/${_id}`)}
+			href={`/odrHistory/${_id}`}
 		>
 			<CardLayout
 				placeOrder={
@@ -53,9 +54,11 @@ const OrderHistory = ({
 				name={product?.name}
 				price={product?.price}
 				commission={product?.commission}
-				classList={`${deliveryStatus(
-					"hover:border-primaryBgClr "
-				)} custom_shadow`}
+				// classList={`${deliveryStatus(
+				// 	"hover:border-primaryBgClr "
+				// )} custom_shadow`}
+				classList={`
+					hover:border-primaryBgClr custom_shadow`}
 				site={product?.site}
 				deviceImage={product?.image}
 				cards={product?.cards}
