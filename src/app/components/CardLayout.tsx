@@ -43,7 +43,7 @@ const CardLayout = ({
 					className="w-40 h-auto sm:h-auto sm:w-[100px]"
 					src={
 						deviceImage
-							? `data:image/jpg;base64,${deviceImage}`
+							? `data:image/webp;base64,${deviceImage}`
 							: phoneImage
 					}
 					alt={""}
