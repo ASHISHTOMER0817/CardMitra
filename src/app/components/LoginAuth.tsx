@@ -39,6 +39,7 @@ const LoginAuth = () => {
 				Popup("error", "Fill the form!!");
 				return;
 			}
+			console.log('----',email,'---- ', password)
 			const response = await axios.post("/api/users/login", {
 				user,
 			});

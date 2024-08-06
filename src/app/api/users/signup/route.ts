@@ -15,7 +15,6 @@ export async function POST(request: NextRequest) {
                   $or: [
                         { email },
                         { contact },
-                        
                   ]
             });
 
