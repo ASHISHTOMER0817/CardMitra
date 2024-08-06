@@ -66,7 +66,7 @@ export default function ProductDetails({
 									{data?.commission}
 								</div>
 								<div className="md:text-xs">
-									Commission
+									Profit
 								</div>
 							</div>
 						</div>

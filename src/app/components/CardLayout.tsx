@@ -71,7 +71,7 @@ const CardLayout = ({
 								Rs. {commission}
 							</div>
 							<div className="md:text-[10px] sm:leading-4 sm:text-[10px]">
-								Commission
+								Profit
 							</div>
 						</div>
 					</div>
