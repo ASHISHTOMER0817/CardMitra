@@ -351,6 +351,9 @@ const AdminOrderHistory = () => {
 											Affiliate
 										</th>
 										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+											Orderer Name
+										</th>
+										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
 											Device
 										</th>
 										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
@@ -424,6 +427,11 @@ const AdminOrderHistory = () => {
 														<td className="py-4 px-6 text-sm font-semibold text-primaryBgClr">
 															{
 																user.name
+															}
+														</td>
+														<td className="py-4 px-6 text-sm font-semibold text-primaryBgClr">
+															{
+																ordererName
 															}
 														</td>
 														<td className="py-4 px-6 text-sm text-gray-500">
