@@ -21,11 +21,14 @@ export async function POST(request: NextRequest) {
         const { email, password, remember } = reqBody.user;
         console.log('this is email', email, 'this is pswrd', password)
 
+        console.log(email.toUpperCase())
         let user;
         const existingUser = await User.findOne({ email: lowerCaseFirstLetter(email) });
         const uppercaseUser = await User.findOne({ email: capitalizeFirstLetter(email) })
+        const wholeUpperCase = await User.findOne({email:email.toUpperCase()})
         if(existingUser)user = existingUser;
         else if(uppercaseUser)user = uppercaseUser;
+        else if(wholeUpperCase) user = wholeUpperCase;
         else{
             return NextResponse.json({
                 message: 'Email or password is wrong!',
