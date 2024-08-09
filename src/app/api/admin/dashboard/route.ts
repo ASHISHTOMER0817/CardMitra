@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
                   console.log(otpList.length, 'this is otplist length')
                   for (let i = 1; i < otpList.length; i++) {
 
-                        if (!mongoose.Types.ObjectId.isValid(otpList[i].OrderID.toString())) {
+                        if (!mongoose.Types.ObjectId.isValid(otpList[i].OrderID.toString()) || otpList[i].status === 'undelivered') {
                               console.warn(`Skipping invalid OrderID: ${otpList[i].OrderID.toString()}`);
                               continue;
                             }
