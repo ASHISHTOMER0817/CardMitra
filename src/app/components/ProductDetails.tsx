@@ -143,6 +143,9 @@ export default function ProductDetails({
 								? data?.productLink
 								: "#"
 						}
+						target="_blank" 
+						rel="noopener noreferrer"
+	
 					>
 						<Image
 							src={
