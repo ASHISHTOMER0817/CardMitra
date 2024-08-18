@@ -9,8 +9,10 @@ import utc from "dayjs/plugin/utc"
 import axios from "axios";
 import { ObjectId } from "mongodb";
 import mongoose from "mongoose";
-import productList, { order } from "@/interface/productList";
+import productList, { CardAndSite, order } from "@/interface/productList";
 import bufferToString from "@/app/components/bufferToString";
+import sharp from "sharp";
+import { Binary } from "mongodb"
 dayjs.extend(utc)
 
 Database()
@@ -40,8 +42,8 @@ export async function GET(request: NextRequest) {
                         if (!mongoose.Types.ObjectId.isValid(otpList[i].OrderID.toString()) || otpList[i].status === 'undelivered') {
                               console.warn(`Skipping invalid OrderID: ${otpList[i].OrderID.toString()}`);
                               continue;
-                            }
-                        
+                        }
+
                         testBulkOprations.push({
                               updateOne: {
                                     filter: { _id: otpList[i].OrderID },
@@ -51,8 +53,6 @@ export async function GET(request: NextRequest) {
                         })
 
                   }
-
-
 
                   console.log(testBulkOprations, 'bulkOperations')
                   // Execute bulkWrite
@@ -90,6 +90,39 @@ export async function GET(request: NextRequest) {
                         }
                   }));
 
+                  // const cards = await Card.find({})
+                  // let testBulkOprations = [];
+                  // console.log(cards)
+                  // for (const card of cards) {
+
+                  //       const base64Data = card.image;
+                  //       const originalBuffer = Buffer.from(base64Data, 'base64');
+                  //       const fileBuffer = await sharp(new Uint8Array(originalBuffer))
+                  //             .resize({ width: 192, height: undefined, fit: 'contain' })
+                  //             .webp()
+                  //             .sharpen()
+                  //             .toBuffer();
+                  //       const imageData = new Binary(fileBuffer);
+
+                  //       testBulkOprations.push({
+                  //             updateOne: {
+                  //                   filter: { _id: card._id },
+                  //                   update: { $set: { image: imageData } },
+                  //                   // upsert: false // Adjust based on whether you want to insert if not found
+                  //             }
+                  //       })
+
+                  // }
+                  // console.log('worked till here')
+
+
+
+                  // console.log(testBulkOprations, 'bulkOperations of cards')
+                  // // Execute bulkWrite
+                  // const result = await Card.bulkWrite(testBulkOprations);
+                  // console.log('Bulk write result:', result);
+
+
 
                   //Affiliate Array
                   const affiliate = await User.find()
@@ -99,7 +132,7 @@ export async function GET(request: NextRequest) {
                   //Orders placed today
                   let order = 0
                   const Orders: order[] = await Order.find({})
-                  
+
                   let arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                   for (const singleOrder of Orders) {
                         const currentYear = new Date().getFullYear()
@@ -114,10 +147,10 @@ export async function GET(request: NextRequest) {
 
                   // const data = { orderHistory, deliveries, noOfAffiliate, order }
                   const data = { orderHistory, noOfAffiliate, order, arr }
-                  
+
 
                   return NextResponse.json({
-                        message: "Order history is being shown", success: true,status:200, data: data,
+                        message: "Order history is being shown", success: true, status: 200, data: data,
                   })
 
             } else if (query === 'orderHistory') {

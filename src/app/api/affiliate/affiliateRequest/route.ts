@@ -7,11 +7,11 @@ Database()
 export async function GET(request: NextRequest) {
       const isApproved = request.nextUrl.searchParams.get('isApproved')
       try {
+            const passwords = await Password.find();
             if (isApproved === 'approved') {
 
                   const allRequest = await User.find().sort({ isApprove: 1 });
                   const order = await Order.find({}).populate('product').populate('user');
-                  const passwords = await Password.find();
                   // console.log(passwords)
                   return NextResponse.json({
                         data: { allRequest, order, passwords }, success: true, message: "All is well"
@@ -21,10 +21,10 @@ export async function GET(request: NextRequest) {
             } else if (!isApproved) {
 
                   const allRequest = await User.find({ isApprove: false })
-                  const order = await Order.find({}).populate('product').populate('user')
+                  // const order = await Order.find({}).populate('product').populate('user')
 
                   return NextResponse.json({
-                        data: { allRequest, order }, success: true, message: "All is well"
+                        data: { allRequest, passwords }, success: true, message: "All is well"
                   })
             }
       } catch {

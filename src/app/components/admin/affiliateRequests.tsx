@@ -14,7 +14,7 @@ import Loader from "../loader";
 const AffiliateRequest = ({ heading }: { heading: string }) => {
 	const [users, setUsers] = useState<{
 		allRequest: user[];
-		order: order[];
+		order?: order[];
 		passwords: {
 			user: string;
 			password: string;
@@ -28,7 +28,6 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 				const response = await axios.get(
 					`api/affiliate/affiliateRequest?isApproved=${heading}`
 				);
-				// console.log(response.data.data);
 				setUsers(response.data.data); // Assuming API response is an array of user objects
 			} catch (error) {
 				console.error(
@@ -131,35 +130,37 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 										index
 									) => {
 										let payable = 0;
-										for (
-											let i = 0;
-											i <
-											users.order
-												.length;
-											i++
-										) {
-											const order =
-												users
-													.order[
-													i
-												];
-											if (
-												_id ===
-													order
-														.user
-														._id &&
-												order.delivered ===
-													"delivered" &&
-												order.paid ===
-													null
+										if (heading && users.order) {
+											for (
+												let i = 0;
+												i < users
+													.order
+													.length;
+												i++
 											) {
-												payable +=
-													order
-														.product
-														.price +
-													order
-														.product
-														.commission;
+												const order =
+													users
+														.order[
+														i
+													];
+												if (
+													_id ===
+														order
+															.user
+															._id &&
+													order.delivered ===
+														"delivered" &&
+													order.paid ===
+														null
+												) {
+													payable +=
+														order
+															.product
+															.price +
+														order
+															.product
+															.commission;
+												}
 											}
 										}
 										return (

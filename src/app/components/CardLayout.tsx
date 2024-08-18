@@ -98,7 +98,7 @@ const CardLayout = ({
 								className="flex justify-center items-center gap-1"
 							>
 								{" "}
-								<Image loading="lazy" quality={40} fetchPriority="low"
+								<Image
 									src={`data:image/jpg;base64,${image}`}
 									width={80}
 									height={40}
