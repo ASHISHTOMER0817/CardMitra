@@ -11,8 +11,8 @@ export async function GET(request: NextRequest) {
             if (isApproved === 'approved') {
 
                   const allRequest = await User.find().sort({ isApprove: 1 });
-                  const order = await Order.find({}).populate('product').populate('user');
-                  // console.log(passwords)
+                  const order = await Order.find({}).populate('product' , 'price commission')
+                  .populate('user', '_id');
                   return NextResponse.json({
                         data: { allRequest, order, passwords }, success: true, message: "All is well"
                   })

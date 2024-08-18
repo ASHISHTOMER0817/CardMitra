@@ -146,8 +146,8 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 												if (
 													_id ===
 														order
-															.user
-															._id &&
+															.user._id
+															 &&
 													order.delivered ===
 														"delivered" &&
 													order.paid ===
