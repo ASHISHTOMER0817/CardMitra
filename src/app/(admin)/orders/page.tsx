@@ -15,6 +15,42 @@ interface joint {
 	orderHistory: productList[];
 	orders: order[];
 }
+
+const exportTableToExcel = () => {
+    const table = document.getElementById('order-table');
+	if(!table)return;
+    const rows = table.querySelectorAll('tr');
+
+    let csvContent = '';
+
+	rows.forEach(row => {
+        const cols = row.querySelectorAll('td, th');
+        const rowData: string[] = [];
+		
+		cols.forEach(col => {
+			
+			const text = (col as HTMLElement).innerText.replace(/,/g, ''); // Cast to HTMLElement to access innerText
+            rowData.push(text);
+			
+        });
+		
+		csvContent += rowData.join(',') + '\n'; // Add a new line after each row
+    });
+
+    // Create a Blob with the CSV data
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+
+    // Create a download link and trigger a download
+    const downloadLink = document.createElement('a');
+    downloadLink.href = url;
+    downloadLink.setAttribute('download', 'table.csv'); // use .csv extension
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+
+};
+
 const AdminOrderHistory = () => {
 	const [data, setData] = useState<joint>();
 	const [view, setView] = useState("grid");
@@ -22,22 +58,29 @@ const AdminOrderHistory = () => {
 	const [startDate, setStartDate] = useState<Date | null>(null);
 	const [endDate, setEndDate] = useState<Date | null>(null);
 	const [name, setName] = useState("");
+
+	const [showFilter, setShowFilter] = useState(false);
+
+	const setFilter = () =>{
+		setShowFilter(!showFilter);
+	}
+
 	// const [total, setTotal] = useState<number | null>();
 
 	useEffect(() => {
 		async function getData() {
 			try {
 				const response = await axios.get(
-					"/api/admin/dashboard?query=orderHistory"
+					`/api/admin/dashboard?query=orderHistory&startDate=${startDate}&endDate=${endDate}`
 				);
-				console.log(response.data.data);
+				console.log( 'resp: ', response.data.data);
 				setData(response.data.data);
 			} catch {
 				console.log("what is happening here !!");
 			}
 		}
 		getData();
-	}, []);
+	}, [startDate, endDate]);
 	console.log(endDate);
 	return (
 		<div className="flex flex-col mx-auto">
@@ -46,14 +89,7 @@ const AdminOrderHistory = () => {
 				heading={"Order History"}
 				Children={
 					<div className="flex gap-[10px] sm:w-full">
-						<button
-							onClick={() => window.print()}
-							className={`px-3 py-1 gap-1 rounded-2xl cursor-pointer flex justify-center items-center text-sm hover:bg-gray-200 sm:px-3 sm:py-0 ${
-								view === "grid" && "hidden"
-							}`}
-						>
-							Print
-						</button>
+						
 						<div
 							onClick={() => setView("list")}
 							className={`px-3 py-1 gap-1 cursor-pointer flex justify-center items-center text-sm hover:bg-gray-200 sm:px-3 sm:py-0 sm:text-nowrap ${
@@ -228,123 +264,153 @@ const AdminOrderHistory = () => {
 						</table>
 					</div> */}
 
-					<div className=" flex md:flex-col md:w-fit mb-7">
-						<input
-							className="mr-2"
-							type="text"
-							placeholder="pincode"
-							value={zipcode}
-							onChange={(e) =>
-								setZipcode(e.target.value)
-							}
-						/>
-						<input
-							className="mr-2"
-							type="text"
-							placeholder="Name"
-							value={name}
-							onChange={(e) =>
-								setName(e.target.value)
-							}
-						/>
-						{/* <input type="Date" placeholder="start Date" value={startDate?.toString()} onChange={(e)=> setStartDate(new Date(e.target.value))}/>
-							<input type="Date" placeholder="End Date" value={endDate?.toString()} onChange={(e)=> setEndDate(new Date(e.target.value))} /> */}
-						{/* <div className="flex ml-auto w-fit"> */}
-						<input
-							className="md:mr-auto"
-							type="date"
-							placeholder="Start Date"
-							value={
-								startDate
-									? startDate
-											.toISOString()
-											.substring(
-												0,
-												10
-											)
-									: ""
-							}
-							onChange={(e) =>
-								setStartDate(
-									e.target.value
-										? new Date(
-												e.target.value
-										  )
-										: null
-								)
-							}
-						/>
+					<div className="flex mb-3">
+						<button className="text-primaryBgClr text-left" onClick={setFilter}>
+							<span>
+								{showFilter ? '- ' : '+ '}
+							</span>
+							Advanced Filters
+							
+						</button>
 
-						<div className="mx-4 text-gray-400">to</div>
-						<input
-							className="md:mr-auto"
-							type="date"
-							placeholder="End Date"
-							value={
-								endDate
-									? endDate
-											.toISOString()
-											.substring(
-												0,
-												10
-											)
-									: ""
-							}
-							onChange={(e) =>
-								setEndDate(
-									e.target.value
-										? new Date(
-												e.target.value
-										  )
-										: null
-								)
-							}
-						/>
-						<div className="ml-auto">
-							Total:{" "}
-							{data.orders.reduce((sum, order) => {
-								const orderedAt = new Date(
-									order.orderedAt
-								); // Assuming orderedAt is a property of product
-								let show = true;
+						<button
+							onClick={exportTableToExcel}
+							className={`cursor-pointer hover:bg-gray-200 ml-auto text-primaryBgClr`}
+						>
+							Download CSV
+						</button>
+					</div>
 
-								if (
-									(zipcode &&
-										order.product
-											.zipCode !==
-											zipcode) ||
-									(startDate &&
-										orderedAt.valueOf() <=
-											startDate.valueOf()) ||
-									(endDate &&
-										orderedAt.valueOf() >=
-											endDate.valueOf()) ||
-									(name &&
-										(order.ordererName ||
-											order.user.name) !==
-											name)
-								) {
-									show = false;
-								}
+					{showFilter &&
+						<div className="flex lg:flex-row flex-col gap-3 py-3 px-2 rounded-[8px]" style={{border: '1px solid aliceblue'}}>
+							
+							<div className="flex justify-between items-center gap-3" >
+								<input
+									className=""
+									type="date"
+									placeholder="Start Date"
+									value={
+										startDate
+											? startDate
+													.toISOString()
+													.substring(
+														0,
+														10
+													)
+											: ""
+									}
+									onChange={(e) =>
+										setStartDate(
+											e.target.value
+												? new Date(
+														e.target.value
+												)
+												: null
+										)
+									}
+								/>
 
-								return show
-									? sum +
-											(+order
-												.product
-												.price +
-												+order
-													.product
-													.commission)
-									: sum;
-							}, 0)}
+								<div className="text-gray-400">to</div>
+								
+								<input
+									className=""
+									type="date"
+									placeholder="End Date"
+									value={
+										endDate
+											? endDate
+													.toISOString()
+													.substring(
+														0,
+														10
+													)
+											: ""
+									}
+									onChange={(e) =>
+										setEndDate(
+											e.target.value
+												? new Date(
+														e.target.value
+												)
+												: null
+										)
+									}
+								/>
+							</div>
+
+							<span className="mx-auto">AND / OR</span>
+
+							<div className="flex lg:flex-row flex-col gap-3">
+								<input
+									style={{border: '1px solid aliceblue'}}
+									className="py-1 px-2 rounded-[8px]"
+									type="text"
+									placeholder="Enter Pincode"
+									value={zipcode}
+									onChange={(e) =>
+										setZipcode(e.target.value)
+									}
+								/>
+								<input
+									style={{border: '1px solid aliceblue'}}
+									className="py-1 px-2 rounded-[8px]"
+									type="text"
+									placeholder="Enter Name"
+									value={name}
+									onChange={(e) =>
+										setName(e.target.value)
+									}
+								/>
+							</div>
+
 						</div>
-						{/* </div> */}
+					}
+
+					<div className="ml-auto my-2">
+						<span className="font-bold">Return Amt:</span>{" Rs. "}
+						
+						{data.orders.reduce((sum, order) => {
+							const orderedAt = new Date(
+								order.orderedAt
+							); // Assuming orderedAt is a property of product
+							let show = true;
+
+							if (
+								(zipcode &&
+									order.product
+										.zipCode !==
+										zipcode) ||
+								(startDate &&
+									orderedAt.valueOf() <=
+										startDate.valueOf()) ||
+								(endDate &&
+									orderedAt.valueOf() >=
+										endDate.valueOf()) ||
+								(name &&
+									(order.ordererName ||
+										order.user.name) !==
+										name)
+							) {
+								show = false;
+							}
+
+							return show
+								? sum +
+										(+order
+											.product
+											.price +
+											+order
+												.product
+												.commission)
+								: sum;
+						}, 0)}
+						{"/-"}
 					</div>
 
 					{/*Latest Design changes */}
 					<div className="">
 						<div className="overflow-x-auto bg-white shadow-md rounded-[8px]">
-							<table className="min-w-full divide-y divide-gray-200 text-nowrap">
+							<table id="order-table" className="min-w-full divide-y divide-gray-200 text-nowrap">
 								<thead className="bg-green-100">
 									<tr>
 										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">

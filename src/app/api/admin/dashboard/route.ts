@@ -24,6 +24,20 @@ export async function GET(request: NextRequest) {
             const operation = searchparams.get('operation')
             const syncOperation = searchparams.get('syncOperation')
 
+            const getLast7Days = () => {
+                  const date = new Date();
+                  date.setDate(date.getDate() - 7);
+                  return date;
+            };
+
+            const checkDate = (dt: string) =>{
+                  if(dt){
+                        if(dt == 'null')return false;
+                        return dt;
+                  }
+                  return false;
+            }
+
             if (syncOperation === 'true') {
                   let otpList;
 
@@ -154,13 +168,24 @@ export async function GET(request: NextRequest) {
                   })
 
             } else if (query === 'orderHistory') {
-                  const products: any = await Product.find({ show: true })
+
+                  const newDate = new Date();
+                  const last7days = getLast7Days();
+
+                  const startDate = checkDate(searchparams.get('startDate') || '') || last7days;
+                  const endDate = checkDate(searchparams.get('endDate') || '') || newDate;
+
+                  console.log('start date and end date : ', startDate, endDate);
+
+                  const products: any = await Product.find({ show: true, Date: { $gte: startDate, $lte: endDate } })
                         .sort({ Date: -1 })
                         .populate({ path: 'cards', select: 'value image' })
                         .populate('site').lean();
                   // console.log('this is product', products)
 
-                  let orders = await Order.find({})
+                  let orders = await Order.find({
+                        orderedAt: { $gte: startDate, $lte: endDate } 
+                  })
                         .sort({ orderedAt: -1 })
                         .populate('user', 'name')
                         .populate('product')
