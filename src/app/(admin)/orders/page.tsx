@@ -453,29 +453,27 @@ const AdminOrderHistory = () => {
 											},
 											index
 										) => {
-											let show =
-												true;
-											if (
-												(zipcode &&
-													product.zipCode !==
-														zipcode) ||
-												(startDate &&
-													new Date(
-														orderedAt
-													).valueOf() <=
-														startDate.valueOf()) ||
-												(endDate &&
-													new Date(
-														orderedAt
-													).valueOf() >=
-														endDate.valueOf()) ||
-												(name &&
-													(ordererName ||
-														user.name) !==
-														name)
-											)
-												show =
-													false;
+											let show = false;
+
+											if (!zipcode && !name) {	
+												// If both have no value, show = true
+												show = true;
+											} else {
+												// If only zipcode or name has a value, check and set show=true if it matches
+												const zipcodeMatches = zipcode && product.zipCode.includes(zipcode);
+												const nameMatches = name && (ordererName.toLowerCase().includes(name.toLowerCase()) || user.name.toLowerCase().includes(name.toLowerCase()));
+
+												if (zipcode && name) {
+													// If both have values, both must match (AND condition)
+													show = Boolean(zipcodeMatches && nameMatches);
+												} else {
+													// If only one has a value, check if it matches
+													show = Boolean(zipcodeMatches || nameMatches);
+												}
+											}
+
+										
+
 											return (
 												show && (
 													<tr

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, ReactNode } from "react";
+import React, { useState, useEffect, ReactNode, ChangeEvent } from "react";
 import axios from "axios";
 import Image from "next/image";
 import reject from "@/../public/reject.svg";
@@ -21,6 +21,12 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 		}[];
 	}>();
 	const [refreshData, setRefreshData] = useState(false);
+
+	const [searchText, setSearch] = useState('');
+
+	const handleSearch = (ev:React.ChangeEvent<HTMLInputElement>) =>{
+		setSearch(ev.target.value);	
+	}
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -84,6 +90,11 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 						User List
 					</h3>
 				)}
+
+				<div className="flex">
+					<input value={searchText} onChange={(ev)=>handleSearch(ev)} type="text" name="search-user" id="search-user" placeholder="Search by name, email, mob..." className="py-1 px-2 rounded-[8px] ml-auto mb-2" style={{border: '1px solid aliceblue',}} />
+				</div>
+
 				{!users ? (
 					<Loader />
 				) : users.allRequest.length > 0 ? (
@@ -129,6 +140,17 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 										},
 										index
 									) => {
+
+										let show = false;
+
+										if(!searchText){
+											show=true;
+										}else{
+											show = name.toLowerCase().includes(searchText.toLowerCase()) ||
+													email.toLowerCase().includes(searchText.toLowerCase()) ||
+													contact.toLowerCase().includes(searchText.toLowerCase())
+										}
+
 										let payable = 0;
 										if (heading && users.order) {
 											for (
@@ -164,100 +186,104 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 											}
 										}
 										return (
-											<tr
-												key={
-													index
-												}
-												className={
-													index %
-														2 ===
-													0
-														? "bg-white"
-														: "bg-gray-50"
-												}
-											>
-												<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-													<Link
-														href={`/adminBookers/${_id}`}
-													>
-														{
-															name
-														}
-													</Link>
-												</td>
-												<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-													{
-														email
-													}
-												</td>
-												<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-													{
-														contact
-													}
-												</td>
+											
+											show && (
 
-												{heading && (
+												<tr
+													key={index}
+													className={
+														index %
+															2 ===
+														0
+															? "bg-white"
+															: "bg-gray-50"
+													}
+												>
 													<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-														{isApprove &&
-															payable}
-													</td>
-												)}
-												<td>
-													{findPassword(
-														email
-													)}
-												</td>
-												<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex gap-2">
-													{!isApprove ? (
-														<>
-															<div
-																onClick={() =>
-																	isAccept(
-																		true,
-																		_id
-																	)
-																}
-																className="text-sm text-white hover:bg-green-600 py-2 px-5 cursor-pointer  rounded-full border bg-primaryBgClr sm:py-1 sm:text-[12px] sm:my-auto sm:h-fit sm:px-3"
-															>
-																Accept
-															</div>
-															<div
-																onClick={() =>
-																	isAccept(
-																		false,
-																		_id
-																	)
-																}
-																className="text-sm py-2 px-5 cursor-pointer hover:bg-slate-100 rounded-full border text-red-500 sm:py-1 sm:text-[12px] sm:my-auto sm:h-fit sm:px-3"
-															>
-																Reject
-															</div>
-														</>
-													) : (
 														<Link
 															href={`/adminBookers/${_id}`}
 														>
-															<Image
-																src={
-																	view
-																}
-																alt="View"
-																width={
-																	30
-																}
-																className={`cursor-pointer h-auto sm:h-[17px] sm:w-[17px] sm:mt-[1px] ${
-																	!(
-																		index %
-																		2
-																	)
-																		? "hover:bg-gray-200"
-																		: "hover:bg-[#d3d1d1]"
-																} rounded-full`}
-															/>
+															{
+																name
+															}
 														</Link>
+													</td>
+													<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+														{
+															email
+														}
+													</td>
+													<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+														{
+															contact
+														}
+													</td>
+
+													{heading && (
+														<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+															{isApprove &&
+																payable}
+														</td>
 													)}
-												</td>
-											</tr>
+													<td>
+														{findPassword(
+															email
+														)}
+													</td>
+													<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex gap-2">
+														{!isApprove ? (
+															<>
+																<div
+																	onClick={() =>
+																		isAccept(
+																			true,
+																			_id
+																		)
+																	}
+																	className="text-sm text-white hover:bg-green-600 py-2 px-5 cursor-pointer  rounded-full border bg-primaryBgClr sm:py-1 sm:text-[12px] sm:my-auto sm:h-fit sm:px-3"
+																>
+																	Accept
+																</div>
+																<div
+																	onClick={() =>
+																		isAccept(
+																			false,
+																			_id
+																		)
+																	}
+																	className="text-sm py-2 px-5 cursor-pointer hover:bg-slate-100 rounded-full border text-red-500 sm:py-1 sm:text-[12px] sm:my-auto sm:h-fit sm:px-3"
+																>
+																	Reject
+																</div>
+															</>
+														) : (
+															<Link
+																href={`/adminBookers/${_id}`}
+															>
+																<Image
+																	src={
+																		view
+																	}
+																	alt="View"
+																	width={
+																		30
+																	}
+																	className={`cursor-pointer h-auto sm:h-[17px] sm:w-[17px] sm:mt-[1px] ${
+																		!(
+																			index %
+																			2
+																		)
+																			? "hover:bg-gray-200"
+																			: "hover:bg-[#d3d1d1]"
+																	} rounded-full`}
+																/>
+															</Link>
+														)}
+													</td>
+												</tr>
+											)	
+
+											
 										);
 									}
 								)}
