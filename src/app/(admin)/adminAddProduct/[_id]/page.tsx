@@ -144,6 +144,10 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 		getDate();
 	}, [updateOptions]);
 
+	useEffect(() => {
+        setReturnAmt((price || 0) + (commission || 0));
+    }, [price, commission]);
+
 	async function AddOption(option: string) {
 		try {
 			const optionObject = JSON.stringify({
@@ -516,9 +520,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 											value={
 												commission
 											}
-											onChange={(
-												e
-											) =>
+											onChange={(e) =>
 												setCommission(
 													+e
 														.target
@@ -543,17 +545,9 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 											id="returnAmt"
 											type="number"
 											placeholder="0"
+											readOnly
 											value={
 												returnAmt
-											}
-											onChange={(
-												e
-											) =>
-												setReturnAmt(
-													+e
-														.target
-														.value
-												)
 											}
 											className=" outline-none px-2 border-b border-black font-semibold text-primaryBgClr py-1"
 										/>

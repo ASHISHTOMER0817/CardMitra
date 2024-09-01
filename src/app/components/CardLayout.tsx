@@ -34,7 +34,7 @@ const CardLayout = ({
 		>
 			<div className="flex items-center mb-4 gap-4 sm:ml-4 sm:mb-2 float-right-sm">
 				<div className="mr-auto px-[10px] py-[5px] text-sm rounded-3xl border text-center bg-gray-200 sm:text-[10px] sm:px-1 sm:py-0">
-					Q: {quantity}
+					{quantity} Pcs
 				</div>
 				{icons}
 			</div>
