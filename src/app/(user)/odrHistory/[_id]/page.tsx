@@ -21,6 +21,7 @@ import {
 	DialogTrigger,
 	DialogClose,
 } from "@/components/ui/dialog";
+import Link from "next/link";
 
 // interface productTypes {
 // 	product: productList;
@@ -173,6 +174,29 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 		);
 	};
 
+	const deleteOrder = async () => {
+		try {
+
+			const decision = confirm("Are you sure you want to delete this order");
+			if(!decision)return;
+
+			const response = await axios.delete(`/api/users/deleteOrder/`, {
+				data: { orderId: params._id } // Send orderId in the request body
+			});
+			
+			if (response.data.success) {
+				// Handle successful deletion (e.g., redirect or show a success message)
+				router.push('/odrHistory'); // Redirect to a success page or wherever you want
+			} else {
+				// Handle errors
+				alert(response.data.message);
+			}
+		} catch (error) {
+			console.error("Error deleting the order:", error);
+			alert("An error occurred while trying to delete the order.");
+		}
+	};
+	  
 	return (
 		<div>
 			<div className="w-full sm:ml-0">
@@ -218,68 +242,82 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 				{!data ? (
 					<Loader />
 				) : (
-					<section className="flex items-start text-sm justify-around flex-wrap gap-4">
-						<div className="flex flex-col items-start justify-around sm:gap-0">
-							<ProductDetails
-								observer="user"
-								data={data?.product}
-								arr={arr}
-							/>
-						</div>
-						{data?.delivered !== "delivered" ? (
-							<div className="border px-10 py-7 rounded-2xl sm:px-4 sm:py-4 sm:w-full">
-								<div className="text-base font-semibold text-primaryBgClr text-center">
-									OTP Form
-								</div>
-								<hr className="my-5 sm:my-2" />
-								<div className=" flex flex-col justify-start gap-3">
-									{otpStatus ? (
-										<ReSubmit />
+					<>
+						{data?.delivered !== 'delivered' && (
+							<div className="flex mb-2 sm:mb-0">
+								<button
+									onClick={deleteOrder}
+									className="ml-auto text-red-500 sm:mx-auto"
+								>
+									Delete Order
+								</button>
+							</div>
+						)}
+
+						<section className="flex items-start text-sm justify-around flex-wrap gap-4">
+
+							<div className="flex flex-col items-start justify-around sm:gap-0">
+								<ProductDetails
+									observer="user"
+									data={data?.product}
+									arr={arr}
+								/>
+							</div>
+							{data?.delivered !== "delivered" ? (
+								<div className="border px-10 py-7 rounded-2xl sm:px-4 sm:py-4 sm:w-full">
+									<div className="text-base font-semibold text-primaryBgClr text-center">
+										OTP Form
+									</div>
+									<hr className="my-5 sm:my-2" />
+									<div className=" flex flex-col justify-start gap-3">
+										{otpStatus ? (
+											<ReSubmit />
+										) : (
+											<GoogleFormPage />
+										)}
+									</div>
+
+									{!data?.ordererName ? (
+										""
 									) : (
-										<GoogleFormPage />
+										<div className="mt-3 mr-auto w-fit text-sm font-semibold text-gray-500">
+											Ordered by -{" "}
+											{data?.ordererName}
+										</div>
+									)}
+									{data && (
+										<div className="mt-3 mr-auto w-fit text-sm font-semibold text-gray-500">
+											Ordered on -{" "}
+											{new Date(
+												data?.orderedAt
+											).toDateString()}
+										</div>
 									)}
 								</div>
-
-								{!data?.ordererName ? (
-									""
-								) : (
-									<div className="mt-3 mr-auto w-fit text-sm font-semibold text-gray-500">
-										Ordered by -{" "}
+							) : (
+								<div className="border px-10 py-7 rounded-2xl sm:px-4 sm:py-4 sm:w-full">
+									<div className="text-base font-semibold text-primaryBgClr text-center">
+										Order details
+									</div>
+									<hr className="my-5 sm:my-2" />
+									<div className=" flex flex-col justify-start gap-3">
+										Ordered By -{" "}
 										{data?.ordererName}
 									</div>
-								)}
-								{data && (
-									<div className="mt-3 mr-auto w-fit text-sm font-semibold text-gray-500">
+									<div className=" flex flex-col justify-start gap-3">
 										Ordered on -{" "}
 										{new Date(
 											data?.orderedAt
 										).toDateString()}
 									</div>
-								)}
-							</div>
-						) : (
-							<div className="border px-10 py-7 rounded-2xl sm:px-4 sm:py-4 sm:w-full">
-								<div className="text-base font-semibold text-primaryBgClr text-center">
-									Order details
+									<div className=" flex flex-col justify-start gap-3">
+										delivery status -{" "}
+										{data?.delivered}
+									</div>
 								</div>
-								<hr className="my-5 sm:my-2" />
-								<div className=" flex flex-col justify-start gap-3">
-									Ordered By -{" "}
-									{data?.ordererName}
-								</div>
-								<div className=" flex flex-col justify-start gap-3">
-									Ordered on -{" "}
-									{new Date(
-										data?.orderedAt
-									).toDateString()}
-								</div>
-								<div className=" flex flex-col justify-start gap-3">
-									delivery status -{" "}
-									{data?.delivered}
-								</div>
-							</div>
-						)}
-					</section>
+							)}
+						</section>
+					</>
 				)}
 			</div>
 		</div>
