@@ -42,7 +42,8 @@ export async function GET(request: NextRequest) {
                   let otpList;
 
                   try {
-                        const response = await axios.get('https://script.google.com/macros/s/AKfycbwA7ltqd1DatJM0Od_rteBT1tgUy3msAQoItJZ6n0-csJDTZnC5fluiiU91C3wSKR0/exec');
+                        // const response = await axios.get('https://script.google.com/macros/s/AKfycbwA7ltqd1DatJM0Od_rteBT1tgUy3msAQoItJZ6n0-csJDTZnC5fluiiU91C3wSKR0/exec');
+                        const response = await axios.get('https://script.google.com/macros/s/AKfycbxhnf1drVrRutVdysp_FsOsrW0WLfyz_OGgU2jvZO86HBncHkY6vyOtHYkAeVFCu3Kw/exec');
                         otpList = response.data.data;
                         console.log('try part')
                   } catch (error) {
