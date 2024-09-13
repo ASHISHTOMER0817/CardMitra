@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
                   try {
                         const response = await axios.get('https://script.google.com/macros/s/AKfycbwA7ltqd1DatJM0Od_rteBT1tgUy3msAQoItJZ6n0-csJDTZnC5fluiiU91C3wSKR0/exec');
                         otpList = response.data.data;
-                        console.log('try part')
+                        console.log('try part', otpList);
                   } catch (error) {
                         console.error('Error fetching data from Google Sheets:', error);
                         return NextResponse.json({ message: 'Failed to fetch data from Google Sheets', success: false });

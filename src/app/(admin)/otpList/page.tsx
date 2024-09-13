@@ -31,17 +31,17 @@ const OtpList = () => {
 			try {
 				const dates = { startDate, endDate };
 
-				console.log("these are dates", dates);
-				console.log("its running boys");
+				// console.log("these are dates", dates);
+				// console.log("its running boys");
 				const dateString = JSON.stringify(dates);
-				console.log(dateString);
-				console.log(action);
+				// console.log(dateString);
+				// console.log(action);
 				const jsonString = JSON.stringify(action);
 				const response = await axios.get(
 					`/api/admin/otpList?date=${dateString}&action=${jsonString}`
 				);
 				setOtpList(response.data.data);
-				console.log(response.data.data);
+				// console.log(response.data.data);
 				// console.log(dropdownStates);
 			} catch {
 				Popup("error", "Something went wrong, Please refresh");

@@ -24,11 +24,11 @@ export default function ProductDetails({
 }) {
 	return (
 		<>
-			<section className=" text-left sm:w-full mt-5">
-				<div className="bg-[#FC08081A] text-[#FC0808] text-center px-4 py-1 rounded-full sm:w-full sm:text-nowrap">
+			<section className=" text-left sm:w-full relative mt-5">
+				<div className="bg-[#FC08081A] absolute right-2 text-[#FC0808] text-center px-4 py-1 rounded-full ">
 					{observer !== "user" || !observer
-						? "Quantity left: " + data?.requirement
-						: "Ordered quantity: 1"}{" "}
+						? "Qty: " + data?.requirement
+						: "Qty: 1"}{" "}
 				</div>
 				<div className="flex justify-start items-center flex-wrap sm:justify-center gap-5 sm:gap-2">
 					<Image

@@ -50,7 +50,7 @@ const Login = ({ params }: { params: { Choice: string } }) => {
 	async function sendData(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		try {
-			console.log("starting");
+			// console.log("starting");
 			setLoader(true);
 			// Validate form inputs
 
@@ -61,7 +61,7 @@ const Login = ({ params }: { params: { Choice: string } }) => {
 					"error",
 					"Name must be at least 5 characters long"
 				);
-				console.log();
+				// console.log();
 				setLoader(false);
 				return;
 			}

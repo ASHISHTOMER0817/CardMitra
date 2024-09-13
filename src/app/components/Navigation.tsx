@@ -60,7 +60,7 @@ const Navigation:React.FC<Options> = ({options}) =>{
             setMenuVisible(!menuVisible);
       }
 
-      return <div className="flex fixed h-full ">
+      return <div className="flex fixed h-full z-10">
 
             { menuVisible &&
                   <aside ref={sidebarRef} className={` ${isMobile > 638 ? 'w-20' : ''} overflow-hidden flex p-4 flex-col duration-300 gap-4 hover:w-48 side-navigation`} style={{borderRight: '3px solid grey', background: 'white', zIndex: 9}}>

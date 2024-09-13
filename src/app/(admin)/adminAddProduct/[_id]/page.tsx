@@ -109,10 +109,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 					});
 
 					setCards(product.cards);
-					// const newSite = delete product.site._id
-					// console.log('newSite', newSite)
 					setSite(product.site);
-					// console.log(product.site)
 					setZipCode(product.zipCode);
 					setReturnAmt(product.returnAmount);
 					setLoader(false);
@@ -126,7 +123,6 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 		getData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [params?._id]);
-	// console.log(cards, site, "these are cards , site");
 
 	useEffect(() => {
 		async function getDate() {

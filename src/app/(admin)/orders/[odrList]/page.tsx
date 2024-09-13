@@ -29,13 +29,13 @@ const OrderList = ({ params }: { params: { odrList: string } }) => {
 				);
 
 				const { info, _id } = await response.data.data;
-				console.log("here");
-				console.log(info);
+				// console.log("here");
+				// console.log(info);
 				setArr(Object.entries(info));
 
 				setData(await response.data.data);
 				setId(_id);
-				console.log(arr);
+				// console.log(arr);
 			} catch {
 				console.log(
 					"something went wrong, please try again later"
@@ -50,14 +50,14 @@ const OrderList = ({ params }: { params: { odrList: string } }) => {
 
 	async function dealOperation(_id: string, operation: string) {
 		try {
-			console.log("frontend", _id, operation);
+			// console.log("frontend", _id, operation);
 			const response = await axios.get(
 				`/api/admin/dashboard?_id=${_id}&operation=${operation}`
 			);
 
 			if (response.data.success) {
 				Popup("success", await response.data.message);
-				console.log(response.data.operation);
+				// console.log(response.data.operation);
 				if (response.data.operation === "delete") {
 					router.back();
 				} else {

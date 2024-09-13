@@ -41,12 +41,12 @@ export default function Home() {
 	useEffect(() => {
 		async function getData() {
 			try {
-				console.log("sending calls where");
+				// console.log("sending calls where");
 				const response = await axios.get(
 					"/api/orders/products?limit=homePage"
 				);
 				const allProducts = response.data.data;
-				console.log(allProducts);
+				// console.log(allProducts);
 				setData(allProducts);
 			} catch {
 				// Popup(

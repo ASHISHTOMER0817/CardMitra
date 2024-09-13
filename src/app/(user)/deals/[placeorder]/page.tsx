@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import OrderForm from "@/app/components/OrderForm";
 import productList, { Data } from "@/interface/productList";
 import ProductDetails from "@/app/components/ProductDetails";
@@ -8,6 +8,7 @@ import Loader from "@/app/components/loader";
 import CardLayout from "@/app/components/CardLayout";
 import Link from "next/link";
 import BackwardButton from "@/app/components/BackwardButton";
+import { useRouter } from "next/navigation";
 
 export interface MyArrayItem {
 	0: string; // First element in the subarray (e.g., 'first', 'second', 'third', 'fourth')
@@ -17,6 +18,36 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 	const [data, setData] = useState<productList>();
 	const [productList, setProductList] = useState<Data>();
 	const [arr, setArr] = useState<Array<MyArrayItem>>([]);
+
+	const [timeLeft, setTimeLeft] = useState(600); // 10 minutes in seconds
+	const [lockCreated, setLockCreated] = useState(false);
+	const hasRun = useRef(false);
+
+  	const router = useRouter();
+
+	useEffect(()=>{
+
+		if (hasRun.current) return; // Prevent duplicate calls
+
+        hasRun.current = true;
+
+		if(!lockCreated){
+
+			setLockCreated(true);
+
+			axios.post(
+				`/api/orders/lockQuantity`,
+				{productId: params.placeorder}
+			).then((res)=>{
+				console.log('res: ', res);
+				setTimeLeft(parseInt(res.data.remainingTime));
+			}).catch((err)=>{
+				// router.push('/deals');
+				console.log('err: ', err);
+			})
+		}
+
+	}, [params.placeorder]);
 
 	useEffect(() => {
 		async function getData() {
@@ -57,11 +88,39 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 		getData();
 	}, []);
 
+	useEffect(() => {
+		if (timeLeft <= 0) {
+		  // Time's up! Redirect the user to a different page
+		  
+		  router.push("/deals"); // Redirect to the previous page or another page
+		  return;
+		}
+	
+		const timerId = setTimeout(() => {
+		  setTimeLeft(timeLeft - 1); // Decrease time by 1 second
+		}, 1000);
+	
+		return () => clearTimeout(timerId); // Cleanup the timer
+	}, [timeLeft, router]);
+
+	// Function to format the time in MM:SS format
+	const formatTime = (seconds:number) => {
+		const minutes = Math.floor(seconds / 60);
+		const secs = seconds % 60;
+		return `${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+	};
+
 	// const placeOrder = () => {};
 	return (
 		<>
 			<div className="sm:flex sm:flex-col">
-				<BackwardButton />
+				<div className="flex justify-between">
+					<BackwardButton />
+					<div className="text-[#FC0808] sm:w-full text-center">
+						<span>Complete your order within {formatTime(timeLeft)} or </span>
+						<button className="underline text-blue-800">Release Qty now</button>
+					</div>
+				</div>
 				<section className="flex items-start text-sm justify-around sm:flex-col flex-wrap">
 					<div className="flex flex-col items-start justify-around sm:gap-0 sm:w-full">
 						{!data && !arr ? (

@@ -111,15 +111,15 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 	useEffect(() => {
 		async function getData() {
 			try {
-				console.log("useEffect running");
-				console.log(params._id);
+				// console.log("useEffect running");
+				// console.log(params._id);
 				const response = await axios.get(
 					`/api/users/details?query=${params._id}&delete=${deleteOperation}&dis_approve=${dis_approve}`
 				);
 				const data = response.data.data;
 				setData(data);
 				setAmount((+data.totalAmt).toString());
-				console.log(response.data.data);
+				// console.log(response.data.data);
 				if (response.data.status === 250) {
 					Popup("success", response.data.message);
 
@@ -225,6 +225,24 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 		}
 	}
 
+	async function disapproveUser() {
+		try {
+			const response = await axios.post(
+				'/api/affiliate/disapproveUser', // Endpoint for disapproving users
+				{ userId: params._id } // Pass the user ID
+			);
+			if (response.data.success) {
+				Popup("success", response.data.message);
+				// Optionally, you can refresh or redirect here
+				router.push('/adminBookers/');
+			} else {
+				Popup("error", response.data.message);
+			}
+		} catch {
+			Popup("error", "Something went wrong while disapproving the user.");
+		}
+	}
+
 	console.log(data?.totalAmt);
 
 	const buttonOperation = () => {
@@ -232,8 +250,9 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 			payment();
 		} else if (overlayElement?.action === "delete") {
 			setDeleteOperation(true);
-		} else if (overlayElement?.action === "payment") {
-			setDis_approve(true);
+		} else if (overlayElement?.action === "dis-approve") {
+			// setDis_approve(true);
+			disapproveUser();
 		}
 		setListType("undelivered");
 	};
@@ -435,11 +454,13 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 								<DropdownMenuContent className="bg-white">
 
 									<DropdownMenuItem className="cursor-pointer " onClick={()=>setOverlayElement(dis_approveAccountElement)}>
-									<DialogTrigger>Dis-Approve</DialogTrigger>	
+										<DialogTrigger>Dis-Approve</DialogTrigger>	
 									</DropdownMenuItem>
+
 									<DropdownMenuSeparator />
+									
 									<DropdownMenuItem className="cursor-pointer " onClick={()=>setOverlayElement(deleteAccountElement)}>
-										 <DialogTrigger>Delete Account</DialogTrigger>
+										<DialogTrigger>Delete Account</DialogTrigger>
 									</DropdownMenuItem>
 								</DropdownMenuContent>
 							</div>

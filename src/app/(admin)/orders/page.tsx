@@ -73,7 +73,7 @@ const AdminOrderHistory = () => {
 				const response = await axios.get(
 					`/api/admin/dashboard?query=orderHistory&startDate=${startDate}&endDate=${endDate}`
 				);
-				console.log( 'resp: ', response.data.data);
+				// console.log( 'resp: ', response.data.data);
 				setData(response.data.data);
 			} catch {
 				console.log("what is happening here !!");
@@ -81,7 +81,7 @@ const AdminOrderHistory = () => {
 		}
 		getData();
 	}, [startDate, endDate]);
-	console.log(endDate);
+	// console.log(endDate);
 	return (
 		<div className="flex flex-col mx-auto">
 			<Header

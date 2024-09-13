@@ -279,6 +279,27 @@ const reviewSchema = new mongoose.Schema({
 	}
 })
 
+const lockSchema = new Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users',
+        required: true,
+    },
+    productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'products',
+        required: true,
+    },
+    lockedAt: {
+        type: Date,
+        default: Date.now,
+    },
+    expiresAt: {
+        type: Date,
+        required: true,
+    },
+});
+
 const Product = mongoose.models.products || mongoose.model("products", productSchema)
 const Otp = mongoose.models.otps || mongoose.model("otps", otpSchema)
 const Order = mongoose.models.orders || mongoose.model("orders", orderSchema)
@@ -290,4 +311,7 @@ const Review = mongoose.models.reviews || mongoose.model('reviews', reviewSchema
 
 const Card = mongoose.models.cards || mongoose.model('cards', cardSchema)
 const Site = mongoose.models.sites || mongoose.model('sites', siteSchema)
-export { User, Password, Product, Otp, Order, Transactions, Options, Review, Card, Site }
+
+const Lock = mongoose.models.locks || mongoose.model('locks', lockSchema)
+
+export { User, Password, Product, Otp, Order, Transactions, Options, Review, Card, Site, Lock }

@@ -8,12 +8,12 @@ import productList from "@/interface/productList";
 Database()
 export async function GET(request: NextRequest) {
       try {
-            console.log('its workin')
+            // console.log('its workin')
             const searchParams = request.nextUrl.searchParams
             const limit = searchParams.get('limit')
             const productId = searchParams.get('productId')
             const icon = searchParams.get('icon')
-            console.log(productId)
+            // console.log(productId)
             if (limit) {
                   // let products = await Product.find({})
                   if (limit === 'none') {

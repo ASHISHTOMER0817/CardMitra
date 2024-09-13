@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
                   .populate({ path: 'cards', select: 'value image' })
                   .populate('site').lean()
 
-                  console.log('this is a single product',productDetails)
+                  // console.log('this is a single product',productDetails)
             const product = bufferToString(productDetails as productList)
 
             // Converting the Buffer images to base64
@@ -57,7 +57,7 @@ export async function GET(request: NextRequest) {
 
 
 
-            console.log('2', product)
+            // console.log('2', product)
             return NextResponse.json({
                   data: product, message: 'Product data is being shown', success: true
             })
