@@ -110,6 +110,18 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 		return `${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
 	};
 
+	const releaseQuantity = async () =>{
+
+		axios.post(
+			`/api/orders/unlockQuantity`,
+			{productId: params.placeorder}
+		).then((res)=>{
+			router.push("/deals");
+		}).catch((err)=>{
+			console.log('err: ', err);
+		})
+	}
+
 	// const placeOrder = () => {};
 	return (
 		<>
@@ -118,7 +130,7 @@ const Placeorder = ({ params }: { params: { placeorder: string } }) => {
 					<BackwardButton />
 					<div className="text-[#FC0808] sm:w-full text-center">
 						<span>Complete your order within {formatTime(timeLeft)} or </span>
-						<button className="underline text-blue-800">Release Qty now</button>
+						<button onClick={releaseQuantity} className="underline text-blue-800">Release Qty now</button>
 					</div>
 				</div>
 				<section className="flex items-start text-sm justify-around sm:flex-col flex-wrap">

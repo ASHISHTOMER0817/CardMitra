@@ -41,6 +41,7 @@ export interface order {
 	paid: Date | null
 	acknowledgment: boolean
 	ordererName:string
+	trackingID:string
 }
 
 export interface otp {

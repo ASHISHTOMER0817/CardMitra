@@ -61,6 +61,8 @@ const AdminOrderHistory = () => {
 
 	const [showFilter, setShowFilter] = useState(false);
 
+	const [deliveryStatus, setDeliveryStatus] = useState('');
+
 	const setFilter = () =>{
 		setShowFilter(!showFilter);
 	}
@@ -153,117 +155,6 @@ const AdminOrderHistory = () => {
 				</div>
 			) : (
 				<>
-					{/* <div className="overflow-auto">
-						<table className="min-w-full divide-y divide-gray-200">
-							<thead className="bg-gray-50">
-								<tr>
-									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-										User
-									</th>
-									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-										Device
-									</th>
-									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-										Order ID
-									</th>
-									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-										Date
-									</th>
-									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-										Delivery Date
-									</th>
-									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-										Status
-									</th>
-								</tr>
-							</thead>
-							<tbody className="bg-white divide-y divide-gray-200">
-								{data.orders.map(
-									(
-										{
-											user,
-											product,
-											orderedAt,
-											deliveryDate,
-											delivered,
-											_id,
-										},
-										index
-									) => (
-										<tr
-											key={index}
-											className={
-												index %
-													2 ===
-												0
-													? "bg-white"
-													: "bg-gray-50"
-											}
-										>
-											<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-												{
-													user.name
-												}
-											</td>
-											<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-												{
-													product.name
-												}
-											</td>
-											<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-												{(() => {
-													const midIndex =
-														Math.floor(
-															_id.length /
-																2
-														);
-													const firstHalf =
-														_id.slice(
-															0,
-															midIndex
-														);
-													const secondHalf =
-														_id.slice(
-															midIndex
-														);
-
-													return (
-														<>
-															{
-																firstHalf
-															}
-															<br />
-															{
-																secondHalf
-															}
-														</>
-													);
-												})()}
-											</td>
-											<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-												{new Date(
-													orderedAt
-												).toDateString()}
-											</td>
-											<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-												{
-													deliveryDate
-												}
-											</td>
-											<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-												<StatusBadge
-													status={
-														delivered
-													}
-												/>
-											</td>
-										</tr>
-									)
-								)}
-							</tbody>
-						</table>
-					</div> */}
-
 					<div className="flex mb-3">
 						<button className="text-primaryBgClr text-left" onClick={setFilter}>
 							<span>
@@ -341,6 +232,19 @@ const AdminOrderHistory = () => {
 							<span className="mx-auto">AND / OR</span>
 
 							<div className="flex lg:flex-row flex-col gap-3">
+								<select
+									style={{border: '1px solid aliceblue'}}
+									className="py-1 px-2 rounded-[8px]"
+									value={deliveryStatus}
+									onChange={(e) =>
+										setDeliveryStatus(e.target.value)
+									}
+								>
+									<option value="">Select</option>
+									<option value="undelivered">undelivered</option>
+									<option value="unverified">unverified</option>
+									<option value="delivered">delivered</option>
+								</select>
 								<input
 									style={{border: '1px solid aliceblue'}}
 									className="py-1 px-2 rounded-[8px]"
@@ -432,7 +336,13 @@ const AdminOrderHistory = () => {
 											Order ID
 										</th>
 										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-											Date
+											Tracking ID
+										</th>
+										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+											Delivery Date
+										</th>
+										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+											Order Date
 										</th>
 
 										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
@@ -449,13 +359,15 @@ const AdminOrderHistory = () => {
 												orderedAt,
 												delivered,
 												_id,
+												trackingID,
+												deliveryDate,
 												ordererName,
 											},
 											index
 										) => {
 											let show = false;
 
-											if (!zipcode && !name) {	
+											if (!zipcode && !name && !deliveryStatus) {	
 												// If both have no value, show = true
 												show = true;
 											} else {
@@ -463,12 +375,14 @@ const AdminOrderHistory = () => {
 												const zipcodeMatches = zipcode && product.zipCode.includes(zipcode);
 												const nameMatches = name && (ordererName.toLowerCase().includes(name.toLowerCase()) || user.name.toLowerCase().includes(name.toLowerCase()));
 
-												if (zipcode && name) {
+												const statusMatches = deliveryStatus && (delivered.toLowerCase() === deliveryStatus.toLowerCase());
+
+												if (zipcode && name && deliveryStatus) {
 													// If both have values, both must match (AND condition)
-													show = Boolean(zipcodeMatches && nameMatches);
+													show = Boolean(zipcodeMatches && nameMatches && statusMatches);
 												} else {
 													// If only one has a value, check if it matches
-													show = Boolean(zipcodeMatches || nameMatches);
+													show = Boolean(zipcodeMatches || nameMatches || statusMatches);
 												}
 											}
 
@@ -525,9 +439,19 @@ const AdminOrderHistory = () => {
 															</span>
 														</td>
 														<td className="py-4 px-6 text-sm text-gray-500">
-															{new Date(
-																orderedAt
-															).toDateString()}
+															<span
+																className="block overflow-hidden text-ellipsis whitespace-nowrap"
+																title={trackingID}
+															>
+																{trackingID}
+															</span>
+														</td>
+														<td className="py-4 px-6 text-sm text-gray-500">
+															{deliveryDate ? new Date(deliveryDate).toDateString() : ''}
+															
+														</td>
+														<td className="py-4 px-6 text-sm text-gray-500">
+															{orderedAt ? new Date(orderedAt).toDateString() : ''}
 														</td>
 
 														<td className="py-4 px-6 text-sm text-gray-500">

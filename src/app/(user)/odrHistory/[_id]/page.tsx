@@ -2,7 +2,7 @@
 import ProductDetails from "@/app/components/ProductDetails";
 import productList, { order } from "@/interface/productList";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import BackwardButton from "@/app/components/BackwardButton";
 import Loader from "@/app/components/loader";
 import { MyArrayItem } from "../../deals/[placeorder]/page";
@@ -20,15 +20,11 @@ import {
 	DialogTitle,
 	DialogTrigger,
 	DialogClose,
+	DialogOverlay,
+	DialogPortal
 } from "@/components/ui/dialog";
 import Link from "next/link";
-
-// interface productTypes {
-// 	product: productList;
-// 	orderNumber: string;
-// 	deliveryDate: Date;
-// 	otp: boolean;
-// }
+// import { DialogOverlay } from "@radix-ui/react-dialog";
 
 const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 	const [data, setData] = useState<order>();
@@ -36,37 +32,42 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 	const [deliveryStatus, setDeliveryStatus] = useState("");
 	const [otpStatusUpdate, setOtpStatusUpdate] = useState("");
 	const [otpStatus, setOtpStatus] = useState<boolean | null>(null);
-	const [overlay, setOverlay] = useState("hidden");
+	// const [overlay, setOverlay] = useState("hidden");
 	const router = useRouter();
 	const [copiedYet, setCopiedYet] = useState(false);
+
+	const [tracking, setTracking] = useState('');
+	const [deliveryDate, setDeliveryDate] = useState('');
+	const [dialogueTriggered, setDialogueTriggered] = useState(false);
 	// const [reWriteOtp, setReWriteOtp] = useState(false)
 
-	useEffect(() => {
-		async function getData() {
-			try {
-				console.log("starts");
-				const response = await axios.get(
-					`/api/users/orderData?odrId=${params._id}&deliveryStatus=${deliveryStatus}&otpStatus=${otpStatusUpdate}`
-				);
-				console.log(response.data.data);
-				const { info } = response.data.data.product;
-				console.log(info);
-				setArr(Object.entries(info));
-				setOtpStatus(response.data.data.otp);
-				setData(response.data.data);
+	async function getData() {
+		try {
+			console.log("starts");
+			const response = await axios.get(
+				`/api/users/orderData?odrId=${params._id}&deliveryStatus=${deliveryStatus}&otpStatus=${otpStatusUpdate}`
+			);
+			console.log(response.data.data);
+			const { info } = response.data.data.product;
+			// console.log(info);
+			setArr(Object.entries(info));
+			setOtpStatus(response.data.data.otp);
+			setData(response.data.data);
 
-				if (deliveryStatus && response.data.success) {
-					router.back();
-				}
-
-				console.log("end here");
-				return;
-			} catch {
-				console.log(
-					"something went wrong please try again later"
-				);
+			if (deliveryStatus && response.data.success) {
+				router.back();
 			}
+
+			console.log("end here");
+			return;
+		} catch {
+			console.log(
+				"something went wrong please try again later"
+			);
 		}
+	}
+
+	useEffect(() => {
 		getData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [deliveryStatus, otpStatusUpdate, params._id]);
@@ -126,6 +127,35 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 		);
 	};
 
+	const onTrackingFormSubmit = (ev: FormEvent) => {
+		ev.preventDefault(); // Prevent the default form submission behavior
+
+		// Extract form elements
+		const form = ev.target as HTMLFormElement;
+		const trackingID = form.trackingID.value;
+		const deliveryDate = form.deliveryDate.value;
+
+		// Create FormData object to handle form data
+		const formData = new FormData();
+		formData.append("trackingID", trackingID);
+		formData.append("deliveryDate", deliveryDate);
+		formData.append("orderId", params._id);
+
+		// Assuming you want to send the data to an API endpoint
+		axios.post("/api/orders/trackingSubmission", formData, {
+			headers: {
+			  "Content-Type": "multipart/form-data", // Ensure form data is sent correctly
+			},
+		})
+		.then((response) => router.back())
+		.catch((error) => {
+			// Handle error
+			console.error("Error submitting tracking information:", error);
+			alert("There was an error submitting the tracking information.");
+		});
+	};
+
+
 	const ReSubmit = () => {
 		return (
 			<>
@@ -135,40 +165,70 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 				>
 					Re-Submit OTP
 				</div>
-				<Dialog>
+
+				<Dialog 
+					open={dialogueTriggered} 
+					onOpenChange={setDialogueTriggered}
+				>
 					<DialogTrigger
-						onClick={() => setOverlay("")}
 						className={`cursor-pointer mx-auto mt-3 text-xs border-b border-b-gray-500 hover:border-b-gray-800 hover:text-gray-800 text-gray-500 `}
 					>
 						confirm product delivery
 					</DialogTrigger>
 
-					{/* <DialogTrigger>Open</DialogTrigger> */}
-					<DialogContent className="bg-white rounded-[20px]">
-						<DialogHeader>
-							<DialogTitle>
-								Product got delivered, Right?
-							</DialogTitle>
-							<DialogDescription>
-								Click confirm if you are sure
-								that the product has been
-								delivered
-							</DialogDescription>
-						</DialogHeader>
-						<DialogFooter className=" gap-3">
-							<DialogClose className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50">
-								Cancel
-							</DialogClose>
-							<button
-								className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50"
-								onClick={() =>
-									setDeliveryStatus("true")
+					
+					<DialogOverlay>
+						<DialogContent className="bg-white rounded-[20px]">
+							<DialogHeader>
+								<DialogTitle>
+									Product got delivered, Right?
+								</DialogTitle>
+								<DialogDescription>
+									Click confirm if you are sure
+									that the product has been
+									delivered
+								</DialogDescription>
+							</DialogHeader>
+							{data?.trackingID == '' && 
+								<form method="post" onSubmit={(ev)=>onTrackingFormSubmit(ev)} className="mt-4">
+									<h6 className="text-sm text-muted-foreground mb-4">We have no info about your tracking ID, kindly input your tracking and delivery date</h6>
+									<div className="flex justify-between mb-2 align-items-center">
+										<label htmlFor="trackingID">Tracking ID</label>
+										<input className="border w-1/2 rounded-xl px-4 py-2" id="trackingID" 
+											placeholder="Tracking ID" required type="text"  
+											
+										/>
+									</div>
+									<div className="flex justify-between align-items-center">
+										<label htmlFor="deliveryDate">Delivery Date</label>
+										<input className="border w-1/2 rounded-xl px-4 py-2" required type="date" id="deliveryDate" />
+									</div>
+
+									<button
+										className="w-full mt-4 rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50"
+										type="submit"
+									>
+										Submit
+									</button>
+								</form>
+							}
+							<DialogFooter className=" gap-3">
+								<DialogClose className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50">
+									Cancel
+								</DialogClose>
+								{data?.trackingID &&
+									<button
+										className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50"
+										onClick={() =>
+											setDeliveryStatus("true")
+										}
+									>
+										Confirm
+									</button>
 								}
-							>
-								Confirm
-							</button>
-						</DialogFooter>
-					</DialogContent>
+							</DialogFooter>
+						</DialogContent>
+					</DialogOverlay>
 				</Dialog>
 			</>
 		);

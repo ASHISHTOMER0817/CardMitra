@@ -48,6 +48,14 @@ const orderSchema = new mongoose.Schema({
 	},
 	ordererName:{
 		type:String
+	},
+	trackingID: {         // New field for tracking information
+		type: String,
+		default: ""
+	},
+	deliveryDate: {      // New field for expected delivery date
+		type: Date,
+		default: null
 	}
 })
 

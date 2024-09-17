@@ -81,6 +81,9 @@ export async function POST(request: NextRequest) {
 
         await lock.save();
 
+        product.quantity -= 1;
+        await product.save()
+
         console.log('step 8');
 
         return NextResponse.json({

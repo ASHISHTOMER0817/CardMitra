@@ -59,10 +59,22 @@ export async function GET(request: NextRequest) {
                               continue;
                         }
 
+                        // const deliveryDate = new Date(otpList[i].timestamp).toISOString().split('T')[0]; // Get only the date part
+                        // Extract the date part from the timestamp (ignoring the time part)
+                        const timestamp = new Date(otpList[i].timestamp);
+                        const deliveryDate = `${timestamp.getFullYear()}-${(timestamp.getMonth() + 1).toString().padStart(2, '0')}-${timestamp.getDate().toString().padStart(2, '0')}`; // Format: YYYY-MM-DD
+
+
                         testBulkOprations.push({
                               updateOne: {
                                     filter: { _id: otpList[i].OrderID },
-                                    update: { $set: { delivered: otpList[i].status } },
+                                    update: { 
+                                          $set: {
+                                                delivered: otpList[i].status,
+                                                trackingID: otpList[i].trackingID,   // Updating tracking ID
+                                                deliveryDate: deliveryDate 
+                                          } 
+                                    },
                                     // upsert: false // Adjust based on whether you want to insert if not found
                               }
                         })
