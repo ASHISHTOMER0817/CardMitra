@@ -10,23 +10,23 @@ export default async () => {
         ); 
     
         // Return a successful response to Netlify
-        return {
-            statusCode: 200,
-            body: JSON.stringify({
-                message: "Unlock expired quantity request sent successfully",
-                response: response.data,
-            }),
-        };
+        // return {
+        //     statusCode: 200,
+        //     body: JSON.stringify({
+        //         message: "Unlock expired quantity request sent successfully",
+        //         response: response.data,
+        //     }),
+        // };
 
     }catch (error) {
         // Handle any errors that occurred during the axios call
-        return {
-            statusCode: 500,
-            body: JSON.stringify({
+        return new Response(
+            JSON.stringify({
                 message: "Error in unlocking expired quantity",
                 error: error.message,
             }),
-        };
+            { status: 500, headers: { "Content-Type": "application/json" } }
+        );
     }
 
 }
