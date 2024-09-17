@@ -149,12 +149,7 @@ const AdminOrderHistory = () => {
 						/> */}
 					</div>
 				)
-			) : data.orderHistory.length < 1 ? (
-				<div className="text-red-500 text-sm mx-auto w-fit font-serif">
-					Currently there are no orders
-				</div>
-			) : (
-				<>
+			) : <>
 					<div className="flex mb-3">
 						<button className="text-primaryBgClr text-left" onClick={setFilter}>
 							<span>
@@ -171,7 +166,6 @@ const AdminOrderHistory = () => {
 							Download CSV
 						</button>
 					</div>
-
 					{showFilter &&
 						<div className="flex lg:flex-row flex-col gap-3 py-3 px-2 rounded-[8px]" style={{border: '1px solid aliceblue'}}>
 							
@@ -270,208 +264,219 @@ const AdminOrderHistory = () => {
 						</div>
 					}
 
-					<div className="ml-auto my-2">
-						<span className="font-bold">Return Amt:</span>{" Rs. "}
-						
-						{data.orders.reduce((sum, order) => {
-							const orderedAt = new Date(
-								order.orderedAt
-							); // Assuming orderedAt is a property of product
-							let show = true;
-
-							if (
-								(zipcode &&
-									order.product
-										.zipCode !==
-										zipcode) ||
-								(startDate &&
-									orderedAt.valueOf() <=
-										startDate.valueOf()) ||
-								(endDate &&
-									orderedAt.valueOf() >=
-										endDate.valueOf()) ||
-								(name &&
-									(order.ordererName ||
-										order.user.name) !==
-										name)
-							) {
-								show = false;
-							}
-
-							return show
-								? sum +
-										(+order
-											.product
-											.price +
-											+order
-												.product
-												.commission)
-								: sum;
-						}, 0)}
-						{"/-"}
-					</div>
-
-					{/*Latest Design changes */}
-					<div className="">
-						<div className="overflow-x-auto bg-white shadow-md rounded-[8px]">
-							<table id="order-table" className="min-w-full divide-y divide-gray-200 text-nowrap">
-								<thead className="bg-green-100">
-									<tr>
-										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-											Affiliate
-										</th>
-										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-											Orderer Name
-										</th>
-										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-											Device
-										</th>
-										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-											Return Amt
-										</th>
-										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-											Pincode
-										</th>
-										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-											Order ID
-										</th>
-										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-											Tracking ID
-										</th>
-										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-											Delivery Date
-										</th>
-										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-											Order Date
-										</th>
-
-										<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-											Status
-										</th>
-									</tr>
-								</thead>
-								<tbody className="bg-white divide-y divide-gray-200">
-									{data.orders.map(
-										(
-											{
-												user,
-												product,
-												orderedAt,
-												delivered,
-												_id,
-												trackingID,
-												deliveryDate,
-												ordererName,
-											},
-											index
-										) => {
-											let show = false;
-
-											if (!zipcode && !name && !deliveryStatus) {	
-												// If both have no value, show = true
-												show = true;
-											} else {
-												// If only zipcode or name has a value, check and set show=true if it matches
-												const zipcodeMatches = zipcode && product.zipCode.includes(zipcode);
-												const nameMatches = name && (ordererName.toLowerCase().includes(name.toLowerCase()) || user.name.toLowerCase().includes(name.toLowerCase()));
-
-												const statusMatches = deliveryStatus && (delivered.toLowerCase() === deliveryStatus.toLowerCase());
-
-												if (zipcode && name && deliveryStatus) {
-													// If both have values, both must match (AND condition)
-													show = Boolean(zipcodeMatches && nameMatches && statusMatches);
-												} else {
-													// If only one has a value, check if it matches
-													show = Boolean(zipcodeMatches || nameMatches || statusMatches);
-												}
-											}
-
-										
-
-											return (
-												show && (
-													<tr
-														key={
-															index
-														}
-														className={
-															index %
-																2 ===
-															0
-																? "bg-gray-100"
-																: "bg-white"
-														}
-													>
-														<td className="py-4 px-6 text-sm font-semibold text-primaryBgClr">
-															{
-																user.name
-															}
-														</td>
-														<td className="py-4 px-6 text-sm font-semibold text-primaryBgClr">
-															{
-																ordererName
-															}
-														</td>
-														<td className="py-4 px-6 text-sm text-gray-500">
-															{
-																product.name
-															}
-														</td>
-														<td className="py-4 px-6 text-sm text-gray-500">
-															{+product.price +
-																+product.commission}
-														</td>
-														<td className="py-4 px-6 text-sm text-gray-500">
-															{
-																product.zipCode
-															}
-														</td>
-														<td className="py-4 px-6 text-sm text-gray-500">
-															<span
-																className="block overflow-hidden text-ellipsis whitespace-nowrap"
-																title={
-																	_id
-																}
-															>
-																{
-																	_id
-																}
-															</span>
-														</td>
-														<td className="py-4 px-6 text-sm text-gray-500">
-															<span
-																className="block overflow-hidden text-ellipsis whitespace-nowrap"
-																title={trackingID}
-															>
-																{trackingID}
-															</span>
-														</td>
-														<td className="py-4 px-6 text-sm text-gray-500">
-															{deliveryDate ? new Date(deliveryDate).toDateString() : ''}
-															
-														</td>
-														<td className="py-4 px-6 text-sm text-gray-500">
-															{orderedAt ? new Date(orderedAt).toDateString() : ''}
-														</td>
-
-														<td className="py-4 px-6 text-sm text-gray-500">
-															<StatusBadge
-																status={
-																	delivered
-																}
-															/>
-														</td>
-													</tr>
-												)
-											);
-										}
-									)}
-								</tbody>
-							</table>
+					{data.orderHistory.length < 1 ? (
+						<div className="text-red-500 text-sm mx-auto w-fit font-serif">
+							Currently there are no orders
 						</div>
-					</div>
-				</>
-			)}
+						) : (
+							<>
+								<div className="ml-auto my-2">
+									<span className="font-bold">Return Amt:</span>{" Rs. "}
+									
+									{data.orders.reduce((sum, order) => {
+										const orderedAt = new Date(
+											order.orderedAt
+										); // Assuming orderedAt is a property of product
+										let show = true;
+
+										if (
+											(zipcode &&
+												order.product
+													.zipCode !==
+													zipcode) ||
+											(startDate &&
+												orderedAt.valueOf() <=
+													startDate.valueOf()) ||
+											(endDate &&
+												orderedAt.valueOf() >=
+													endDate.valueOf()) ||
+											(name &&
+												(order.ordererName ||
+													order.user.name) !==
+													name)
+										) {
+											show = false;
+										}
+
+										return show
+											? sum +
+													(+order
+														.product
+														.price +
+														+order
+															.product
+															.commission)
+											: sum;
+									}, 0)}
+									{"/-"}
+								</div>
+
+								{/*Latest Design changes */}
+								<div className="">
+									<div className="overflow-x-auto bg-white shadow-md rounded-[8px]">
+										<table id="order-table" className="min-w-full divide-y divide-gray-200 text-nowrap">
+											<thead className="bg-green-100">
+												<tr>
+													<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+														Affiliate
+													</th>
+													<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+														Orderer Name
+													</th>
+													<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+														Device
+													</th>
+													<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+														Return Amt
+													</th>
+													<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+														Pincode
+													</th>
+													<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+														Order ID
+													</th>
+													<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+														Tracking ID
+													</th>
+													<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+														Delivery Date
+													</th>
+													<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+														Order Date
+													</th>
+
+													<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+														Status
+													</th>
+												</tr>
+											</thead>
+											<tbody className="bg-white divide-y divide-gray-200">
+												{data.orders.map(
+													(
+														{
+															user,
+															product,
+															orderedAt,
+															delivered,
+															_id,
+															trackingID,
+															deliveryDate,
+															ordererName,
+														},
+														index
+													) => {
+														let show = false;
+
+														if (!zipcode && !name && !deliveryStatus) {	
+															// If both have no value, show = true
+															show = true;
+														} else {
+															// If only zipcode or name has a value, check and set show=true if it matches
+															const zipcodeMatches = zipcode && product.zipCode.includes(zipcode);
+															const nameMatches = name && (ordererName.toLowerCase().includes(name.toLowerCase()) || user.name.toLowerCase().includes(name.toLowerCase()));
+
+															const statusMatches = deliveryStatus && (delivered.toLowerCase() === deliveryStatus.toLowerCase());
+
+															if (zipcode && name && deliveryStatus) {
+																// If both have values, both must match (AND condition)
+																show = Boolean(zipcodeMatches && nameMatches && statusMatches);
+															} else {
+																// If only one has a value, check if it matches
+																show = Boolean(zipcodeMatches || nameMatches || statusMatches);
+															}
+														}
+
+													
+
+														return (
+															show && (
+																<tr
+																	key={
+																		index
+																	}
+																	className={
+																		index %
+																			2 ===
+																		0
+																			? "bg-gray-100"
+																			: "bg-white"
+																	}
+																>
+																	<td className="py-4 px-6 text-sm font-semibold text-primaryBgClr">
+																		{
+																			user.name
+																		}
+																	</td>
+																	<td className="py-4 px-6 text-sm font-semibold text-primaryBgClr">
+																		{
+																			ordererName
+																		}
+																	</td>
+																	<td className="py-4 px-6 text-sm text-gray-500">
+																		{
+																			product.name
+																		}
+																	</td>
+																	<td className="py-4 px-6 text-sm text-gray-500">
+																		{+product.price +
+																			+product.commission}
+																	</td>
+																	<td className="py-4 px-6 text-sm text-gray-500">
+																		{
+																			product.zipCode
+																		}
+																	</td>
+																	<td className="py-4 px-6 text-sm text-gray-500">
+																		<span
+																			className="block overflow-hidden text-ellipsis whitespace-nowrap"
+																			title={
+																				_id
+																			}
+																		>
+																			{
+																				_id
+																			}
+																		</span>
+																	</td>
+																	<td className="py-4 px-6 text-sm text-gray-500">
+																		<span
+																			className="block overflow-hidden text-ellipsis whitespace-nowrap"
+																			title={trackingID}
+																		>
+																			{trackingID}
+																		</span>
+																	</td>
+																	<td className="py-4 px-6 text-sm text-gray-500">
+																		{deliveryDate ? new Date(deliveryDate).toDateString() : ''}
+																		
+																	</td>
+																	<td className="py-4 px-6 text-sm text-gray-500">
+																		{orderedAt ? new Date(orderedAt).toDateString() : ''}
+																	</td>
+
+																	<td className="py-4 px-6 text-sm text-gray-500">
+																		<StatusBadge
+																			status={
+																				delivered
+																			}
+																		/>
+																	</td>
+																</tr>
+															)
+														);
+													}
+												)}
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</>
+						)
+					}
+				</> 
+			}
+			
+			
 		</div>
 	);
 };
