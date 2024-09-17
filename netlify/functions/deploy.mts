@@ -8,6 +8,8 @@ export default async () => {
         const response = await axios.post(
             `https://cardmitra.netlify.com/api/orders/unlockExpiredQuantity`
         ); 
+
+        return response;
     
         // Return a successful response to Netlify
         // return {

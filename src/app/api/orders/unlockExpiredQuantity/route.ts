@@ -12,11 +12,19 @@ export async function POST(request: NextRequest) {
         const expiredLocks = await Lock.find({ expiresAt: { $lt: currentTime } });
 
         if (expiredLocks.length === 0) {
-            return NextResponse.json({
-                message: "No expired locks found.",
-                success: true,
-                status: 200,
-            });
+            // No expired locks found response
+            return new Response(
+                JSON.stringify({
+                    message: "No expired locks found.",
+                    success: true,
+                }),
+                {
+                    status: 200,
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
         }
 
         console.log(`Found ${expiredLocks.length} expired locks.`);
@@ -40,17 +48,43 @@ export async function POST(request: NextRequest) {
             console.log(`Lock ${lock._id} deleted.`);
         }
 
-        return NextResponse.json({
-            message: `${expiredLocks.length} Locks successfully released.`,
-            success: true,
-            status: 200,
-        });
+        return new Response(
+            JSON.stringify({
+                message: `${expiredLocks.length} Locks successfully released.`,
+                success: true,
+            }),
+            {
+                status: 200,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        // return NextResponse.json({
+        //     message: `${expiredLocks.length} Locks successfully released.`,
+        //     success: true,
+        //     status: 200,
+        // });
 
     } catch (error) {
-        return NextResponse.json({
-            message: "Something went wrong while processing the request, please try again later.",
-            success: false,
-            status: 500,
-        });
+        // return NextResponse.json({
+        //     message: "Something went wrong while processing the request, please try again later.",
+        //     success: false,
+        //     status: 500,
+        // });
+        // Error handling response
+        return new Response(
+            JSON.stringify({
+                message: "Something went wrong while processing the request, please try again later.",
+                success: false,
+            }),
+            {
+                status: 500,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
     }
 }
