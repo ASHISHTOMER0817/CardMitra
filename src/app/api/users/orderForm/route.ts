@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import Database from "@/database/database";
-import { Order, Product } from "@/models/userModel";
+import { Order, Product, Lock } from "@/models/userModel";
 import GetToken from "@/app/components/getToken";
 import mongoose from "mongoose";
 // import dayjs from "dayjs";
@@ -60,9 +60,11 @@ export const POST = async (request: NextRequest) => {
                   })
 
                   // Decrease requirement by 1
-                  product.requirement = requirement - 1
-                  await product.save();
-                  console.log(product.requirement)
+                  // product.requirement = requirement - 1
+                  // await product.save();
+                  // console.log(product.requirement)
+
+                  await Lock.deleteOne({ userId: userObjectId, productId });
 
                   console.log(newOrder)
                   return NextResponse.json({

@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
             // Find the product by ID and increment its quantity
             const product = await Product.findById(productId);
             if (product) {
-                product.quantity += 1; // Increment the quantity
+                product.requirement += 1; // Increment the quantity
                 await product.save();   // Save the updated product
                 console.log(`Product ${productId} quantity incremented.`);
             } else {

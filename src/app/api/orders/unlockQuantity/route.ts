@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
         }
 
         // Increase the quantity of the product by 1
-        product.quantity += 1;
+        product.requirement += 1;
         await product.save();
 
         console.log('step 6');

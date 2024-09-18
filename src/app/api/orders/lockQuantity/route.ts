@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
         console.log('step 6');
         
         // Check if the product quantity is greater than zero
-        if (product.quantity <= 0) {
+        if (product.requirement <= 0) {
             return NextResponse.json({
                 message: "Product quantity is zero.",
                 success: false,
@@ -81,10 +81,11 @@ export async function POST(request: NextRequest) {
 
         await lock.save();
 
-        product.quantity -= 1;
+        console.log('product quantity before: ', product.requirement);
+        product.requirement -= 1;
         await product.save()
 
-        console.log('step 8');
+        console.log('step 8, product quantity later: ', product.requirement);
 
         return NextResponse.json({
             message: "Lock successfully created.",
