@@ -7,9 +7,10 @@ import productList, { order } from "@/interface/productList";
 import { Product } from "@/models/userModel";
 import axios from "axios";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { IoGridOutline } from "react-icons/io5";
 import { IoListOutline } from "react-icons/io5";
+import Popup from "@/app/components/Popup";
 
 interface joint {
 	orderHistory: productList[];
@@ -69,7 +70,24 @@ const AdminOrderHistory = () => {
 
 	// const [total, setTotal] = useState<number | null>();
 
+	
+
 	useEffect(() => {
+
+		async function clearQuantity (){
+			try {
+				await axios.post(
+					"/api/orders/unlockExpiredQuantity"
+				);
+			} catch {
+				Popup(
+					"error",
+					"Something went wrong, REFRESH THE PAGE"
+				);
+				console.log("Something went wrong, REFRESH THE PAGE");
+			}
+		}
+
 		async function getData() {
 			try {
 				const response = await axios.get(
@@ -81,7 +99,10 @@ const AdminOrderHistory = () => {
 				console.log("what is happening here !!");
 			}
 		}
-		getData();
+
+		clearQuantity().then(()=>{
+			getData();
+		})
 	}, [startDate, endDate]);
 	// console.log(endDate);
 	return (

@@ -11,6 +11,21 @@ const Deals = () => {
 	const [data, setData] = useState<Data>();
 
 	useEffect(() => {
+
+		async function clearQuantity (){
+			try {
+				await axios.post(
+					"/api/orders/unlockExpiredQuantity"
+				);
+			} catch {
+				Popup(
+					"error",
+					"Something went wrong, REFRESH THE PAGE"
+				);
+				console.log("Something went wrong, REFRESH THE PAGE");
+			}
+		}
+
 		async function getData() {
 			try {
 				const response = await axios.get(
@@ -28,7 +43,13 @@ const Deals = () => {
 			}
 		}
 		getData();
+
+		clearQuantity().then(()=>{
+			getData();
+		})
 	}, []);
+
+	
 
 	return (
 		<div className="">
