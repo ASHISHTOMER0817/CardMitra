@@ -3,79 +3,77 @@ import Database from "@/database/database";
 import { Order, Product, Lock } from "@/models/userModel";
 import GetToken from "@/app/components/getToken";
 import mongoose from "mongoose";
-// import dayjs from "dayjs";
 import dateFormat from "@/app/components/dateFormat";
 
 Database()
+
 export const POST = async (request: NextRequest) => {
 
-      try {
-            const reqBody = await request.json()
-            const {
-                  orderNumber,
-                  ordererName,
-                  objectId,
-                  // deliveryDate
-            } = reqBody.formData
-            const { _id } = await GetToken()
-            if (_id) {
+  try {
+    const reqBody = await request.json();
+    const { orderNumber, ordererName, objectId } = reqBody.formData;
+    const { _id } = await GetToken();
 
-                  // Object Id 
-                  const userObjectId = new mongoose.Types.ObjectId(_id)
-                  const productId = new mongoose.Types.ObjectId(objectId)
-                  // console.log(productId)
+    if (_id) {
 
-                  //check the requirement
-                  const product = await Product.findOne({ _id: objectId })
-                  console.log(product)
-                  const requirement = product.requirement
-                  console.log(requirement)
-                  // console.log(deliveryDate)
+      // Convert to MongoDB ObjectIds
+      const userObjectId = new mongoose.Types.ObjectId(_id);
+      const productId = new mongoose.Types.ObjectId(objectId);
 
-                  //Change Format
-                  // const delivery_date = dateFormat(deliveryDate)
-                  // console.log('delivery date', delivery_date, typeof delivery_date)
+      // Check for lock
+      const lock = await Lock.findOne({ userId: userObjectId, productId });
 
-                  //check if requirement fulfilled
-                  if (requirement === 0) {
-                        return NextResponse.json({
-                              message: "Quantity got fulfilled, better luck next time", success: true, status: 400
-                        })
-                  }
-                  console.log("still workin...")
-
-                  // console.log(delivery_date)
-                  // Create new Order
-                  const newOrder = await Order.create({
-                        product: productId,
-                        user: userObjectId,
-                        orderId: orderNumber,
-                        // deliveryDate: delivery_date,
-                        orderedAt: new Date(),
-                        delivered: 'undelivered',
-                        otp: false,
-                        paid: null,
-                        acknowledgment: false,
-                        ordererName
-                  })
-
-                  // Decrease requirement by 1
-                  // product.requirement = requirement - 1
-                  // await product.save();
-                  // console.log(product.requirement)
-
-                  await Lock.deleteOne({ userId: userObjectId, productId });
-
-                  console.log(newOrder)
-                  return NextResponse.json({
-                        message: "order successfully saved ", success: true, status: 200
-                  })
-            }
-
-      } catch {
-            return NextResponse.json({
-                  message: "Something went wrong in form submission, please try again later", success: false, status: 500
-            })
+      if (!lock) {
+        // If no lock found, return error
+        return NextResponse.json({
+          message: "No active lock found for this product. Please try again.", 
+          success: false, 
+          status: 400
+        });
       }
-}
 
+      // Check if the lock has expired
+      const currentTime = new Date();
+      if (currentTime > lock.expiresAt) {
+        // If lock is expired, return error and delete lock
+        await Lock.deleteOne({ userId: userObjectId, productId });
+        return NextResponse.json({
+          message: "Lock has expired. Please try again.", 
+          success: false, 
+          status: 400
+        });
+      }
+
+      // If lock is valid, create new order
+      const newOrder = await Order.create({
+        product: productId,
+        user: userObjectId,
+        orderId: orderNumber,
+        orderedAt: new Date(),
+        delivered: 'undelivered',
+        otp: false,
+        paid: null,
+        acknowledgment: false,
+        ordererName
+      });
+
+      // Delete the lock after order creation
+      await Lock.deleteOne({ userId: userObjectId, productId });
+
+      // Return success response
+      return NextResponse.json({
+        message: "Order created successfully.", 
+        success: true, 
+        status: 200
+      });
+    }
+
+  } catch (error) {
+    console.error("Error:", error);
+    return NextResponse.json({
+      message: "Something went wrong in form submission, please try again later.", 
+      success: false, 
+      status: 500
+    });
+  }
+};
