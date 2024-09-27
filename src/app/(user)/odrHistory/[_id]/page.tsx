@@ -346,12 +346,23 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 										</div>
 									)}
 									{data && (
-										<div className="mt-3 mr-auto w-fit text-sm font-semibold text-gray-500">
-											Ordered on -{" "}
-											{new Date(
-												data?.orderedAt
-											).toDateString()}
-										</div>
+										<>
+											<div className="mt-3 mr-auto w-fit text-sm font-semibold text-gray-500">
+												Ordered on -{" "}
+												{new Date(
+													data?.orderedAt
+												).toDateString()}
+											</div>
+											<div className="mt-3 mr-auto w-fit text-sm font-semibold text-gray-500">
+												Order ID -{" "}
+												{data?.orderId}
+											</div>
+											<div className="mt-3 mr-auto w-fit text-sm font-semibold text-gray-500">
+												Tracking ID -{" "}
+												{data?.trackingID}
+											</div>
+										</>
+										
 									)}
 								</div>
 							) : (
@@ -369,6 +380,14 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 										{new Date(
 											data?.orderedAt
 										).toDateString()}
+									</div>
+									<div className="mt-3 mr-auto w-fit text-sm font-semibold text-gray-500">
+										Order ID -{" "}
+										{data?.orderId}
+									</div>
+									<div className="mt-3 mr-auto w-fit text-sm font-semibold text-gray-500">
+										Tracking ID -{" "}
+										{data?.trackingID}
 									</div>
 									<div className=" flex flex-col justify-start gap-3">
 										delivery status -{" "}
