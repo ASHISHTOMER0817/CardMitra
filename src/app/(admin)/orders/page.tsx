@@ -52,6 +52,77 @@ const exportTableToExcel = () => {
 
 };
 
+// Define the props type
+interface StatusBadgeProps {
+	status: string;
+	orderId: string;
+}
+
+// StatusBadge Component
+const StatusBadgeEnclosing: React.FC<StatusBadgeProps> = ({ status, orderId }) => {
+
+	const [isEditing, setIsEditing] = useState(false);
+	const [selectedStatus, setSelectedStatus] = useState(status);
+	const [finalVal, setFinalVal] = useState<string|null>(null);
+
+	const statuses = ['undelivered', 'delivered', 'cancelled'];
+
+	const updateStatus = async (setVal: string) => {
+		console.log('sta');
+
+		axios.post('/api/orders/updateStatus', {orderId, status:setVal})
+		.then((res)=>{
+			setFinalVal(res.data.val); 
+			setIsEditing(false);
+		})
+		.catch(err=>{
+			console.log('err', err.message);
+		})
+	};
+
+	const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		setSelectedStatus(e.target.value);
+		updateStatus(e.target.value);
+		// handleBlur();
+	};
+
+	const handleBlur = (e: React.FocusEvent<HTMLSelectElement>) =>{
+		setIsEditing(false);
+	}
+
+	useEffect(()=>{
+		console.log('edit', isEditing);
+	}, [isEditing])
+
+	return (
+		<div
+			tabIndex={0}
+			className="relative"
+			onClick={() => setIsEditing(true)}
+			// onBlur={handleBlur}
+		>
+		{isEditing ? (
+			<select
+				value={selectedStatus}
+				onChange={handleStatusChange}
+				onBlur={handleBlur}
+				className="border border-gray-300 rounded py-1 px-2"
+				autoFocus
+				>
+				{statuses.map((statusOption) => (
+					<option key={statusOption} value={statusOption}>
+					{statusOption}
+					</option>
+				))}
+			</select>
+		) : (
+			<span onClick={()=>setIsEditing(true)}> <StatusBadge status={finalVal || status} /> </span>
+		)}
+		</div>
+	);
+};
+
+
 const AdminOrderHistory = () => {
 	const [data, setData] = useState<joint>();
 	const [view, setView] = useState("grid");
@@ -63,6 +134,13 @@ const AdminOrderHistory = () => {
 	const [showFilter, setShowFilter] = useState(false);
 
 	const [deliveryStatus, setDeliveryStatus] = useState('');
+
+	// const [editingOrderId, setEditingOrderId] = useState<String | null>(null);
+
+	// const handleStatusClick = (orderId:String) => {
+	// 	setEditingOrderId(orderId);
+	// };
+	
 
 	const setFilter = () =>{
 		setShowFilter(!showFilter);
@@ -476,11 +554,12 @@ const AdminOrderHistory = () => {
 																	</td>
 
 																	<td className="py-4 px-6 text-sm text-gray-500">
-																		<StatusBadge
+																		<StatusBadgeEnclosing orderId={_id} status={delivered} />
+																		{/* <StatusBadge
 																			status={
 																				delivered
 																			}
-																		/>
+																		/> */}
 																	</td>
 																</tr>
 															)
