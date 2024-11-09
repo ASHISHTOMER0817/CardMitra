@@ -9,12 +9,11 @@ Database();
 export async function POST(request: NextRequest) {
     try {
 
-        const reqBody = await request.formData();
-        const orderId = reqBody.get("orderId") as string;
-        const trackingID = reqBody.get("trackingID") as string;
-        const deliveryDate = reqBody.get("deliveryDate") as string;
+        const orderId = request.nextUrl.searchParams.get('odrId')
 
-        console.log(orderId, trackingID, deliveryDate);
+        const reqBody = await request.json();
+
+        const { deliveryDate } = reqBody;
         
         // Retrieve user token to ensure authorized access
         const { _id } = await GetToken();
@@ -49,8 +48,6 @@ export async function POST(request: NextRequest) {
 
         console.log('step 5');
 
-        // Update the order's tracking ID and delivery date
-        order.trackingID = trackingID;
         order.deliveryDate = deliveryDate;
         order.delivered = 'unverified';
         await order.save();
@@ -58,7 +55,7 @@ export async function POST(request: NextRequest) {
         console.log('step 6');
 
         return NextResponse.json({
-            message: "Tracking information updated successfully.",
+            message: "Delivery information updated successfully.",
             success: true,
             status: 200,
         });

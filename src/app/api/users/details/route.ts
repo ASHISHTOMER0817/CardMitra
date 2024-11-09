@@ -13,12 +13,12 @@ export async function GET(request: NextRequest) {
 
             // Searchparams
             let userId = searchparams.get('query')
-            let deleteUser = searchparams.get('delete')
-            let disApprove = searchparams.get('dis_approve')
-            if(deleteUser){}
-            // if(disApprove){
-            //       const user
-            // }
+            // let deleteUser = searchparams.get('delete')
+            // let disApprove = searchparams.get('dis_approve')
+            // if(deleteUser){}
+            // // if(disApprove){
+            // //       const user
+            // // }
             console.log('thisis userId', userId)
             const adminSideUserId = userId;
             console.log('passing value', adminSideUserId)
@@ -37,34 +37,25 @@ export async function GET(request: NextRequest) {
                         })
 
                   }
-                  // if (role === 'user') {
-                  //       console.log('this is user')
-                  //       // const userInfo = await User.findOne({ _id: _id })
-                  //       // console.log(userInfo)
-                  //       // return NextResponse.json({
-                  //       //       message: 'here is your details', data: userInfo, success: true
-                  //       // })
-                  // }
             }
 
             const user = await User.findOne({ _id: userId })
-            // console.log(user, '&& this is userId', userId)
+            if (!user) return NextResponse.json({ message: "User not found", success: false });
 
             orderList = await Order.find({ user: userId }).populate({path:"product", select:"-image"})
 
             // Current amount to pay
             let total = 0;
             let totalUnVerifiedAmt = 0;
-            if (orderList.length > 0) {
-                  for (let i = 0; i < orderList.length; i++) {
-                        if (orderList[i].delivered === 'delivered' && orderList[i].paid === null) {
-                              total += orderList[i].product.price + orderList[i].product.commission;
-                        }
-                        if (orderList[i].delivered === 'unverified' && orderList[i].paid === null) {
-                              totalUnVerifiedAmt += orderList[i].product.price + orderList[i].product.commission;
-                        }
+
+            for (const order of orderList) {
+                  const { delivered, paid, product } = order;
+                  if (paid === null) {
+                      if (delivered === 'delivered') total += product.price + product.commission;
+                      if (delivered === 'unverified') totalUnVerifiedAmt += product.price + product.commission;
                   }
             }
+
             const totalAmt = user.unpaid + total
             const verifiedAmt = totalAmt
             const unpaid = user.unpaid

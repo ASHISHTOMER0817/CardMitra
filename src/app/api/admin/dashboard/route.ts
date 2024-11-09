@@ -12,7 +12,8 @@ import mongoose from "mongoose";
 import productList, { CardAndSite, order } from "@/interface/productList";
 import bufferToString from "@/app/components/bufferToString";
 import sharp from "sharp";
-import { Binary } from "mongodb"
+import { Binary } from "mongodb";
+import GetToken from "@/app/components/getToken";
 dayjs.extend(utc)
 
 Database()
@@ -23,6 +24,18 @@ export async function GET(request: NextRequest) {
             const _id = searchparams.get('_id')
             const operation = searchparams.get('operation')
             const syncOperation = searchparams.get('syncOperation')
+
+            const loggedInUser = await GetToken();
+
+            console.log('step 1');
+
+            if (!loggedInUser._id) {
+                  return NextResponse.json({
+                  message: "Unauthorized access.",
+                  success: false,
+                  status: 401,
+                  });
+            }
 
             const getLast7Days = () => {
                   const date = new Date();
@@ -182,6 +195,22 @@ export async function GET(request: NextRequest) {
 
             } else if (query === 'orderHistory') {
 
+                  interface ProductFilter {
+                        show: boolean;
+                        Date: { $gte: Date | string; $lte: Date | string };
+                        collaborator?: string; // Add this field optionally
+                  }
+                  
+
+                  // Set fields to exclude if user is a collaborator
+                  const productSelectFields = loggedInUser.role === 'collaborator' 
+                        ? '-price -commission -returnAmount' // Specify fields to exclude here
+                        : ''; // No exclusions for other user types
+
+                  const orderSelectFields = loggedInUser.role === 'collaborator' 
+                        ? '-price -zipcode -commission' // Specify order fields to exclude
+                        : '';
+
                   const newDate = new Date();
                   const last7days = getLast7Days();
 
@@ -190,19 +219,53 @@ export async function GET(request: NextRequest) {
 
                   console.log('start date and end date : ', startDate, endDate);
 
-                  const products: any = await Product.find({ show: true, Date: { $gte: startDate, $lte: endDate } })
+                  // Build product filter based on role
+                  const productFilter:ProductFilter = { show: true, Date: { $gte: startDate, $lte: endDate } };
+                  if (loggedInUser.role === 'collaborator') {
+                        productFilter.collaborator = loggedInUser._id; // Adjust based on your schema
+                  }
+
+                  const products: any = await Product.find(productFilter)
+                        .select(productSelectFields)
                         .sort({ Date: -1 })
                         .populate({ path: 'cards', select: 'value image' })
                         .populate('site').lean();
                   // console.log('this is product', products)
 
-                  let orders = await Order.find({
-                        orderedAt: { $gte: startDate, $lte: endDate } 
-                  })
+                  // let orders = await Order.find({ orderedAt: { $gte: startDate, $lte: endDate } })
+                  //       .sort({ orderedAt: -1 })
+                  //       .populate('user', 'name')
+                  //       .populate('product')
+                  //       .select(orderSelectFields)
+                  //       .lean();
+
+                  // Extract product IDs from the filtered products
+                  const productIds = products.map((product: any) => product._id);
+
+                  // Fetch orders based on user role
+                  let orders;
+                  if (loggedInUser.role === 'collaborator') {
+                        // If collaborator, filter orders by product IDs
+                        orders = await Order.find({
+                              orderedAt: { $gte: startDate, $lte: endDate },
+                              product: { $in: productIds } // Only orders with products in the filtered products list
+                        })
                         .sort({ orderedAt: -1 })
                         .populate('user', 'name')
                         .populate('product')
+                        .select(orderSelectFields)
                         .lean();
+                  } else {
+                        // For other roles, get all orders in the date range
+                        orders = await Order.find({
+                              orderedAt: { $gte: startDate, $lte: endDate }
+                        })
+                        .sort({ orderedAt: -1 })
+                        .populate('user', 'name')
+                        .populate('product')
+                        .select(orderSelectFields)
+                        .lean();
+                  }
 
                   const orderHistory = bufferToString(products)
 

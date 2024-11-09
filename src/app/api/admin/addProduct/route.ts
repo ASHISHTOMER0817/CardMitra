@@ -4,12 +4,13 @@ import Database from '@/database/database';
 import path from 'path';
 import fs from 'fs/promises';
 import { NextRequest, NextResponse } from 'next/server';
-import { Options, Product, Card, Site } from '@/models/userModel';
+import { Options, Product, Card, Site, User } from '@/models/userModel';
 import { dropdown } from '@/app/(admin)/adminAddProduct/[_id]/page';
 import sharp from "sharp"
 
 
 import { Binary } from "mongodb"
+import { cookies } from 'next/headers';
 
 
 
@@ -150,7 +151,7 @@ Database();
 
 export async function POST(request: NextRequest) {
       try {
-            console.log('add product route working');
+            // console.log('add product route working');
             const query = request.nextUrl.searchParams.get('query');
 
             if (query === 'option') {
@@ -188,7 +189,7 @@ export async function POST(request: NextRequest) {
             // Handle product upload
             const formData = await request.formData();
             const name = formData.get('name');
-            console.log('workin til her')
+            // console.log('workin til her')
             const file = formData.get('file') as File | null;
             const existingImg = formData.get('existingImg') as string | null;
             const commission = formData.get('commission');
@@ -201,14 +202,19 @@ export async function POST(request: NextRequest) {
             const cardObj: any = formData.get('card');
             const siteObj: any = formData.get('site');
             const infoList: any = formData.get('info');
+            const collabObj: any = formData.get('collaborator')
 
             const cards: dropdown[] = JSON.parse(cardObj);
             const site: dropdown = JSON.parse(siteObj);
             const info = JSON.parse(infoList);
             const zipCode = formData.get('zipCode');
             const productId = formData.get('productId')
-            console.log('this is file', console.log(file?.type), 'below si the file', file)
+            // console.log('this is file', console.log(file?.type), 'below si the file', file)
             let fileBuffer;
+
+            // Get collaborator ID from formData
+            const collaboratorjson: dropdown = JSON.parse(collabObj);
+            
 
             if (file || existingImg) {
                   let originalBuffer;
@@ -231,10 +237,12 @@ export async function POST(request: NextRequest) {
 
             const imageData = new Binary(fileBuffer);
 
-
-
             // Find the site document
             let siteDoc = await Site.findOne({ value: site.value });
+
+            let collabDoc = await User.findOne({_id : collaboratorjson.value})
+
+            console.log('collabDoc: ', collabDoc, collabDoc._id);
 
             // Find or create card documents
             const cardIds = await Promise.all(cards.map(async (card) => {
@@ -255,14 +263,15 @@ export async function POST(request: NextRequest) {
                   info,
                   zipCode,
                   returnAmount: +returnAmount!,
+                  collaborator: collabDoc._id,
                   showOnHomePage: false,
                   Date: new Date()
             }
-            console.log(productDetails, 'and:--', price)
+            // console.log(productDetails, 'and:--', price)
             if (productId !== 'newProduct') {
-                  console.log('rng if candsn')
+                  // console.log('rng if candsn')
                   const existingProduct = await Product.findOneAndUpdate({ _id: productId }, { $set: { ...productDetails } }, { new: true })
-                  console.log('heyar is existing prdct', existingProduct)
+                  // console.log('heyar is existing prdct', existingProduct)
                   return NextResponse.json({
                         message: 'Product updated', success: true,
                   });
@@ -272,7 +281,7 @@ export async function POST(request: NextRequest) {
                   const newProduct = await Product.create({
                         ...productDetails
                   });
-                  console.log(newProduct, 'this newProduct')
+                  // console.log(newProduct, 'this newProduct')
 
                   return NextResponse.json({
                         message: 'Product added', success: true,

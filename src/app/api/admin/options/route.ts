@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Database from "@/database/database";
-import { Card, Options, Site } from "@/models/userModel";
+import { Card, Options, Site, User } from "@/models/userModel";
 
 Database()
 
@@ -20,12 +20,16 @@ export async function GET(request: NextRequest) {
 
             const sites = await Site.find({}).select('value label');
             const cards = await Card.find({}).select('value label');
-            // const siteOptions = 
-            // const cardOptions = 
-            // console.log(sites, cards)
-                  return NextResponse.json({
-                        message: 'something went wrong', success: true, data: { sites, cards }
-                  })
+
+            const collaborators = (await User.find({ role: 'collaborator', isApprove: true }).select('id name')).map(collaborator => ({
+                  value: collaborator.id,
+                  label: collaborator.name,
+            }));
+
+            
+            return NextResponse.json({
+                  message: 'something went wrong', success: true, data: { sites, cards, collaborators }
+            })
             
       } catch {
             return NextResponse.json({

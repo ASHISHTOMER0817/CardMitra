@@ -3,24 +3,18 @@ import Link from "next/link";
 import Image from "next/image";
 // import phoneImage from "@/../public/phoneImage.jpg";
 import cardVerticalLine from "@/../public/cardVerticalLine.svg";
-// import amazon from "@/../public/static/amazon.svg";
-// import flipkart from "@/../public/static/flipkart.svg";
-// import shopsy from "@/../public/static/shopsy.jpg";
-// import vivo from "@/../public/static/vivo.webp";
-// import oppo from "@/../public/static/oppo.png";
-// import mi from "@/../public/static/mi.jpg";
-// import samsung from "@/../public/static/samsung.png";
-// import { useEffect, useState } from "react";
 import { MyArrayItem } from "../(user)/deals/[placeorder]/page";
 
 export default function ProductDetails({
 	observer,
 	data,
 	arr,
+	collaborator
 }: {
 	observer?: string
 	data: productList
 	arr: Array<MyArrayItem>
+	collaborator?:Boolean
 }) {
 	return (
 		<>
@@ -48,28 +42,33 @@ export default function ProductDetails({
 						</h4>
 						{/* </div> */}
 						{/* <div> */}
-						<div className="flex items-start gap-3 sm:text-sm sm:justify-center">
-							<div className="">
-								<div className="font-semibold text-black">
-									{data?.price}
+						{
+							!collaborator && 
+
+							<div className="flex items-start gap-3 sm:text-sm sm:justify-center">
+
+								<div className="">
+									<div className="font-semibold text-black">
+										{data?.price}
+									</div>
+									<div className="md:text-xs">
+										Price/ Unit
+									</div>
 								</div>
-								<div className="md:text-xs">
-									Price/ Unit
+								<Image
+									src={cardVerticalLine}
+									alt={""}
+								/>
+								<div className="">
+									<div className="font-semibold text-primaryBgClr">
+										{data?.commission}
+									</div>
+									<div className="md:text-xs">
+										Profit
+									</div>
 								</div>
 							</div>
-							<Image
-								src={cardVerticalLine}
-								alt={""}
-							/>
-							<div className="">
-								<div className="font-semibold text-primaryBgClr">
-									{data?.commission}
-								</div>
-								<div className="md:text-xs">
-									Profit
-								</div>
-							</div>
-						</div>
+						}
 						{/* </div> */}
 						{arr.length > 0 && (
 							<div className="flex flex-col gap-4 sm:gap-0 sm:mt-2 items-start">

@@ -12,13 +12,13 @@ export async function GET(request: NextRequest) {
             let params = request.nextUrl.searchParams
             let odrId = request.nextUrl.searchParams.get('odrId')
             let productId = request.nextUrl.searchParams.get('productId')
-            let otpstatus = params.get('otpStatus')
-            let deliveryStatus = params.get('deliveryStatus')
+            // let otpstatus = params.get('otpStatus')
+            // let deliveryStatus = params.get('deliveryStatus')
             if (odrId) {
                   
                   const updateOrder = await Order.findOne({ _id: odrId })
-                  if (otpstatus === 'true') { updateOrder.otp = true }
-                  if (deliveryStatus === 'true') { updateOrder.delivered = 'unverified' }
+                  // if (otpstatus === 'true') { updateOrder.otp = true }
+                  // if (deliveryStatus === 'true') { updateOrder.delivered = 'unverified' }
                   const updatedOrder = await updateOrder.save()
 
                   console.log('2nd console', updatedOrder)

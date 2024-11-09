@@ -59,16 +59,6 @@ const OrderForm = ({ objectId }: { objectId: string }) => {
 			className="form flex flex-col justify-start"
 			onSubmit={handleSubmit}
 		>
-			<label htmlFor="number">Order Number</label>
-			<input
-				id="number"
-				type="text"
-				placeholder="Order Number"
-				value={orderNumber}
-				onChange={(e) => setOrderNumber(e.target.value)}
-				required
-				style={{ width: "100% !important" }}
-			/>
 			<label htmlFor="orderer">Orderer Name</label>
 			<input
 				id="orderer"
@@ -79,6 +69,18 @@ const OrderForm = ({ objectId }: { objectId: string }) => {
 				required
 				style={{ width: "100% !important" }}
 			/>
+			
+			<label htmlFor="number">Order Number</label>
+			<input
+				id="number"
+				type="text"
+				placeholder="Order Number"
+				value={orderNumber}
+				onChange={(e) => setOrderNumber(e.target.value)}
+				required
+				style={{ width: "100% !important" }}
+			/>
+			
 			<button
 				disabled={disabled}
 				type="submit"

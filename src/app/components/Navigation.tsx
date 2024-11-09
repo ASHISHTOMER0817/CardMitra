@@ -69,7 +69,7 @@ const Navigation:React.FC<Options> = ({options}) =>{
                               options.map((opt)=>{
                                     return <OptionLink key={opt.name} link={opt.link} name={opt.name} icon={opt.icon} activeIcon={opt.activeIcon}  />
                               })
-                                    }
+                        }
                         <Logout />
                   </aside>
             }

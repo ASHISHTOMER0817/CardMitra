@@ -5,7 +5,7 @@ import { order } from "@/interface/productList";
 import Loader from "./loader";
 import StatusBadge from "./StatusBadge";
 
-const ProductOrderList = ({ _id }: { _id: string }) => {
+const ProductOrderList = ({ _id, collaborator }: { _id: string, collaborator?:Boolean }) => {
 	const [orders, setOrders] = useState<order[]>();
 
 	useEffect(() => {
@@ -35,13 +35,27 @@ const ProductOrderList = ({ _id }: { _id: string }) => {
 						<thead>
 							<tr className="bg-green-100">
 								<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-									User
+									Order Name 
+								</th> 
+								{
+									!collaborator &&
+
+									<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+										User
+									</th> 
+								}
+								
+								<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+									OTP
 								</th>
 								<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
 									Order ID
 								</th>
 								<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-									Order
+									Order Date
+								</th>
+								<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+									Delivery Date
 								</th>
 								<th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
 									Status
@@ -55,7 +69,16 @@ const ProductOrderList = ({ _id }: { _id: string }) => {
 									className={index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}
 								>
 									<td className="py-4 px-6 font-semibold text-primaryBgClr">
-										{order.user.name}
+										{order.ordererName}
+									</td>
+									{
+										!collaborator && 
+										<td className="py-4 px-6 font-semibold text-primaryBgClr">
+											{order.user.name}
+										</td>
+									}
+									<td className="py-4 px-6 text-gray-500">
+										{order?.otp}
 									</td>
 									<td className="py-4 px-6 text-gray-500">
 										{order._id}
@@ -64,6 +87,17 @@ const ProductOrderList = ({ _id }: { _id: string }) => {
 										{new Date(
 											order.orderedAt
 										).toDateString()}
+									</td>
+									<td className="py-4 px-6 text-gray-500">
+									{
+										order?.deliveryDate?
+											typeof(order?.deliveryDate) == 'string' ?
+												new Date(order?.deliveryDate).toDateString()
+												: 
+												order?.deliveryDate.toDateString()
+										:
+										''
+									}
 									</td>
 									<td className="py-4 px-6 text-gray-500">
 										<StatusBadge

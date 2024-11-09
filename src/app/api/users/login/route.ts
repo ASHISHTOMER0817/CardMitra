@@ -26,6 +26,7 @@ export async function POST(request: NextRequest) {
         const existingUser = await User.findOne({ email: lowerCaseFirstLetter(email) });
         const uppercaseUser = await User.findOne({ email: capitalizeFirstLetter(email) })
         const wholeUpperCase = await User.findOne({email:email.toUpperCase()})
+        
         if(existingUser)user = existingUser;
         else if(uppercaseUser)user = uppercaseUser;
         else if(wholeUpperCase) user = wholeUpperCase;
@@ -36,9 +37,12 @@ export async function POST(request: NextRequest) {
                 data: null
             });
         }
+        
 
         // Compare password
         const verifyPassword = await bcrypt.compare(password, user.password);
+
+        
 
         // If password is incorrect
         if (!verifyPassword) {
@@ -48,6 +52,8 @@ export async function POST(request: NextRequest) {
                 data: null
             });
         }
+
+        console.log('step 3');
 
         // If user exists and password is correct
         const tokenData = { email, _id: user._id, role: user.role };

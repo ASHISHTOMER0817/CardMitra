@@ -97,11 +97,11 @@ export const Logout = () =>{
 
 	return (
 		<div className="p-[9px] overflow-hidden">
-                  <Link href={'#'} className={'flex items-center '} onClick={DeleteToken}>
-                        <Image src={logout} className="w-7 h-7" alt="icon"/>
-                        <h6 className={`pl-[9px] text-nowrap text-[16px]`}>Logout</h6>
-                  </Link>
-            </div>
+			<Link href={'#'} className={'flex items-center '} onClick={DeleteToken}>
+				<Image src={logout} className="w-7 h-7" alt="icon"/>
+				<h6 className={`pl-[9px] text-nowrap text-[16px]`}>Logout</h6>
+			</Link>
+		</div>
 	)
 }
 

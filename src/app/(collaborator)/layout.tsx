@@ -38,26 +38,18 @@ const options = [
 	{
 		icon: dashboard,
 		name: "Dashboard",
-		link: "/adminDashboard",
+		link: "/collabDashboard",
 		activeIcon: dashboardActive,
 	},
-	{ icon: deals, name: "Orders", link: "/orders", activeIcon: dealsActive },
-	{ icon: OdrHistory, name: "Today's OTPs", link: "/adminOTPs", activeIcon: odrHistoryActive },
+	{ icon: deals, name: "Orders", link: "/collabOrders", activeIcon: dealsActive },
+	
 	{
-		icon: bookers,
-		name: "Bookers",
-		link: "/adminBookers",
-		activeIcon: bookersActive,
-	},
-	{
-		icon: transactionInactive,
-		name: "Transactions",
-		link: "/adminTransactions",
-		activeIcon: transactions,
+		icon: OdrHistory,
+		name: "Today's OTPs",
+		link: "/collabOTPs",
+		activeIcon: odrHistoryActive,
 	},
 	
-
-	// {icon:dimBell, name:'Deals', link: '/deals'},
 ];
 
 export default function RootLayout({

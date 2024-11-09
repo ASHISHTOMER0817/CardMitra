@@ -27,18 +27,17 @@ const CardLayout = ({
 	cards: { value: string; label: string; image: any }[];
 }) => {
 
-
 	return (
 		<div
 			className={`p-4 h-full border rounded-2xl sm:px-4 sm:py-3 border-gray-400 ${classList}`}
 		>
-			<div className="flex items-center mb-4 gap-4 sm:ml-4 sm:mb-2 float-right-sm">
-				<div className="mr-auto px-[10px] py-[5px] text-sm rounded-3xl border text-center bg-gray-200 sm:text-[10px] sm:px-1 sm:py-0">
+			<div className={`flex items-center ${price ? 'mb-4': 'mb-0'} gap-4 sm:ml-4 sm:mb-2 float-right-sm`}>
+				<div className={`${price ? 'mr-auto': 'ml-auto'} px-[10px] py-[5px] text-sm rounded-3xl border text-center bg-gray-200 sm:text-[10px] sm:px-1 sm:py-0`}>
 					{quantity} Pcs
 				</div>
-				{icons}
+				{price && icons}
 			</div>
-			<div className="flex justify-center text-sm items-start md:gap-5 sm:justify-between gap-2.5">
+			<div className="flex justify-center text-sm items-center md:gap-5 sm:justify-between gap-2.5">
 				<Image loading="lazy"
 					className="w-40 h-auto sm:h-auto sm:w-[100px]"
 					src={
@@ -56,25 +55,29 @@ const CardLayout = ({
 						{name}
 					</div>
 
-					<div className=" flex">
-						<div>
-							<div className="text-nowrap font-bold text-black sm:leading-4 sm:text-[10px]">
-								Rs. {price}
+					{
+						price 
+						&&
+						<div className=" flex">
+							<div>
+								<div className="text-nowrap font-bold text-black sm:leading-4 sm:text-[10px]">
+									Rs. {price}
+								</div>
+								<div className="md:text-[10px] sm:leading-4">
+									Price/Unit
+								</div>
 							</div>
-							<div className="md:text-[10px] sm:leading-4">
-								Price/Unit
+							<hr className="rotate-90 my-5 mx-4 w-[20px] h-3px md:mx-0 md:my-[2px] md:w-[70px] sm:w-[26px] sm:mt-4 sm:mb-0.5" />
+							<div>
+								<div className="font-bold  text-primaryBgClr sm:leading-4 sm:text-[10px]">
+									Rs. {commission}
+								</div>
+								<div className="md:text-[10px] sm:leading-4 sm:text-[10px]">
+									Profit
+								</div>
 							</div>
 						</div>
-						<hr className="rotate-90 my-5 mx-4 w-[20px] h-3px md:mx-0 md:my-[2px] md:w-[70px] sm:w-[26px] sm:mt-4 sm:mb-0.5" />
-						<div>
-							<div className="font-bold  text-primaryBgClr sm:leading-4 sm:text-[10px]">
-								Rs. {commission}
-							</div>
-							<div className="md:text-[10px] sm:leading-4 sm:text-[10px]">
-								Profit
-							</div>
-						</div>
-					</div>
+					}
 					{placeOrder}
 				</section>
 			</div>

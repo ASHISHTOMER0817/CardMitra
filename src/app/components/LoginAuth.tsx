@@ -51,6 +51,7 @@ const LoginAuth = () => {
 			if(!success){Popup("error", message);setLoader(false)}
 			else if (data === "user") router.push("/deals");
 			else if (data === "admin") router.push("/adminDashboard");
+			else if (data === "collaborator") router.push("/collabDashboard");
 			
 		} catch (error: any) {
 			setLoader(false);

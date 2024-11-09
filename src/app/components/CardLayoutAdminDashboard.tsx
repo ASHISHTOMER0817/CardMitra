@@ -11,7 +11,7 @@ import { IoCheckmark } from "react-icons/io5";
 import { GoPlus } from "react-icons/go";
 // import { Icons } from "react-toastify";
 
-const CardLayoutAdminDashboard = ({ data }: { data: productList }) => {
+const CardLayoutAdminDashboard = ({ data, collaborator }: { data: productList, collaborator?: Boolean }) => {
 	const {
 		_id,
 		requirement,
@@ -46,8 +46,12 @@ const CardLayoutAdminDashboard = ({ data }: { data: productList }) => {
 		}
 	}
 	// console.log('this is site and cards', site, cards)
+	const opactiyClass = deals ? '' : 'opacity-45';
+
+	let href = collaborator ? `/collabOrders/${_id}` : `/orders/${_id}`
+
 	return (
-		<Link href={`/orders/${_id}`}>
+		<Link href={href} className={opactiyClass}>
 			<CardLayout
 				classList="hover:border-primaryBgClr custom_shadow"
 				icons={
@@ -93,9 +97,13 @@ const CardLayoutAdminDashboard = ({ data }: { data: productList }) => {
 				commission={commission}
 				placeOrder={
 					<>
-						<button className="bg-primaryBgClr p-[14px] font-semibold text-base rounded-full border text-center w-auto text-white md:w-[100px] md:mt-4 sm:mx-auto sm:text-sm sm:p-0 ">
-							{deals ? "Active" : "In-Active"}
-						</button>
+						{/* <button className="bg-primaryBgClr p-[14px] font-semibold text-base rounded-full border text-center w-auto text-white md:w-[100px] md:mt-4 sm:mx-auto sm:text-sm sm:p-0 ">
+							{deals ? "Active" : "Inactive"}
+						</button> */}
+						<div className="bg-primaryBgClr inline-block px-4 py-2 font-semibold text-base rounded-full border text-center w-auto text-white md:w-[100px] md:mt-4 sm:mx-auto sm:text-sm">
+							{deals ? "Active" : "Inactive"}
+						</div>
+
 					</>
 				}
 				site={site}

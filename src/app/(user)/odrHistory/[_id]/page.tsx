@@ -29,34 +29,29 @@ import Link from "next/link";
 const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 	const [data, setData] = useState<order>();
 	const [arr, setArr] = useState<Array<MyArrayItem>>([]);
-	const [deliveryStatus, setDeliveryStatus] = useState("");
-	const [otpStatusUpdate, setOtpStatusUpdate] = useState("");
-	const [otpStatus, setOtpStatus] = useState<boolean | null>(null);
-	// const [overlay, setOverlay] = useState("hidden");
-	const router = useRouter();
-	const [copiedYet, setCopiedYet] = useState(false);
 
-	const [tracking, setTracking] = useState('');
-	const [deliveryDate, setDeliveryDate] = useState('');
-	const [dialogueTriggered, setDialogueTriggered] = useState(false);
-	// const [reWriteOtp, setReWriteOtp] = useState(false)
+	const [orderBy, setOrderBy] = useState('');
+	const [orderID, setOrderID] = useState('');
+	const [trackingID, setTracking] = useState('');
+	const [otp, setOTP] = useState('');
+	const [last4digits, setLast4digits] = useState(Number);
+
+	const [deliveryDate, setDeliveryDate] = useState(new Date());
+	
+	const router = useRouter();
 
 	async function getData() {
 		try {
 			console.log("starts");
 			const response = await axios.get(
-				`/api/users/orderData?odrId=${params._id}&deliveryStatus=${deliveryStatus}&otpStatus=${otpStatusUpdate}`
+				`/api/users/orderData?odrId=${params._id}`
 			);
 			console.log(response.data.data);
 			const { info } = response.data.data.product;
 			// console.log(info);
 			setArr(Object.entries(info));
-			setOtpStatus(response.data.data.otp);
+			// setOtpStatus(response.data.data.otp);
 			setData(response.data.data);
-
-			if (deliveryStatus && response.data.success) {
-				router.back();
-			}
 
 			console.log("end here");
 			return;
@@ -70,169 +65,7 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 	useEffect(() => {
 		getData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [deliveryStatus, otpStatusUpdate, params._id]);
-
-	const GoogleForm = async () => {
-		const googleFormUrl =
-			"https://docs.google.com/forms/d/e/1FAIpQLSeRDhNchCdKMxAqOpF9QgUHWP_r4QwkHwnDYevHaVDg0kd6JQ/viewform"; // Replace with your actual Google Form URL
-		const newWindow = window.open(
-			googleFormUrl,
-			"_blank",
-			"noopener,noreferrer"
-		);
-
-		if (newWindow) {
-			console.log(" The new window was opened successfully");
-		} else {
-			console.log(
-				"The new window was blocked or couldn't be opened"
-			);
-		}
-	};
-
-	const GoogleFormPage = () => {
-		return (
-			<>
-				<CopyDivToClipboard
-					orderId={params._id}
-					// classList={otpStatus ? "hidden" : ""}
-					// stateChange={function () {
-					// 	setCopiedYet(true);
-					// }}
-				/>
-
-				<button
-					className={`text-gray-700 border-orange-200 border rounded-3xl self-center px-4 py-3 hover:bg-orange-50 bg-white ${
-						"" // otpStatus ? "hidden" : ""
-					} w-96 sm:w-48 sm:py-2`}
-					onClick={() => {
-						GoogleForm();
-					}}
-				>
-					Fill google form
-				</button>
-				<button
-					className={`text-white border self-center rounded-3xl px-4 py-3 hover:bg-green-600 bg-primaryBgClr ${
-						"" // otpStatus ? "hidden" : ""
-					} w-96 sm:w-48 sm:py-2`}
-					onClick={() => {
-						setOtpStatusUpdate("true");
-						// handleSubmit();
-						setOtpStatus(true);
-					}}
-				>
-					Confirm
-				</button>
-			</>
-		);
-	};
-
-	const onTrackingFormSubmit = (ev: FormEvent) => {
-		ev.preventDefault(); // Prevent the default form submission behavior
-
-		// Extract form elements
-		const form = ev.target as HTMLFormElement;
-		const trackingID = form.trackingID.value;
-		const deliveryDate = form.deliveryDate.value;
-
-		// Create FormData object to handle form data
-		const formData = new FormData();
-		formData.append("trackingID", trackingID);
-		formData.append("deliveryDate", deliveryDate);
-		formData.append("orderId", params._id);
-
-		// Assuming you want to send the data to an API endpoint
-		axios.post("/api/orders/trackingSubmission", formData, {
-			headers: {
-			  "Content-Type": "multipart/form-data", // Ensure form data is sent correctly
-			},
-		})
-		.then((response) => router.back())
-		.catch((error) => {
-			// Handle error
-			console.error("Error submitting tracking information:", error);
-			alert("There was an error submitting the tracking information.");
-		});
-	};
-
-
-	const ReSubmit = () => {
-		return (
-			<>
-				<div
-					onClick={() => setOtpStatus(false)}
-					className={`text-white border text-center cursor-pointer self-center rounded-3xl px-4 py-3 hover:bg-green-600 bg-primaryBgClr w-96  sm:w-48 sm:py-2 `}
-				>
-					Re-Submit OTP
-				</div>
-
-				<Dialog 
-					open={dialogueTriggered} 
-					onOpenChange={setDialogueTriggered}
-				>
-					<DialogTrigger
-						className={`cursor-pointer mx-auto mt-3 text-xs border-b border-b-gray-500 hover:border-b-gray-800 hover:text-gray-800 text-gray-500 `}
-					>
-						confirm product delivery
-					</DialogTrigger>
-
-					
-					<DialogOverlay>
-						<DialogContent className="bg-white rounded-[20px]">
-							<DialogHeader>
-								<DialogTitle>
-									Product got delivered, Right?
-								</DialogTitle>
-								<DialogDescription>
-									Click confirm if you are sure
-									that the product has been
-									delivered
-								</DialogDescription>
-							</DialogHeader>
-							{data?.trackingID == '' && 
-								<form method="post" onSubmit={(ev)=>onTrackingFormSubmit(ev)} className="mt-4">
-									<h6 className="text-sm text-muted-foreground mb-4">We have no info about your tracking ID, kindly input your tracking and delivery date</h6>
-									<div className="flex justify-between mb-2 align-items-center">
-										<label htmlFor="trackingID">Tracking ID</label>
-										<input className="border w-1/2 rounded-xl px-4 py-2" id="trackingID" 
-											placeholder="Tracking ID" required type="text"  
-											
-										/>
-									</div>
-									<div className="flex justify-between align-items-center">
-										<label htmlFor="deliveryDate">Delivery Date</label>
-										<input className="border w-1/2 rounded-xl px-4 py-2" required type="date" id="deliveryDate" />
-									</div>
-
-									<button
-										className="w-full mt-4 rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50"
-										type="submit"
-									>
-										Submit
-									</button>
-								</form>
-							}
-							<DialogFooter className=" gap-3">
-								<DialogClose className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50">
-									Cancel
-								</DialogClose>
-								{data?.trackingID &&
-									<button
-										className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50"
-										onClick={() =>
-											setDeliveryStatus("true")
-										}
-									>
-										Confirm
-									</button>
-								}
-							</DialogFooter>
-						</DialogContent>
-					</DialogOverlay>
-				</Dialog>
-			</>
-		);
-	};
+	}, [params._id]);
 
 	const deleteOrder = async () => {
 		try {
@@ -256,48 +89,67 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 			alert("An error occurred while trying to delete the order.");
 		}
 	};
+
+	const editOrderDetails = async () =>{
+		try {
+			console.log("starts");
+			const response = await axios.post(
+				`/api/orders/editDetails?odrId=${params._id}`,
+				{orderBy, orderID, trackingID, otp, last4digits}
+			);
+			if (response.data.success) {
+				Popup("success", response.data.message);
+				getData();
+			} else {
+				Popup("error", response.data.message);
+			}
+			return;
+		} catch {
+			console.log(
+				"something went wrong please try again later"
+			);
+			Popup("error", 'something went wrong please try again later');
+		}
+	}
+
+	const onEditClick = () =>{
+		setOrderBy(data?.ordererName || '');
+		setOrderID(data?.orderId || '');
+		setTracking(data?.trackingID || '');
+		setOTP(data?.otp || '');
+		setLast4digits(data?.last4digits || 0);
+	}
+	
+	const onEditDeliveryClick = () =>{
+		setDeliveryDate(data?.deliveryDate || new Date());
+	}
 	  
+	const editOrderDelivery = async () =>{
+		try {
+			
+			const response = await axios.post(
+				`/api/orders/deliverySubmission?odrId=${params._id}`,
+				{deliveryDate}
+			);
+			if (response.data.success) {
+				Popup("success", response.data.message);
+				getData();
+			} else {
+				Popup("error", response.data.message);
+			}
+			return;
+		} catch {
+			console.log(
+				"something went wrong please try again later"
+			);
+			Popup("error", 'something went wrong please try again later');
+		}
+	}
+
 	return (
 		<div>
 			<div className="w-full sm:ml-0">
-				{/* <div
-						className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}
-					></div>
-					<div
-						// onSubmit={payment}
-						className={`${overlay} bg-white flex px-2 z-20 absolute opacity-100 pt-2 pb-4 rounded-big flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 sm:gap-2 sm:w-4/5`}
-					>
-						<RxCross1
-							width={30}
-							height={30}
-							className="p-2 cursor-pointer ml-auto hover:bg-gray-100 active:bg-gray-100 rounded-full"
-							onClick={() => setOverlay("hidden")}
-						/>
-						<h4 className="sm:text text-xl text-center">
-							Are you sure the order has been
-							delivered?{" "}
-						</h4>
-						<div className="flex justify-center gap-3 items-center">
-							<button
-								onClick={() => {
-									setOverlay("hidden");
-								}}
-								type="button"
-								className="px-4 py-2 hover:bg-gray-200 border-gray-200 border rounded-full active:bg-gray-200"
-							>
-								Cancel
-							</button>
-							<button
-								onClick={() =>
-									setDeliveryStatus("true")
-								}
-								type="button"
-								className="px-4 py-2 hover:bg-green-600 bg-primaryBgClr rounded-full text-white"
-							>
-								Confirm
-							</button>
-						</div>
-					</div> */}
+				
 				<BackwardButton />
 				{!data ? (
 					<Loader />
@@ -323,78 +175,261 @@ const SubmitOTP = ({ params }: { params: { _id: string } }) => {
 									arr={arr}
 								/>
 							</div>
-							{data?.delivered !== "delivered" ? (
-								<div className="border px-10 py-7 rounded-2xl sm:px-4 sm:py-4 sm:w-full">
-									<div className="text-base font-semibold text-primaryBgClr text-center">
-										OTP Form
-									</div>
-									<hr className="my-5 sm:my-2" />
-									<div className=" flex flex-col justify-start gap-3">
-										{otpStatus ? (
-											<ReSubmit />
-										) : (
-											<GoogleFormPage />
-										)}
-									</div>
-
-									{!data?.ordererName ? (
-										""
-									) : (
-										<div className="mt-3 mr-auto w-fit text-sm font-semibold text-gray-500">
-											Ordered by -{" "}
-											{data?.ordererName}
-										</div>
-									)}
-									{data && (
-										<>
-											<div className="mt-3 mr-auto w-fit text-sm font-semibold text-gray-500">
-												Ordered on -{" "}
-												{new Date(
-													data?.orderedAt
-												).toDateString()}
-											</div>
-											<div className="mt-3 mr-auto w-fit text-sm font-semibold text-gray-500">
-												Order ID -{" "}
-												{data?.orderId}
-											</div>
-											<div className="mt-3 mr-auto w-fit text-sm font-semibold text-gray-500">
-												Tracking ID -{" "}
-												{data?.trackingID}
-											</div>
-										</>
-										
-									)}
+							
+							<div className="border px-10 py-7 rounded-2xl sm:px-4 sm:py-4 sm:w-full">
+								<div className="text-base font-semibold text-primaryBgClr text-center">
+									Order Details
 								</div>
-							) : (
-								<div className="border px-10 py-7 rounded-2xl sm:px-4 sm:py-4 sm:w-full">
-									<div className="text-base font-semibold text-primaryBgClr text-center">
-										Order details
-									</div>
-									<hr className="my-5 sm:my-2" />
-									<div className=" flex flex-col justify-start gap-3">
-										Ordered By -{" "}
+								<hr className="my-5 sm:my-2" />
+
+								<div className="mt-3 mr-auto flex text-sm font-semibold text-gray-500">
+									<span>
+										Order By:
+									</span>
+									<span className="ml-auto pl-4">
 										{data?.ordererName}
-									</div>
-									<div className=" flex flex-col justify-start gap-3">
-										Ordered on -{" "}
+									</span>
+								</div>
+
+								<div className="mt-3 mr-auto flex text-sm font-semibold text-gray-500">
+									<span>
+										Order Date:
+									</span>
+									<span className="ml-auto pl-4">
 										{new Date(
 											data?.orderedAt
 										).toDateString()}
-									</div>
-									<div className="mt-3 mr-auto w-fit text-sm font-semibold text-gray-500">
-										Order ID -{" "}
-										{data?.orderId}
-									</div>
-									<div className="mt-3 mr-auto w-fit text-sm font-semibold text-gray-500">
-										Tracking ID -{" "}
-										{data?.trackingID}
-									</div>
-									<div className=" flex flex-col justify-start gap-3">
-										delivery status -{" "}
-										{data?.delivered}
-									</div>
+									</span>
 								</div>
-							)}
+
+								<div className="mt-3 mr-auto flex text-sm font-semibold text-gray-500">
+									<span>
+										Order ID: 
+									</span>
+									<span className="ml-auto pl-4">
+										{data?.orderId}
+									</span>
+								</div>
+
+								<div className="mt-3 mr-auto flex text-sm font-semibold text-gray-500">
+									<span>
+										Tracking ID: 
+									</span>
+									<span className="ml-auto pl-4">
+										{data?.trackingID}
+									</span>
+								</div>
+
+								<div className="mt-3 mr-auto flex text-sm font-semibold text-gray-500">
+									<span>
+										OTP:
+									</span>
+									<span className="ml-auto pl-4">
+										{data?.otp}
+									</span>
+								</div>
+
+								<div className="mt-3 mr-auto flex text-sm font-semibold text-gray-500">
+									<span>
+										OTP Submission Date:
+									</span>
+									<span className="ml-auto pl-4">
+										{
+											data?.otpDate ?
+												new Date(data.otpDate).toDateString()
+											:
+												''
+										}
+										
+									</span>
+								</div>
+
+								<div className="mt-3 mr-auto flex text-sm font-semibold text-gray-500">
+									<span>
+										Mobile no. last 4 digits:
+									</span>
+									<span className="ml-auto pl-4">
+										{data?.last4digits} 
+									</span>
+									
+								</div>
+
+								<div className="mt-3 mr-auto flex text-sm font-semibold text-gray-500">
+									<span>
+										Delivery Date:
+									</span>
+									<span className="ml-auto pl-4">
+										{
+
+											data?.deliveryDate?
+												typeof(data?.deliveryDate) == 'string' ?
+												 	new Date(data?.deliveryDate).toDateString()
+													: 
+													data?.deliveryDate.toDateString()
+											:
+											''
+										}
+									</span>
+									
+								</div>
+
+								{data?.delivered !== 'delivered' && (
+									<Dialog>
+										<DialogContent>
+											<DialogHeader>
+												<DialogTitle>
+													Edit Order Details
+												</DialogTitle>
+												{/* <DialogDescription>
+												</DialogDescription> */}
+											</DialogHeader>
+
+											<label
+												htmlFor="orderBy"
+												className="font-bold sm:text-[13px]"
+											>
+												Order By:
+											</label>
+											<input
+												required
+												id="orderBy"
+												type="text"
+												value={orderBy}
+												onChange={(e)=>setOrderBy(e.target.value)}
+												className=" border border-gray-300 rounded-full p-2 w-full sm:text-[10px]"
+												placeholder="Order By"
+											/>
+
+											<label
+												htmlFor="orderID"
+												className="font-bold sm:text-[13px]"
+											>
+												Order ID:
+											</label>
+											<input
+												required
+												id="orderID"
+												type="text"
+												value={orderID}
+												onChange={(e)=>setOrderID(e.target.value)}
+												className="border border-gray-300 rounded-full p-2 w-full sm:text-[10px]"
+												placeholder="Order ID"
+											/>
+
+											<label
+												htmlFor="trackingID"
+												className="font-bold sm:text-[13px]"
+											>
+												Tracking ID:
+											</label>
+											<input
+												required
+												id="trackingID"
+												type="text"
+												value={trackingID}
+												onChange={(e)=>setTracking(e.target.value)}
+												className=" border border-gray-300 rounded-full p-2 w-full sm:text-[10px]"
+												placeholder="Tracking ID"
+											/>
+
+											<label
+												htmlFor="otp"
+												className="font-bold sm:text-[13px]"
+											>
+												OTP:
+											</label>
+											<input
+												required
+												id="otp"
+												type="text"
+												value={otp}
+												onChange={(e)=>setOTP(e.target.value)}
+												className=" border border-gray-300 rounded-full p-2 w-full sm:text-[10px]"
+												placeholder="OTP"
+											/>
+
+											<label
+												htmlFor="last4digits"
+												className="font-bold sm:text-[13px]"
+											>
+												Mobile No. last 4 digits:
+											</label>
+											<input
+												required
+												id="last4digits"
+												type="number"
+												value={last4digits}
+												onChange={(e)=>setLast4digits(parseInt(e.target.value))}
+												className=" border border-gray-300 rounded-full p-2 w-full sm:text-[10px]"
+												placeholder="Last 4 digits"
+											/>
+											
+											<DialogFooter className=" gap-3">
+												<DialogClose className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50">
+													Cancel
+												</DialogClose>
+												<DialogClose
+													className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50"
+													onClick={editOrderDetails}
+												>
+													Submit
+												</DialogClose>
+											</DialogFooter>
+
+										</DialogContent>
+										<DialogTrigger onClick={onEditClick} className="text-primaryBgClr border-primaryBgClr border order-form rounded-2xl py-2 px-4 sm:w-48 sm:py-2 mt-3 mx-auto w-full font-medium">
+											Edit Details
+										</DialogTrigger>
+									</Dialog>
+								)}
+
+								{data?.otp && data?.delivered !== 'delivered' && (
+									<Dialog>
+										<DialogContent>
+											<DialogHeader>
+												<DialogTitle>
+													Edit Submission Details
+												</DialogTitle>
+												{/* <DialogDescription>
+												</DialogDescription> */}
+											</DialogHeader>
+
+											<label
+												htmlFor="deliveryDate"
+												className="font-bold sm:text-[13px]"
+											>
+												Delivery Date:
+											</label>
+											<input
+												required
+												id="deliveryDate"
+												type="date"
+												value={deliveryDate.toDateString()}
+												onChange={(e)=>setDeliveryDate(new Date(e.target.value))}
+												className=" border border-gray-300 rounded-full p-2 w-full sm:text-[10px]"
+												
+											/>
+
+											<DialogFooter className=" gap-3">
+												<DialogClose className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50">
+													Cancel
+												</DialogClose>
+												<DialogClose
+													className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50"
+													onClick={editOrderDelivery}
+												>
+													Submit
+												</DialogClose>
+											</DialogFooter>
+
+										</DialogContent>
+										<DialogTrigger onClick={onEditDeliveryClick} className="text-primaryBgClr border-primaryBgClr border order-form rounded-2xl py-2 px-4 sm:w-48 sm:py-2 mt-3 mx-auto w-full font-medium">
+											Mark as Delivered
+										</DialogTrigger>
+									</Dialog>
+								)}
+
+							</div>
 						</section>
 					</>
 				)}

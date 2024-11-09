@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { mongo, Schema } from "mongoose";
 
 const passwordSchema = new mongoose.Schema({
 	user: {
@@ -21,14 +21,9 @@ const orderSchema = new mongoose.Schema({
 	orderId: {
 		type: String,
 	},
-	// deliveryDate: {
-	// 	type: String,
-	// 	// required: true,
-	// 	// format: Date
-	// },
 	otp: {
-		default: false,
-		type: Boolean
+		type: String,
+		default: '',
 	},
 	delivered: {
 		type: String,
@@ -55,6 +50,13 @@ const orderSchema = new mongoose.Schema({
 	},
 	deliveryDate: {      // New field for expected delivery date
 		type: Date,
+		default: null
+	},
+	last4digits: {
+		type: Number,
+	},
+	otpDate: {
+		type: Date || null,
 		default: null
 	}
 })
@@ -94,7 +96,6 @@ const otpSchema = new mongoose.Schema({
 		default: false
 	}
 })
-
 
 const userSchema = new mongoose.Schema({
 	name: {
@@ -228,6 +229,10 @@ const productSchema = new mongoose.Schema({
 	},
 	Date:{
 		type:Date
+	},
+	collaborator: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'users'
 	}
 });
 

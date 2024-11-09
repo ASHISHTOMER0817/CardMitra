@@ -106,6 +106,9 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 										Name
 									</th>
 									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+										User Type
+									</th>
+									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 										Email
 									</th>
 									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -133,6 +136,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 									(
 										{
 											name,
+											role,
 											email,
 											contact,
 											isApprove,
@@ -207,6 +211,11 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 																name
 															}
 														</Link>
+													</td>
+													<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+														{
+															role
+														}
 													</td>
 													<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 														{

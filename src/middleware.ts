@@ -2,8 +2,6 @@ import { NextResponse } from 'next/server'
 import { NextRequest } from 'next/server'
 import * as jose from 'jose'
 
-
-
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
       const value = request.cookies.get('joseToken')?.value!
@@ -21,6 +19,8 @@ export async function middleware(request: NextRequest) {
                   process.env.TOKEN_SECRET_KEY!,
             )
             const jwt = value
+
+            console.log('jwt: ', jwt, secret);
 
             const { payload } = await jose.jwtVerify(jwt, secret, {
                   issuer: 'Guru',

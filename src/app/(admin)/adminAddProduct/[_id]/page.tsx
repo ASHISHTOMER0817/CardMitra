@@ -43,6 +43,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	const [commission, setCommission] = useState<number>();
 	const [cards, setCards] = useState<dropdown[]>([]);
 	const [site, setSite] = useState<dropdown>();
+	const [collaborator, setCollaborator] = useState<dropdown>();
 	const [productLink, setProductLink] = useState("");
 	const [image, setImage] = useState<any>();
 	const [file, setFile] = useState<File>();
@@ -59,6 +60,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	const router = useRouter();
 	const [siteOptions, setSiteOptions] = useState<dropdown[]>([]);
 	const [cardOptions, setCardOptions] = useState<dropdown[]>([]);
+	const [collaboratorOptions, setCollaboratorOption] = useState<dropdown[]>([]);
 	const [addOption, setAddOption] = useState("");
 	const [optionName, setOptionName] = useState("");
 	const [optionFile, setOptionFile] = useState<File>();
@@ -67,9 +69,16 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	const [buttonClick, setButtonClick] = useState(false)
 	const [returnAmt, setReturnAmt] = useState<number>();
 
+
 	//function to set Site
 	const handleDropdownChangeSite: any = (option: dropdown) => {
 		setSite(option);
+	};
+
+	//function to set Site
+	const handleDropdownChangeCollaborator: any = (option: dropdown) => {
+		console.log('inside function');
+		setCollaborator(option);
 	};
 
 	// Function to set Cards
@@ -130,6 +139,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 				const response = await axios.get("/api/admin/options");
 				setCardOptions(response.data.data.cards);
 				setSiteOptions(response.data.data.sites);
+				setCollaboratorOption(response.data.data.collaborators);
 				if (response.data.success !== true) {
 					Popup("error", "server error, please refresh");
 				}
@@ -193,6 +203,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 			);
 			formData.append("card", JSON.stringify(cards));
 			formData.append("site", JSON.stringify(site));
+			formData.append("collaborator", JSON.stringify(collaborator));
 			if (file) {
 				formData.append("file", file);
 			} else {
@@ -238,6 +249,10 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	const handleDragOver = (event: any) => {
 		event.preventDefault();
 	};
+
+	useEffect(()=>{
+		console.log('coll: ', collaborator);
+	})
 
 	return (
 		<Dialog>
@@ -683,14 +698,6 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 										onChange={
 											handleDropdownChangeSite
 										}
-										// defaultValue={
-										// 	siteOptions[0]
-										// }
-										// value={
-										// 	site
-										// 		? site
-										// 		: siteOptions[0]
-										// }
 										className="flex-1 sm:text-[10px]"
 									/>
 									<DialogTrigger>
@@ -790,6 +797,37 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 									className=" border border-gray-300 rounded-full p-2 w-full sm:text-[10px]"
 									placeholder="Enter Zip Code"
 								/>
+							</div>
+							<div className="mb-4 sm:mb-0 flex flex-col w-full gap-6 sm:gap-2">
+								<label
+									htmlFor="collaborator"
+									className="font-bold sm:text-[13px]"
+								>
+									Collaborator
+								</label>
+
+								<div className="relative flex gap-1">
+									<Dropdown
+										options={
+											collaboratorOptions
+										}
+										onChange={
+											handleDropdownChangeCollaborator
+										}
+										className="flex-1 sm:text-[10px]"
+									/>
+									{/* <DialogTrigger>
+										<IoAddSharp
+											onClick={() => {
+												// setOverlay("");
+												setAddOption(
+													"collaborator"
+												);
+											}}
+											className="border border-gray-500 rounded-full p-2 hover:bg-gray-100 w-10 h-10"
+										/>
+									</DialogTrigger> */}
+								</div>
 							</div>
 						</div>
 						<div className="ml-auto w-fit flex gap-3 mt-8 sm:mr-auto">

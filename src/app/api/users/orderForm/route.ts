@@ -51,7 +51,6 @@ export const POST = async (request: NextRequest) => {
         orderId: orderNumber,
         orderedAt: new Date(),
         delivered: 'undelivered',
-        otp: false,
         paid: null,
         acknowledgment: false,
         ordererName

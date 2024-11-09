@@ -107,6 +107,12 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 		button: "Dis-Approve",
 		action: 'dis-approve',
 	};
+	const makeCollaboratorElement = {
+		heading: "Make this user a collaborator",
+		desc: "Are you sure about this. Remeber user can get to see internal information",
+		button: "Make Collaborator",
+		action: 'make-collaborator',
+	};
 
 	useEffect(() => {
 		async function getData() {
@@ -243,6 +249,24 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 		}
 	}
 
+	async function makeCollaborator() {
+		try {
+			const response = await axios.post(
+				'/api/affiliate/makeCollaborator', // Endpoint for editing user type
+				{ userId: params._id } // Pass the user ID
+			);
+			if (response.data.success) {
+				Popup("success", response.data.message);
+				// Optionally, you can refresh or redirect here
+				router.push('/adminBookers/');
+			} else {
+				Popup("error", response.data.message);
+			}
+		} catch {
+			Popup("error", "Something went wrong while making the user a collaborator.");
+		}
+	}
+
 	console.log(data?.totalAmt);
 
 	const buttonOperation = () => {
@@ -253,6 +277,9 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 		} else if (overlayElement?.action === "dis-approve") {
 			// setDis_approve(true);
 			disapproveUser();
+		} else if (overlayElement?.action === "make-collaborator") {
+			// setDis_approve(true);
+			makeCollaborator();
 		}
 		setListType("undelivered");
 	};
@@ -462,6 +489,12 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 									<DropdownMenuItem className="cursor-pointer " onClick={()=>setOverlayElement(deleteAccountElement)}>
 										<DialogTrigger>Delete Account</DialogTrigger>
 									</DropdownMenuItem>
+
+									<DropdownMenuSeparator />
+									
+									<DropdownMenuItem className="cursor-pointer " onClick={()=>setOverlayElement(makeCollaboratorElement)}>
+										<DialogTrigger>Make Collaborator</DialogTrigger>
+									</DropdownMenuItem>
 								</DropdownMenuContent>
 							</div>
 						</div>
@@ -515,10 +548,10 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 												status.toLowerCase()
 											)
 										}
-										className={`text-sm p-2 rounded-full cursor-pointer whitespace-nowrap ${
+										className={`text-sm p-2 rounded-sm cursor-pointer whitespace-nowrap ${
 											listType ===
 											status.toLowerCase()
-												? "bg-primaryBgClr text-white"
+												? "bg-gray-100"
 												: "hover:bg-gray-100"
 										} sm:text-xs sm:p-1`}
 									>
@@ -530,6 +563,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 								{listType === "transactions" ? (
 									<Transactions
 										_id={params._id}
+										
 									/>
 								) : (
 									data && (
@@ -540,6 +574,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 											listType={
 												listType
 											}
+											
 										/>
 									)
 								)}

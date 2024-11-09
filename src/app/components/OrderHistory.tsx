@@ -13,7 +13,7 @@ const OrderHistory = ({
 }: {
 	product: productList
 	_id: string
-	otp: boolean
+	otp: string
 	delivered: string
 	paid: null | Date
 }) => {
@@ -39,7 +39,7 @@ const OrderHistory = ({
 		>
 			<CardLayout
 				placeOrder={
-					otp && delivered === "undelivered" ? (
+					otp && otp !=='false' && delivered === "undelivered" ? (
 						<StatusBadge status={"OTP submitted"} />
 					) : paid && delivered === "delivered" ? (
 						<StatusBadge

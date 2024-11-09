@@ -33,15 +33,17 @@ export interface order {
 	product: productList
 	user: user
 	orderId: string
-	deliveryDate: string
-	otp: boolean
+	deliveryDate: Date | null
+	otp: string
 	delivered: string
 	orderedAt: string
 	_id: string
 	paid: Date | null
 	acknowledgment: boolean
 	ordererName:string
-	trackingID:string
+	trackingID:string,
+	last4digits: number,
+	otpDate: Date | null
 }
 
 export interface otp {
