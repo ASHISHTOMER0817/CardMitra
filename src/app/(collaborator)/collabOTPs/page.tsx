@@ -27,7 +27,7 @@ const CollabOTPHistory = () => {
 
 	return (
 		<div className="flex flex-col mx-auto">
-            <h5>Today's OTPs</h5>
+            <h5>Today&apos;s  OTPs</h5>
 
             {!orders ? (
                 <Loader />
