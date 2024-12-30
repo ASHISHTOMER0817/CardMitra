@@ -103,3 +103,10 @@ export interface CardAndSite {
 	label:string
 	image:string | Buffer
 }
+
+export interface SpecialQuantity {
+	user: user,
+	product: productList,
+	quantity: number,
+	orderedQuantity: number
+}

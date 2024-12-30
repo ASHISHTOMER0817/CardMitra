@@ -4,18 +4,10 @@ import Image from "next/image";
 import React, { FormEvent, useEffect, useState } from "react";
 import downloadImg from "@/../public/downloadImg.svg";
 import Select from "react-select";
-// import oneCard from "@/../public/oneCard.jpg";
-// import hdfcCard from "@/../public/hdfcCard.jpg";
-// import iciciCard from "@/../public/iciciCard.jpg";
-// import flipkartAxis from "@/../public/flipkart_axis.png";
-// import sbiCashback from "@/../public/sbi_cashback.webp";
-// import amazonPay from "@/../public/amazonPay.jpeg";
-// import amazonLogo from "@/../public/amazonLogo.webp"
-// import flipkartLogo from "@/../public/flipkartLogo.png"
-// import sbi from "@/../public/SBI.png"
+
 import Dropdown, { defaultStyles } from "@/app/components/dropdown";
 import Popup from "@/app/components/Popup";
-import productList from "@/interface/productList";
+import productList, { SpecialQuantity, user } from "@/interface/productList";
 import Loader from "@/app/components/loader";
 import { useRouter } from "next/navigation";
 import { RxCross1 } from "react-icons/rx";
@@ -35,7 +27,7 @@ import {
 export interface dropdown {
 	value: string;
 	label: string;
-	// image:string;
+	
 }
 const ProductForm = ({ params }: { params: { _id: string } }) => {
 	const [name, setName] = useState("");
@@ -68,6 +60,15 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	const [existingImg, setExistingImage] = useState("");
 	const [buttonClick, setButtonClick] = useState(false)
 	const [returnAmt, setReturnAmt] = useState<number>();
+
+	const [specialQuantity, setSpecialQuantity] = useState<number>();
+	const [specialUser, setSpecialUser] = useState("");
+	const [allSpecialUsers, setAllSpecialUsers] = useState<user[]>([]);
+	const [specialUserId, setSpecialUserId] = useState<string>();
+
+	const [special, setSpecials] = useState<SpecialQuantity[]>([]);
+
+	const [usersVsibile, setUsersVisible] = useState<boolean>(false);
 
 
 	//function to set Site
@@ -250,9 +251,85 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 		event.preventDefault();
 	};
 
+	
+	async function onSpecialRequestSubmit(e: FormEvent<HTMLFormElement>) {
+		e.preventDefault();
+		try {
+			
+			const formData = {
+				user: specialUserId,
+				quantity: specialQuantity,
+				product: params._id,
+			};
+
+			const response = await axios.post(
+				`/api/admin/addSpecial`,
+				formData
+			);
+
+			// console.log(response);
+			if (response.data.success) {
+
+				Popup("success", response.data.message);
+				fetchSpecials();
+				// router.back();
+			} else {
+				
+				Popup("error", response.data.message);
+			}
+		} catch (error: any) {
+			
+			Popup("error", "Something went wrong, try again later");
+		}
+	}
+	
+
 	useEffect(()=>{
-		console.log('coll: ', collaborator);
-	})
+		
+		async function fetchUsers(){
+			try {
+				const response = await axios.get(`/api/admin/allUsers?q=${specialUser}`);
+				setAllSpecialUsers(response.data.users);
+				
+				if (response.data.success !== true) {
+					Popup("error", "server error, please refresh");
+				}
+			} catch {
+				Popup("error", "server error, please refresh");
+			}
+		}
+
+		fetchUsers();
+		
+	}, [specialUser]);
+
+	
+	async function fetchSpecials(){
+		try {
+			const response = await axios.get(`/api/admin/getSpecialQuantity?product=${params._id}`);
+
+			console.log('res data: ', response.data.data);
+			setSpecials(response.data.data);
+			
+			if (response.data.success !== true) {
+				Popup("error", "server error, please refresh");
+			}
+		} catch {
+			Popup("error", "server error, please refresh");
+		}
+	}
+
+	useEffect(()=>{
+
+		fetchSpecials();
+		
+	}, []);
+
+	const onUserClick = (usr: user) =>{
+		setSpecialUser(usr.name);
+		setSpecialUserId(usr._id);
+		setUsersVisible(false);
+	}
 
 	return (
 		<Dialog>
@@ -261,130 +338,72 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 					<Loader />
 				) : (
 					<>
-						{/* <div
-						className={`${overlay} w-full h-full absolute bg-gray-500 z-10 opacity-45`}
-					></div> */}
-						{/* <div
-							className={` bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 sm:w-4/5 sm:top-2/4 sm:-translate-y-2/4`}
-						> */}
-							{/* <RxCross1
-							className=" w-6 h-6 cursor-pointer ml-auto p-1 hover:bg-gray-100 active:bg-gray-100 rounded-full sm:w-7 sm:h-7"
-							onClick={() => setOverlay("hidden")}
-						/> */}
-
-							{/* <DialogTrigger>Open</DialogTrigger> */}
-							<DialogContent>
-								<DialogHeader>
-									<DialogTitle>
-										{" "}
-										Write, {
-											addOption
-										}{" "}
-										name you want to add
-									</DialogTitle>
-									{/* <DialogDescription>
-									</DialogDescription> */}
-								</DialogHeader>
-								<input
-									type="text"
-									placeholder={`${
-										addOption === "site"
-											? "Site Name"
-											: "Card name"
-									}`}
-									className="outline-none border-b pb-2 border-black sm:text-xs"
-									value={optionName}
-									onChange={(e) =>
-										setOptionName(
-											e.target.value
-										)
-									}
-								/>{" "}
-								<input
-									type="file"
-									placeholder={`${
-										addOption === "site"
-											? "Site Image"
-											: "Card Image"
-									}`}
-									className={`outline-none border-b pb-2 border-black sm:text-xs `}
-									onChange={({
-										target,
-									}) => {
-										if (target.files) {
-											setOptionFile(
-												target
-													.files[0]
-											);
-										}
-									}}
-								/>{" "}
-								<DialogFooter className=" gap-3">
-									<DialogClose className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50">
-										Cancel
-									</DialogClose>
-									<DialogClose
-										className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50"
-										onClick={() => {
-											optionName &&
-												AddOption(
-													optionName
-												);
-										}}
-									>
-										Add
-									</DialogClose>
-								</DialogFooter>
-							</DialogContent>
-
-							{/* <h4 className="sm:text-xs">
-								Write, {addOption} name you want
-								to add
-							</h4> */}
-
-							{/* <input
-							type="text"
-							placeholder={`${
-								addOption === "site"
-									? "Site Name"
-									: "Card name"
-							}`}
-							className="outline-none border-b pb-2 border-black sm:text-xs"
-							value={optionName}
-							onChange={(e) =>
-								setOptionName(e.target.value)
-							}
-						/>{" "}
-						<input
-							type="file"
-							placeholder={`${
-								addOption === "site"
-									? "Site Image"
-									: "Card Image"
-							}`}
-							className={`outline-none border-b pb-2 border-black sm:text-xs `}
-							onChange={({ target }) => {
-								if (target.files) {
-									setOptionFile(
-										target.files[0]
-									);
+						
+						{/* <DialogTrigger>Open</DialogTrigger> */}
+						<DialogContent>
+							<DialogHeader>
+								<DialogTitle>
+									{" "}
+									Write, {
+										addOption
+									}{" "}
+									name you want to add
+								</DialogTitle>
+								{/* <DialogDescription>
+								</DialogDescription> */}
+							</DialogHeader>
+							<input
+								type="text"
+								placeholder={`${
+									addOption === "site"
+										? "Site Name"
+										: "Card name"
+								}`}
+								className="outline-none border-b pb-2 border-black sm:text-xs"
+								value={optionName}
+								onChange={(e) =>
+									setOptionName(
+										e.target.value
+									)
 								}
-							}}
-						/>{" "} */}
-							{/* <button
-								onClick={() => {
-									// setListType("reduce");
-									setOverlay("hidden");
-									optionName &&
-										AddOption(
-											optionName
+							/>{" "}
+							<input
+								type="file"
+								placeholder={`${
+									addOption === "site"
+										? "Site Image"
+										: "Card Image"
+								}`}
+								className={`outline-none border-b pb-2 border-black sm:text-xs `}
+								onChange={({
+									target,
+								}) => {
+									if (target.files) {
+										setOptionFile(
+											target
+												.files[0]
 										);
+									}
 								}}
-								className="px-3 py-1 hover:bg-gray-200"
-							>
-								Add
-							</button> */}
-						{/* </div> */}
+							/>{" "}
+							<DialogFooter className=" gap-3">
+								<DialogClose className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50">
+									Cancel
+								</DialogClose>
+								<DialogClose
+									className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50"
+									onClick={() => {
+										optionName &&
+											AddOption(
+												optionName
+											);
+									}}
+								>
+									Add
+								</DialogClose>
+							</DialogFooter>
+						</DialogContent>
+	
 						<div className="flex gap-10 mb-8 sm:flex-col sm:mb-4 sm:gap-4">
 							<label
 								htmlFor="image"
@@ -636,7 +655,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 						</div>
 
 						<div className="grid grid-flow-row grid-cols-2 items-end gap-x-6 gap-y-3 sm:flex sm:flex-col">
-							<div className="mb-4 sm:mb-0 flex flex-col w-full gap-6 sm:gap-2">
+							<div className="mb-4 sm:mb-0 flex flex-col w-full gap-3 sm:gap-2">
 								<label
 									htmlFor="bank"
 									className="font-bold sm:text-[13px]"
@@ -682,7 +701,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 									</DialogTrigger>
 								</div>
 							</div>
-							<div className="mb-4 sm:mb-0 flex flex-col w-full gap-6 sm:gap-2">
+							<div className="mb-4 sm:mb-0 flex flex-col w-full gap-3 sm:gap-2">
 								<label
 									htmlFor="website"
 									className="font-bold sm:text-[13px]"
@@ -713,7 +732,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 									</DialogTrigger>
 								</div>
 							</div>
-							<div className=" flex flex-col w-full gap-6 sm:gap-2">
+							<div className=" flex flex-col w-full gap-3 sm:gap-2">
 								<label
 									htmlFor="directLink"
 									className="font-bold sm:text-[13px]"
@@ -734,7 +753,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 									placeholder="Enter direct link"
 								/>
 							</div>
-							<div className=" flex flex-col w-full gap-6 sm:gap-2">
+							<div className=" flex flex-col w-full gap-3 sm:gap-2">
 								<label
 									htmlFor="requirement"
 									className="font-bold sm:text-[13px]"
@@ -756,7 +775,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 									placeholder="Requirement"
 								/>
 							</div>
-							<div className=" flex flex-col w-full gap-6 sm:gap-2">
+							<div className=" flex flex-col w-full gap-3 sm:gap-2">
 								<label
 									htmlFor="address"
 									className="font-bold sm:text-[13px]"
@@ -777,7 +796,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 									placeholder="Enter Address"
 								/>
 							</div>
-							<div className=" flex flex-col w-full gap-6 sm:gap-2">
+							<div className=" flex flex-col w-full gap-3 sm:gap-2">
 								<label
 									htmlFor="address"
 									className="font-bold sm:text-[13px]"
@@ -798,7 +817,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 									placeholder="Enter Zip Code"
 								/>
 							</div>
-							<div className="mb-4 sm:mb-0 flex flex-col w-full gap-6 sm:gap-2">
+							<div className="mb-4 sm:mb-0 flex flex-col w-full gap-3 sm:gap-2">
 								<label
 									htmlFor="collaborator"
 									className="font-bold sm:text-[13px]"
@@ -830,6 +849,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 								</div>
 							</div>
 						</div>
+
 						<div className="ml-auto w-fit flex gap-3 mt-8 sm:mr-auto">
 							<button
 								onClick={() => router.back()}
@@ -848,6 +868,103 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 					</>
 				)}
 			</form>
+
+			<hr />
+
+			<h5 className="mt-3">Special Quantities</h5>
+
+			<form onSubmit={onSpecialRequestSubmit} className="grid grid-flow-row grid-cols-3 p-8 sm:px-0 gap-x-6">
+				<div className=" flex flex-col w-full gap-3 sm:gap-2 relative">
+					<label
+						htmlFor="special-user"
+						className="font-bold sm:text-[13px]"
+					>
+						Special User:
+					</label>
+					<input
+						required
+						id="special-user"
+						type="text"
+						value={specialUser}
+						onChange={(e) =>{
+								setSpecialUser(
+									e.target
+										.value
+								);
+								!usersVsibile && setUsersVisible(true);
+							}
+							
+						}
+						className=" border border-gray-300 rounded-full p-2 w-full sm:text-[10px]"
+						placeholder="Special Quantity"
+					/>
+
+					{ 	usersVsibile && 
+						<div className=" absolute z-10 bg-white border border-gray-300 shadow-md rounded-lg" style={{maxHeight: '150px', overflow: 'auto', width: '100%', top: '100%'}}>
+							{allSpecialUsers.map((usr)=>{
+								return <div className="cursor-pointer hover:bg-gray-100 p-2" onClick={()=>onUserClick(usr)}>
+									{usr.name}
+								</div>
+							})}
+						</div>
+					}
+					
+				</div>
+				<div className=" flex flex-col w-full gap-3 sm:gap-2">
+					<label
+						htmlFor="special-quantity"
+						className="font-bold sm:text-[13px]"
+					>
+						Special Quantity:
+					</label>
+					<input
+						required
+						id="special-quantity"
+						type="number"
+						value={specialQuantity}
+						onChange={(e) =>
+							setSpecialQuantity(
+								+e.target
+									.value
+							)
+						}
+						className=" border border-gray-300 rounded-full p-2 w-full sm:text-[10px]"
+						placeholder="Special Quantity"
+					/>
+				</div>
+				<div className="flex gap-3 align-items-end" style={{alignItems: 'end'}}>
+					
+					<button
+						className="w-64 p-2 text-white hover:bg-green-600 bg-primaryBgClr rounded-full sm:w-[8rem] sm:py-0 sm-px-0.5"
+						type="submit"
+						style={{maxHeight: '41px'}}
+					>
+						Add Quantity
+					</button>
+				</div>
+			</form>
+
+			<div className="overflow-x-auto bg-white shadow-md rounded-[8px]">
+				<table className="min-w-full divide-y divide-gray-200">
+					<thead className="bg-green-100">
+						<tr>
+							<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+							<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+							<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fullfilled</th>
+						</tr>
+					</thead>
+					<tbody className="bg-white divide-y divide-gray-200">
+						{special?.map((spec, index)=>{
+							return <tr className={ index%2 ? 'bg-white' : 'bg-gray-50'}>
+								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{spec.user.name}</td>
+								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{spec.quantity}</td>
+								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{spec.orderedQuantity || 0}</td>
+							</tr>
+						})}
+					</tbody>
+				</table>
+			</div>
+
 		</Dialog>
 	);
 };

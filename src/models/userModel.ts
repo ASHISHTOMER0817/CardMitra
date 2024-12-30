@@ -313,6 +313,27 @@ const lockSchema = new Schema({
     },
 });
 
+const specialQuantitySchema = new Schema({
+	product: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "products",
+		required: true
+	},
+	user: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "users",
+		required: true
+	},
+	quantity: {
+		type: Number,
+		required: true
+	},
+	orderedQuantity: {
+		type: Number
+	}
+})
+
+
 const Product = mongoose.models.products || mongoose.model("products", productSchema)
 const Otp = mongoose.models.otps || mongoose.model("otps", otpSchema)
 const Order = mongoose.models.orders || mongoose.model("orders", orderSchema)
@@ -327,4 +348,6 @@ const Site = mongoose.models.sites || mongoose.model('sites', siteSchema)
 
 const Lock = mongoose.models.locks || mongoose.model('locks', lockSchema)
 
-export { User, Password, Product, Otp, Order, Transactions, Options, Review, Card, Site, Lock }
+const SpecialQuantity = mongoose.models.specialQuantity || mongoose.model('specialQuantity', specialQuantitySchema)
+
+export { User, Password, Product, Otp, Order, Transactions, Options, Review, Card, Site, Lock, SpecialQuantity }
