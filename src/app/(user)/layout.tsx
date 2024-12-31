@@ -32,6 +32,7 @@ const options = [
 		activeIcon: dashboardActive,
 	},
 	{ icon: deals, name: "Deals", link: "/deals", activeIcon: dealsActive },
+	{ icon: deals, name: "Special Req.", link: "/specialQuantity", activeIcon: dealsActive },
 	{
 		icon: OdrHistory,
 		name: "Order History",
