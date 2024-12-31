@@ -108,5 +108,6 @@ export interface SpecialQuantity {
 	user: user,
 	product: productList,
 	quantity: number,
-	orderedQuantity: number
+	orderedQuantity: number,
+	_id: string
 }

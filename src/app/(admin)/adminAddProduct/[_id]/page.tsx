@@ -58,7 +58,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 	const [optionFile, setOptionFile] = useState<File>();
 	const [updateOptions, setUpdateOptions] = useState(false);
 	const [existingImg, setExistingImage] = useState("");
-	const [buttonClick, setButtonClick] = useState(false)
+	const [buttonClick, setButtonClick] = useState(false);
 	const [returnAmt, setReturnAmt] = useState<number>();
 
 	const [specialQuantity, setSpecialQuantity] = useState<number>();
@@ -330,6 +330,24 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 		setSpecialUserId(usr._id);
 		setUsersVisible(false);
 	}
+
+	const onSpecialDelete = async (id: string) =>{
+		try {
+			const response = await axios.post(`/api/admin/deleteSpecialQuantity`, {id});
+
+			if(response.data.success){	
+				Popup("success", "Deleted successfully");
+				fetchSpecials();
+			}
+			
+			if (response.data.success !== true) {
+				Popup("error", "server error, please refresh");
+			}
+		} catch {
+			Popup("error", "server error, please refresh");
+		}
+	}
+
 
 	return (
 		<Dialog>
@@ -951,6 +969,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 							<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
 							<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
 							<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fullfilled</th>
+							<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
 						</tr>
 					</thead>
 					<tbody className="bg-white divide-y divide-gray-200">
@@ -959,6 +978,9 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{spec.user.name}</td>
 								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{spec.quantity}</td>
 								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{spec.orderedQuantity || 0}</td>
+								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{!spec.orderedQuantity && 
+									<button className="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded-full w-36 shadow-md transition duration-300" onClick={()=>{onSpecialDelete(spec._id)}}>Delete</button> }
+								</td>
 							</tr>
 						})}
 					</tbody>
