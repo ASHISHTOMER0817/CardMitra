@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
             if (specialQuantities.length === 0) {
                 return NextResponse.json({
                     message: 'No special quantity records found for the specified user',
-                    success: false,
+                    success: true,
                 });
             }
 
@@ -70,7 +70,7 @@ export async function GET(request: NextRequest) {
         if (specialQuantities.length === 0) {
             return NextResponse.json({
                 message: 'No special quantity records found for the specified product',
-                success: false,
+                success: true,
             });
         }
 

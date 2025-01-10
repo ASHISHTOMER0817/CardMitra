@@ -4,15 +4,11 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Popup from "./Popup";
 
-const OrderForm = ({ objectId }: { objectId: string }) => {
+const OrderForm = ({ objectId, special=false }: { objectId: string, special: boolean }) => {
 	const [orderNumber, setOrderNumber] = useState("");
 	const [ordererName, setordererName] = useState("");
 	const router = useRouter();
 	const [disabled, setDisabled] = useState(false);
-
-	// const handleOrderNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
-	// 	setOrderNumber(e.target.value);
-	// };
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -24,17 +20,22 @@ const OrderForm = ({ objectId }: { objectId: string }) => {
 				ordererName,
 				objectId,
 			};
-			const response = await axios.post("/api/users/orderForm", {
+			const response = await axios.post(`/api/users/orderForm?special=${special}`, {
 				formData,
 			});
 			const message = response.data.message;
 			const status = response.data.status;
+			const success = response.data.success;
 
 			if (status === 400) {
 				Popup("info", message);
 				return;
 			}
 			if (status === 500) {
+				Popup("error", message);
+				return;
+			}
+			if(!success){
 				Popup("error", message);
 				return;
 			}

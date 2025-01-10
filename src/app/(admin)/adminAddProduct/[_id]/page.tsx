@@ -889,7 +889,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 
 			<hr />
 
-			<h5 className="mt-3">Special Quantities</h5>
+			<h5 className="mt-3 font-semibold">Special Quantities</h5>
 
 			<form onSubmit={onSpecialRequestSubmit} className="grid grid-flow-row grid-cols-3 p-8 sm:px-0 gap-x-6">
 				<div className=" flex flex-col w-full gap-3 sm:gap-2 relative">
@@ -914,7 +914,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 							
 						}
 						className=" border border-gray-300 rounded-full p-2 w-full sm:text-[10px]"
-						placeholder="Special Quantity"
+						placeholder="Special User"
 					/>
 
 					{ 	usersVsibile && 

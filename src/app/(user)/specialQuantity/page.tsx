@@ -72,10 +72,12 @@ const Deals = () => {
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.address}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{quantity}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{orderedQuantity || 0}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{orderedQuantity != quantity && 
-                                                    <Link href={`/specialQuantity/${_id}`} />
-                                                }
-                                                    
+                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                    {orderedQuantity != quantity && 
+                                                        <Link href={`/specialQuantity/${_id}`} className="text-primaryBgClr text-base sm:text-xs">
+                                                            Place Order
+					                                    </Link>
+                                                    }
                                                 </td>
                                             </tr>
                                                     

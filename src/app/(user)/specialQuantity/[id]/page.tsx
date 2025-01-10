@@ -24,23 +24,7 @@ const Placeorder = ({ params }: { params: { id: string } }) => {
 			try {
 				console.log(params.id);
 				const response = await axios.get(
-					`/api/users/productData?query=${params.id}`
-				);
-
-				console.log(response.data.message, response.data.data);
-			} catch (error) {
-				console.log(error);
-			}
-		}
-		getData();
-	}, [params.id]);
-
-	useEffect(() => {
-		async function getData() {
-			try {
-				console.log(params.id);
-				const response = await axios.get(
-					`/api/users/productData?query=${params.id}`
+					`/api/users/productData?query=${params.id}&special=true`
 				);
 				console.log(params.id);
 				setData(response.data.data);
@@ -94,7 +78,7 @@ const Placeorder = ({ params }: { params: { id: string } }) => {
 							Order Form
 						</div>
 						<hr className="my-5" />
-						<OrderForm objectId={params.id} />
+						<OrderForm objectId={params.id} special/>
 					</div>
 				</section>
 
