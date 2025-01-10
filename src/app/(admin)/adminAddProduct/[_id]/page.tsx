@@ -919,8 +919,8 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 
 					{ 	usersVsibile && 
 						<div className=" absolute z-10 bg-white border border-gray-300 shadow-md rounded-lg" style={{maxHeight: '150px', overflow: 'auto', width: '100%', top: '100%'}}>
-							{allSpecialUsers.map((usr)=>{
-								return <div className="cursor-pointer hover:bg-gray-100 p-2" onClick={()=>onUserClick(usr)}>
+							{allSpecialUsers.map((usr, index)=>{
+								return <div key={'addProduct'+index} className="cursor-pointer hover:bg-gray-100 p-2" onClick={()=>onUserClick(usr)}>
 									{usr.name}
 								</div>
 							})}
@@ -974,7 +974,7 @@ const ProductForm = ({ params }: { params: { _id: string } }) => {
 					</thead>
 					<tbody className="bg-white divide-y divide-gray-200">
 						{special?.map((spec, index)=>{
-							return <tr className={ index%2 ? 'bg-white' : 'bg-gray-50'}>
+							return <tr key={'addProduct'+index} className={ index%2 ? 'bg-white' : 'bg-gray-50'}>
 								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{spec.user.name}</td>
 								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{spec.quantity}</td>
 								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{spec.orderedQuantity || 0}</td>
