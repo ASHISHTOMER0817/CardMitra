@@ -141,6 +141,7 @@ const OrderList = ({ params }: { params: { odrList: string } }) => {
 				</div>
 			)}
 			<h5 className="text-left font-semibold mt-6 my-4">Order Details</h5>
+			
 			<ProductOrderList _id={_id} />
 		</div>
 	);
