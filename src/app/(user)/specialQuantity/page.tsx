@@ -67,7 +67,7 @@ const Deals = () => {
                                     ) => {
                                         return (
                                                  
-                                            <tr className={ index%2 ? 'bg-white' : 'bg-gray-50'}>
+                                            <tr key={'SP'+index} className={ index%2 ? 'bg-white' : 'bg-gray-50'}>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.name}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.address}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{quantity}</td>
