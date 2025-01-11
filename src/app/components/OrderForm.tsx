@@ -4,7 +4,7 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Popup from "./Popup";
 
-const OrderForm = ({ objectId, special=false }: { objectId: string, special: boolean }) => {
+const OrderForm = ({ objectId, special=false }: { objectId: string, special?: boolean }) => {
 	const [orderNumber, setOrderNumber] = useState("");
 	const [ordererName, setordererName] = useState("");
 	const router = useRouter();
