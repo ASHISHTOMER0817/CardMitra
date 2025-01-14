@@ -4,6 +4,7 @@ import axios from "axios";
 import * as XLSX from "xlsx";
 import { order } from "@/interface/productList";
 import Popup from "@/app/components/Popup";
+import { useRouter } from "next/navigation";
 
 // Define the result type
 interface SyncResult {
@@ -140,8 +141,13 @@ const SyncOrders: React.FC = () => {
 
       // Handle success response
 
+      const router = useRouter();
+
       if (response.data.success) {
         Popup("success", response.data.message);
+        setTimeout(() => {
+          router.refresh(); // Refresh the page in Next.js
+        }, 2000); // Adjust the delay as needed
       } else {
         Popup("error", response.data.message);
       }
