@@ -76,7 +76,7 @@ const AdminDashboard = () => {
 			if (response.data.success) {
 				Popup("success", response.data.message);
 			} else {
-				Popup("error", response.data.success);
+				Popup("error", response.data.message);
 			}
 		} catch {
 			setDisabled(false);
@@ -102,7 +102,16 @@ const AdminDashboard = () => {
 			<section className="">
 				<h3 className=" font-semibold mb-3">Dashboard</h3>
 				<div className="flex justify-start gap-2 sm:gap-1">
-					<button
+					<div
+						className="px-12 py-4 rounded-big bg-[#F3F3F3] md:min-w-[26%] sm:flex sm:flex-col sm:justify-between sm:items-center sm:py-3 sm:px-[6px]"
+					>
+						
+						<Link href={'/syncOrders'} className="sm:text-[10px] leading-none text-center">
+							<MdOutlineCloudSync className="w-6 h-6 text-primaryBgClr mx-auto sm:h-[17px]" />
+							<span>Sync orders</span>
+						</Link>
+					</div>
+					{/* <button
 						className="px-12 py-4 rounded-big bg-[#F3F3F3] md:min-w-[26%] sm:flex sm:flex-col sm:justify-between sm:items-center sm:py-3 sm:px-[6px]"
 						// href={"/otpList"}
 						disabled={disabled}
@@ -112,7 +121,7 @@ const AdminDashboard = () => {
 						<div className="sm:text-[10px] leading-none text-center">
 							Sync orders
 						</div>
-					</button>
+					</button> */}
 					<div
 						// className=" text-center px-20 py-8 rounded-3xl  bg-[#F3F3F3] cursor-pointer md:min-w-[20%] sm:flex sm:flex-col sm:justify-center sm:items-center sm:pt-0 sm:pb-1 sm:px-1 sm:leading-none"
 						className="px-12 py-4 rounded-big bg-[#F3F3F3] md:min-w-[26%] sm:flex sm:flex-col sm:justify-between sm:items-center sm:py-3 sm:px-[6px]"
