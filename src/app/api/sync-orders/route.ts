@@ -21,7 +21,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     // Base query
     let query: FilterQuery<OrderInterface> = {
       trackingID: { $in: trackingIds },
-      status: { $ne: "delivered" },
+      delivered: { $ne: "delivered" },
     };
 
     if (role === "collaborator") {
