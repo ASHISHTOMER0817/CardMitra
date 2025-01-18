@@ -6,7 +6,7 @@ export async function GET(request:NextRequest) {
       try{
             const reqBody = await request.json()
             const {email} = reqBody;
-             console.log(reqBody)
+            // console.log(reqBody)
             const user = await User.findOne({email})
             if(user){
                   //Change the anchor tag !important

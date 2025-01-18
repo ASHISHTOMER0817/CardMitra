@@ -18,6 +18,8 @@ const SyncOrders: React.FC = () => {
   const [result, setResult] = useState<SyncResult>({ matchedOrders: [], unmatchedIds: [] });
   const [error, setError] = useState<string | null>(null);
 
+  const router = useRouter();
+  
   // Handle Excel File Upload
 //   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
 //     const file = e.target.files?.[0];
@@ -140,8 +142,6 @@ const SyncOrders: React.FC = () => {
       });
 
       // Handle success response
-
-      const router = useRouter();
 
       if (response.data.success) {
         Popup("success", response.data.message);

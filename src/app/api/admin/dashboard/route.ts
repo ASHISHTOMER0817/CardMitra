@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
 
             const loggedInUser = await GetToken();
 
-            console.log('step 1');
+            // console.log('step 1');
 
             if (!loggedInUser._id) {
                   return NextResponse.json({
@@ -58,13 +58,13 @@ export async function GET(request: NextRequest) {
                         // const response = await axios.get('https://script.google.com/macros/s/AKfycbwA7ltqd1DatJM0Od_rteBT1tgUy3msAQoItJZ6n0-csJDTZnC5fluiiU91C3wSKR0/exec');
                         const response = await axios.get('https://script.google.com/macros/s/AKfycbxhnf1drVrRutVdysp_FsOsrW0WLfyz_OGgU2jvZO86HBncHkY6vyOtHYkAeVFCu3Kw/exec');
                         otpList = response.data.data;
-                        console.log('try part', otpList);
+                        // console.log('try part', otpList);
                   } catch (error) {
                         console.error('Error fetching data from Google Sheets:', error);
                         return NextResponse.json({ message: 'Failed to fetch data from Google Sheets', success: false });
                   }
                   let testBulkOprations = [];
-                  console.log(otpList.length, 'this is otplist length')
+                  // console.log(otpList.length, 'this is otplist length')
                   for (let i = 1; i < otpList.length; i++) {
 
                         if (!mongoose.Types.ObjectId.isValid(otpList[i].OrderID.toString()) || otpList[i].status === 'undelivered') {
@@ -94,11 +94,11 @@ export async function GET(request: NextRequest) {
 
                   }
 
-                  console.log(testBulkOprations, 'bulkOperations')
+                  // console.log(testBulkOprations, 'bulkOperations')
                   // Execute bulkWrite
                   try {
                         const result = await Order.bulkWrite(testBulkOprations);
-                        console.log('Bulk write result:', result);
+                        // console.log('Bulk write result:', result);
                         return NextResponse.json({
                               message: "sync successful", success: true,
                         })
@@ -217,7 +217,7 @@ export async function GET(request: NextRequest) {
                   const startDate = checkDate(searchparams.get('startDate') || '') || last7days;
                   const endDate = checkDate(searchparams.get('endDate') || '') || newDate;
 
-                  console.log('start date and end date : ', startDate, endDate);
+                  // console.log('start date and end date : ', startDate, endDate);
 
                   // Build product filter based on role
                   const productFilter:ProductFilter = { show: true, Date: { $gte: startDate, $lte: endDate } };
@@ -279,7 +279,7 @@ export async function GET(request: NextRequest) {
             }
             else if (_id) {
                   const product = await Product.findOne({ _id: _id }).select('-image')
-                  console.log('else if condition running', _id)
+                  // console.log('else if condition running', _id)
                   if (operation === 'remove') {
 
                         // await Product.findOneAndUpdate({ _id: _id }, { $set: { deals: false } })

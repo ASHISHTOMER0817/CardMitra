@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
         const { productId } = reqBody;
         const { _id } = await GetToken();
 
-        console.log('step 1');
+        // console.log('step 1');
 
         if (!_id) {
             return NextResponse.json({
@@ -22,16 +22,16 @@ export async function POST(request: NextRequest) {
             });
         }
 
-        console.log('step 2');
+        // console.log('step 2');
         
         const userObjectId = new mongoose.Types.ObjectId(_id);
         
-        console.log('step 3');
+        // console.log('step 3');
 
         // Check if there's an existing lock for the user and product
         const existingLock = await Lock.findOne({ userId: userObjectId, productId });
 
-        console.log('step 4', existingLock);
+        // console.log('step 4', existingLock);
         
         if (!existingLock) {
             return NextResponse.json({
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
             });
         }
         
-        console.log('step 5');
+        // console.log('step 5');
         
         // Delete the existing lock
         await Lock.findByIdAndDelete(existingLock._id);
@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
         product.requirement += 1;
         await product.save();
 
-        console.log('step 6');
+        // console.log('step 6');
 
         return NextResponse.json({
             message: "Lock successfully released.",

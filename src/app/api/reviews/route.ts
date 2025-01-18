@@ -14,14 +14,14 @@ export async function GET(request: NextRequest) {
             const review = request.nextUrl.searchParams.get('review')
             if (review === 'receive') {
                   const newReview = await Review.create({ user: objectId, review: review })
-                  console.log(newReview)
+                  // console.log(newReview)
                   return NextResponse.json({
                         message: 'Thanks for the review', success: true, status: 200
                   })
             }
             if (review === 'show') {
                   const allReviews = await Review.find({}).populate('user')
-                  console.log(allReviews)
+                  // console.log(allReviews)
                   return NextResponse.json({
                         message: 'Thanks for the review', success: true, status: 200, data: allReviews
                   })

@@ -242,7 +242,7 @@ export async function POST(request: NextRequest) {
 
             let collabDoc = await User.findOne({_id : collaboratorjson.value})
 
-            console.log('collabDoc: ', collabDoc, collabDoc._id);
+            // console.log('collabDoc: ', collabDoc, collabDoc._id);
 
             // Find or create card documents
             const cardIds = await Promise.all(cards.map(async (card) => {

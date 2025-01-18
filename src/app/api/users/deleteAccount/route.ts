@@ -11,7 +11,7 @@ export async function DELETE(request:NextRequest){
             const searchParams = request.nextUrl.searchParams
             const _id = searchParams.get("objectId")
             const deletedUser = await User.findOneAndDelete({_id:_id})
-            console.log(deletedUser)
+            // console.log(deletedUser)
             return NextResponse.json({
                   message:"Successfully deleted", success: true
             })

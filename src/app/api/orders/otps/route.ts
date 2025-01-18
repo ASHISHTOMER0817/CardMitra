@@ -20,14 +20,14 @@ export async function GET(request: NextRequest) {
     const endOfDayUTC = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 23, 59, 59, 999));
 
     // Log to check the start and end times in UTC
-    console.log("Start of Day (UTC):", startOfDayUTC);
-    console.log("End of Day (UTC):", endOfDayUTC);
+    // console.log("Start of Day (UTC):", startOfDayUTC);
+    // console.log("End of Day (UTC):", endOfDayUTC);
 
 
     if (role === "admin") {
       // Query to find all undelivered orders where OTP exists and otpDate is today's date
       const newOrder = await Order.find({otpDate: {$gte: startOfDayUTC, $lt: endOfDayUTC}})
-      console.log('new: ', newOrder);
+      // console.log('new: ', newOrder);
       const orders = await Order.find({
         delivered: "undelivered",
         otp: { $exists: true, $ne: null },

@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
                   // if (deliveryStatus === 'true') { updateOrder.delivered = 'unverified' }
                   const updatedOrder = await updateOrder.save()
 
-                  console.log('2nd console', updatedOrder)
+                  // console.log('2nd console', updatedOrder)
                   const order: order | null = await Order.findOne({ _id: odrId }).populate({
                         path: 'product',
                         populate: [
@@ -32,14 +32,14 @@ export async function GET(request: NextRequest) {
 
                   let orders;
                   if (order) { orders = bufferToStringOrders(order) }
-                  console.log(orders, 'after converting buffer to string')
+                  // console.log(orders, 'after converting buffer to string')
                   return NextResponse.json({
                         data: orders, message: 'User data successfully retrieved', success: true
                   })
             } else if (productId) {
-                  console.log('objectId')
+                  // console.log('objectId')
                   const orderList = await Order.find({ product: productId }).populate('user')
-                  console.log('this is orderList', orderList)
+                  // console.log('this is orderList', orderList)
                   return NextResponse.json({
                         message: "Showing orderList", success: false, data: orderList
                   })

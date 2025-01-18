@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
         const { orderId, status } = reqBody;
         const { _id, role } = await GetToken();
 
-        console.log('step 1');
+        // console.log('step 1');
 
         if (!_id) {
             return NextResponse.json({
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
             });
         }
 
-        console.log('step 2');
+        // console.log('step 2');
 
         // Step 2: Check if the user is an admin
         if (role !== 'admin') {

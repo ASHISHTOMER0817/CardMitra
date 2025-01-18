@@ -18,20 +18,20 @@ export async function GET(request: NextRequest) {
             const actionString = request.nextUrl.searchParams.get('action')
 
             if (trackingOrzip) {
-                  console.log('yes it is woring')
+                  // console.log('yes it is woring')
                   if (trackingOrzip.length === 6) {
-                        console.log('fi condition')
+                        // console.log('fi condition')
                         const otpList = await Otp.find({ zipCode: trackingOrzip }).populate("userObjectId")
-                        console.log(otpList, 'th is the that product')
+                        // console.log(otpList, 'th is the that product')
                         return NextResponse.json({
                               message: "everything is fine", success: true, data: otpList
                         })
                   } else {
-                        console.log('esle condition')
+                        // console.log('esle condition')
                         const otpList = await Otp.find({ trackingId: trackingOrzip }).populate("userObjectId")
-                        console.log(otpList, 'th is the that product')
+                        // console.log(otpList, 'th is the that product')
 
-                        console.log('hello')
+                        // console.log('hello')
 
                         return NextResponse.json({
                               message: "everything is fine", success: true, data: otpList
@@ -39,25 +39,25 @@ export async function GET(request: NextRequest) {
                   }
             }
 
-            console.log('crossed if condition')
+            // console.log('crossed if condition')
 
             if (dateParams) {
                   let dates = JSON.parse(dateParams)
-                  console.log(typeof dates.startDate, dates.startDate, new Date(dates.startDate), new Date())
+                  // console.log(typeof dates.startDate, dates.startDate, new Date(dates.startDate), new Date())
 
 
                   // Obtain the local time zone offset in minutes
 
                   const range = convertDates(dates.startDate, dates.endDate)
                   const endDate = range.endDate
-                  console.log('route', range.startDate, new Date(endDate.toDate()),)
+                  // console.log('route', range.startDate, new Date(endDate.toDate()),)
                   if (actionString && actionString !== '' && JSON.parse(actionString)._id) {
-                        console.log('if conditon')
+                        // console.log('if conditon')
 
                         const actionObject = JSON.parse(actionString)
                         // otpList document
                         const otpDocument = await Otp.findOneAndUpdate({ _id: actionObject._id }, { $set: { delivered: actionObject.label } })
-                        console.log(otpDocument)
+                        // console.log(otpDocument)
                         await Order.findOneAndUpdate({ _id: otpDocument.orderObjectId }, { $set: { delivered: actionObject.label } })
                         const otpList = await Otp.find({
                               submittedAt: {
@@ -72,7 +72,7 @@ export async function GET(request: NextRequest) {
                               data: otpList,
                         });
                   } else {
-                        console.log('eslse conition', typeof range.startDate, typeof range.endDate)
+                        // console.log('eslse conition', typeof range.startDate, typeof range.endDate)
 
                         const otpList = await Otp.find({
                               submittedAt: {

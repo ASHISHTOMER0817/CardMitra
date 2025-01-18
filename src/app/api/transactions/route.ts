@@ -9,11 +9,11 @@ export async function GET(request: NextRequest) {
             // const user = request.nextUrl.searchParams.get('userPage')
             const _id = request.nextUrl.searchParams.get('_id')
             // console.log(_id)
-            console.log(_id)
+            // console.log(_id)
             if (!_id) {
-                  console.log('if condition running')
+                  // console.log('if condition running')
                   const transactions = await Transactions.find({}).sort({ dateOfPayment: -1 }).populate('user')
-                  console.log(transactions)
+                  // console.log(transactions)
                   return NextResponse.json({
                         message: 'You are being shown all the transactions', success: true, data: transactions
                   })

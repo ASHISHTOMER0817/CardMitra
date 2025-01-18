@@ -19,9 +19,9 @@ export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json();
         const { email, password, remember } = reqBody.user;
-        console.log('this is email', email, 'this is pswrd', password)
+        // console.log('this is email', email, 'this is pswrd', password)
 
-        console.log(email.toUpperCase())
+        // console.log(email.toUpperCase())
         let user;
         const existingUser = await User.findOne({ email: lowerCaseFirstLetter(email) });
         const uppercaseUser = await User.findOne({ email: capitalizeFirstLetter(email) })
@@ -53,12 +53,12 @@ export async function POST(request: NextRequest) {
             });
         }
 
-        console.log('step 3');
+        // console.log('step 3');
 
         // If user exists and password is correct
         const tokenData = { email, _id: user._id, role: user.role };
-        console.log(tokenData, 'and', remember);
-        console.log('Password verified:', verifyPassword);
+        // console.log(tokenData, 'and', remember);
+        // console.log('Password verified:', verifyPassword);
 
         const secret = new TextEncoder().encode(process.env.TOKEN_SECRET_KEY);
         const expirationTime = remember ? '7 days' : '1h';
@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
             .setExpirationTime(expirationTime)
             .sign(secret);
 
-        console.log(joseToken);
+        // console.log(joseToken);
 
         let time = remember ? 7 * 24 * 60 * 60 * 1000 : 60 * 60 * 1000;
         cookies().set('joseToken', joseToken, { expires: new Date(Date.now() + time) });

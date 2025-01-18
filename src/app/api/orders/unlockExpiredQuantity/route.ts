@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        console.log(`Found ${expiredLocks.length} expired locks.`);
+        // console.log(`Found ${expiredLocks.length} expired locks.`);
 
         // Iterate over each expired lock to increment product quantity and delete the lock
         for (const lock of expiredLocks) {
@@ -38,14 +38,14 @@ export async function POST(request: NextRequest) {
             if (product) {
                 product.requirement += 1; // Increment the quantity
                 await product.save();   // Save the updated product
-                console.log(`Product ${productId} quantity incremented.`);
+                // console.log(`Product ${productId} quantity incremented.`);
             } else {
                 console.log(`Product with ID ${productId} not found.`);
             }
 
             // Delete the lock after processing the product update
             await Lock.findByIdAndDelete(lock._id);
-            console.log(`Lock ${lock._id} deleted.`);
+            // console.log(`Lock ${lock._id} deleted.`);
         }
 
         return new Response(

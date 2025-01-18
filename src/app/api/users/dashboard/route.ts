@@ -17,14 +17,14 @@ export async function GET(request: NextRequest) {
             const { _id } = await getToken()
             const orderObjectId = request.nextUrl.searchParams.get('query')
             if (orderObjectId) {
-                  console.log(orderObjectId, 'what is this???')
+                  // console.log(orderObjectId, 'what is this???')
                   const otpAction = await Order.findOneAndUpdate({ _id: orderObjectId }, { $set: { acknowledgment: true } })
-                  console.log(otpAction)
+                  // console.log(otpAction)
             }
 
             // Convert the userId string to a mongoose.Schema.Types.ObjectId object
             const userObjectId = new mongoose.Types.ObjectId(_id);
-            console.log(userObjectId)
+            // console.log(userObjectId)
             // const immediateActionOrders = await Order.find({
             //       _id: userObjectId, $or: [
             //             { delivered: 'wrong OTP' },
@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
             //       ], acknowledgment: false
             // }).populate('product')
             // console.log(immediateActionOrders, 'otpaction is this')
-            console.log('till here')
+            // console.log('till here')
             const order: order = await Order.find({ user: userObjectId })
                   .sort({ orderedAt: -1 })
                   .populate({
@@ -44,11 +44,11 @@ export async function GET(request: NextRequest) {
                   })
                   // .limit(3) // Limit the number of documents to 3
                   .lean();
-            console.log(order, "so this is order")
+            // console.log(order, "so this is order")
 
             let orders;
             if (order) { orders = bufferToStringOrders(order) }
-            console.log('these are converted', orders)
+            // console.log('these are converted', orders)
 
 
 

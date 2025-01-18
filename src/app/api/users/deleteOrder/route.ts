@@ -20,7 +20,7 @@ export const DELETE = async (request: NextRequest) => {
             const order = await Order.findOne({ _id: orderId, user: userObjectId });
 
             const odr = await Order.findOne({_id: orderId});
-            console.log('odr: ', odr, 'user: ', userObjectId);
+            // console.log('odr: ', odr, 'user: ', userObjectId);
 
             if (!order) {
                 return NextResponse.json({

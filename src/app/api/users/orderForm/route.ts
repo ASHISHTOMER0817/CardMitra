@@ -25,7 +25,7 @@ export const POST = async (request: NextRequest) => {
       // Check if a specialQuantity exists for this user and product
       const specialQuantity = await SpecialQuantity.findOne({ _id: spec_id });
 
-      console.log('speci: ', specialQuantity);
+      // console.log('speci: ', specialQuantity);
 
       // If no specialQuantity is found, return an error
       if (!specialQuantity) {

@@ -6,12 +6,12 @@ import FormData from 'form-data';
 export async function POST(request: NextRequest) {
       try {
             const { email } = await request.json()
-            console.log(email)
+            // console.log(email)
             const mailgun = new Mailgun(FormData)
 
             const otp = Math.floor(Math.random() * 1000000);
             otp.toString().padStart(6, '0');
-            console.log(otp)
+            // console.log(otp)
 
 
 

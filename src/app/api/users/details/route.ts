@@ -8,7 +8,7 @@ Database()
 
 export async function GET(request: NextRequest) {
       try {
-            console.log('hello')
+            // console.log('hello')
             const searchparams = request.nextUrl.searchParams
 
             // Searchparams
@@ -19,9 +19,9 @@ export async function GET(request: NextRequest) {
             // // if(disApprove){
             // //       const user
             // // }
-            console.log('thisis userId', userId)
+            // console.log('thisis userId', userId)
             const adminSideUserId = userId;
-            console.log('passing value', adminSideUserId)
+            // console.log('passing value', adminSideUserId)
             // const listType = searchparams.get('listType')
             let amount = searchparams.get('paid')
             let orderList;
@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
                   if (!userId) userId = _id
                   else {
                         const user = await User.findOne({ _id: _id })
-                        console.log('basicinfo', user)
+                        // console.log('basicinfo', user)
                         return NextResponse.json({
                               message: "Returning basic info about the user", success: true, data: user
                         })
@@ -65,13 +65,13 @@ export async function GET(request: NextRequest) {
             // console.log('complete data', deliveredData)
 
             if (amount && +amount > 0) {
-                  console.log(amount)
+                  // console.log(amount)
                   orderList = await Order.updateMany(
                         { user: userId, delivered: 'delivered', paid: null },
                         { $set: { paid: new Date() } }
                   );
 
-                  console.log(orderList)
+                  // console.log(orderList)
                   // console.log('this is -- ', userId, '--', totalAmt - +amount!)
                   user.unpaid = totalAmt - +amount!
                   user.paid += +amount!
@@ -91,7 +91,7 @@ export async function GET(request: NextRequest) {
                   })
             }
             else {
-                  console.log('else condition')
+                  // console.log('else condition')
                   return NextResponse.json({
                         message: "List of Transactions ", success: true, data: !adminSideUserId ? { user, verifiedAmt, totalUnVerifiedAmt } : { user, orderList, totalAmt, unpaid }
                   })

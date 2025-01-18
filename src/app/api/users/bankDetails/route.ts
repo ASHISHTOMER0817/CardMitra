@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
             }
             // const user = await User.updateOne({ _id: _id }, { $set: { ifsc, upi, accountNo, name, email, contact } });
             const user = await User.findOne({ _id: _id })
-            console.log('this user', user)
+            // console.log('this user', user)
             const fieldNames = ['name', 'email', 'contact', 'ifsc', 'accountNo', 'upi'];
 
             for (let i = 0; i < arr.length; i++) {

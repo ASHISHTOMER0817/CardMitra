@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
         const { productId } = reqBody;
         const { _id } = await GetToken();
 
-        console.log('step 1');
+        // console.log('step 1');
 
         if (!_id) {
             return NextResponse.json({
@@ -22,11 +22,11 @@ export async function POST(request: NextRequest) {
             });
         }
 
-        console.log('step 2');
+        // console.log('step 2');
         
         const userObjectId = new mongoose.Types.ObjectId(_id);
         
-        console.log('step 3');
+        // console.log('step 3');
         // Check if the product exists
         const product = await Product.findOne({ _id: productId });
         if (!product) {
@@ -36,12 +36,12 @@ export async function POST(request: NextRequest) {
                 status: 404,
             });
         }
-        console.log('step 4');
+        // console.log('step 4');
         
         // Check if there's an existing lock for the user and product
         let existingLock = await Lock.findOne({ userId: userObjectId, productId });
 
-        console.log('step 5', existingLock);
+        // console.log('step 5', existingLock);
         
         if (existingLock) {
             // If the existing lock is expired, remove it
@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
             }
         }
 
-        console.log('step 6');
+        // console.log('step 6');
         
         // Check if the product quantity is greater than zero
         if (product.requirement <= 0) {
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
             });
         }
         
-        console.log('step 7');
+        // console.log('step 7');
         // Create a new lock if no active lock exists
         const lock = new Lock({
             userId: userObjectId,
@@ -81,11 +81,11 @@ export async function POST(request: NextRequest) {
 
         await lock.save();
 
-        console.log('product quantity before: ', product.requirement);
+        // console.log('product quantity before: ', product.requirement);
         product.requirement -= 1;
         await product.save()
 
-        console.log('step 8, product quantity later: ', product.requirement);
+        // console.log('step 8, product quantity later: ', product.requirement);
 
         return NextResponse.json({
             message: "Lock successfully created.",

@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
         const transactionId = body.transactionID;
         const newAmount = parseFloat(body.newAmt || '0');
 
-        console.log('body: ', body);
+        // console.log('body: ', body);
         
         
         if (!transactionId || !newAmount) {

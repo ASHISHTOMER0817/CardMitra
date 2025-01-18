@@ -4,7 +4,7 @@ import { NextResponse } from "next/server"
 export async function DELETE() {
       try {
             const token = cookies().delete('joseToken')
-            console.log(token)
+            // console.log(token)
             return NextResponse.json({
                   message: 'Logged Out', success: true
             })

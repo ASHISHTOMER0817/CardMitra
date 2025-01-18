@@ -6,14 +6,14 @@ import GetToken from "@/app/components/getToken";
 Database()
 export async function POST(request: NextRequest) {
       try {
-            console.log("reached server")
+            // console.log("reached server")
             const { review } = await request.json()
             const { _id } = await GetToken()
-            console.log(review, _id)
+            // console.log(review, _id)
             if (review) {
 
                   const newReview = await Review.updateOne({ user: _id }, { $set: { review } }, { upsert: true })
-                  console.log(newReview)
+                  // console.log(newReview)
                   return NextResponse.json({
                         message: 'review added', success: true
                   })

@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
             }).lean()
 
             const orderList = bufferToStringOrders(orderHistory)
-            console.log(orderList)
+            // console.log(orderList)
 
             return NextResponse.json({ data: orderList, message: 'User data successfully retrieved', success: true });
 

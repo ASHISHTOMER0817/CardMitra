@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
         // Retrieve user token to ensure authorized access
         const { _id } = await GetToken();
 
-        console.log('step 1');
+        // console.log('step 1');
 
         if (!_id) {
             return NextResponse.json({
@@ -27,16 +27,16 @@ export async function POST(request: NextRequest) {
                 status: 401,
             });
         }
-        console.log('step 2');
+        // console.log('step 2');
 
         // Convert user ID into a valid MongoDB ObjectId
         const userObjectId = new mongoose.Types.ObjectId(_id);
 
-        console.log('step 3');
+        // console.log('step 3');
         // Find the order in the database by productId
         const order = await Order.findOne({ _id: orderId, user: userObjectId });
 
-        console.log('step 4');
+        // console.log('step 4');
 
         if (!order) {
             return NextResponse.json({
@@ -46,13 +46,13 @@ export async function POST(request: NextRequest) {
             });
         }
 
-        console.log('step 5');
+        // console.log('step 5');
 
         order.deliveryDate = deliveryDate;
         order.delivered = 'unverified';
         await order.save();
 
-        console.log('step 6');
+        // console.log('step 6');
 
         return NextResponse.json({
             message: "Delivery information updated successfully.",
