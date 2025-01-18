@@ -20,8 +20,10 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     // Base query
     let query: FilterQuery<OrderInterface> = {
-      trackingID: { $in: trackingIds },
       delivered: { $ne: "delivered" },
+      $or: trackingIds.map((id) => ({
+        trackingID: { $regex: `${id}$`, $options: "i" }, // Ends with 'id'
+      })),
     };
 
     if (role === "collaborator") {

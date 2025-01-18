@@ -1,5 +1,5 @@
 import { order } from "@/interface/productList";
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 
 
 const exportTableToExcel = () => {
@@ -43,10 +43,23 @@ interface OTPTableProps {
   
 
 const OTPTable: React.FC<OTPTableProps> = ({ orders }) =>{
+
+    const [visibleOrders, setVisibleOrders] = useState(orders);
+
+    const onSearchOtp = (e:ChangeEvent<HTMLInputElement>) =>{
+        let val = e.target.value;
+
+        setVisibleOrders(()=>{
+            return orders.filter(({trackingID, ordererName})=> trackingID.toLowerCase().includes(val.toLowerCase()) || ordererName.toLowerCase().includes(val.toLowerCase()))
+        })
+    }
+
     return (
         
         <>
-            <div className="flex mb-3">
+            <div className="flex float-right-sm mb-3 mt-3">
+
+                <input className="border border-gray-300 rounded-[10px] p-2 sm:w-full sm:text-[10px]" type="text" onChange={onSearchOtp} name="search-otp" id="search-otp" placeholder="Search OTPs"/>
 
                 <button
                     onClick={exportTableToExcel}
@@ -65,7 +78,7 @@ const OTPTable: React.FC<OTPTableProps> = ({ orders }) =>{
                                 Order Name
                             </th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-                                Device
+                                Tracking ID
                             </th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
                                 OTP
@@ -73,22 +86,21 @@ const OTPTable: React.FC<OTPTableProps> = ({ orders }) =>{
                             <th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
                                 Last 4 digits
                             </th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+                                Device
+                            </th>
                             
                             <th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
                                 Pincode
                             </th>
                             
-                            <th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
-                                Tracking ID
-                            </th>
-                            
-                            <th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
+                            {/* <th className="px-6 py-3 text-left text-xs font-medium text-[#2f4f4f] uppercase tracking-wider">
                                 Order Date
-                            </th>
+                            </th> */}
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                        {orders.map(
+                        {visibleOrders.map(
                             (
                                 {
                                     user,
@@ -125,9 +137,12 @@ const OTPTable: React.FC<OTPTableProps> = ({ orders }) =>{
                                             }
                                         </td>
                                         <td className="py-4 px-6 text-sm text-gray-500">
-                                            {
-                                                product.name
-                                            }
+                                            <span
+                                                className="block overflow-hidden text-ellipsis whitespace-nowrap"
+                                                title={trackingID}
+                                            >
+                                                {trackingID}
+                                            </span>
                                         </td>
                                         <td className="py-4 px-6 text-sm text-gray-500">
                                             {
@@ -139,23 +154,21 @@ const OTPTable: React.FC<OTPTableProps> = ({ orders }) =>{
                                                 last4digits
                                             }
                                         </td>
+                                        <td className="py-4 px-6 text-sm text-gray-500">
+                                            {
+                                                product.name
+                                            }
+                                        </td>
                                         
                                         <td className="py-4 px-6 text-sm text-gray-500">
                                             {
                                                 product.zipCode
                                             }
                                         </td>
-                                        <td className="py-4 px-6 text-sm text-gray-500">
-                                            <span
-                                                className="block overflow-hidden text-ellipsis whitespace-nowrap"
-                                                title={trackingID}
-                                            >
-                                                {trackingID}
-                                            </span>
-                                        </td>
-                                        <td className="py-4 px-6 text-sm text-gray-500">
+                                        
+                                        {/* <td className="py-4 px-6 text-sm text-gray-500">
                                             {orderedAt ? new Date(orderedAt).toDateString() : ''}
-                                        </td>
+                                        </td> */}
 
                                         
                                     </tr>
