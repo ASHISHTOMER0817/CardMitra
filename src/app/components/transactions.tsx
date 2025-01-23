@@ -127,7 +127,7 @@ const Transactions = ({
 											</td>
 											{!userId && (
 												<td className="py-4 px-6 font-semibold text-primaryBgClr">
-													{transaction.user.name}
+													{transaction?.user?.name}
 												</td>
 											)}
 											<td className="py-4 px-6 text-gray-500">

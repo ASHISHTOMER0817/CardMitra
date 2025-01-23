@@ -169,11 +169,12 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 														.order[
 														i
 													];
+													
 												if (
-													_id ===
-														order
-															.user._id
-															 &&
+													order.user
+													&&
+													_id === order.user._id
+													&&
 													order.delivered ===
 														"delivered" &&
 													order.paid ===

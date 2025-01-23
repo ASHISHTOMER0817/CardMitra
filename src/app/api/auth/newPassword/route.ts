@@ -9,16 +9,16 @@ export async function POST(request: NextRequest) {
       try {
             const reqBody = await request.json()
             const { email, password } = reqBody.data;
-            console.log(reqBody.data,`and here is the ${email} and ${password}`)
+            // console.log(reqBody.data,`and here is the ${email} and ${password}`)
             
             const oneuser  = await User.findOne({email})
-            console.log(oneuser)
+            // console.log(oneuser)
             //hash Password
             const salt = await bcryptjs.genSalt(10)
             const hashedPassword = await bcryptjs.hash(password, salt);
 
             const user = await User.findOneAndUpdate({ email }, { $set: { password: hashedPassword } })
-            console.log(user)
+            // console.log(user)
             return NextResponse.json({
                   message: " change successfully!", success: true
             })
