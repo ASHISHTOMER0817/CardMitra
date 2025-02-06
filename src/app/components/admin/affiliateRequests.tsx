@@ -13,20 +13,20 @@ import Loader from "../loader";
 
 const AffiliateRequest = ({ heading }: { heading: string }) => {
 	const [users, setUsers] = useState<{
-		allRequest: user[];
-		order?: order[];
+		allRequest: { user: user, balance:number }[];
 		passwords: {
 			user: string;
 			password: string;
 		}[];
+		// balance:number
 	}>();
 	const [refreshData, setRefreshData] = useState(false);
 
-	const [searchText, setSearch] = useState('');
+	const [searchText, setSearch] = useState("");
 
-	const handleSearch = (ev:React.ChangeEvent<HTMLInputElement>) =>{
-		setSearch(ev.target.value);	
-	}
+	const handleSearch = (ev: React.ChangeEvent<HTMLInputElement>) => {
+		setSearch(ev.target.value);
+	};
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -92,7 +92,16 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 				)}
 
 				<div className="flex">
-					<input value={searchText} onChange={(ev)=>handleSearch(ev)} type="text" name="search-user" id="search-user" placeholder="Search by name, email, mob..." className="py-1 px-2 rounded-[8px] ml-auto mb-2" style={{border: '1px solid aliceblue',}} />
+					<input
+						value={searchText}
+						onChange={(ev) => handleSearch(ev)}
+						type="text"
+						name="search-user"
+						id="search-user"
+						placeholder="Search by name, email, mob..."
+						className="py-1 px-2 rounded-[8px] ml-auto mb-2"
+						style={{ border: "1px solid aliceblue" }}
+					/>
 				</div>
 
 				{!users ? (
@@ -133,69 +142,46 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 							</thead>
 							<tbody className="bg-white divide-y divide-gray-200">
 								{users.allRequest.map(
-									(
-										{
+									({ user, balance }, index) => {
+										// console.log(user, balance)
+										const {
 											name,
 											role,
 											email,
 											contact,
 											isApprove,
 											_id,
-										},
-										index
-									) => {
+											unpaid,
+										} = user;
 
 										let show = false;
 
-										if(!searchText){
-											show=true;
-										}else{
-											show = name.toLowerCase().includes(searchText.toLowerCase()) ||
-													email.toLowerCase().includes(searchText.toLowerCase()) ||
-													contact.toLowerCase().includes(searchText.toLowerCase())
-										}
-
-										let payable = 0;
-										if (heading && users.order) {
-											for (
-												let i = 0;
-												i < users
-													.order
-													.length;
-												i++
-											) {
-												const order =
-													users
-														.order[
-														i
-													];
-													
-												if (
-													order.user
-													&&
-													_id === order.user._id
-													&&
-													order.delivered ===
-														"delivered" &&
-													order.paid ===
-														null
-												) {
-													payable +=
-														order
-															.product
-															.price +
-														order
-															.product
-															.commission;
-												}
-											}
+										if (!searchText) {
+											show = true;
+										} else {
+											show =
+												name
+													.toLowerCase()
+													.includes(
+														searchText.toLowerCase()
+													) ||
+												email
+													.toLowerCase()
+													.includes(
+														searchText.toLowerCase()
+													) ||
+												contact
+													.toLowerCase()
+													.includes(
+														searchText.toLowerCase()
+													);
 										}
 										return (
-											
 											show && (
-
 												<tr
-													key={index}
+													key={
+														index
+													}
 													className={
 														index %
 															2 ===
@@ -232,7 +218,8 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 													{heading && (
 														<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 															{isApprove &&
-																payable}
+																heading &&
+																balance}
 														</td>
 													)}
 													<td>
@@ -291,9 +278,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 														)}
 													</td>
 												</tr>
-											)	
-
-											
+											)
 										);
 									}
 								)}

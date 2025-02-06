@@ -20,7 +20,7 @@ export async function middleware(request: NextRequest) {
             )
             const jwt = value
 
-            console.log('jwt: ', jwt, secret);
+            // console.log('jwt: ', jwt, secret);
 
             const { payload } = await jose.jwtVerify(jwt, secret, {
                   issuer: 'Guru',

@@ -33,33 +33,26 @@ const InfoItem = ({ label, value }:{label:string | undefined, value:string |unde
 const UserProfile = () => {
 	const [data, setData] = useState<{
 		user: user;
-		verifiedAmt: string;
-		totalUnVerifiedAmt: string;
+		// verifiedAmt: string;
+		balance: number;
 		// orderList:order[]
 	}>();
 
-	useEffect(() => {
-		async function getData() {
-			try {
-				console.log("useEffect starts");
-				const response = await axios.get(`/api/users/details`);
-				console.log(response.data.message);
-				if (!response.data.success) {
-					console.log("false success");
-					return Popup(
-						"error",
-						"something went wrong, please refresh"
-					);
-				}
-				setData(response.data.data);
-			} catch {
-				console.log("catchpart");
-				Popup("error", "something went wrong, please refresh");
-			}
-		}
-		getData();
-	}, []);
+  useEffect(()=>{
+    async function getData(){
+      try{
+        const res = await axios.get("/api/users/profile")
+        if(!res.data.success) return Popup("error","something went wrong, please refresh");
+        setData(res.data.data)
+      }catch(error){
+        Popup("error", "something went wrong, please refresh");
+        return;
+      }
+    }
+    getData()
+  }, [])
 
+  console.log(data)
 	return (
 		<>
 
@@ -91,9 +84,9 @@ const UserProfile = () => {
               <p className="text-3xl md:text-2xl sm:text-xl font-bold">₹{data?.user.paid}</p>
             </div>
             <div>
-              <p className="text-sm md:text-xs mb-1">Pending Amount</p>
-              <p className="text-base md:text-sm">Verified: ₹{data?.verifiedAmt}</p>
-              <p className="text-base md:text-sm">Unverified: ₹{data?.totalUnVerifiedAmt}</p>
+              <p className="text-sm md:text-xs mb-1">Pending Amount:- {data?.balance}</p>
+              {/* <p className="text-base md:text-sm">Verified: ₹{data?.user?.unpaid}</p> */}
+              {/* <p className="text-base md:text-sm">Unverified: ₹{data?.unverifiedAmt}</p> */}
             </div>
           </div>
         </div>
@@ -118,7 +111,7 @@ const UserProfile = () => {
           <h2 className="text-xl md:text-lg sm:text-base font-semibold text-gray-800">Transactions</h2>
         </div>
         <div className="p-6 md:p-4 sm:p-0">
-          <Transactions _id={data?.user._id!} user={true} />
+          <Transactions _id={data?.user?._id ?? ''} user={true} />
         </div>
       </div>
     </div>

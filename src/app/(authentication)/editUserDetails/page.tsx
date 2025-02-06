@@ -8,16 +8,14 @@ import React, { FormEvent, useEffect, useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 // import { InputProps } from "react-select";
 
-
-
 interface InputProps {
 	type: string;
 	placeholder?: string;
 	value: string;
 	onChange: (value: string) => void;
 	classList?: string;
-	id?: string;  // Add this line
-    }
+	id?: string; // Add this line
+}
 
 const InputSpace: React.FC<InputProps> = ({
 	type,
@@ -26,25 +24,18 @@ const InputSpace: React.FC<InputProps> = ({
 	onChange,
 	classList,
 	id,
-    }) => {
+}) => {
 	return (
-	  <input
-	    id={id}
-	    className={`w-full px-3 py-2 border border-gray-300 rounded-[6px] shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${classList}`}
-	    type={type}
-	    placeholder={placeholder}
-	    value={value}
-	    onChange={(e) => onChange(e.target.value)}
-	  />
+		<input
+			id={id}
+			className={`w-full px-3 py-2 border border-gray-300 rounded-[6px] shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${classList}`}
+			type={type}
+			placeholder={placeholder}
+			value={value}
+			onChange={(e) => onChange(e.target.value)}
+		/>
 	);
-    };
-    
-
-
-
-
-
-
+};
 
 const EditUserDetails = () => {
 	const [ifsc, setIfsc] = useState("");
@@ -60,31 +51,28 @@ const EditUserDetails = () => {
 	// 	totalUnVerifiedAmt: string;
 	// 	// orderList:order[]
 	// }>();
-	const bankDetails = { name, email, contact, ifsc, accountNo, upi };
 
+	const bankDetails = { name, email, contact, ifsc, accountNo, upi };
 	useEffect(() => {
 		async function getData() {
 			try {
-				console.log("useEffect starts");
-				const response = await axios.get(
-					`/api/users/details?query=basicInfo`
-				);
-				console.log(response.data.message);
-				if (!response.data.success) {
+				const res = await axios.get(`/api/users/profile`);
+				if (!res.data.success) {
 					return Popup(
 						"error",
 						"something went wrong, please refresh"
 					);
 				}
 				// setData(response.data.data);
-				const user = response.data.data;
-				console.log(user);
-				setName(user.name);
-				setEmail(user.email);
-				setContact(user.contact);
-				setIfsc(user.ifsc);
-				setAccountNo(user.accountNo);
-				setUpi(user.upi);
+				const { name, email, contact, ifsc, accountNo, upi } =
+					res.data.data.user;
+				// console.log(res.data.data, 'hello this is')
+				setName(name);
+				setEmail(email);
+				setContact(contact);
+				setIfsc(ifsc);
+				setAccountNo(accountNo);
+				setUpi(upi);
 			} catch {
 				Popup("error", "something went wrong, please refresh");
 			}
@@ -109,15 +97,16 @@ const EditUserDetails = () => {
 		}
 	}
 
-
-	{/* <RxCross1
+	{
+		/* <RxCross1
             className=" cursor-pointer ml-auto w-[30px] h-[30px] p-1 rounded-full hover:bg-green-100 "
             onClick={overlayFeature}
-      /> */}
+      /> */
+	}
 
 	return (
 		<>
-		{/* <form
+			{/* <form
 			onSubmit={sendData}
 			className={` bg-white  flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-4 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 w-[35%] sm:gap-2`}
 		>
@@ -181,56 +170,92 @@ const EditUserDetails = () => {
 			</div>
 		</form> */}
 
+			<form
+				onSubmit={sendData}
+				className="bg-white shadow-lg rounded-[8px] p-8 mx-auto max-w-md w-full space-y-6 no-shadow-small"
+			>
+				<h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
+					Your Information
+				</h2>
+				<p className="text-sm text-gray-600 text-center mb-6">
+					Update your information or provide new details
+					below.
+				</p>
 
+				{[
+					{
+						label: "Your Name",
+						value: name,
+						setter: setName,
+						type: "text",
+					},
+					{
+						label: "Email ID",
+						value: email,
+						setter: setEmail,
+						type: "email",
+					},
+					{
+						label: "Contact",
+						value: contact,
+						setter: setContact,
+						type: "tel",
+					},
+					{
+						label: "Bank Account No.",
+						value: accountNo,
+						setter: setAccountNo,
+						type: "text",
+					},
+					{
+						label: "IFSC code",
+						value: ifsc,
+						setter: setIfsc,
+						type: "text",
+					},
+					{
+						label: "UPI ID",
+						value: upi,
+						setter: setUpi,
+						type: "text",
+					},
+				].map((field, index) => (
+					<div key={index} className="space-y-1">
+						<label
+							htmlFor={field.label}
+							className="text-sm font-medium text-gray-700"
+						>
+							{field.label}
+						</label>
+						<InputSpace
+							id={field.label}
+							type={field.type}
+							value={field.value}
+							onChange={(value: any) =>
+								field.setter(value)
+							}
+							placeholder={field.label}
+							classList="w-full"
+						/>
+					</div>
+				))}
 
-<form
-  onSubmit={sendData}
-  className="bg-white shadow-lg rounded-[8px] p-8 mx-auto max-w-md w-full space-y-6 no-shadow-small"
->
-  <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Your Information</h2>
-  <p className="text-sm text-gray-600 text-center mb-6">
-    Update your information or provide new details below.
-  </p>
-
-  {[
-    { label: "Your Name", value: name, setter: setName, type: "text" },
-    { label: "Email ID", value: email, setter: setEmail, type: "email" },
-    { label: "Contact", value: contact, setter: setContact, type: "tel" },
-    { label: "Bank Account No.", value: accountNo, setter: setAccountNo, type: "text" },
-    { label: "IFSC code", value: ifsc, setter: setIfsc, type: "text" },
-    { label: "UPI ID", value: upi, setter: setUpi, type: "text" },
-  ].map((field, index) => (
-    <div key={index} className="space-y-1">
-      <label htmlFor={field.label} className="text-sm font-medium text-gray-700">
-        {field.label}
-      </label>
-      <InputSpace
-        id={field.label}
-        type={field.type}
-        value={field.value}
-        onChange={(value: any) => field.setter(value)}
-        placeholder={field.label}
-        classList="w-full"
-      />
-    </div>
-  ))}
-
-  <div className="flex space-x-4 pt-4">
-    <button
-      type="button"
-      onClick={() => router.push("/userProfile")}
-      className="flex-1 py-2 px-4 border border-gray-300 rounded-[6px] text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-    >
-      Cancel
-    </button>
-    <button
-      type="submit"
-      className="flex-1 py-2 px-4 border border-transparent rounded-[6px] shadow-sm text-sm font-medium text-white bg-primaryBgClr hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-    >
-      Submit
-    </button>
-  </div>
-</form>
+				<div className="flex space-x-4 pt-4">
+					<button
+						type="button"
+						onClick={() => router.push("/userProfile")}
+						className="flex-1 py-2 px-4 border border-gray-300 rounded-[6px] text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+					>
+						Cancel
+					</button>
+					<button
+						type="submit"
+						className="flex-1 py-2 px-4 border border-transparent rounded-[6px] shadow-sm text-sm font-medium text-white bg-primaryBgClr hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+					>
+						Submit
+					</button>
+				</div>
+			</form>
 		</>
 	);
 };

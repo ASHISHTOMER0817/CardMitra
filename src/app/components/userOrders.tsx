@@ -119,7 +119,9 @@ const UserOrders = ({
 							},
 							index
 						) => {
+							console.log(typeof orderedAt, 'this is the type of orderedAt')
 							return (
+
 								<>
 									{listType ===
 										delivered && (

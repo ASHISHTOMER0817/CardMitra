@@ -3,7 +3,7 @@ import { transactions } from "@/interface/productList";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Popup from "./Popup";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { DropdownMenu } from "@/components/ui/dropdown-menu";
 
 const Transactions = ({
@@ -19,7 +19,8 @@ const Transactions = ({
 
 	const [transactionID, setTransactionID] = useState('');
 	// const [paymentEdited, setPaymentEdited] = useState(false);
-
+	
+	console.log('is this user', user)
 	async function getData() {
 		try {
 			const response = await axios.get(
@@ -32,7 +33,6 @@ const Transactions = ({
 			Popup("error", "Something missing, refresh the page");
 		}
 	}
-
 	useEffect(() => {
 		getData();
 	}, [_id]);
@@ -83,7 +83,7 @@ const Transactions = ({
 									</DialogClose>
 									<DialogClose
 										className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50"
-										onClick={editPayment }
+										onClick={editPayment}
 									>
 										Submit
 									</DialogClose>

@@ -7,7 +7,7 @@ import React, { ReactNode, Suspense, useEffect, useState } from "react";
 // import accept from "@/../public/accept.svg";
 // import acceptAffiliate from "@/app/components/acceptAffiliate";
 import UserOrders from "@/app/components/userOrders";
-import { order } from "@/interface/productList";
+import { order, user } from "@/interface/productList";
 import Popup from "@/app/components/Popup";
 import { useRouter } from "next/navigation";
 import { RxCross1 } from "react-icons/rx";
@@ -73,14 +73,14 @@ const InfoItem = ({
 );
 
 const Bookers = ({ params }: { params: { _id: string } }) => {
-	const [data, setData] = useState<UserDetails>();
+	const [data, setData] = useState<{user:user, orderList:order[], balance:number }>();
 	const [listType, setListType] = useState("delivered");
 	const [amount, setAmount] = useState("");
 	const [overlayElement, setOverlayElement] = useState<{
 		heading: string;
 		desc: string;
 		button: string;
-		action:string
+		action: string;
 	}>();
 	const [deleteOperation, setDeleteOperation] = useState(false);
 	const [dis_approve, setDis_approve] = useState(false);
@@ -90,142 +90,93 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 	const router = useRouter();
 
 	const paymentElement = {
-		heading: `The pending amount is ₹${" "} ${(!data?.totalAmt ? 0: data?.totalAmt) - (!data?.unpaid ? 0: data?.unpaid)}${" + "}${data?.unpaid}`,
+		heading: `The pending amount is ₹${" "} ${data?.balance}`,
 		desc: "Write the amount, you have paid to the user.",
 		button: "Confirm",
-		action:'payment'
+		action: "payment",
 	};
 	const deleteAccountElement = {
 		heading: `Delete ${data?.user.name} account`,
 		desc: "You really want to delete this account. This action is irreversible",
 		button: "Delete",
-		action: 'delete'
+		action: "delete",
 	};
 	const dis_approveAccountElement = {
 		heading: "Are you sure about dis-approving this user",
 		desc: "Are you sure about this. Remember it causes discomfort to the user",
 		button: "Dis-Approve",
-		action: 'dis-approve',
+		action: "dis-approve",
 	};
 	const makeCollaboratorElement = {
 		heading: "Make this user a collaborator",
 		desc: "Are you sure about this. Remeber user can get to see internal information",
 		button: "Make Collaborator",
-		action: 'make-collaborator',
+		action: "make-collaborator",
 	};
 
+	// useEffect(() => {
+	// 	async function getData() {
+	// 		try {
+	// 			// console.log("useEffect running");
+	// 			// console.log(params._id);
+	// 			const response = await axios.get(
+	// 				`/api/users/details?query=${params._id}&delete=${deleteOperation}&dis_approve=${dis_approve}`
+	// 			);
+	// 			const data = response.data.data;
+	// 			console.log(data.user.unpaid, '-:this is unpaid amt')
+	// 			setData(data);
+	// 			setAmount((+data.totalAmt).toString());
+	// 			// console.log(response.data.data);
+	// 			if (response.data.status === 250) {
+	// 				Popup("success", response.data.message);
+
+	// 				// setRefresh(true)
+	// 			}
+	// 		} catch {
+	// 			Popup("error", "something went wrong!!");
+	// 		}
+	// 	}
+	// 	getData();
+	// }, [params._id, deleteOperation, dis_approve]);
+	
+	
+	
 	useEffect(() => {
 		async function getData() {
 			try {
-				// console.log("useEffect running");
-				// console.log(params._id);
 				const response = await axios.get(
-					`/api/users/details?query=${params._id}&delete=${deleteOperation}&dis_approve=${dis_approve}`
+					`/api/users/details?userId=${params._id}`
 				);
 				const data = response.data.data;
+				console.log(data)
 				setData(data);
-				setAmount((+data.totalAmt).toString());
-				// console.log(response.data.data);
-				if (response.data.status === 250) {
-					Popup("success", response.data.message);
-
-					// setRefresh(true)
-				}
+				
 			} catch {
 				Popup("error", "something went wrong!!");
 			}
 		}
 		getData();
-	}, [params._id, deleteOperation, dis_approve]);
-	// if(refresh){
-	// 	setRefresh(false)
-	// 	router.refresh()
-	// }
+	}, [params._id]);
 
-	// Function to remove account of the user
-	// async function removeAccount() {
-	// 	try {
-	// 		const response = await axios.delete(
-	// 			`/api/users/deleteAccount?objectId=${params._id}`
-	// 		);
-	// 		const success = await response.data.success;
-	// 		const msg = await response.data.message;
-	// 		console.log(success);
-	// 		if (success !== true) {
-	// 			Popup("error", msg);
-	// 		} else if (success) {
-	// 			Popup("success", msg);
-	// 			setTimeout(() => {
-	// 				router.back();
-	// 			}, 3000);
-	// 		}
-	// 	} catch {
-	// 		Popup("error", "something went wrong, REFRESH");
-	// 	}
-	// }
-	// function overlayFeature() {
-	// 	setOverlay("hidden");
-	// 	console.log(overlay);
-	// }
 
-	// 	const crossElement = (<RxCross1
-	// 	width={20}
-	// 	height={20}
-	// 	className=" cursor-pointer ml-auto hover:bg-gray-100 active:bg-gray-100 rounded-full"
-	// 	onClick={() => setOverlay("hidden")}
-	// />)
-	// 	const paymentElement = (
-	// 		<form
-	// 			onSubmit={payment}
-	// 			className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 sm:gap-2`}
-	// 		>
-	// 			{crossElement}
-	// 			<h4 className="sm:text-nowrap">Write, the amount you paid</h4>
-	// 			<input
-	// 				type="number"
-	// 				required
-	// 				placeholder="Amount"
-	// 				className="outline-none border-b pb-2 border-black sm:text-sm"
-	// 				value={amount}
-	// 				onChange={(e) => setAmount(+e.target.value)}
-	// 			/>{" "}
-	// 			<button
-	// 				onClick={() => {
-	// 					setListType("undelivered");
-	// 					// payment();
-	// 					setOverlay("hidden");
-	// 				}}
-	// 				type="submit"
-	// 				className="px-3 py-1 hover:bg-gray-200 active:bg-gray-200"
-	// 			>
-	// 				Submit
-	// 			</button>
-	// 		</form>
-	// 	);
 
-	// 	const deleteAccountElement = (
-	// 		<div className={`${overlay} bg-white flex px-10 z-20 absolute opacity-100 py-6 flex-col gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 sm:gap-2`}
-	// 		>
-	// 			<RxCross1
-	// 				width={20}
-	// 				height={20}
-	// 				className=" cursor-pointer ml-auto hover:bg-gray-100 active:bg-gray-100 rounded-full"
-	// 				onClick={() => setOverlay("hidden")}
-	// 			/>
-	// 		</div>
-	// 	)
 
+	
 	async function payment() {
 		try {
 			const response = await axios.get(
-				`/api/users/details?paid=${amount}&query=${params._id}`
+				`/api/admin/payment?paid=${amount}&query=${params._id}`
+				// `/api/users/details?paid=${amount}&query=${params._id}`
 			);
-			setData(response.data.data);
-			if (response.data.status === 250) {
-				Popup("success", response.data.message);
-				console.log("really----");
-				// setRefresh(true)
-			}
+			Popup('success', `payment of ${amount}`)
+			router.back();
+			return;
+			// setData(response.data.data);
+			// if (response.data.status === 250) {
+			// 	Popup("success", response.data.message);
+			// 	console.log("really----");
+			// 	// setRefresh(true)
+			// }
 		} catch {
 			Popup("error", "something went wrong!!");
 		}
@@ -234,43 +185,53 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 	async function disapproveUser() {
 		try {
 			const response = await axios.post(
-				'/api/affiliate/disapproveUser', // Endpoint for disapproving users
+				"/api/affiliate/disapproveUser", // Endpoint for disapproving users
 				{ userId: params._id } // Pass the user ID
 			);
 			if (response.data.success) {
 				Popup("success", response.data.message);
 				// Optionally, you can refresh or redirect here
-				router.push('/adminBookers/');
+				router.push("/adminBookers/");
 			} else {
 				Popup("error", response.data.message);
 			}
 		} catch {
-			Popup("error", "Something went wrong while disapproving the user.");
+			Popup(
+				"error",
+				"Something went wrong while disapproving the user."
+			);
 		}
 	}
 
 	async function makeCollaborator() {
 		try {
 			const response = await axios.post(
-				'/api/affiliate/makeCollaborator', // Endpoint for editing user type
+				"/api/affiliate/makeCollaborator", // Endpoint for editing user type
 				{ userId: params._id } // Pass the user ID
 			);
 			if (response.data.success) {
 				Popup("success", response.data.message);
 				// Optionally, you can refresh or redirect here
-				router.push('/adminBookers/');
+				router.push("/adminBookers/");
 			} else {
 				Popup("error", response.data.message);
 			}
 		} catch {
-			Popup("error", "Something went wrong while making the user a collaborator.");
+			Popup(
+				"error",
+				"Something went wrong while making the user a collaborator."
+			);
 		}
 	}
 
-	console.log(data?.totalAmt);
+	// console.log(data?.totalAmt);
 
 	const buttonOperation = () => {
 		if (overlayElement?.action === "payment") {
+			if((data?.balance || 1) < Number(amount) || Number(amount) <= 0){
+				Popup("warning", `keep it in the range of 0 to ${data?.balance}`)
+				return;
+			}
 			payment();
 		} else if (overlayElement?.action === "delete") {
 			setDeleteOperation(true);
@@ -286,138 +247,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 
 	return (
 		<>
-			{/* <div className="w-[90%] mx-10 mt-6 relative sm:mx-0 sm:w-full sm:mt-2">
-			<BackwardButton />
-			<div className="flex justify-between mb-10 items-center sm:mb-0">
-				<h3 className="font-semibold">{data?.user?.name}</h3>
-				{(listType === "delivered" || listType === "reduce") &&
-					data?.totalAmt! > 0 && (
-						<div
-							onClick={() => {
-								setOverlay("");
-								setOverlayElement(
-									paymentElement
-								);
-							}}
-							className="rounded-3xl text-nowrap ml-auto mr-4 cursor-pointer bg-primaryBgClr flex py-2 px-4 border justify-center items-center text-white sm:py-1 sm:text-[10px]"
-						>
-							pay Rs.{data?.totalAmt}
-						</div>
-					)}
-				<div
-					className={`h-10 sm:h-6 text-sm ${
-						dropDown
-							? "overflow-visible"
-							: "overflow-hidden"
-					}`}
-				>
-					<div
-						className={`flex gap-2 border border-black rounded-2xl px-2 justify-center transition-all sm:h-6 items-center h-10 cursor-pointer`}
-						onClick={() => setdropDown(!dropDown)}
-					>
-						<div>Action</div>
-						<IoIosArrowDown
-							className={
-								!dropDown ? "" : "rotate-180"
-							}
-						/>
-					</div>
-					<div
-						onClick={() => {
-							setOverlay("");
-							setOverlayElement(
-								deleteAccountElement
-							);
-						}}
-						className="h-10 px-2 flex justify-center sm:h-6 items-center cursor-pointer border-l border-l-black border-r border-r-black hover:bg-gray-200 acti"
-					>
-						Delete account
-					</div>
-					<div
-						onClick={() => {
-							setOverlay("");
-							setOverlayElement(
-								dis_approveAccountElement
-							);
-						}}
-						className="h-10 px-2 flex justify-center sm:h-6 items-center border border-black cursor-pointer hover:bg-gray-200"
-					>
-						Dis-approve
-					</div>
-				</div>
-			</div>
-
-			<h6 className="text-gray-400 mb-4 text-sm sm:text-[12px] sm:mb-1 sm:mt-4">
-				PERSONAL
-			</h6>
-			<section className="flex flex-wrap justify-between items-center align-left-small sm:flex-col sm:text-[14px] ">
-				{personal.map(({key, value},index)=>{
-					return (
-						<div key={index}>{key}:{" "} {value} </div>
-					)
-				})}
-			</section>
-
-			<hr className="border w-full my-7 sm:my-3" />
-			<h6 className="text-gray-400 mb-4 text-sm  sm:text-[12px]  sm:mb-1">
-				BANK DETAILS
-			</h6>
-
-			<section className="flex flex-wrap justify-between align-left-small items-center sm:flex-col sm:text-[14px]">
-				{bankDetails.map(({key, value}, index)=>{
-					return (
-						<div key={index} className="mr-20">
-					{key}{" "}
-					<div className={`float-right ${index === bankDetails.length -1 && 'mr-20'}`}>
-						{value}
-					</div>
-				</div>
-					)
-				})}
-			</section>
-
-			<div className="flex justify-start gap-4 mt-8 mb-4 sm:mt-4 items-center overflow-auto">
-				<h6
-					onClick={() => {
-						setListType("delivered");
-						// setTransactions(false);
-					}}
-					className={` text-sm p-[12px] sm:p-0 rounded-full cursor-pointer sm:text-[12px] sm:text-nowrap ${
-						(listType === "delivered" ||
-							listType === "reduce") &&
-						// !transactions &&
-						"underline underline-offset-4 text-primaryBgClr"
-					}`}
-				>
-					Delivered
-				 </h6>
-
-				{deliveryStatus.map((status,index)=>{
-					return (
-						<h6 key={index}
-					onClick={() => setListType(status)}
-					className={` text-sm p-[12px] sm:p-0 rounded-full cursor-pointer sm:text-[12px] sm:text-nowrap ${
-					listType === status && 
-						"underline underline-offset-4 text-primaryBgClr"
-					}`}
-				>
-					{status}
-				</h6>
-					)
-				})}
-
-			</div>
-
-			{listType === "transactions" ? (
-				<Transactions _id={params._id} />
-			) : data ? (
-				<UserOrders data={data.orderList} listType={listType} />
-			) : (
-				<div className="mt-28 mx-auto w-fit text-sm text-red-500 font-serif sm:text-[8px]">
-					User was In-active !!
-				</div>
-			)}
-		</div> */}
+			
 			<Dialog>
 				<DropdownMenu>
 					<DialogContent className="bg-white rounded-[20px]">
@@ -436,6 +266,8 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 							</DialogDescription>
 						</DialogHeader>
 						<input
+						
+						 max={data?.balance}
 							type="number"
 							className={`border border-solid rounded-[10px] px-3 py-2 ${
 								overlayElement?.button ===
@@ -455,7 +287,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 							</DialogClose>
 							<DialogClose
 								className="rounded-[10px] px-1 py-2 border border-solid hover:bg-gray-50"
-								onClick={buttonOperation }
+								onClick={buttonOperation}
 							>
 								{overlayElement?.button}
 							</DialogClose>
@@ -467,7 +299,14 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 								{data?.user?.name}
 							</h1>
 							<div className="flex space-x-4 md:space-x-3 sm:space-x-2">
-								<DialogTrigger onClick={()=>setOverlayElement(paymentElement)} className="text-gray-700 border border-gray-300 rounded-[6px] px-3 py-2 md:px-2 md:py-1 sm:text-xs hover:bg-gray-100 transition-colors duration-200">
+								<DialogTrigger
+									onClick={() =>
+										setOverlayElement(
+											paymentElement
+										)
+									}
+									className="text-gray-700 border border-gray-300 rounded-[6px] px-3 py-2 md:px-2 md:py-1 sm:text-xs hover:bg-gray-100 transition-colors duration-200"
+								>
 									Pay
 								</DialogTrigger>
 
@@ -479,21 +318,48 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 									Open
 								</DropdownMenuTrigger> */}
 								<DropdownMenuContent className="bg-white">
-
-									<DropdownMenuItem className="cursor-pointer " onClick={()=>setOverlayElement(dis_approveAccountElement)}>
-										<DialogTrigger>Dis-Approve</DialogTrigger>	
+									<DropdownMenuItem
+										className="cursor-pointer "
+										onClick={() =>
+											setOverlayElement(
+												dis_approveAccountElement
+											)
+										}
+									>
+										<DialogTrigger>
+											Dis-Approve
+										</DialogTrigger>
 									</DropdownMenuItem>
 
 									<DropdownMenuSeparator />
-									
-									<DropdownMenuItem className="cursor-pointer " onClick={()=>setOverlayElement(deleteAccountElement)}>
-										<DialogTrigger>Delete Account</DialogTrigger>
+
+									<DropdownMenuItem
+										className="cursor-pointer "
+										onClick={() =>
+											setOverlayElement(
+												deleteAccountElement
+											)
+										}
+									>
+										<DialogTrigger>
+											Delete Account
+										</DialogTrigger>
 									</DropdownMenuItem>
 
 									<DropdownMenuSeparator />
-									
-									<DropdownMenuItem className="cursor-pointer " onClick={()=>setOverlayElement(makeCollaboratorElement)}>
-										<DialogTrigger>Make Collaborator</DialogTrigger>
+
+									<DropdownMenuItem
+										className="cursor-pointer "
+										onClick={() =>
+											setOverlayElement(
+												makeCollaboratorElement
+											)
+										}
+									>
+										<DialogTrigger>
+											Make
+											Collaborator
+										</DialogTrigger>
 									</DropdownMenuItem>
 								</DropdownMenuContent>
 							</div>
@@ -563,7 +429,6 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 								{listType === "transactions" ? (
 									<Transactions
 										_id={params._id}
-										
 									/>
 								) : (
 									data && (
@@ -574,7 +439,6 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 											listType={
 												listType
 											}
-											
 										/>
 									)
 								)}
