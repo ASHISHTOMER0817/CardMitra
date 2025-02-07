@@ -37,6 +37,7 @@ const Transactions = ({
 		getData();
 	}, [_id]);
 	const userId = _id;
+	// console.log(userId)
 
 	async function editPayment() {
 		try {
