@@ -84,7 +84,7 @@ const UserProfile = () => {
               <p className="text-3xl md:text-2xl sm:text-xl font-bold">₹{data?.user.paid}</p>
             </div>
             <div>
-              <p className="text-sm md:text-xs mb-1">Pending Amount:- {data?.balance}</p>
+              <p className="text-sm md:text-xs mb-1 underline underline-offset-4 font-semibold">Pending Verified Amount{" "}-{" "}{data?.balance}</p>
               {/* <p className="text-base md:text-sm">Verified: ₹{data?.user?.unpaid}</p> */}
               {/* <p className="text-base md:text-sm">Unverified: ₹{data?.unverifiedAmt}</p> */}
             </div>
