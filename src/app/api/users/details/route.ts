@@ -3,19 +3,23 @@ import Database from "@/database/database";
 import { Order, Transactions, User } from "@/models/userModel";
 import GetToken from "@/app/components/getToken";
 import { order } from "@/interface/productList";
-import  getBalance  from "@/lib/getBalance";
+import getBalance from "@/lib/getBalance";
+import mongoose from "mongoose";
 
 Database();
 
 
 export async function GET(req: NextRequest) {
       try {
-           const _id = req.nextUrl.searchParams.get("userId")
-           const user = await User.findOne({_id});
-            const orderList = await Order.find({ user: _id }).populate({path:"product", select:"-image"})
-            const balance = _id ? await getBalance(_id) : 0;
+            const _id = req.nextUrl.searchParams.get("userId")
+            if (!_id) { return NextResponse.json({ message: "Something went wrong, please try again later", success: false }) }
+            const user = await User.findOne({ _id });
+            const orderList = await Order.find({ user: _id }).populate({ path: "product", select: "-image" })
 
-            return NextResponse.json({message: "showing user details", success: true, data:{user, orderList, balance} })
+            const userId = new mongoose.Types.ObjectId(_id)
+            const balance = await getBalance( userId);
+            // console.log('this is balance', balance)
+            return NextResponse.json({ message: "showing user details", success: true, data: { user, orderList, balance } })
       } catch {
             return NextResponse.json({
                   message: "Something went wrong, please try again later", success: false

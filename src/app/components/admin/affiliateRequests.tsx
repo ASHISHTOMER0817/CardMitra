@@ -18,7 +18,6 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 			user: string;
 			password: string;
 		}[];
-		// balance:number
 	}>();
 	const [refreshData, setRefreshData] = useState(false);
 
@@ -32,7 +31,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 		const fetchData = async () => {
 			try {
 				const response = await axios.get(
-					`api/affiliate/affiliateRequest?isApproved=${heading}`
+					`/api/affiliate/affiliateRequest?isApproved=${heading}`
 				);
 				setUsers(response.data.data); // Assuming API response is an array of user objects
 			} catch (error) {
