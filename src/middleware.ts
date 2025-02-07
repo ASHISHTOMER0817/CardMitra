@@ -20,8 +20,6 @@ export async function middleware(request: NextRequest) {
             )
             const jwt = value
 
-            // console.log('jwt: ', jwt, secret);
-
             const { payload } = await jose.jwtVerify(jwt, secret, {
                   issuer: 'Guru',
                   audience: 'Orderee',
@@ -33,7 +31,6 @@ export async function middleware(request: NextRequest) {
             const adminDynamicPath = path.startsWith('/adminAddProduct/') || path.startsWith('/adminBookers/') || path.startsWith('/orders/')
             const userDynamicPath = path.startsWith('/odrHistory/') || path.startsWith('/deals/')
 
-            // if (path === '/') {
             if (authPath) {
                   if (payload.role === 'user') {
                         return NextResponse.redirect(new URL('/deals', request.url))

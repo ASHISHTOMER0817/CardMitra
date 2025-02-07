@@ -3,30 +3,10 @@ import Database from "@/database/database";
 import { Order, Transactions, User } from "@/models/userModel";
 import GetToken from "@/app/components/getToken";
 import { order } from "@/interface/productList";
+import  getBalance  from "@/lib/getBalance";
 
 Database();
 
-export async function getBalance(userId: string){
-//      Database()
-
-      const orderList = await Order.find({ user: userId }).populate({path:"product", select:"-image"})
-
-      const delivered_orders = orderList.filter((order)=>order.delivered == 'delivered');
-      const delivered_orders_sum = delivered_orders.reduce((acc, odr)=>{
-            acc += odr.product.price+odr.product.commission;
-            return acc;
-      }, 0);
-
-      const transactions = await Transactions.find({user: userId});
-      const transaction_sum = transactions.reduce((acc, curr)=>{
-            acc += curr.amount;
-            return acc;
-      }, 0);
-            console.log(delivered_orders_sum, transaction_sum)
-      const finalBalance = delivered_orders_sum - transaction_sum;
-
-      return finalBalance || 0;
-}
 
 export async function GET(req: NextRequest) {
       try {

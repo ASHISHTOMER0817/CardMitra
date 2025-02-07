@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Database from "@/database/database";
 import { Order, User } from "@/models/userModel";
 import { Password } from "@/models/userModel";
-import { getBalance } from "../../users/details/route";
+import  getBalance  from "@/lib/getBalance"
 
 Database()
 export async function GET(request: NextRequest) {
