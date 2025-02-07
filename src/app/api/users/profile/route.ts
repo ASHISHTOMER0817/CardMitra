@@ -2,7 +2,8 @@ import Database from "@/database/database";
 import { NextResponse, NextRequest } from "next/server";
 import GetToken from "@/app/components/getToken";
 import { Order, User } from "@/models/userModel";
-import { getBalance } from "../details/route";
+import getBalance from "@/lib/getBalance";
+// import { getBalance } from "../details/route";
 Database()
 
 export async function GET() {
