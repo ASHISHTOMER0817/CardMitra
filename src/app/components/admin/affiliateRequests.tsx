@@ -2,11 +2,11 @@
 import React, { useState, useEffect, ReactNode, ChangeEvent } from "react";
 import axios from "axios";
 import Image from "next/image";
-import reject from "@/../public/reject.svg";
-import accept from "@/../public/accept.svg";
+// import reject from "@/../public/reject.svg";
+// import accept from "@/../public/accept.svg";
 import view from "@/../public/view.svg";
 import Link from "next/link";
-import acceptAffiliate from "../acceptAffiliate";
+// import AcceptAffiliate from "../acceptAffiliate";
 import Popup from "../Popup";
 import { order, user } from "@/interface/productList";
 import Loader from "../loader";
