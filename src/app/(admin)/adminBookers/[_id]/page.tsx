@@ -90,7 +90,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 	const router = useRouter();
 
 	const paymentElement = {
-		heading: `The pending amount is ₹${" "} ${data?.balance}`,
+		heading: `The pending amount is ₹ ${data?.balance}`,
 		desc: "Write the amount, you have paid to the user.",
 		button: "Confirm",
 		action: "payment",
