@@ -33,7 +33,7 @@ const InfoItem = ({ label, value }:{label:string | undefined, value:string |unde
 const UserProfile = () => {
 	const [data, setData] = useState<{
 		user: user;
-		// verifiedAmt: string;
+		earning: number;
 		balance: number;
 		// orderList:order[]
 	}>();
@@ -81,7 +81,7 @@ const UserProfile = () => {
           <div className="flex justify-between items-center md:flex-col md:items-start">
             <div className="md:mb-3">
               <p className="text-base md:text-sm">Total Earnings</p>
-              <p className="text-3xl md:text-2xl sm:text-xl font-bold">₹{data?.user.paid}</p>
+              <p className="text-3xl md:text-2xl sm:text-xl font-bold">₹{data?.earning}</p>
             </div>
             <div>
               <p className="text-sm md:text-xs mb-1 underline underline-offset-4 font-semibold">Pending Verified Amount{" "}-{" "}{data?.balance}</p>
