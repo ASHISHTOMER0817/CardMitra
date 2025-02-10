@@ -13,7 +13,7 @@ import Loader from "../loader";
 
 const AffiliateRequest = ({ heading }: { heading: string }) => {
 	const [users, setUsers] = useState<{
-		allRequest: { user: user, balance:number }[];
+		allRequest: ({ user: user, balance:number } | user)[];
 		passwords: {
 			user: string;
 			password: string;
@@ -33,6 +33,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 				const response = await axios.get(
 					`/api/affiliate/affiliateRequest?isApproved=${heading}`
 				);
+				console.log('resp: ', response.data.data);
 				setUsers(response.data.data); // Assuming API response is an array of user objects
 			} catch (error) {
 				console.error(
@@ -141,8 +142,11 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 							</thead>
 							<tbody className="bg-white divide-y divide-gray-200">
 								{users.allRequest.map(
-									({ user, balance }, index) => {
+									( info, index) => {
 										// console.log(user, balance)
+										// const { user, balance } = info
+										const user = "balance" in info ? info.user : info;
+										const balance = "balance" in info ? info.balance : 0;
 										const {
 											name,
 											role,
