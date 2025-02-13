@@ -158,10 +158,6 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 		getData();
 	}, [params._id]);
 
-
-
-
-	
 	async function payment() {
 		try {
 			const response = await axios.get(
@@ -169,7 +165,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 				// `/api/users/details?paid=${amount}&query=${params._id}`
 			);
 			Popup('success', `payment of ${amount}`)
-			router.back();
+			// router.back();
 			return;
 			// setData(response.data.data);
 			// if (response.data.status === 250) {
@@ -267,7 +263,7 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 						</DialogHeader>
 						<input
 						
-						 max={data?.balance}
+						//  max={data?.balance}
 							type="number"
 							className={`border border-solid rounded-[10px] px-3 py-2 ${
 								overlayElement?.button ===
