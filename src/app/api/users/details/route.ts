@@ -8,7 +8,6 @@ import mongoose from "mongoose";
 
 Database();
 
-
 export async function GET(req: NextRequest) {
       try {
             const _id = req.nextUrl.searchParams.get("userId")
