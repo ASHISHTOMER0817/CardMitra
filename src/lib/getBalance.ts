@@ -4,10 +4,10 @@ import mongoose from "mongoose";
 
 export default async function getBalance(userId: mongoose.Types.ObjectId){
       // console.log(userId)
-      const filterDate = new Date("2025-09-01T00:00:00.000Z");
+      const filterDate = new Date("2025-01-10T00:00:00.000Z");
 
       const orderTotal = await Order.aggregate([
-            { $match: { user: userId, delivered: "delivered", orderedAt: { $gte: filterDate } } }, // Filter only delivered orders
+            { $match: { user: userId, delivered: "delivered", orderedAt: { $gt: filterDate } } }, // Filter only delivered orders
             {
               $lookup: {  // Join with the Product collection
                 from: "products",
@@ -24,11 +24,11 @@ export default async function getBalance(userId: mongoose.Types.ObjectId){
               }
             }
           ]);
-      //     console.log('this is order total', orderTotal)
+          // console.log('this is order total', orderTotal)
           const delivered_orders_sum = orderTotal.length > 0 ? orderTotal[0].totalSum : 0;
 
       const transactionTotal = await Transactions.aggregate([
-            { $match: { user: userId, dateOfPayment: { $gte: filterDate } } }, // Filter transactions for the user
+            { $match: { user: userId, dateOfPayment: { $gt: filterDate } } }, // Filter transactions for the user
             {
               $group: {
                 _id: null,
@@ -36,7 +36,7 @@ export default async function getBalance(userId: mongoose.Types.ObjectId){
               }
             }
           ]);
-      //     console.log('this is transactions total', transactionTotal)
+          // console.log('this is transactions total', transactionTotal)
 
           const transaction_sum = transactionTotal.length > 0 ? transactionTotal[0].totalSum : 0;
       const finalBalance = delivered_orders_sum - transaction_sum;
