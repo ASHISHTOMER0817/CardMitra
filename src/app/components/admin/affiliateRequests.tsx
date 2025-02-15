@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, ReactNode, ChangeEvent } from "react";
+import React, { useState, useEffect, ReactNode, ChangeEvent, useRef } from "react";
 import axios from "axios";
 import Image from "next/image";
 // import reject from "@/../public/reject.svg";
@@ -13,15 +13,21 @@ import Loader from "../loader";
 
 const AffiliateRequest = ({ heading }: { heading: string }) => {
 	const [users, setUsers] = useState<{
-		allRequest: { user: user, balance:number }[];
+		allRequest: { user: user; balance: number }[];
 		passwords: {
 			user: string;
 			password: string;
 		}[];
+		lastId:string
 	}>();
 	const [refreshData, setRefreshData] = useState(false);
-
 	const [searchText, setSearch] = useState("");
+	const [page, setPage] = useState(1);
+	const [totalPages, setTotalPages] = useState(1);
+	const [lastId, setLastId] = useState(null);
+	const [navigate, setNavigate] = useState('gt')
+	// const [pageHistory, setPageHistory] = useState<string[]>([]);
+	// const pageHistory:string[] = useRef([]).current;
 
 	const handleSearch = (ev: React.ChangeEvent<HTMLInputElement>) => {
 		setSearch(ev.target.value);
@@ -30,10 +36,15 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await axios.get(
-					`/api/affiliate/affiliateRequest?isApproved=${heading}`
+				const res = await axios.get(
+					`/api/affiliate/affiliateRequest?isApproved=${heading}&lastId=${
+						lastId || ""
+					}&navigate=${navigate}`
 				);
-				setUsers(response.data.data); // Assuming API response is an array of user objects
+				setUsers(res.data.data); // Assuming API response is an array of user objects
+				setTotalPages(res.data.data.totalPages);
+				setLastId(res.data.data.lastId)
+				// pageHistory=[...pageHistory, res.data.data.lastId];
 			} catch (error) {
 				console.error(
 					"Something went wrong; Please reload the page",
@@ -41,9 +52,9 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 				);
 			}
 		};
-
 		fetchData();
-	}, [heading, refreshData]);
+	}, [heading, refreshData, navigate]);
+
 
 	async function isAccept(choice: boolean, _id: string) {
 		try {
@@ -103,6 +114,33 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 					/>
 				</div>
 
+				<div>
+					<button
+						disabled={page === 1}
+						onClick={() => {
+							setPage(page - 1);
+							setNavigate('lt')
+							setRefreshData(!refreshData)
+						}}
+					>
+						Prev
+					</button>
+					<span>
+						{" "}
+						Page {page} of {totalPages}{" "}
+					</span>
+					<button
+						disabled={page === totalPages}
+						onClick={() => {
+							setPage(page + 1);
+							setNavigate('gt')
+							setRefreshData(!refreshData)
+						}}
+					>
+						Next
+					</button>
+				</div>
+
 				{!users ? (
 					<Loader />
 				) : users.allRequest.length > 0 ? (
@@ -141,7 +179,10 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 							</thead>
 							<tbody className="bg-white divide-y divide-gray-200">
 								{users.allRequest.map(
-									({ user, balance }, index) => {
+									(
+										{ user, balance },
+										index
+									) => {
 										// console.log(user, balance)
 										const {
 											name,
@@ -198,7 +239,30 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 															}
 														</Link>
 													</td>
-													<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+													{[
+														role,
+														email,
+														contact,
+													].map(
+														(
+															val,
+															index
+														) => {
+															return (
+																<td
+																	key={
+																		index
+																	}
+																	className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+																>
+																	{
+																		val
+																	}
+																</td>
+															);
+														}
+													)}
+													{/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 														{
 															role
 														}
@@ -212,7 +276,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 														{
 															contact
 														}
-													</td>
+													</td> */}
 
 													{heading && (
 														<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
