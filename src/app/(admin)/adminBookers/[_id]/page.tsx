@@ -224,10 +224,10 @@ const Bookers = ({ params }: { params: { _id: string } }) => {
 
 	const buttonOperation = () => {
 		if (overlayElement?.action === "payment") {
-			if((data?.balance || 1) < Number(amount) || Number(amount) <= 0){
-				Popup("warning", `keep it in the range of 0 to ${data?.balance}`)
-				return;
-			}
+			// if( Number(amount) <= 0){
+			// 	Popup("warning", `keep it in the range of 0 to ${data?.balance}`)
+			// 	return;
+			// }
 			payment();
 		} else if (overlayElement?.action === "delete") {
 			setDeleteOperation(true);
