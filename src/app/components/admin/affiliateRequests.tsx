@@ -1,5 +1,11 @@
 "use client";
-import React, { useState, useEffect, ReactNode, ChangeEvent, useRef } from "react";
+import React, {
+	useState,
+	useEffect,
+	ReactNode,
+	ChangeEvent,
+	useRef,
+} from "react";
 import axios from "axios";
 import Image from "next/image";
 // import reject from "@/../public/reject.svg";
@@ -13,21 +19,40 @@ import Loader from "../loader";
 
 const AffiliateRequest = ({ heading }: { heading: string }) => {
 	const [users, setUsers] = useState<{
-		allRequest: ({ user: user, balance:number } | user)[];
+		allRequest: ({ user: user; balance: number } | user)[];
 		passwords: {
 			user: string;
 			password: string;
 		}[];
-		lastId:string
+		lastId: string;
 	}>();
 	const [refreshData, setRefreshData] = useState(false);
 	const [searchText, setSearch] = useState("");
 	const [page, setPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
 	const [lastId, setLastId] = useState(null);
-	const [navigate, setNavigate] = useState('gt')
+	const [navigate, setNavigate] = useState("gt");
 	// const [pageHistory, setPageHistory] = useState<string[]>([]);
 	// const pageHistory:string[] = useRef([]).current;
+	const userArr =
+		useRef<
+			{
+				name: string;
+				email: string;
+				contact: number;
+				_id: string;
+			}[]
+		>();
+	// const [userArr, setUsersArr] = useState<{name:string, email:string, contact:number}[]>()
+	const [matchedNames, setMatchedNames] =
+		useState<
+			{
+				name: string;
+				email: string;
+				contact: number;
+				_id: string;
+			}[]
+		>();
 
 	const handleSearch = (ev: React.ChangeEvent<HTMLInputElement>) => {
 		setSearch(ev.target.value);
@@ -43,7 +68,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 				);
 				setUsers(res.data.data); // Assuming API response is an array of user objects
 				setTotalPages(res.data.data.totalPages);
-				setLastId(res.data.data.lastId)
+				setLastId(res.data.data.lastId);
 				// pageHistory=[...pageHistory, res.data.data.lastId];
 			} catch (error) {
 				console.error(
@@ -55,6 +80,20 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 		fetchData();
 	}, [heading, refreshData, navigate]);
 
+	useEffect(() => {
+		const UsersData = async () => {
+			try {
+				const res = await axios.get(
+					"/api/affiliate/searchAffiliate"
+				);
+				userArr.current = [...res.data.user];
+				console.log(res.data.user);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		UsersData();
+	}, []);
 
 	async function isAccept(choice: boolean, _id: string) {
 		try {
@@ -88,6 +127,32 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 			}
 	}
 
+	useEffect(() => {
+		if (userArr.current !== undefined) {
+			try {
+				let allMatchedUser = [];
+
+				for (let user of userArr.current) {
+					if (allMatchedUser.length === 8 || !searchText) break;
+					if (
+						user.name
+							.toLowerCase()
+							.includes(searchText) ||
+						String(user.contact).includes(searchText) ||
+						user.email
+							.toLowerCase()
+							.includes(searchText)
+					) {
+						allMatchedUser.push(user);
+					}
+				}
+				setMatchedNames([...allMatchedUser]);
+			} catch (error) {
+				console.log(error);
+			}
+		}
+	}, [searchText, userArr]);
+
 	return (
 		<>
 			<div
@@ -101,17 +166,46 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 					</h3>
 				)}
 
-				<div className="flex">
+				<div className="flex relative ml-auto flex-col items-start w-fit">
 					<input
+						// ref={searchRef.current}
 						value={searchText}
 						onChange={(ev) => handleSearch(ev)}
 						type="text"
 						name="search-user"
 						id="search-user"
 						placeholder="Search by name, email, mob..."
-						className="py-1 px-2 rounded-[8px] ml-auto mb-2"
+						className="py-1 px-2 rounded-[8px] mb-2"
 						style={{ border: "1px solid aliceblue" }}
 					/>
+					<div className="flex flex-col items-start absolute bg-white p-2 rounded-md top-full right-0">
+						{matchedNames &&
+							matchedNames?.map(
+								(
+									{
+										name,
+										email,
+										_id,
+									}: {
+										name: string;
+										email: string;
+										_id: string;
+									},
+									index
+								) => {
+									return (
+										<Link
+											className="hover:bg-gray-200 border-b-2 text-nowrap border-gray-500 text-sm sm:text-[10px] w-full"
+											key={index}
+											href={`/adminBookers/${_id}`}
+										>
+											{name} |{" "}
+											{email}
+										</Link>
+									);
+								}
+							)}
+					</div>
 				</div>
 
 				<div>
@@ -119,8 +213,8 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 						disabled={page === 1}
 						onClick={() => {
 							setPage(page - 1);
-							setNavigate('lt')
-							setRefreshData(!refreshData)
+							setNavigate("lt");
+							setRefreshData(!refreshData);
 						}}
 					>
 						Prev
@@ -133,8 +227,8 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 						disabled={page === totalPages}
 						onClick={() => {
 							setPage(page + 1);
-							setNavigate('gt')
-							setRefreshData(!refreshData)
+							setNavigate("gt");
+							setRefreshData(!refreshData);
 						}}
 					>
 						Next
@@ -179,11 +273,19 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 							</thead>
 							<tbody className="bg-white divide-y divide-gray-200">
 								{users.allRequest.map(
-									( info, index) => {
+									(info, index) => {
 										// console.log(user, balance)
 										// const { user, balance } = info
-										const user = "balance" in info ? info.user : info;
-										const balance = "balance" in info ? info.balance : 0;
+										const user =
+											"balance" in
+											info
+												? info.user
+												: info;
+										const balance =
+											"balance" in
+											info
+												? info.balance
+												: 0;
 										const {
 											name,
 											role,
@@ -194,30 +296,31 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 											unpaid,
 										} = user;
 
-										let show = false;
+										// let show = false;
 
-										if (!searchText) {
-											show = true;
-										} else {
-											show =
-												name
-													.toLowerCase()
-													.includes(
-														searchText.toLowerCase()
-													) ||
-												email
-													.toLowerCase()
-													.includes(
-														searchText.toLowerCase()
-													) ||
-												contact
-													.toLowerCase()
-													.includes(
-														searchText.toLowerCase()
-													);
-										}
+										// if (!searchText) {
+										// 	show = true;
+										// } else {
+										// 	show =
+										// 		name
+										// 			.toLowerCase()
+										// 			.includes(
+										// 				searchText.toLowerCase()
+										// 			) ||
+										// 		email
+										// 			.toLowerCase()
+										// 			.includes(
+										// 				searchText.toLowerCase()
+										// 			) ||
+										// 		contact
+										// 			.toLowerCase()
+										// 			.includes(
+										// 				searchText.toLowerCase()
+										// 			);
+										// }
 										return (
-											show && (
+											  (
+											// show && (
 												<tr
 													key={
 														index

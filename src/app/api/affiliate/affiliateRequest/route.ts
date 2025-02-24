@@ -19,14 +19,13 @@ export async function GET(req: NextRequest) {
       try {
             const passwords = await Password.find();
             if (isApproved === 'approved') {
-
-                  const users = await User.find(filter).sort({ _id: navigate == 'gt' ? 1: -1 }).limit(10);
-
+                  const users = await User.find(filter).sort({ _id: navigate == 'gt' ? 1 : -1 }).limit(10);
                   const balances = await Promise.all(users.map(user => getBalance(user._id)));
                   const totalPages = Math.ceil(await User.countDocuments() / 10)
                   const allRequest = users.map((user, index) => ({ user, balance: balances[index] }));
+                  allRequest.sort((a, b) => b.balance - a.balance);
                   return NextResponse.json({
-                        data: { allRequest, passwords,totalPages, lastId: users.length ? users[users.length - 1]._id : null, }, success: true, message: "All is well"
+                        data: { allRequest, passwords, totalPages, lastId: users.length ? users[users.length - 1]._id : null, }, success: true, message: "All is well"
                   })
             } else {
                   const allRequest = await User.find({ isApprove: false })
