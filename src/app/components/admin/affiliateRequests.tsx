@@ -54,9 +54,14 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 			}[]
 		>();
 
-	const handleSearch = (ev: React.ChangeEvent<HTMLInputElement>) => {
-		setSearch(ev.target.value);
-	};
+	// const handleSearch = (ev: React.ChangeEvent<HTMLInputElement>) => {
+	// 	setSearch(ev.target.value);
+	// };
+
+	const handleSearch = (ev: React.FormEvent<HTMLInputElement>) => {
+		setSearch((ev.target as HTMLInputElement).value);
+	  };
+	  
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -167,10 +172,11 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 				)}
 
 				<div className="flex relative ml-auto flex-col items-start w-fit">
-					<input
+					<input 
 						// ref={searchRef.current}
 						value={searchText}
-						onChange={(ev) => handleSearch(ev)}
+						onInput={(ev) => handleSearch(ev)}
+						// onChange={(ev) => handleSearch(ev)}
 						type="text"
 						name="search-user"
 						id="search-user"
