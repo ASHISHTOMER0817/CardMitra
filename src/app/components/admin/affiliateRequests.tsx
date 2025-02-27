@@ -16,6 +16,7 @@ import Link from "next/link";
 import Popup from "../Popup";
 import { order, user } from "@/interface/productList";
 import Loader from "../loader";
+// import { count } from "console";
 
 const AffiliateRequest = ({ heading }: { heading: string }) => {
 	const [users, setUsers] = useState<{
@@ -34,6 +35,9 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 	const [navigate, setNavigate] = useState("gt");
 	// const [pageHistory, setPageHistory] = useState<string[]>([]);
 	// const pageHistory:string[] = useRef([]).current;
+	const [tempCount, setTempCount] = useState(0)
+
+
 	const userArr =
 		useRef<
 			{
@@ -52,7 +56,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 				contact: number;
 				_id: string;
 			}[]
-		>();
+		>([]);
 
 	// const handleSearch = (ev: React.ChangeEvent<HTMLInputElement>) => {
 	// 	setSearch(ev.target.value);
@@ -133,10 +137,11 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 	}
 
 	useEffect(() => {
+		console.log('currently outside')
 		if (userArr.current !== undefined) {
 			try {
+				console.log(tempCount, 'I am in wow')
 				let allMatchedUser = [];
-
 				for (let user of userArr.current) {
 					if (allMatchedUser.length === 8 || !searchText) break;
 					if (
@@ -151,12 +156,16 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 						allMatchedUser.push(user);
 					}
 				}
+				setTempCount(tempCount+1)
+				console.log("matched_Count", allMatchedUser)
 				setMatchedNames([...allMatchedUser]);
 			} catch (error) {
 				console.log(error);
 			}
 		}
 	}, [searchText, userArr]);
+
+	// console.log(matchedNames)
 
 	return (
 		<>
@@ -199,9 +208,10 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 									},
 									index
 								) => {
+									console.log(name)
 									return (
 										<Link
-											className="hover:bg-gray-200 border-b-2 text-nowrap border-gray-500 text-sm sm:text-[10px] w-full"
+											className="hover:bg-gray-200 focus:bg-gray-200 border-b-2 text-nowrap border-gray-500 text-sm sm:text-[10px] w-full"
 											key={index}
 											href={`/adminBookers/${_id}`}
 										>
