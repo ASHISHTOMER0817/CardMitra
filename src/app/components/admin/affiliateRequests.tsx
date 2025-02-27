@@ -35,7 +35,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 	const [navigate, setNavigate] = useState("gt");
 	// const [pageHistory, setPageHistory] = useState<string[]>([]);
 	// const pageHistory:string[] = useRef([]).current;
-	const [tempCount, setTempCount] = useState(0)
+	// const [tempCount, setTempCount] = useState(0)
 
 
 	const userArr =
@@ -96,7 +96,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 					"/api/affiliate/searchAffiliate"
 				);
 				userArr.current = [...res.data.user];
-				console.log(res.data.user);
+				// console.log(res.data.user);
 			} catch (error) {
 				console.log(error);
 			}
@@ -137,29 +137,31 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 	}
 
 	useEffect(() => {
-		console.log('currently outside')
+		// console.log('currently outside')
 		if (userArr.current !== undefined) {
 			try {
-				console.log(tempCount, 'I am in wow', 'nd this is userArr', userArr.current)
+				// console.log(tempCount, 'I am in wow', 'nd this is userArr', userArr.current)
 				let allMatchedUser = [];
 				for (let user of userArr.current) {
-					console.log('start of for loop', ' user:--', user, 'and searchText:--', searchText)
+					// console.log('start of for loop', ' user:--', user, 'and searchText:--', searchText)
 					if (allMatchedUser.length === 8 || !searchText) break;
 					if (
 						user.name
 							.toLowerCase()
-							.includes(searchText) ||
-						String(user.contact).includes(searchText) ||
+							.includes(searchText.toLowerCase()) ||
+						String(user.contact).includes(searchText.toLowerCase()) ||
 						user.email
 							.toLowerCase()
-							.includes(searchText)
+							.includes(searchText.toLowerCase())
 					) {
+
 						allMatchedUser.push(user);
+						// console.log('condition fulfilled:-',allMatchedUser)
 					}
-					console.log('end of for loop')
+					// console.log('end of for loop')
 				}
-				setTempCount(tempCount+1)
-				console.log("matched_Count", allMatchedUser)
+				// setTempCount(tempCount+1)
+				// console.log("matched_Count", allMatchedUser)
 				setMatchedNames([...allMatchedUser]);
 			} catch (error) {
 				console.log(error);
@@ -208,7 +210,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 									},
 									index
 								) => {
-									console.log(name)
+									// console.log(name)
 									return (
 										<Link
 											className="hover:bg-gray-200 focus:bg-gray-200 border-b-2 text-nowrap border-gray-500 text-sm sm:text-[10px] w-full"
