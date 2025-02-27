@@ -140,9 +140,10 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 		console.log('currently outside')
 		if (userArr.current !== undefined) {
 			try {
-				console.log(tempCount, 'I am in wow')
+				console.log(tempCount, 'I am in wow', 'nd this is userArr', userArr.current)
 				let allMatchedUser = [];
 				for (let user of userArr.current) {
+					console.log('start of for loop', ' user:--', user, 'and searchText:--', searchText)
 					if (allMatchedUser.length === 8 || !searchText) break;
 					if (
 						user.name
@@ -155,6 +156,7 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 					) {
 						allMatchedUser.push(user);
 					}
+					console.log('end of for loop')
 				}
 				setTempCount(tempCount+1)
 				console.log("matched_Count", allMatchedUser)
@@ -164,8 +166,6 @@ const AffiliateRequest = ({ heading }: { heading: string }) => {
 			}
 		}
 	}, [searchText, userArr]);
-
-	// console.log(matchedNames)
 
 	return (
 		<>
