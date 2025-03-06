@@ -32,7 +32,8 @@ export async function GET(request: NextRequest) {
         delivered: "undelivered",
         otp: { $exists: true, $ne: null },
         otpDate: { $gte: startOfDayUTC, $lt: endOfDayUTC },
-      }).populate("product"); // Populate to get product details
+      }).populate("product") // Populate to get product details
+      .sort({otpDate:1});      
 
       return NextResponse.json({ success: true, orders });
 
