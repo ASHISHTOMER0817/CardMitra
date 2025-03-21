@@ -28,7 +28,6 @@ export async function POST(request: Request): Promise<NextResponse> {
       })),
     };
 
-    console.log('query: ', query);
 
     if (role === "collaborator") {
       // Find product IDs associated with the collaborator
@@ -41,8 +40,6 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     // Fetch orders based on the query
     const orders: OrderInterface[] = await Order.find(query).populate("product");
-
-    console.log('orders: ', orders);
 
     // Extract matched and unmatched tracking IDs
     const matchedIds = orders.map((order) => order.trackingID);
