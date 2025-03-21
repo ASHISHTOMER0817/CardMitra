@@ -18,13 +18,17 @@ export async function POST(request: Request): Promise<NextResponse> {
     const { _id, role } = await GetToken();
     const { trackingIds }: { trackingIds: string[] } = await request.json();
 
+    console.log('tracking ids: ', trackingIds);
+
     // Base query
     let query: FilterQuery<OrderInterface> = {
       delivered: { $ne: "delivered" },
       $or: trackingIds.map((id) => ({
-        trackingID: { $regex: `${id}$`, $options: "i" }, // Ends with 'id'
+        trackingID: { $regex: `${id}`, $options: "i" }, // Ends with 'id'
       })),
     };
+
+    console.log('query: ', query);
 
     if (role === "collaborator") {
       // Find product IDs associated with the collaborator
@@ -38,9 +42,13 @@ export async function POST(request: Request): Promise<NextResponse> {
     // Fetch orders based on the query
     const orders: OrderInterface[] = await Order.find(query).populate("product");
 
+    console.log('orders: ', orders);
+
     // Extract matched and unmatched tracking IDs
     const matchedIds = orders.map((order) => order.trackingID);
-    const unmatchedIds = trackingIds.filter((id) => !matchedIds.includes(id));
+    const unmatchedIds = trackingIds.filter((id) => {
+      return !matchedIds.find((mid)=>mid.includes(id));
+    });
 
     // Prepare the matched orders response
     const matchedOrders = orders.map((order) => ({
