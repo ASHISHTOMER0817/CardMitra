@@ -4,751 +4,466 @@ import phoneImg from "@/../public/phoneImg.svg";
 import { GoBell } from "react-icons/go";
 import { CiRoute } from "react-icons/ci";
 import { IoCubeOutline } from "react-icons/io5";
+import { FaWhatsapp, FaArrowRight, FaCheckCircle, FaStar, FaShieldAlt, FaHeadset, FaChartLine, FaHistory } from "react-icons/fa";
 import vector from "@/../public/Vector.svg";
 import IntroFooter from "../components/IntroFooter";
 import IntroHeader from "../components/IntroHeader";
 import VeriticalRuler from "@/../public/VerticalRuler.svg";
 import InputSpace from "../components/InputSpace";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Link from "next/link";
 import productList, { ReviewInterface } from "@/interface/productList";
-// import Slider from "react-slick";
 import SimpleSlider from "../components/SimpleSlider";
-
-// import HDFC from "@/../public/cards/HDFC.svg";
-
 import fb from "@/../public/fb.svg";
 import insta from "@/../public/Insta.svg";
-// import whtsap from "@/../public/whatsapp.svg"
-import { FaWhatsapp } from "react-icons/fa";
 import whtsap from "@/../public/whtsap.svg";
 import footerDanda from "@/../public/FooterDanda.svg";
 import CardLayout from "../components/CardLayout";
-import { FaArrowDownLong } from "react-icons/fa6";
+import logo from "@/../public/logo.svg";
+
+import iphone15 from "@/../public/mobiles/iphone15.png";
+import samsung24 from "@/../public/mobiles/samsung24.png";
+import oneplus12 from "@/../public/mobiles/oneplus12.png";
+
+// Demo data for featured products
+const featuredProducts = [
+	{
+		id: 1,
+		name: "iPhone 15 Pro Max",
+		price: "₹1,49,999",
+		commission: "₹5,000",
+		requirement: "10 units",
+		site: "Amazon",
+		image: iphone15,
+		cards: ["HDFC", "ICICI", "SBI"],
+		rating: 4.8,
+		reviews: 128
+	},
+	{
+		id: 2,
+		name: "Samsung S24 Ultra",
+		price: "₹1,29,999",
+		commission: "₹4,500",
+		requirement: "8 units",
+		site: "Flipkart",
+		image: samsung24,
+		cards: ["HDFC", "Axis", "Kotak"],
+		rating: 4.7,
+		reviews: 95
+	},
+	{
+		id: 3,
+		name: "OnePlus 12",
+		price: "₹64,999",
+		commission: "₹3,000",
+		requirement: "15 units",
+		site: "Amazon",
+		image: oneplus12,
+		cards: ["HDFC", "ICICI", "SBI", "Axis"],
+		rating: 4.6,
+		reviews: 156
+	}
+];
+
+// Demo data for features
+const features = [
+	{
+		icon: <FaChartLine className="w-14 h-14 rounded-3xl p-3 text-white bg-primaryBgClr" />,
+		title: "Best Commission",
+		description: "Earn the highest commission rates in the industry with our competitive pricing"
+	},
+	{
+		icon: <FaArrowRight className="w-14 h-14 rounded-3xl p-3 text-white bg-primaryBgClr" />,
+		title: "Fast Re-payment",
+		description: "Get your earnings quickly with our streamlined payment process"
+	},
+	{
+		icon: <FaHistory className="w-14 h-14 rounded-3xl p-3 text-white bg-primaryBgClr" />,
+		title: "Order History & Analytics",
+		description: "Track all your orders and get detailed analytics in one place"
+	}
+];
+
+// Demo data for testimonials
+const testimonials = [
+	{
+		name: "Rahul Sharma",
+		role: "Premium Affiliate",
+		image: "/testimonials/user1.jpg",
+		rating: 5,
+		text: "CardMitra has transformed my business. The platform is incredibly user-friendly and the support team is always ready to help."
+	},
+	{
+		name: "Priya Patel",
+		role: "Business Owner",
+		image: "/testimonials/user2.jpg",
+		rating: 5,
+		text: "I've seen a 200% increase in my sales since joining CardMitra. The commission structure is very attractive."
+	},
+	{
+		name: "Amit Kumar",
+		role: "Enterprise Partner",
+		image: "/testimonials/user3.jpg",
+		rating: 5,
+		text: "The best platform for managing phone orders. The real-time tracking and analytics are game-changers."
+	}
+];
 
 export default function Home() {
-	const [name, setName] = useState("");
-	const [email, setEmail] = useState("");
-	const [number, setNumber] = useState("");
-	const [error, setError] = useState("");
-	const [mail, setMail] = useState("");
-	const [reviews, setReviews] = useState<ReviewInterface[]>([]);
-
-	const user = { name, email, number };
 	const [data, setData] = useState<productList[]>();
+	const [stats, setStats] = useState({ orders: 0, transactions: 0, satisfaction: 0 });
+	const statsRef = useRef(null);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	useEffect(() => {
 		async function getData() {
 			try {
-				// console.log("sending calls where");
-				const response = await axios.get(
-					"/api/orders/products?limit=homePage"
-				);
-				const allProducts = response.data.data;
-				// console.log(allProducts);
-				setData(allProducts);
+				const response = await axios.get("/api/orders/products?limit=homePage");
+				setData(response.data.data);
 			} catch {
-				// Popup(
-				// 	"error",
-				// 	"Something went wrong, REFRESH THE PAGE"
-				// );
 				console.log("Something went wrong, REFRESH THE PAGE");
 			}
 		}
 		getData();
 	}, []);
 
-	// async function sendData() {
-	// 	try {
-	// 		// Validate form inputs
-	// 		// if (name.length < 5) {
-	// 		// 	// Handle name validation error
-	// 		// 	setError("Name must be at least 5 characters long");
-	// 		// 	return;
-	// 		// }
-	// 		// if (number.length < 10) {
-	// 		// 	// Handle phone number validation error
-	// 		// 	setError(
-	// 		// 		"Phone number must be at least 10 digits long"
-	// 		// 	);
-	// 		// 	return;
-	// 		// }
+	useEffect(() => {
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					animateStats();
+				}
+			});
+		});
 
-	// 		const response = await axios.post("/api/users/signup", {
-	// 			user,
-	// 		});
-	// 		const success = await response.data.success;
-	// 		if (!success) {
-	// 			setError(await response.data.message);
-	// 			console.log(error);
-	// 			return;
-	// 		} else {
-	// 		}
-	// 	} catch (error) {
-	// 		setError("Something went wrong,Please try again later");
-	// 		console.log("Something went wrong ", error);
-	// 	}
-	// }
+		if (statsRef.current) {
+			observer.observe(statsRef.current);
+		}
 
-	// useEffect(() => {
-	// 	async function getData() {
-	// 		try {
-	// 			const response = await axios.get(
-	// 				"/api/reviews?review=show"
-	// 			);
-	// 			if (response.data.success) {
-	// 				setReviews(response.data.data);
-	// 			} else {
-	// 				console.log("something went wrong from server");
-	// 			}
-	// 		} catch {
-	// 			console.log(
-	// 				"something went wrong while sending request"
-	// 			);
-	// 		}
-	// 	}
-	// 	getData();
-	// });
+		return () => observer.disconnect();
+	}, []);
 
-	const arr = [
-		{
-			user: "Vansh Kumar",
-			review: "Incredible service, outstanding results!Deal dynamo transformed our website beyond our expectations.",
-		},
-		{
-			user: "Vansh Kumar",
-			review: "Incredible service, outstanding results!Deal dynamo transformed our website beyond our expectations.",
-		},
-		{
-			user: "Vansh Kumar",
-			review: "Incredible service, outstanding results!Deal dynamo transformed our website beyond our expectations.",
-		},
-		{
-			user: "Vansh Kumar",
-			review: "Incredible service, outstanding results!Deal dynamo transformed our website beyond our expectations.",
-		},
-		{
-			user: "Vansh Kumar",
-			review: "Incredible service, outstanding results!Deal dynamo transformed our website beyond our expectations.",
-		},
-		{
-			user: "Vansh Kumar",
-			review: "Incredible service, outstanding results!Deal dynamo transformed our website beyond our expectations.",
-		},
-	];
+	const animateStats = () => {
+		const duration = 2000; // 2 seconds
+		const steps = 60;
+		const interval = duration / steps;
 
-	const image = <Image className="" src={VeriticalRuler} alt={""}></Image>;
+		let currentStep = 0;
+		const targetValues = {
+			orders: 50000,
+			transactions: 49, // 49Cr
+			satisfaction: 98
+		};
 
-	const danda = <Image src={footerDanda} alt={""} />;
+		const animate = () => {
+			if (currentStep >= steps) return;
+
+			setStats({
+				orders: Math.round((targetValues.orders / steps) * currentStep),
+				transactions: Math.round((targetValues.transactions / steps) * currentStep),
+				satisfaction: Math.round((targetValues.satisfaction / steps) * currentStep)
+			});
+
+			currentStep++;
+			setTimeout(animate, interval);
+		};
+
+		animate();
+	};
 
 	return (
 		<>
-			{/* <div className="">
-				<IntroHeader />
-				<main className=" min-h-screen text-center">
-					<section className="text-center px-10 bg-black py-16 sm:py-8">
-						<h5 className="my-4 font-medium text-primaryBgClr sm:my-0">
-							DEALS
-						</h5>
-						<h1 className="my-4 font-extrabold text-gray-400 sm:leading-7">
-							amazing deals <br />
-							sign up and start earning
-						</h1>
-						<div className="mb-10 mt-14 ml-8 flex flex-wrap gap-3 sm:ml-2 sm:gap-1 sm:my-6">
-							{!data ? (
-								""
-							) : data.length > 0 ? (
-								data.map(
-									(
-										{
-											_id,
-											requirement,
-											name,
-											price,
-											commission,
-											site,
-											image,
-											cards,
-										},
-										index
-									) => {
-										return (
-											<>
-												<CardLayout
-													classList="bg-white"
-													key={
-														index
-													}
-													placeOrder={
-														<Link
-															className="p-[14px] font-semibold text-base hover:bg-green-600 bg-primaryBgClr rounded-full border text-center w-auto text-white sm:mt-2 sm:px-1 sm:py-2 sm:font-medium sm:text-[10px] sm:text-nowrap sm:leading-4"
-															href={
-																"/Auth/signup"
-															}
-														>
-															Fulfill
-															Order
-														</Link>
-													}
-													quantity={
-														requirement
-													}
-													name={
-														name
-													}
-													price={
-														price
-													}
-													commission={
-														commission
-													}
-													site={
-														site
-													}
-													deviceImage={
-														image
-													}
-													cards={
-														cards
-													}
-												/>
-											</>
-										);
-									}
-								)
-							) : (
-								<div className="text-red-500 font-serif mx-auto w-fit ">
-									No other products to order
-								</div>
-							)}
-						</div>
-						<Link
-							href={"/Auth/signup"}
-							className="text-black flex justify-center items-center gap-2 w-fit mx-auto bg-white px-5 py-1 rounded-[12px] button"
-						>
-							<div className="font-serif font-semibold text-lg">
-								{" "}
-								See More
-							</div>{" "}
-							<FaArrowDownLong
-								width={14}
-								className="w-[14px] h-auto"
-							/>
+			<header className="fixed w-full bg-white shadow-sm z-50">
+				<div className="container mx-auto px-4">
+					<div className="flex items-center justify-between h-20">
+						<Link href="/" className="flex items-center space-x-2">
+							<Image src={logo} alt="CardMitra Logo" width={40} height={40} />
+							<span className="text-2xl font-bold text-primaryBgClr">CardMitra</span>
 						</Link>
-					</section>
-					<section className="text-center px-10 py-16 sm:py-8">
-						<h5 className="my-4 font-medium text-primaryBgClr  sm:my-0">
-							TOP RANKED SOLUTIONS
-						</h5>
-						<h1 className="font-extrabold sm:leading-7">
-							Your One-Stop Solutions for <br />{" "}
-							Managing Phone Orders
-						</h1>
-						<h3 className="my-6 text-gray-400 sm:leading-7 hide-on-smaller">
-							Streamline your phone order management
-							effortlessly <br /> with our
-							comprehensive solution
-						</h3>
-						<button className="button button-primary button-lg mt-4">
-							<Link
-								href={"/Auth/signup"}
-								className="text-xl"
-							>
-								Become an Affiliate
+						<nav className="hidden lg:flex space-x-8">
+							<Link href="#products" className="text-gray-600 hover:text-primaryBgClr transition-colors">
+								Products
 							</Link>
+							<Link href="#features" className="text-gray-600 hover:text-primaryBgClr transition-colors">
+								Features
+							</Link>
+							<Link href="#stats" className="text-gray-600 hover:text-primaryBgClr transition-colors">
+								Stats
+							</Link>
+							<Link href="#testimonials" className="text-gray-600 hover:text-primaryBgClr transition-colors">
+								Testimonials
+							</Link>
+						</nav>
+						<div className="hidden lg:flex items-center space-x-4">
+							<Link href="/Auth/signup" className="text-gray-600 hover:text-primaryBgClr transition-colors">
+								Sign Up 
+							</Link>
+							<Link href="/Auth/login" className="bg-primaryBgClr text-white px-6 py-2 rounded-full hover:bg-green-600 transition-colors">
+								Login
+							</Link>
+						</div>
+						<button 
+							className="lg:hidden text-gray-600"
+							onClick={() => setIsMenuOpen(!isMenuOpen)}
+						>
+							<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								{isMenuOpen ? (
+									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+								) : (
+									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+								)}
+							</svg>
 						</button>
-					</section>
-
-					<section className="bg-black text-white text-left px-10 py-10 flex items-center data-section">
-						{" "}
-						{[
-							{ count: "20K+", type: "Users" },
-							{ count: "10,000+", type: "Phones" },
-							{ count: "400+", type: "Deals" },
-						].map(({ count, type }, index) => {
-							return (
-								<div
-									key={index}
-									className="font-extrabold text-white flex flex-col gap-y-4"
-								>
-									{" "}
-									<h1 className="">
-										{count}
-									</h1>
-									<h3 className="text-gray-400 font-semibold">
-										{type}
-									</h3>
-								</div>
-							);
-						})}
-					</section>
-					<section
-						className="text-center px-10 py-16 sm:py-8"
-						id="aboutUs"
-					>
-						<h5 className="font-medium text-primaryBgClr mb-4">
-							ABOUT US
-						</h5>
-						<h1 className="font-extrabold sm:leading-7">
-							Simplify Phone Order <br />
-							Management
-						</h1>
-						<Image
-							src={phoneImg}
-							alt={"phones Image"}
-							className="my-12 mx-auto sm:my-6"
-						></Image>
-						<h3 className="text-[#121212B2]">
-							We&apos;re on a mission to Streamline
-							phone order management. Our <br />{" "}
-							user-friendly platform empowers
-							businesses and individuals to <br />{" "}
-							optimize their processes effortlessly.
-							Join us and experience the <br />
-							convenience of seamless order
-							management today
-						</h3>
-					</section>
-					<section
-						className="text-center py-16 px-10 bg-[#242424] text-white sm:py-8"
-						id="ourFeatures"
-					>
-						<h5 className="font-medium text-primaryBgClr mb-8 sm:mb-4">
-							OUR FEATURES
-						</h5>
-						<h1
-							className="font-extrabold "
-							style={{ lineHeight: 1.75 }}
-						>
-							Unlock the power of seamless <br />
-							phone Order Management
-						</h1>
-						<div className="flex justify-center gap-x-32 mt-12 items-center text-left sm:gap-2 sm:flex-col sm:mt-4">
-							{[
-								{
-									head: (
-										<>
-											Real-Time
-											Order <br />{" "}
-											Alerts
-										</>
-									),
-									desc: (
-										<>
-											{" "}
-											Instant alerts
-											for new <br />{" "}
-											orders and
-											updates for{" "}
-											<br />{" "}
-											seamless order{" "}
-											<br />{" "}
-											management
-										</>
-									),
-								},
-								{
-									head: (
-										<>
-											Customizable{" "}
-											<br />{" "}
-											Management{" "}
-										</>
-									),
-									desc: (
-										<>
-											Get promotions{" "}
-											<br />{" "}
-											effortlessly.
-											Set discounts,{" "}
-											<br /> deals,
-											quantities &{" "}
-											<br />{" "}
-											validity
-										</>
-									),
-								},
-								{
-									head: (
-										<>
-											Advanced Order{" "}
-											<br />{" "}
-											Tracking{" "}
-										</>
-									),
-									desc: (
-										<>
-											Effortlessly
-											track orders,{" "}
-											<br /> gain
-											insights,
-											provide <br />{" "}
-											unparalleled
-											customer{" "}
-											<br /> service
-										</>
-									),
-								},
-							].map(({ head, desc }, index) => {
-								return (
-									<div
-										key={index}
-										className="flex flex-col p-9 rounded-2xl bg-[#FFFFFF1A] justify-start gap-y-3 sm:w-4/5 sm:py-3 sm:pl-4 sm:pr-0"
-									>
-										<GoBell className="w-12 h-12 rounded-3xl p-2 text-white bg-primaryBgClr" />
-
-										<div className="text-lg font-semibold">
-											{head}
-										</div>
-										<div className="text-[#FFFFFFB2]">
-											{desc}
-										</div>
-									</div>
-								);
-							})}
+					</div>
+					{/* Mobile Menu */}
+					<div className={`lg:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
+						<div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t">
+							<Link href="#products" className="block px-3 py-2 text-gray-600 hover:text-primaryBgClr transition-colors">
+								Products
+							</Link>
+							<Link href="#features" className="block px-3 py-2 text-gray-600 hover:text-primaryBgClr transition-colors">
+								Features
+							</Link>
+							<Link href="#stats" className="block px-3 py-2 text-gray-600 hover:text-primaryBgClr transition-colors">
+								Stats
+							</Link>
+							<Link href="#testimonials" className="block px-3 py-2 text-gray-600 hover:text-primaryBgClr transition-colors">
+								Testimonials
+							</Link>
+							<Link href="/Auth/login" className="block px-3 py-2 text-gray-600 hover:text-primaryBgClr transition-colors">
+								Login
+							</Link>
+							<Link href="/Auth/signup" className="block px-3 py-2 text-primaryBgClr hover:text-green-600 transition-colors">
+								Sign Up
+							</Link>
 						</div>
-					</section>
-					<section
-						className="py-16 px-10 sm:py-8 bg-primaryBgClr"
-						id="testimonials"
-					>
-						<h5 className="font-medium text-white mb-8 sm:mb-4">
-							CUSTOMER TESTIMONIALS
-						</h5>
-						<h1 className="font-extrabold text-white mb-16 sm:mb-4 sm:leading-7">
-							Hear What Our Clients <br />
-							Have to Say!
-						</h1>
-						<SimpleSlider reviewArr={arr} />
-					</section>
-
-					<section className="bg-primaryBgClr flex justify-around py-4 text-sm text-white px-10 sm:px-0 sm:py-2 sm:justify-center sm:gap-5">
-						<div className="flex gap-x-7 sm:gap-1">
-							{[whtsap, insta, fb].map(
-								(icon, index) => {
-									return (
-										<Image
-											key={index}
-											src={icon}
-											alt=""
-											className="sm:w-6 w-8 h-8"
-										/>
-									);
-								}
-							)}
-						</div>
-						<div className="responsiveLink flex flex-wrap font-medium items-center justify-center gap-x-5 sm:gap-1 sm:text-nowrap sm:text-[10px]">
-							{[
-								"Refund Policy",
-								"Privacy Policy",
-								"Terms and Conditions",
-							].map((policy, index) => {
-								return (
-									<>
-										<div key={index}>
-											{policy}
-										</div>
-										{index < 2 && danda}
-									</>
-								);
-							})}
-						</div>
-					</section>
-				</main>
-			</div> */}
-
-			<IntroHeader />
-			<section className="text-center px-10 bg-black py-16 lgMax:py-8 lgMax:px-4">
-				<h5 className="my-4 font-medium text-primaryBgClr lgMax:my-2 lgMax:text-lg">
-					DEALS
-				</h5>
-				<h1 className="my-4 font-extrabold text-gray-400 lgMax:textlgMax-2xl xs:text-xl">
-					amazing deals <br />
-					sign up and start earning
-				</h1>
-				<div className="mb-10 mt-14 ml-8 flex flex-wrap gap-3 lgMax:gap-4 lgMax:justify-center xs:gap-2">
-					{!data ? (
-						""
-					) : data.length > 0 ? (
-						data.map(
-							(
-								{
-									_id,
-									requirement,
-									name,
-									price,
-									commission,
-									site,
-									image,
-									cards,
-								},
-								index
-							) => {
-								return (
-									<>
-										<CardLayout
-											classList="bg-white"
-											key={index}
-											placeOrder={
-												<Link
-													className="p-[14px] font-semibold text-base hover:bg-green-600 bg-primaryBgClr rounded-full border text-center w-auto text-white sm:mt-2 sm:px-1 sm:py-2 sm:font-medium sm:text-[10px] sm:text-nowrap sm:leading-4"
-													href={
-														"/Auth/signup"
-													}
-												>
-													Fulfill
-													Order
-												</Link>
-											}
-											quantity={
-												requirement
-											}
-											name={name}
-											price={price}
-											commission={
-												commission
-											}
-											site={site}
-											deviceImage={
-												image
-											}
-											cards={cards}
-										/>
-									</>
-								);
-							}
-						)
-					) : (""
-						// <div className="text-red-500 font-serif mx-auto w-fit ">
-						// 	No other products to order
-						// </div>
-					)}
+					</div>
 				</div>
-				{/* <Link
-					href={"/Auth/signup"}
-					className="text-black flex justify-center items-center gap-2 w-fit mx-auto bg-white px-5 py-1 rounded-[12px] button"
-				>
-					<div className="font-serif font-semibold text-lg">
-						{" "}
-						See More
-					</div>{" "}
-					<FaArrowDownLong
-						width={14}
-						className="w-[14px] h-auto"
-					/>
-				</Link> */}
-			</section>
-
-			<section className="text-center px-10 py-16 lgMax:py-8 lgMax:px-4">
-				<h5 className="my-4 font-medium text-primaryBgClr  sm:my-0">
-					TOP RANKED SOLUTIONS
-				</h5>
-				<h1 className="font-extrabold sm:leading-7">
-					Your One-Stop Solutions for <br /> Managing Phone
-					Orders
-				</h1>
-				<h3 className="my-6 text-gray-400 sm:leading-7 hide-on-smaller">
-					Streamline your phone order management
-					effortlessly <br /> with our comprehensive
-					solution
-				</h3>
-				<button className=" bg-primaryBgClr rounded-full hover:bg-green-600 text-white button-lg mt-4">
-					<Link href={"/Auth/signup"} className="text-xl">
-						Become an Affiliate
-					</Link>
-				</button>
-			</section>
-
-			<section className="bg-black text-white text-left px-10 py-10 flex items-center data-section lgMax:flex-col lgMax:gap-4 lgMax:text-center">
-				{[
-					{ count: "20K+", type: "Users" },
-					{ count: "10,000+", type: "Phones" },
-					{ count: "400+", type: "Deals" },
-				].map(({ count, type }, index) => {
-					return (
-						<div
-							key={index}
-							className="font-extrabold text-white flex flex-col gap-y-4"
-						>
-							{" "}
-							<h1 className="">{count}</h1>
-							<h3 className="text-gray-400 font-semibold">
-								{type}
-							</h3>
+			</header>
+			
+			{/* Hero Section */}
+			<section className="relative min-h-screen bg-gradient-to-b from-black to-gray-900 text-white overflow-hidden pt-20">
+				<div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
+				<div className="container mx-auto px-4 py-24 lg:py-32">
+					<div className="max-w-4xl mx-auto text-center">
+						<h1 className="text-5xl md:text-6xl font-bold mb-6">
+							Transform Your Business with 
+						</h1>
+						<h1 className="text-5xl md:text-6xl font-bold mb-8 text-primaryBgClr">CardMitra</h1>
+						<p className="text-xl text-gray-300 mb-8">
+							The ultimate platform for managing phone orders and maximizing your earnings
+						</p>
+						<div className="flex flex-col lg:flex-row gap-4 justify-center">
+							<Link href="/Auth/signup" className="w-full lg:w-auto bg-primaryBgClr hover:bg-green-600 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105">
+								Get Started Now
+							</Link>
+							<Link href="#features" className="w-full lg:w-auto border border-white hover:border-primaryBgClr text-white px-8 py-4 rounded-full font-semibold transition-all duration-300">
+								Learn More
+							</Link>
 						</div>
-					);
-				})}
+					</div>
+				</div>
 			</section>
 
-			<section
-				className="text-center px-10 py-16 lgMax:py-8 lgMax:px-4"
-				id="aboutUs"
-			>
-				<h5 className="font-medium text-primaryBgClr mb-4">
-					ABOUT US
-				</h5>
-				<h1 className="font-extrabold sm:leading-7">
-					Simplify Phone Order <br />
-					Management
-				</h1>
-				<Image
-					src={phoneImg}
-					alt={"phones Image"}
-					className="my-12 mx-auto sm:my-6"
-				></Image>
-				<h3 className="text-[#121212B2]">
-					We&apos;re on a mission to Streamline phone order
-					management. Our <br /> user-friendly platform
-					empowers businesses and individuals to <br />{" "}
-					optimize their processes effortlessly. Join us and
-					experience the <br />
-					convenience of seamless order management today
-				</h3>
-			</section>
-
-			<section
-				className="text-center py-16 px-10 bg-[#242424] text-white lgMax:py-8 lgMax:px-4"
-				id="ourFeatures"
-			>
-				<h5 className="font-medium text-primaryBgClr mb-8 sm:mb-4">
-					OUR FEATURES
-				</h5>
-				<h1
-					className="font-extrabold "
-					style={{ lineHeight: 1.75 }}
-				>
-					Unlock the power of seamless <br />
-					phone Order Management
-				</h1>
-
-				<div className="flex justify-center gap-x-32 mt-12 items-center text-left lgMax:flex-col lgMax:gap-4 lgMax:mt-8">
-					{[
-						{
-							head: (
-								<>
-									Real-Time Order <br />{" "}
-									Alerts
-								</>
-							),
-							desc: (
-								<>
-									{" "}
-									Instant alerts for new{" "}
-									<br /> orders and updates
-									for <br /> seamless order{" "}
-									<br /> management
-								</>
-							),
-						},
-						{
-							head: (
-								<>
-									Customizable <br />{" "}
-									Management{" "}
-								</>
-							),
-							desc: (
-								<>
-									Get promotions <br />{" "}
-									effortlessly. Set
-									discounts, <br /> deals,
-									quantities & <br />{" "}
-									validity
-								</>
-							),
-						},
-						{
-							head: (
-								<>
-									Advanced Order <br />{" "}
-									Tracking{" "}
-								</>
-							),
-							desc: (
-								<>
-									Effortlessly track orders,{" "}
-									<br /> gain insights,
-									provide <br />{" "}
-									unparalleled customer{" "}
-									<br /> service
-								</>
-							),
-						},
-					].map(({ head, desc }, index) => {
-						return (
-							<div
-								key={index}
-								className="flex flex-col p-9 rounded-2xl bg-[#FFFFFF1A] justify-start gap-y-3 sm:w-4/5 sm:py-3 sm:pl-4 sm:pr-0"
-							>
-								<GoBell className="w-12 h-12 rounded-3xl p-2 text-white bg-primaryBgClr" />
-
-								<div className="text-lg font-semibold">
-									{head}
+			{/* Featured Products Section */}
+			<section id="products" className="py-12 sm:py-16 md:py-24 bg-gray-50">
+				<div className="container mx-auto px-4">
+					<div className="text-center mb-16">
+						<h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Products</h2>
+						<p className="text-gray-600 max-w-2xl mx-auto">
+							Discover our most popular products with the best commission rates
+						</p>
+					</div>
+					<div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+						{featuredProducts.map((product) => (
+							<div key={product.id} className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+								<div className="relative h-48">
+									<Image
+										src={product.image}
+										alt={product.name}
+										fill
+										className="object-cover"
+									/>
 								</div>
-								<div className="text-[#FFFFFFB2]">
-									{desc}
+								<div className="p-6">
+									<h3 className="text-xl font-bold mb-2">{product.name}</h3>
+									<div className="flex items-center mb-4">
+										<div className="flex text-yellow-400">
+											{[...Array(5)].map((_, i) => (
+												<FaStar key={i} className="w-5 h-5" />
+											))}
+										</div>
+										<span className="ml-2 text-gray-600">({product.reviews} reviews)</span>
+									</div>
+									<div className="space-y-2">
+										<p className="text-gray-600">Price: <span className="font-semibold">{product.price}</span></p>
+										<p className="text-gray-600">Commission: <span className="font-semibold text-primaryBgClr">{product.commission}</span></p>
+										<p className="text-gray-600">Requirement: <span className="font-semibold">{product.requirement}</span></p>
+									</div>
+									<div className="mt-6 flex gap-2">
+										{product.cards.map((card, index) => (
+											<span key={index} className="bg-gray-100 px-3 py-1 rounded-full text-sm">
+												{card}
+											</span>
+										))}
+									</div>
+									<Link href="/Auth/signup" className="mt-6 block w-full bg-primaryBgClr hover:bg-green-600 text-white text-center py-3 rounded-full font-semibold transition-colors duration-300">
+										Get Started
+									</Link>
 								</div>
 							</div>
-						);
-					})}
+						))}
+					</div>
 				</div>
 			</section>
 
-			{/* <section
-				className="py-16 px-10 lgMax:py-8 lgMax:px-4 bg-primaryBgClr"
-				id="testimonials"
-			>
-				<h5 className="font-medium text-white mb-8 sm:mb-4">
-					CUSTOMER TESTIMONIALS
-				</h5>
-				<h1 className="font-extrabold text-white mb-16 sm:mb-4 sm:leading-7">
-					Hear What Our Clients <br />
-					Have to Say!
-				</h1>
-				<SimpleSlider reviewArr={arr} />
-			</section> */}
-			<section
-				className="py-16 px-10 lgMax:py-8 lgMax:px-4 bg-primaryBgClr"
-				id="testimonials"
-			>
-				<h5 className="font-medium text-white mb-4 text-center">
-					CUSTOMER TESTIMONIALS
-				</h5>
-				<h1 className="font-extrabold text-white mb-8 text-center text-3xl lgMax:text-2xl smMax:text-xl">
-					Hear What Our Clients Have to Say!
-				</h1>
-				<SimpleSlider reviewArr={arr} />
+			{/* Features Section */}
+			<section id="features" className="py-12 sm:py-16 md:py-24 bg-white">
+				<div className="container mx-auto px-4">
+					<div className="text-center mb-16">
+						<h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose CardMitra?</h2>
+						<p className="text-gray-600 max-w-2xl mx-auto">
+							Experience the difference with our comprehensive platform
+						</p>
+					</div>
+					<div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+						{features.map((feature, index) => (
+							<div key={index} className="bg-gray-50 rounded-2xl p-8 hover:shadow-xl transition-all duration-300">
+								<div className="mb-6">{feature.icon}</div>
+								<h3 className="text-xl font-bold mb-4">{feature.title}</h3>
+								<p className="text-gray-600">{feature.description}</p>
+							</div>
+						))}
+					</div>
+				</div>
 			</section>
 
-			<section className="bg-primaryBgClr flex justify-around py-4 text-sm text-white px-10 lgMax:px-4 lgMax:py-2 lgMax:flex-col lgMax:items-center lgMax:gap-4">
-				<div className="flex gap-x-7 sm:gap-1">
-					{[whtsap, insta, fb].map((icon, index) => {
-						return (
-							<Image
-								key={index}
-								src={icon}
-								alt=""
-								className="sm:w-6 w-8 h-8"
-							/>
-						);
-					})}
-				</div>
-				<div className="responsiveLink flex flex-wrap font-medium items-center justify-center gap-x-5 sm:gap-1 sm:text-nowrap sm:text-[10px]">
-					{[
-						"Refund Policy",
-						"Privacy Policy",
-						"Terms and Conditions",
-					].map((policy, index) => {
-						return (
-							<>
-								<div key={index}>{policy}</div>
-								{index < 2 && danda}
-							</>
-						);
-					})}
+			{/* Stats Section */}
+			<section id="stats" ref={statsRef} className="py-12 sm:py-16 md:py-24 bg-black text-white">
+				<div className="container mx-auto px-4">
+					<div className="grid grid-cols-1 gap-8 text-center">
+						<div className="p-8">
+							<div className="text-5xl font-bold text-primaryBgClr mb-4">{stats.orders.toLocaleString()}+</div>
+							<div className="text-xl text-gray-400">Total Orders</div>
+						</div>
+						<div className="p-8">
+							<div className="text-5xl font-bold text-primaryBgClr mb-4">{stats.transactions}Cr+</div>
+							<div className="text-xl text-gray-400">Total Transactions</div>
+						</div>
+						<div className="p-8">
+							<div className="text-5xl font-bold text-primaryBgClr mb-4">{stats.satisfaction}%</div>
+							<div className="text-xl text-gray-400">Customer Satisfaction</div>
+						</div>
+					</div>
 				</div>
 			</section>
+
+			{/* Testimonials Section */}
+			<section id="testimonials" className="py-12 sm:py-16 md:py-24 bg-gray-50">
+				<div className="container mx-auto px-4">
+					<div className="text-center mb-16">
+						<h2 className="text-3xl md:text-4xl font-bold mb-4">What Our Users Say</h2>
+						<p className="text-gray-600 max-w-2xl mx-auto">
+							Join thousands of satisfied users who have transformed their business with CardMitra
+						</p>
+					</div>
+					<div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+						{testimonials.map((testimonial, index) => (
+							<div key={index} className="bg-white rounded-2xl p-8 shadow-lg">
+								<div className="flex items-center mb-6">
+									<div className="relative w-16 h-16 rounded-full overflow-hidden mr-4">
+										<Image
+											src={testimonial.image}
+											alt={testimonial.name}
+											fill
+											className="object-cover"
+										/>
+									</div>
+									<div>
+										<h3 className="font-bold">{testimonial.name}</h3>
+										<p className="text-gray-600">{testimonial.role}</p>
+									</div>
+								</div>
+								<div className="flex text-yellow-400 mb-4">
+									{[...Array(testimonial.rating)].map((_, i) => (
+										<FaStar key={i} className="w-5 h-5" />
+									))}
+								</div>
+								<p className="text-gray-600">{testimonial.text}</p>
+							</div>
+						))}
+					</div>
+				</div>
+			</section>
+
+			{/* CTA Section */}
+			<section className="py-12 sm:py-16 md:py-24 bg-primaryBgClr text-white">
+				<div className="container mx-auto px-4 text-center">
+					<h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Get Started?</h2>
+					<p className="text-xl mb-8 max-w-2xl mx-auto">
+						Join thousands of successful affiliates and start earning today
+					</p>
+					<Link href="/Auth/signup" className="inline-block bg-white text-primaryBgClr px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors duration-300">
+						Sign Up Now
+					</Link>
+				</div>
+			</section>
+
+			{/* Footer */}
+			<footer className="bg-gray-900 text-white py-8 sm:py-12">
+				<div className="container mx-auto px-4">
+					<div className="flex flex-col lg:flex-row lg:justify-between gap-8">
+						{/* CardMitra Section */}
+						<div className="text-center lg:text-left">
+							<h3 className="text-xl font-bold mb-4">CardMitra</h3>
+							<p className="text-gray-400">
+								Your trusted partner in phone order management
+							</p>
+						</div>
+
+						{/* Quick Links and Legal Section */}
+						<div className="flex flex-col lg:flex-row lg:justify-between lg:gap-16">
+							<div className="text-center lg:text-left">
+								<h4 className="font-semibold mb-4">Quick Links</h4>
+								<ul className="space-y-2">
+									<li><Link href="#products" className="text-gray-400 hover:text-white">Products</Link></li>
+									<li><Link href="#features" className="text-gray-400 hover:text-white">Features</Link></li>
+									<li><Link href="#stats" className="text-gray-400 hover:text-white">Stats</Link></li>
+									<li><Link href="#testimonials" className="text-gray-400 hover:text-white">Testimonials</Link></li>
+								</ul>
+							</div>
+							<div className="text-center lg:text-left">
+								<h4 className="font-semibold mb-4">Legal</h4>
+								<ul className="space-y-2">
+									<li><Link href="#" className="text-gray-400 hover:text-white">Privacy Policy</Link></li>
+									<li><Link href="#" className="text-gray-400 hover:text-white">Terms of Service</Link></li>
+									<li><Link href="#" className="text-gray-400 hover:text-white">Refund Policy</Link></li>
+								</ul>
+							</div>
+						</div>
+
+						{/* Connect With Us Section */}
+						<div className="text-center lg:text-left">
+							<h4 className="font-semibold mb-4">Connect With Us</h4>
+							<div className="flex justify-center lg:justify-start space-x-4">
+								<Link href="#" className="text-gray-400 hover:text-white">
+									<Image src={fb} alt="Facebook" className="w-6 h-6" />
+								</Link>
+								<Link href="#" className="text-gray-400 hover:text-white">
+									<Image src={insta} alt="Instagram" className="w-6 h-6" />
+								</Link>
+								<Link href="#" className="text-gray-400 hover:text-white">
+									<Image src={whtsap} alt="WhatsApp" className="w-6 h-6" />
+								</Link>
+							</div>
+						</div>
+					</div>
+					<div className="border-t border-gray-800 mt-6 pt-6 text-center text-gray-400">
+						<p>&copy; 2024 CardMitra. All rights reserved.</p>
+					</div>
+				</div>
+			</footer>
 		</>
 	);
 }

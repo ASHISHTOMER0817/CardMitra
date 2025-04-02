@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import Popup from "./Popup";
 import Loader from "./loader";
 import Link from "next/link";
+import Image from "next/image";
+import logo from "@/../public/logo.svg";
 
 const LoginAuth = () => {
 	const router = useRouter();
@@ -15,20 +17,6 @@ const LoginAuth = () => {
 	const [remember, setRemember] = useState(true);
 
 	const user = { email, password, remember };
-	// console.log(user)
-	// function checkSuccess(success: boolean, message: string, data: string) {
-	// 	if (success === false) {
-	// 		Popup("error", message);
-	// 		setLoader(false);
-	// 	} else {
-	// 		if (data === "user") {
-	// 			router.push("/deals");
-	// 			console.log("why is it not forwarding");
-	// 		} else if (data === "admin") {
-	// 			router.push("/adminDashboard");
-	// 		}
-	// 	}
-	// }
 
 	async function sendData(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
@@ -39,14 +27,10 @@ const LoginAuth = () => {
 				Popup("error", "Fill the form!!");
 				return;
 			}
-			console.log('----',email,'---- ', password)
 			const response = await axios.post("/api/users/login", {
 				user,
 			});
 			const { success, message, data } = response.data;
-			// const success = response
-			console.log(success, message, data);
-			// checkSuccess(success, message, data);
 
 			if(!success){Popup("error", message);setLoader(false)}
 			else if (data === "user") router.push("/deals");
@@ -59,16 +43,19 @@ const LoginAuth = () => {
 		}
 	}
 
-	// function ForgetPassword() {}
-
 	return (
-		<>
+		<div className="w-full bg-white rounded-2xl shadow-xl p-6 sm:p-8">
 			{loader && <Loader />}
-			<form
-				className="flex flex-col gap-y-6 mt-4 sm:gap-y-4"
-				onSubmit={sendData}
-			>
-				<>
+			<div className="text-center mb-6 sm:mb-8">
+				<Link href="/" className="inline-block mb-4">
+					<Image src={logo} alt="CardMitra Logo" width={48} height={48} className="sm:w-[60px] sm:h-[60px]" />
+				</Link>
+				<h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Welcome Back!</h2>
+				<p className="text-sm sm:text-base text-gray-600">Sign in to continue to your account</p>
+			</div>
+
+			<form onSubmit={sendData} className="space-y-4 sm:space-y-6">
+				<div className="space-y-3 sm:space-y-4">
 					<InputSpace
 						type="email"
 						value={email}
@@ -81,46 +68,45 @@ const LoginAuth = () => {
 						placeholder="Password"
 						onChange={(value) => setPassword(value)}
 					/>
-				</>
-				<div className="flex text-sm text-gray-500">
-					<input
-						type="checkbox"
-						onChange={() => setRemember(!remember)}
-						checked={remember}
-						id="rememberMe"
-					/>{" "}
-					<label
-						htmlFor="rememberMe"
-						className="cursor-pointer"
-					>
-						Remember Me
-					</label>
+				</div>
+
+				<div className="flex items-center justify-between">
+					<div className="flex items-center">
+						<input
+							type="checkbox"
+							onChange={() => setRemember(!remember)}
+							checked={remember}
+							id="rememberMe"
+							className="h-4 w-4 text-primaryBgClr border-gray-300 rounded focus:ring-primaryBgClr"
+						/>
+						<label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-700">
+							Remember me
+						</label>
+					</div>
 					<Link
-						href={"/forgotPassword"}
-						className="float-right ml-auto hover:border-primaryBgClr  hover:text-primaryBgClr cursor-pointer"
+						href="/forgotPassword"
+						className="text-sm font-medium text-primaryBgClr hover:text-green-600"
 					>
-						Forgot Password{" "}
+						Forgot password?
 					</Link>
 				</div>
 
 				<button
 					disabled={loader}
-					className="text-white border px-3 py-4 rounded-full hover:bg-green-600 bg-primaryBgClr cursor-pointer sm:py-2"
+					className="w-full flex justify-center py-2.5 sm:py-3 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-primaryBgClr hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primaryBgClr transition-colors duration-300"
 					type="submit"
 				>
-					Login
+					{loader ? "Signing in..." : "Sign in"}
 				</button>
-				<Link
-					href={"/Auth/signup"}
-					className="float-right mx-auto text-sm text-gray-400 cursor-pointer"
-				>
-					I don&apos;t have an account?{" "}
-					<div className="float-right text-primaryBgClr font-bold">
-						Signup
-					</div>{" "}
-				</Link>
+
+				<p className="text-center text-sm text-gray-600">
+					Don't have an account?{" "}
+					<Link href="/Auth/signup" className="font-medium text-primaryBgClr hover:text-green-600">
+						Sign up
+					</Link>
+				</p>
 			</form>
-		</>
+		</div>
 	);
 };
 

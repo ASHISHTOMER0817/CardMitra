@@ -1,34 +1,26 @@
+"use client";
 import React from "react";
 
 // Define a TypeScript interface for the props
-interface InputProps {
+interface InputSpaceProps {
 	type: string;
-	placeholder?: string;
 	value: string;
+	placeholder: string;
 	onChange: (value: string) => void;
-	classList?: string;
 }
 
 // Define the Input component
-const InputSpace: React.FC<InputProps> = ({
-	type,
-	placeholder,
-	value,
-	onChange,
-	classList,
-}) => {
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		onChange(event.target.value);
-	};
-
+const InputSpace = ({ type, value, placeholder, onChange }: InputSpaceProps) => {
 	return (
-		<input
-			className={`py-4 px-7 outline-none border border-gray-400 rounded-full sm:py-2 sm:pl-6 ${classList}`}
-			type={type}
-			placeholder={placeholder}
-			value={value}
-			onChange={handleChange}
-		/>
+		<div className="w-full">
+			<input
+				type={type}
+				value={value}
+				onChange={(e) => onChange(e.target.value)}
+				placeholder={placeholder}
+				className="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-primaryBgClr focus:border-transparent transition-all duration-300 text-sm sm:text-base"
+			/>
+		</div>
 	);
 };
 
