@@ -100,7 +100,7 @@ const LoginAuth = () => {
 				</button>
 
 				<p className="text-center text-sm text-gray-600">
-					Don't have an account?{" "}
+					Don&apos;t have an account?{" "}
 					<Link href="/Auth/signup" className="font-medium text-primaryBgClr hover:text-green-600">
 						Sign up
 					</Link>
