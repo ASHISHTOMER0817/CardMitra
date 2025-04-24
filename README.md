@@ -19,7 +19,6 @@ CardMitra is a web platform that enables individuals to place bulk orders of ele
 
             🛒 50,000+ orders placed
             👥 300+ active users
-            💸 ₹50+ Crores in total transactions
 
 🛠 Tech Stack
 
